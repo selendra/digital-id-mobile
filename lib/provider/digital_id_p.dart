@@ -1,9 +1,9 @@
 import 'package:provider/provider.dart';
-import 'package:student_id/all_export.dart';
-import 'package:student_id/core/config/app_config.dart';
-import 'package:student_id/models/digital_id_m.dart';
-import 'package:student_id/provider/home_p.dart';
-import 'package:student_id/services/storage.dart';
+import 'package:digital_id/all_export.dart';
+import 'package:digital_id/core/config/app_config.dart';
+import 'package:digital_id/models/digital_id_m.dart';
+import 'package:digital_id/provider/home_p.dart';
+import 'package:digital_id/services/storage.dart';
 class DigitalIDProvider extends ChangeNotifier{
 
   DigitalIDModel? identifierModel = DigitalIDModel();

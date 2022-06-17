@@ -1,9 +1,9 @@
 // variable for our route names
 import 'package:flutter/material.dart';
-import 'package:student_id/all_export.dart';
-import 'package:student_id/screens/otp_verify/otp_verify_page.dart';
-import 'package:student_id/screens/registration/signup/signup.dart';
-import 'package:student_id/screens/setup_wallet/import_acc/import_acc.dart';
+import 'package:digital_id/all_export.dart';
+import 'package:digital_id/screens/otp_verify/otp_verify_page.dart';
+import 'package:digital_id/screens/registration/signup/signup.dart';
+import 'package:digital_id/screens/setup_wallet/import_acc/import_acc.dart';
 
 const String loginRoute = '/';
 const String signUpRoute = '/signUp';

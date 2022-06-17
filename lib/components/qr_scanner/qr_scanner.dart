@@ -1,7 +1,7 @@
 import 'package:provider/provider.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
-import 'package:student_id/all_export.dart';
-import 'package:student_id/theme/theme.dart';
+import 'package:digital_id/all_export.dart';
+import 'package:digital_id/theme/theme.dart';
 
 class QrScanner extends StatefulWidget {
   // final List portList;

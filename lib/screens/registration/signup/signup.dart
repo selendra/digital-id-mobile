@@ -1,19 +1,19 @@
 import 'dart:convert';
 
 import 'package:provider/provider.dart';
-import 'package:student_id/all_export.dart';
-import 'package:student_id/components/alert_dialog_c.dart';
-import 'package:student_id/components/components_c.dart';
-import 'package:student_id/core/backend.dart';
-import 'package:student_id/core/config/app_config.dart';
-import 'package:student_id/models/sign_up_m.dart';
-import 'package:student_id/provider/api_provider.dart';
-import 'package:student_id/provider/registration_p.dart';
-import 'package:student_id/screens/otp_verify/otp_verify_page.dart';
-import 'package:student_id/screens/registration/login/body_login_page.dart';
-import 'package:student_id/screens/registration/signup/body_signup.dart';
-import 'package:student_id/screens/registration/verfiyAcc/verifyAcc.dart';
-import 'package:student_id/services/storage.dart';
+import 'package:digital_id/all_export.dart';
+import 'package:digital_id/components/alert_dialog_c.dart';
+import 'package:digital_id/components/components_c.dart';
+import 'package:digital_id/core/backend.dart';
+import 'package:digital_id/core/config/app_config.dart';
+import 'package:digital_id/models/sign_up_m.dart';
+import 'package:digital_id/provider/api_provider.dart';
+import 'package:digital_id/provider/registration_p.dart';
+import 'package:digital_id/screens/otp_verify/otp_verify_page.dart';
+import 'package:digital_id/screens/registration/login/body_login_page.dart';
+import 'package:digital_id/screens/registration/signup/body_signup.dart';
+import 'package:digital_id/screens/registration/verfiyAcc/verifyAcc.dart';
+import 'package:digital_id/services/storage.dart';
 
 import '../../../shared/bg_shared.dart';
 

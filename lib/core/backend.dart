@@ -2,18 +2,20 @@ import 'dart:convert';
 import 'dart:math';
 
 import 'package:http/http.dart' as _http;
-import 'package:student_id/core/config/app_config.dart';
-import 'package:student_id/models/sign_up_m.dart';
-import 'package:student_id/services/storage.dart';
+import 'package:digital_id/core/config/app_config.dart';
+import 'package:digital_id/models/sign_up_m.dart';
+import 'package:digital_id/services/storage.dart';
 import 'package:encrypt/encrypt.dart';
 
-class Backend {
-
-  final String _api = "https://accounts.koompi.com/";
   _http.Response? _res;
   Map<String, dynamic>? _decode; 
   String? _bodyEncode; 
   Map<String, dynamic>? _token;
+
+class Backend {
+
+  final String _api = "https://accounts.koompi.com/";
+  final String _sdApi = "https://student.saladigital.org/";
 
   Future<String> _otpContents() async {
 
@@ -175,7 +177,7 @@ class Backend {
       "email": email,
       "password": passwords
     });
-    _res = await _http.post(Uri.parse(_api+"login"), headers: _conceteHeader(), body: _bodyEncode);
+    _res = await _http.post(Uri.parse(_sdApi+"login"), headers: _conceteHeader(), body: _bodyEncode);
     return _res!;
   }
 
@@ -211,4 +213,5 @@ class Backend {
 
     return _res!;
   }
+
 }

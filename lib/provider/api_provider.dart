@@ -10,26 +10,20 @@ import 'package:polkawallet_sdk/api/types/networkParams.dart';
 import 'package:polkawallet_sdk/polkawallet_sdk.dart';
 import 'package:polkawallet_sdk/storage/keyring.dart';
 import 'package:polkawallet_sdk/utils/index.dart';
-// import 'package:student_id/index.dart';
-// import 'package:student_id/src/constants/db_key_con.dart';
-// import 'package:student_id/src/models/account.m.dart';
-// import 'package:student_id/src/models/lineChart_m.dart';
-// import 'package:student_id/src/models/smart_contract.m.dart';
-// import 'package:polkawallet_plugin_kusama/polkawallet_plugin_kusama.dart';
 import 'package:http/http.dart' as http;
 import 'package:polkawallet_sdk/storage/types/keyPairData.dart';
 import 'package:polkawallet_sdk/api/apiKeyring.dart';
 import 'package:polkawallet_sdk/utils/localStorage.dart';
 import 'package:provider/provider.dart';
-import 'package:student_id/components/alert_dialog_c.dart';
-import 'package:student_id/core/config/app_config.dart';
-import 'package:student_id/models/account_m.dart';
-import 'package:student_id/provider/home_p.dart';
-import 'package:student_id/provider/registration_p.dart';
-import 'package:student_id/services/apiKeyring.dart';
+import 'package:digital_id/components/alert_dialog_c.dart';
+import 'package:digital_id/core/config/app_config.dart';
+import 'package:digital_id/models/account_m.dart';
+import 'package:digital_id/provider/home_p.dart';
+import 'package:digital_id/provider/registration_p.dart';
+import 'package:digital_id/services/apiKeyring.dart';
 // import 'package:bitcoin_flutter/bitcoin_flutter.dart';
 import 'package:encrypt/encrypt.dart';
-import 'package:student_id/services/storage.dart';
+import 'package:digital_id/services/storage.dart';
 
 class ApiProvider with ChangeNotifier {
   

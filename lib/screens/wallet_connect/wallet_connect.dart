@@ -1,15 +1,15 @@
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:student_id/all_export.dart';
-import 'package:student_id/components/alert_dialog_c.dart';
-import 'package:student_id/components/walletConnect_c.dart';
-import 'package:student_id/core/backend.dart';
-import 'package:student_id/core/config/app_config.dart';
-import 'package:student_id/provider/api_provider.dart';
-import 'package:student_id/provider/registration_p.dart';
-import 'package:student_id/screens/otp_verify/otp_verify_page.dart';
-import 'package:student_id/screens/wallet_connect/body_walletconnect_page.dart';
-import 'package:student_id/services/storage.dart';
+import 'package:digital_id/all_export.dart';
+import 'package:digital_id/components/alert_dialog_c.dart';
+import 'package:digital_id/components/walletConnect_c.dart';
+import 'package:digital_id/core/backend.dart';
+import 'package:digital_id/core/config/app_config.dart';
+import 'package:digital_id/provider/api_provider.dart';
+import 'package:digital_id/provider/registration_p.dart';
+import 'package:digital_id/screens/otp_verify/otp_verify_page.dart';
+import 'package:digital_id/screens/wallet_connect/body_walletconnect_page.dart';
+import 'package:digital_id/services/storage.dart';
 import 'package:wallet_connect/wallet_connect.dart';
 
 class WalletConnectPage extends StatefulWidget {

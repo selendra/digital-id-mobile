@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:camera/camera.dart';
 import 'package:flutter/services.dart';
-import 'package:student_id/all_export.dart';
+import 'package:digital_id/all_export.dart';
 
 List<CameraDescription> cameras = [];
 

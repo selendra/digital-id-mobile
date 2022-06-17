@@ -1,6 +1,6 @@
 
 import 'package:polkawallet_sdk/storage/types/keyPairData.dart';
-import 'package:student_id/all_export.dart';
+import 'package:digital_id/all_export.dart';
 class AccountM {
 
   String? name;

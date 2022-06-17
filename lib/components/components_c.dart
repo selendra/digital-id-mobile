@@ -1,5 +1,4 @@
-import 'package:student_id/all_export.dart';
-import 'package:student_id/components/text_c.dart';
+import 'package:digital_id/all_export.dart';
 import 'package:image_picker/image_picker.dart';
 
 class Components {

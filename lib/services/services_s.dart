@@ -7,8 +7,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_share/flutter_share.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:student_id/all_export.dart';
-import 'package:student_id/provider/api_provider.dart';
+import 'package:digital_id/all_export.dart';
+import 'package:digital_id/provider/api_provider.dart';
 
 class Services {
 

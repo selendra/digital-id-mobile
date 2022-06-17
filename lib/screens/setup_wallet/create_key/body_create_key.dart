@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:student_id/all_export.dart';
-import 'package:student_id/components/text_c.dart';
-import 'package:student_id/core/config/app_config.dart';
-import 'package:student_id/main.dart';
+import 'package:digital_id/all_export.dart';
+import 'package:digital_id/components/text_c.dart';
+import 'package:digital_id/core/config/app_config.dart';
+import 'package:digital_id/main.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class CreateKeyBody extends StatelessWidget {

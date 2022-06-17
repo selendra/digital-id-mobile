@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:student_id/all_export.dart';
+import 'package:digital_id/all_export.dart';
 
 import '../../shared/typography.dart';
 import '../../widgets/build_line_top.dart';

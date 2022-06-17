@@ -3,12 +3,12 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:student_id/all_export.dart';
-import 'package:student_id/components/walletConnect_c.dart';
-import 'package:student_id/core/config/app_config.dart';
-import 'package:student_id/provider/digital_id_p.dart';
-import 'package:student_id/provider/home_p.dart';
-import 'package:student_id/services/storage.dart';
+import 'package:digital_id/all_export.dart';
+import 'package:digital_id/components/walletConnect_c.dart';
+import 'package:digital_id/core/config/app_config.dart';
+import 'package:digital_id/provider/digital_id_p.dart';
+import 'package:digital_id/provider/home_p.dart';
+import 'package:digital_id/services/storage.dart';
 
 
 class Account extends StatefulWidget {

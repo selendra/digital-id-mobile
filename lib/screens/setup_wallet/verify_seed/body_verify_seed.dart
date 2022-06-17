@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:student_id/all_export.dart';
-import 'package:student_id/components/text_c.dart';
-import 'package:student_id/services/storage.dart';
+import 'package:digital_id/all_export.dart';
+import 'package:digital_id/components/text_c.dart';
+import 'package:digital_id/services/storage.dart';
 
 class VerifyPassphraseBody extends StatelessWidget {
   

@@ -1,11 +1,13 @@
+import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:provider/provider.dart';
-import 'package:student_id/all_export.dart';
-import 'package:student_id/components/text_c.dart';
-import 'package:student_id/components/qr_scanner.dart';
-import 'package:student_id/components/walletConnect_c.dart';
-import 'package:student_id/screens/registration/scan_connect/scan_page.dart';
-import 'package:student_id/screens/wallet_connect/wallet_connect.dart';
-import 'package:student_id/theme/theme.dart';
+import 'package:digital_id/all_export.dart';
+import 'package:digital_id/components/text_c.dart';
+import 'package:digital_id/components/qr_scanner.dart';
+import 'package:digital_id/components/walletConnect_c.dart';
+import 'package:digital_id/core/graphql/schema.dart';
+import 'package:digital_id/screens/registration/scan_connect/scan_page.dart';
+import 'package:digital_id/screens/wallet_connect/wallet_connect.dart';
+import 'package:digital_id/theme/theme.dart';
 import 'package:wallet_connect/wallet_connect.dart';
 
 import '../../../shared/typography.dart';
@@ -87,6 +89,7 @@ class LoginPageBody extends StatelessWidget {
                   onPressed: () async {
                     // validator!();
                     await submitLogin!();
+                    // runMuation!({});
                   },
                 ),
 

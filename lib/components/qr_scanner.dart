@@ -4,7 +4,7 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/foundation.dart';
-import 'package:student_id/all_export.dart';
+import 'package:digital_id/all_export.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 
 class QRViewExample extends StatefulWidget {

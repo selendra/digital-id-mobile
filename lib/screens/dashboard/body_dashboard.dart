@@ -1,15 +1,15 @@
 import 'dart:developer';
 
 import 'package:provider/provider.dart';
-import 'package:student_id/all_export.dart';
-import 'package:student_id/components/text_c.dart';
-import 'package:student_id/core/config/app_config.dart';
-import 'package:student_id/models/digital_id_m.dart';
-import 'package:student_id/provider/home_p.dart';
-import 'package:student_id/provider/digital_id_p.dart';
-import 'package:student_id/screens/dashboard/account_linked.dart';
-import 'package:student_id/screens/dashboard/indentityInfo.dart';
-import 'package:student_id/services/services_s.dart';
+import 'package:digital_id/all_export.dart';
+import 'package:digital_id/components/text_c.dart';
+import 'package:digital_id/core/config/app_config.dart';
+import 'package:digital_id/models/digital_id_m.dart';
+import 'package:digital_id/provider/home_p.dart';
+import 'package:digital_id/provider/digital_id_p.dart';
+import 'package:digital_id/screens/dashboard/account_linked.dart';
+import 'package:digital_id/screens/dashboard/indentityInfo.dart';
+import 'package:digital_id/services/services_s.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class DashBoardBody extends StatelessWidget {

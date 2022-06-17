@@ -2,13 +2,13 @@ import 'dart:io';
 
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-import 'package:student_id/all_export.dart';
-import 'package:student_id/components/text_c.dart';
-import 'package:student_id/core/config/app_config.dart';
-import 'package:student_id/main.dart';
-import 'package:student_id/provider/home_p.dart';
-import 'package:student_id/provider/digital_id_p.dart';
-import 'package:student_id/theme/theme.dart';
+import 'package:digital_id/all_export.dart';
+import 'package:digital_id/components/text_c.dart';
+import 'package:digital_id/core/config/app_config.dart';
+import 'package:digital_id/main.dart';
+import 'package:digital_id/provider/home_p.dart';
+import 'package:digital_id/provider/digital_id_p.dart';
+import 'package:digital_id/theme/theme.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:share/share.dart';
 class IdentityInfo extends StatelessWidget{

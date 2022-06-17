@@ -1,15 +1,21 @@
+import 'dart:convert';
+
+import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:provider/provider.dart';
-import 'package:student_id/all_export.dart';
-import 'package:student_id/components/alert_dialog_c.dart';
-import 'package:student_id/core/backend.dart';
-import 'package:student_id/core/config/app_config.dart';
-import 'package:student_id/models/digital_id_m.dart';
-import 'package:student_id/provider/api_provider.dart';
-import 'package:student_id/provider/digital_id_p.dart';
-import 'package:student_id/provider/home_p.dart';
-import 'package:student_id/provider/registration_p.dart';
-import 'package:student_id/screens/otp_verify/otp_verify_page.dart';
-import 'package:student_id/services/storage.dart';
+import 'package:digital_id/all_export.dart';
+import 'package:digital_id/components/alert_dialog_c.dart';
+import 'package:digital_id/core/backend.dart';
+import 'package:digital_id/core/config/app_config.dart';
+import 'package:digital_id/core/decode_token.dart';
+import 'package:digital_id/core/graphql/schema.dart';
+import 'package:digital_id/models/digital_id_m.dart';
+import 'package:digital_id/provider/api_provider.dart';
+import 'package:digital_id/provider/digital_id_p.dart';
+import 'package:digital_id/provider/graphql_p.dart';
+import 'package:digital_id/provider/home_p.dart';
+import 'package:digital_id/provider/registration_p.dart';
+import 'package:digital_id/screens/otp_verify/otp_verify_page.dart';
+import 'package:digital_id/services/storage.dart';
 
 import '../../../shared/bg_shared.dart';
 
@@ -72,68 +78,47 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   Future<void> submitLogin() async {
-    MyDialog().dialogLoading(context);
-    print("submitLogin");
-    try {
-      // await Future.delayed(Duration(seconds: 1), (){
-      //   Navigator.push(context, MaterialPageRoute(builder: (context) => SetupPage()));
-      // });
 
-      await _api!.loginSELNetwork(email: emailInputController.text, password: passwordInputController.text).then((value) async {
+    
+    Backend().login("bytesharedmin@gmail.com", "adminbyteshare5556").then((value) async {
+      Map<String, dynamic> _map = await json.decode(value.body);
+      print("_map['access_token'] $_map");
+      
+      //Decode access_token
+      JwtDecode.tryParseJwt(_map['access_token'], context);
+      GraphQLConfiguration.setToken(_map['access_token']);
+    });
+    // MyDialog().dialogLoading(context);
+    // try {
 
-        if (value['status'] == true) {
+    //   await _api!.loginSELNetwork(email: emailInputController.text, password: passwordInputController.text).then((value) async {
+
+    //     if (value['status'] == true) {
           
-          Provider.of<RegistrationProvider>(context, listen: false).email = emailInputController.text;
-          Provider.of<RegistrationProvider>(context, listen: false).password = passwordInputController.text;
-          
-          // await _api!.autoGenerateAcc(context: context).then((value) async {
+    //       Provider.of<RegistrationProvider>(context, listen: false).email = emailInputController.text;
+    //       Provider.of<RegistrationProvider>(context, listen: false).password = passwordInputController.text;
 
-          //   await _api!.getCurrentAccount();
-          // });
+    //       Map<String, dynamic> result = await _api!.query(email: emailInputController.text);
 
-          Map<String, dynamic> result = await _api!.query(email: emailInputController.text);
+    //       Provider.of<HomeProvider>(context, listen: false).setWallet = result['accountId'];//_api!.accountM.address!;
+    //       _api!.accountM.address = result['accountId'];//_api!.accountM.address!;
+    //       print(_api!.accountM.address);
+    //       Provider.of<HomeProvider>(context, listen: false).homeModel.email = emailInputController.text;//_api!.accountM.address!;
+    //       await _api!.encryptData(context: context);
+    //       await StorageServices.storeData(true, DbKey.login);
 
-          Provider.of<HomeProvider>(context, listen: false).setWallet = result['accountId'];//_api!.accountM.address!;
-          _api!.accountM.address = result['accountId'];//_api!.accountM.address!;
-          print(_api!.accountM.address);
-          Provider.of<HomeProvider>(context, listen: false).homeModel.email = emailInputController.text;//_api!.accountM.address!;
-          await _api!.encryptData(context: context);
-          await StorageServices.storeData(true, DbKey.login);
+    //       Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => DashboardPage()), (route) => false);
+ 
+    //     } else {
+    //       Navigator.pop(context);
+    //       await MyDialog().customDialog(context, "Message", "${value['message']}");
+    //     }
+    //   });
 
-          Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => DashboardPage()), (route) => false);
-
-          // return showModalBottomSheet(
-          //     useRootNavigator: true,
-          //     isScrollControlled: true,
-          //     context: context,
-          //     clipBehavior: Clip.antiAlias,
-          //     shape: const RoundedRectangleBorder(
-          //       borderRadius:
-          //           BorderRadius.vertical(
-          //         top: Radius.circular(24),
-          //       ),
-          //     ),
-          //     builder: (context) {
-          //       return StatefulBuilder(builder:
-          //           (context, setModalState) {
-          //         return  SizedBox(
-          //           height: MediaQuery.of(context).size.height -200,
-          //           child: OTPVerifyPage()
-          //         );
-          //       });
-          //     }
-          //   );
-          // Navigator.push(context, MaterialPageRoute(builder: (context) => SetupPage())); 
-        } else {
-          Navigator.pop(context);
-          await MyDialog().customDialog(context, "Message", "${value['message']}");
-        }
-      });
-
-    } catch (e) {
-      debugPrint("Error submitSignUp $e");
-      // Navigator.pop(context);
-    }
+    // } catch (e) {
+    //   debugPrint("Error submitSignUp $e");
+    //   // Navigator.pop(context);
+    // }
   }
 
   @override

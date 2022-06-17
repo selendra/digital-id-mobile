@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:student_id/all_export.dart';
+import 'package:digital_id/all_export.dart';
 
 class StoragesPageBody extends StatelessWidget {
   const StoragesPageBody({ Key? key }) : super(key: key);

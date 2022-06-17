@@ -2,11 +2,11 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:student_id/all_export.dart';
+import 'package:digital_id/all_export.dart';
 // import 'package:bip39/bip39.dart' as bip39;
 import 'package:mnemonic/mnemonic.dart';
-import 'package:student_id/provider/api_provider.dart';
-import 'package:student_id/provider/registration_p.dart';
+import 'package:digital_id/provider/api_provider.dart';
+import 'package:digital_id/provider/registration_p.dart';
 
 class CreateWalletPage extends StatefulWidget {
   const CreateWalletPage({Key? key}) : super(key: key);

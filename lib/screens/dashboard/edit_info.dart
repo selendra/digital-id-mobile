@@ -1,6 +1,6 @@
-import 'package:student_id/all_export.dart';
-import 'package:student_id/components/text_c.dart';
-import 'package:student_id/models/dashboard_m.dart';
+import 'package:digital_id/all_export.dart';
+import 'package:digital_id/components/text_c.dart';
+import 'package:digital_id/models/dashboard_m.dart';
 
 class Info extends StatefulWidget{
 

@@ -1,13 +1,13 @@
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-import 'package:student_id/all_export.dart';
-import 'package:student_id/components/alert_dialog_c.dart';
-import 'package:student_id/core/config/app_config.dart';
-import 'package:student_id/models/digital_id_m.dart';
-import 'package:student_id/provider/digital_id_p.dart';
-import 'package:student_id/provider/home_p.dart';
-import 'package:student_id/screens/digital_id/selfie/body_selfie.dart';
-import 'package:student_id/services/storage.dart';
+import 'package:digital_id/all_export.dart';
+import 'package:digital_id/components/alert_dialog_c.dart';
+import 'package:digital_id/core/config/app_config.dart';
+import 'package:digital_id/models/digital_id_m.dart';
+import 'package:digital_id/provider/digital_id_p.dart';
+import 'package:digital_id/provider/home_p.dart';
+import 'package:digital_id/screens/digital_id/selfie/body_selfie.dart';
+import 'package:digital_id/services/storage.dart';
 
 class SelfieSide extends StatefulWidget {
   const SelfieSide({ Key? key}) : super(key: key);

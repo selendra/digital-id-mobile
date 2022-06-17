@@ -1,12 +1,14 @@
 import 'package:flutter/services.dart';
+import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:responsive_framework/responsive_framework.dart';
-import 'package:student_id/all_export.dart';
+import 'package:digital_id/all_export.dart';
 import 'package:provider/provider.dart';
-import 'package:student_id/components/walletConnect_c.dart';
-import 'package:student_id/provider/api_provider.dart';
-import 'package:student_id/provider/home_p.dart';
-import 'package:student_id/provider/digital_id_p.dart';
-import 'package:student_id/provider/registration_p.dart';
+import 'package:digital_id/components/walletConnect_c.dart';
+import 'package:digital_id/provider/api_provider.dart';
+import 'package:digital_id/provider/graphql_p.dart';
+import 'package:digital_id/provider/home_p.dart';
+import 'package:digital_id/provider/digital_id_p.dart';
+import 'package:digital_id/provider/registration_p.dart';
 
 import 'screens/digital_id/lading.dart';
 import 'shared/bg_shared.dart';
@@ -32,6 +34,9 @@ void main() {
         ),
         ChangeNotifierProvider<HomeProvider>(
           create: (context) => HomeProvider(),
+        ),
+        ChangeNotifierProvider<GraphQLConfiguration>(
+          create: (context) => GraphQLConfiguration(),
         ),
       ],
       child: const MyApp()

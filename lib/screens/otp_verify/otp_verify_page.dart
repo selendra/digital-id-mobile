@@ -2,14 +2,14 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:student_id/all_export.dart';
-import 'package:student_id/components/alert_dialog_c.dart';
-import 'package:student_id/core/config/app_config.dart';
-import 'package:student_id/provider/api_provider.dart';
-import 'package:student_id/provider/home_p.dart';
-import 'package:student_id/provider/registration_p.dart';
-import 'package:student_id/screens/otp_verify/body_otp_verify_page.dart';
-import 'package:student_id/services/storage.dart';
+import 'package:digital_id/all_export.dart';
+import 'package:digital_id/components/alert_dialog_c.dart';
+import 'package:digital_id/core/config/app_config.dart';
+import 'package:digital_id/provider/api_provider.dart';
+import 'package:digital_id/provider/home_p.dart';
+import 'package:digital_id/provider/registration_p.dart';
+import 'package:digital_id/screens/otp_verify/body_otp_verify_page.dart';
+import 'package:digital_id/services/storage.dart';
 import 'package:encrypt/encrypt.dart';
 
 import '../../widgets/build_line_top.dart';

@@ -1,7 +1,7 @@
-import 'package:student_id/all_export.dart';
-import 'package:student_id/components/text_c.dart';
-import 'package:student_id/core/config/app_config.dart';
-import 'package:student_id/theme/theme.dart';
+import 'package:digital_id/all_export.dart';
+import 'package:digital_id/components/text_c.dart';
+import 'package:digital_id/core/config/app_config.dart';
+import 'package:digital_id/theme/theme.dart';
 
 import '../screens/digital_id/build_dot_indecator.dart';
 

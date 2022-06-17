@@ -1,4 +1,4 @@
-package com.example.student_id
+package com.example.digital_id
 
 import io.flutter.embedding.android.FlutterActivity
 

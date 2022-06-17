@@ -21,7 +21,6 @@ class DigitalIDModel {
       backImage!,
       selfieImage!,
     ];
-    print("lsIDCard lsIDCard $lsIDCard");
     return this; 
   }
 

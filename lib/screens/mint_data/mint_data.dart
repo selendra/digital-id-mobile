@@ -1,7 +1,7 @@
 import 'package:provider/provider.dart';
-import 'package:student_id/all_export.dart';
-import 'package:student_id/provider/api_provider.dart';
-import 'package:student_id/screens/mint_data/body_mint_data.dart';
+import 'package:digital_id/all_export.dart';
+import 'package:digital_id/provider/api_provider.dart';
+import 'package:digital_id/screens/mint_data/body_mint_data.dart';
 
 class MintData extends StatefulWidget {
   const MintData({ Key? key }) : super(key: key);

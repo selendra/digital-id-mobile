@@ -1,5 +1,4 @@
-import 'package:student_id/all_export.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:digital_id/all_export.dart';
 class MyText extends StatelessWidget{
 
   final String? text; 

@@ -1,11 +1,11 @@
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
-import 'package:student_id/all_export.dart';
-import 'package:student_id/components/camera_c.dart';
-import 'package:student_id/components/components_c.dart';
-import 'package:student_id/models/digital_id_m.dart';
-import 'package:student_id/provider/digital_id_p.dart';
-import 'package:student_id/screens/digital_id/front_side/body_front_side.dart';
+import 'package:digital_id/all_export.dart';
+import 'package:digital_id/components/camera_c.dart';
+import 'package:digital_id/components/components_c.dart';
+import 'package:digital_id/models/digital_id_m.dart';
+import 'package:digital_id/provider/digital_id_p.dart';
+import 'package:digital_id/screens/digital_id/front_side/body_front_side.dart';
 
 class FrontSide extends StatefulWidget {
 

@@ -1,12 +1,12 @@
 import 'package:provider/provider.dart';
-import 'package:student_id/all_export.dart';
-import 'package:student_id/components/alert_dialog_c.dart';
-import 'package:student_id/components/walletConnect_c.dart';
-import 'package:student_id/core/backend.dart';
-import 'package:student_id/provider/api_provider.dart';
-import 'package:student_id/provider/registration_p.dart';
-import 'package:student_id/screens/otp_verify/otp_verify_page.dart';
-import 'package:student_id/screens/registration/scan_connect/body_scan_page.dart';
+import 'package:digital_id/all_export.dart';
+import 'package:digital_id/components/alert_dialog_c.dart';
+import 'package:digital_id/components/walletConnect_c.dart';
+import 'package:digital_id/core/backend.dart';
+import 'package:digital_id/provider/api_provider.dart';
+import 'package:digital_id/provider/registration_p.dart';
+import 'package:digital_id/screens/otp_verify/otp_verify_page.dart';
+import 'package:digital_id/screens/registration/scan_connect/body_scan_page.dart';
 
 
 class ScanConnect extends StatefulWidget {

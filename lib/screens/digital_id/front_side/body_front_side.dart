@@ -1,15 +1,15 @@
 import 'dart:io';
 
 import 'package:image_picker/image_picker.dart';
-import 'package:student_id/all_export.dart';
-import 'package:student_id/components/camera_c.dart';
-import 'package:student_id/components/text_c.dart';
-import 'package:student_id/core/config/app_config.dart';
-import 'package:student_id/main.dart';
-import 'package:student_id/models/digital_id_m.dart';
-import 'package:student_id/screens/digital_id/back_side/back_side.dart';
-import 'package:student_id/screens/digital_id/selfie/selfie.dart';
-import 'package:student_id/services/services_s.dart';
+import 'package:digital_id/all_export.dart';
+import 'package:digital_id/components/camera_c.dart';
+import 'package:digital_id/components/text_c.dart';
+import 'package:digital_id/core/config/app_config.dart';
+import 'package:digital_id/main.dart';
+import 'package:digital_id/models/digital_id_m.dart';
+import 'package:digital_id/screens/digital_id/back_side/back_side.dart';
+import 'package:digital_id/screens/digital_id/selfie/selfie.dart';
+import 'package:digital_id/services/services_s.dart';
 
 import '../build_dot_indecator.dart';
 

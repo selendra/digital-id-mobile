@@ -1,4 +1,4 @@
-name: student_id
+name: digital_id
 description: A new Flutter project.
 
 # The following line prevents the package from being accidentally published to
@@ -37,16 +37,16 @@ dependencies:
   connectivity:
   connectivity_wrapper:
   qr_flutter:
-  image_picker: 
+  image_picker:
   camera:
   hexcolor:
-  provider: 
+  provider:
   flutter_launcher_icons:
   path_provider:
   path:
   qr_code_scanner:
 
-  shared_preferences: 
+  shared_preferences:
   mnemonic:
   wallet_connect:
   walletconnect_dart:
@@ -56,7 +56,7 @@ dependencies:
 
   # Apply glass for ui
   glassmorphism:
-  google_fonts: 
+  google_fonts:
   cupertino_stepper:
   flutter_share:
   carousel_slider:
@@ -65,24 +65,31 @@ dependencies:
   motion_toast:
   basic_utils:
   page_transition:
-  
+  graphql_flutter:
+  jwt_decode:
+  # flutter pub global activate rename
+  # flutter pub global run rename --bundleId com.onatcipli.networkUpp
+  # flutter pub global run rename --appname "Network Upp"
+  rename:
+
 dependency_overrides:
   encrypt:
-    # git:
-    #   url: https://github.com/polkawallet-io/ui.git
-    #   ref: 485a9cde97f2446d74a1aeb6d8d63e33683461a5
-    
+  # git:
+  #   url: https://github.com/polkawallet-io/ui.git
+  #   ref: 485a9cde97f2446d74a1aeb6d8d63e33683461a5
+
   polkawallet_sdk: 0.4.2
   flutter_svg:
   charts_flutter:
-     git:
-       url: https://github.com/google/charts
-       path: charts_flutter
+    git:
+      url: https://github.com/google/charts
+      path: charts_flutter
   permission_handler: ^8.3.0
-  # get_storage:
+  get_storage: 2.0.2
+  get: 4.6.1
   # flutter_aes_ecb_pkcs5
   flutter_native_splash: ^2.0.4
-  responsive_framework: ^0.1.7
+  responsive_framework: 0.1.7
   share: ^2.0.4
   step_progress_indicator: ^1.0.2
 

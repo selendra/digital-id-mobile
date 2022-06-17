@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:student_id/all_export.dart';
+import 'package:digital_id/all_export.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:student_id/core/config/app_config.dart';
+import 'package:digital_id/core/config/app_config.dart';
 class Navbar extends StatefulWidget {
   const Navbar({Key? key}) : super(key: key);
 

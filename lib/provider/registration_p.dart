@@ -1,4 +1,4 @@
-import 'package:student_id/all_export.dart';
+import 'package:digital_id/all_export.dart';
 
 class RegistrationProvider with ChangeNotifier{
 

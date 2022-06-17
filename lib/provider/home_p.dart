@@ -1,8 +1,6 @@
 import 'package:provider/provider.dart';
-import 'package:student_id/all_export.dart';
-import 'package:motion_toast/resources/arrays.dart';
+import 'package:digital_id/all_export.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
-import 'package:motion_toast/motion_toast.dart';
 class HomeProvider with ChangeNotifier{
 
   DashBoardModel homeModel = DashBoardModel();
