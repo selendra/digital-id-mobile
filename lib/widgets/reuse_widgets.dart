@@ -505,6 +505,7 @@ void createIDBottomSheet(BuildContext context) {
             borderRadius: const BorderRadius.only(topLeft: Radius.circular(20), topRight: Radius.circular(20)),
           ),
           child: Column(
+            mainAxisSize: MainAxisSize.min,
             children: <Widget>[
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -539,7 +540,7 @@ void createIDBottomSheet(BuildContext context) {
                         children: [
                           CircleAvatar(
                             backgroundColor: secondaryColor,
-                            radius: 25,
+                            radius: 20,
                             child: Icon(Iconsax.add_circle, color: whiteColor)
                           ),
       
@@ -563,7 +564,7 @@ void createIDBottomSheet(BuildContext context) {
                         children: [
                           CircleAvatar(
                             backgroundColor: secondaryColor,
-                            radius: 25,
+                            radius: 20,
                             child: Icon(Iconsax.document_upload, color: whiteColor)
                           ),
                           
@@ -579,6 +580,8 @@ void createIDBottomSheet(BuildContext context) {
                   ),
                 ],
               ),
+
+              const SizedBox(height: 20),
             ],
           ),
         ),
