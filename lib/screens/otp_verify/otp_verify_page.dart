@@ -74,7 +74,7 @@ class _OTPVerifyPageState extends State<OTPVerifyPage> {
 
           // Auto Generate Account After Verify
           
-          Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => DashboardPage()), (route) => false);
+          Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => Home()), (route) => false);
           // Navigator.push(context, MaterialPageRoute(builder: (context) => const SetupPage()));
         } else {
           await MyDialog().customDialog(context, "Oops", "Incorrect code");

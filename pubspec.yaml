@@ -44,7 +44,7 @@ dependencies:
   flutter_launcher_icons:
   path_provider:
   path:
-  qr_code_scanner:
+  qr_code_scanner: ^1.0.0
 
   shared_preferences:
   mnemonic:
@@ -99,7 +99,7 @@ flutter_icons:
   image_path: "assets/logos/id_card.jpeg"
 
 dev_dependencies:
-  flutter_lints: ^1.0.0
+  flutter_lints: ^2.0.1
   flutter_test:
     sdk: flutter
 

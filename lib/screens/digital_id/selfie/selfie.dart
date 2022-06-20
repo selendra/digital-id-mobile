@@ -56,7 +56,7 @@ class _IdentifierState extends State<SelfieSide> {
 
       Navigator.pushAndRemoveUntil(
         context, 
-        MaterialPageRoute(builder: (context) => DashboardPage()), 
+        MaterialPageRoute(builder: (context) => Home()), 
         (route) => false
       );
     });

@@ -23,7 +23,7 @@ class _AccountState extends State<Account> {
   @override
   initState(){
     checkSession();
-    initDigitalId();
+    // initDigitalId();
     initBlockchainData();
     super.initState();
   }

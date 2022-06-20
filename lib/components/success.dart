@@ -73,7 +73,7 @@ class SuccessSubmit extends StatelessWidget{
                         await method!();
                       } else {
 
-                        Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => DashboardPage()), (route) => false);
+                        Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => Home()), (route) => false);
                       }
                     },
                   ),

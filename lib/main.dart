@@ -60,7 +60,7 @@ class _MyAppState extends State<MyApp> {
   
   @override
   initState(){
-    initApiProvider();
+    // initApiProvider();
     WalletConnectComponent _wConnectC = WalletConnectComponent();
     _wConnectC.setBuildContext = context;
     super.initState();
@@ -131,7 +131,7 @@ class _MyAppState extends State<MyApp> {
           const ResponsiveBreakpoint.autoScale(2460, name: "4K"),
         ],
       ),
-      home: LoginPage(),
+      home: Home(),
       //LoginPage(),//CreateWalletPage(),
       onGenerateRoute: RouteGenerator.generateRoute,
       initialRoute: loginRoute,

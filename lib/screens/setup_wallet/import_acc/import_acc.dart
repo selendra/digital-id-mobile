@@ -58,7 +58,7 @@ class _ImportAccountState extends State<ImportAccount> {
         
         // Navigator.pushNamedAndRemoveUntil(context, navbarRoute, (route) => false);
         await StorageServices.storeData(true, DbKey.login);
-        Navigator.push(context, MaterialPageRoute(builder: (context) => DashboardPage()));
+        Navigator.push(context, MaterialPageRoute(builder: (context) => Home()));
       });
     } catch (e){
       print("Error submitSeed $e");

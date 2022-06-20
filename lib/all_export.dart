@@ -8,7 +8,7 @@ export 'package:digital_id/widgets/reuse_widgets.dart';
 
 export 'package:hexcolor/hexcolor.dart';
 
-export 'package:digital_id/screens/dashboard/dashbaord_page.dart';
+export 'package:digital_id/screens/home/home.dart';
 
 export 'package:digital_id/widgets/constants.dart';
 

@@ -9,7 +9,7 @@ import 'package:digital_id/main.dart';
 import 'package:digital_id/models/asset_list_m.dart';
 import 'package:digital_id/models/dashboard_m.dart';
 import 'package:digital_id/provider/digital_id_p.dart';
-import 'package:digital_id/screens/dashboard/edit_info.dart';
+import 'package:digital_id/screens/home/edit_info.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter/services.dart';
 import 'package:digital_id/all_export.dart';

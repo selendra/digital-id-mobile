@@ -52,11 +52,11 @@ class _LoginPageState extends State<LoginPage> {
 
   void isLogin() async {
 
-    await StorageServices.fetchData(DbKey.login).then((value) {
-      print("Login $value");
-      if (value != null) Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => DashboardPage()), (route) => false);
-      // if (value != null) Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => const Identifier(title: "",)), (route) => false);
-    });
+    // await StorageServices.fetchData(DbKey.login).then((value) {
+    //   print("Login $value");
+    //   if (value != null) Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => DashboardPage()), (route) => false);
+    //   // if (value != null) Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => const Identifier(title: "",)), (route) => false);
+    // });
 
     // Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => const ImportAccount()), (route) => false);
     // await Future.delayed(Duration(seconds: 1), (){});

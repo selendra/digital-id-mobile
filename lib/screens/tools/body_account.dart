@@ -32,11 +32,11 @@ class AccountBody extends StatelessWidget {
         return Scaffold(
           appBar: AppBar(
             leading: IconButton(
-                onPressed: (){
-                  Navigator.pop(context);
-                }, 
-                icon: Icon(Icons.arrow_back, color: Colors.black)
-              ),
+              onPressed: (){
+                Navigator.pop(context);
+              }, 
+              icon: Icon(Icons.arrow_back, color: Colors.black)
+            ),
             backgroundColor: Colors.transparent,
             shadowColor: Colors.transparent,
             actions: [

@@ -81,7 +81,7 @@ class ApiProvider with ChangeNotifier {
       await rootBundle.loadString('lib/core/js_api/dist/main.js').then((String js) {
         _jsCode = js;
       });
-      await _keyring.init([42]);
+      await _keyring.init([0, 42]);
       print("finish init keyring");
       await _sdk.init(_keyring, jsCode: _jsCode);
       print("finish init sdk");
