@@ -16,6 +16,7 @@ export 'package:digital_id/screens/account/account_page.dart';
 export 'package:digital_id/screens/account/account_page_body.dart';
 
 export 'package:digital_id/widgets/components.dart';
+export 'package:digital_id/components/text_c.dart';
 
 export 'package:digital_id/screens/cryptos/cryptos_page.dart';
 export 'package:digital_id/screens/cryptos/cryptos_page_body.dart';
@@ -40,6 +41,10 @@ export 'package:digital_id/screens/setup_wallet/verify_seed/body_verify_seed.dar
 export 'package:digital_id/screens/digital_id/digital_id_option.dart';
 
 export 'package:digital_id/theme/theme.dart';
+
+export 'package:iconsax/iconsax.dart';
+
+export 'package:digital_id/components/nested_scroll_view_custom.dart';
 
 /// Model
 /// 

@@ -202,7 +202,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
         onTab: onTab,
         tabController: _tabController,
         edit: edit, 
-        pickImage: pickImage, 
+        // pickImage: pickImage, 
         submitEdit: submitEdit,
         scaffoldKey: globalKey,
       )

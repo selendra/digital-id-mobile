@@ -23,6 +23,7 @@ class SelfieSideBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: primaryColor,
       appBar: appbarCustom("Selfie With Front Side", context, centerTitle: true),  
       body: Stack(
         children: [
@@ -90,6 +91,7 @@ class SelfieSideBody extends StatelessWidget {
                   top: paddingSize,
                   bottom: paddingSize,
                   width: 311,
+                  color: AppColors.whiteColor,
                   fontWeight: FontWeight.bold,
                   text: "Position your document inside the frame. Make sure that all the data is clearly visible."
                 ),
@@ -97,9 +99,20 @@ class SelfieSideBody extends StatelessWidget {
                 Padding(
                   padding: EdgeInsets.all(paddingSize),
                   child: TextButton(
-                    child: MyText(
-                      fontWeight: FontWeight.bold,
-                      text: "Take a selfie"
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Icon(Iconsax.camera, color: whiteColor),
+
+                        SizedBox(width: 5),
+
+                        MyText(
+                          fontWeight: FontWeight.bold,
+                          text: "Take a selfie",
+                          color: AppColors.whiteColor,
+                        ),
+                      ],
                     ),
                     onPressed: () async {
                       try {
@@ -133,10 +146,20 @@ class SelfieSideBody extends StatelessWidget {
               style: ButtonStyle(
                 shape: MaterialStateProperty.all(
                   RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(50)),
+                      borderRadius: BorderRadius.circular(20)),
                 ),
               ),
-              onPressed: model!.selfieImage == '' ? null : () async {
+              // onPressed: model!.selfieImage == '' ? null : () async {
+              //   // MaterialPageRoute(builder: (context) => SuccessSubmit(method: () async {await submit!();},))
+              //   Navigator.push(
+              //     context, 
+              //     PageTransition(
+              //       type: PageTransitionType.rightToLeft,
+              //       child: SuccessSubmit(method: () async {await submit!();},)
+              //     )
+              //   );
+              // }, 
+              onPressed: () async {
                 // MaterialPageRoute(builder: (context) => SuccessSubmit(method: () async {await submit!();},))
                 Navigator.push(
                   context, 

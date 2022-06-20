@@ -9,21 +9,22 @@ class CryptosPageBody extends StatelessWidget {
     return Scaffold(
       backgroundColor: whiteColor,
       body: SafeArea(
-        child: SingleChildScrollView(
-          physics: const AlwaysScrollableScrollPhysics(),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              profileWidget(context, pickImage: (){}, model: DashBoardModel()),
-              const DashboardOptions(),
-              titleDashboard('Cryptos Assets', context),
-              const CryptosAssetInfo(),
-              AddButton(
-                text: 'Add Asset',
-                onPressed: () {}
-              ),
-            ],
+        child: MyNestedScrollView(
+          body: SingleChildScrollView(
+            physics: const AlwaysScrollableScrollPhysics(),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                const DashboardOptions(),
+                titleDashboard('Cryptos Assets', context),
+                const CryptosAssetInfo(),
+                AddButton(
+                  text: 'Add Asset',
+                  onPressed: () {}
+                ),
+              ],
+            ),
           ),
         ),
       ),

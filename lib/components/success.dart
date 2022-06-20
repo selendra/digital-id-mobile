@@ -12,8 +12,10 @@ class SuccessSubmit extends StatelessWidget{
 
   SuccessSubmit({this.method, this.isIndicator = true});
 
+  @override
   Widget build(BuildContext context){
     return Scaffold(
+      backgroundColor: primaryColor,
       body: SafeArea(
         child: Container(
           height: MediaQuery.of(context).size.height,
@@ -29,6 +31,7 @@ class SuccessSubmit extends StatelessWidget{
                     top: paddingSize,
                     bottom: paddingSize,
                     text: "Success",
+                    color: AppColors.whiteColor,
                     fontSize: 26,
                     fontWeight: FontWeight.bold,
                   ),
@@ -39,6 +42,7 @@ class SuccessSubmit extends StatelessWidget{
                     left: paddingSize*2,
                     right: paddingSize*2,
                     text: "The entered recovery seeds is valid and matches the one in devices.",
+                    color: AppColors.whiteColor,
                     fontSize: 15,
                     fontWeight: FontWeight.bold,
                   ),
@@ -55,12 +59,12 @@ class SuccessSubmit extends StatelessWidget{
                   child: ElevatedButton(
                     style: ButtonStyle(
                       shape: MaterialStateProperty.all(
-                        RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)),
+                        RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
                       ),
                     ),
                     child: Container(
                     height: btnHeight,
-                    padding: EdgeInsets.symmetric(horizontal: paddingSize, vertical: paddingSize),
+                    padding: EdgeInsets.symmetric(horizontal: paddingSize, vertical: 15),
                     width: MediaQuery.of(context).size.width,
                     child: MyText(
                         text: 'Finish',

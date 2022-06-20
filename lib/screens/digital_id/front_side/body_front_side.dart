@@ -24,6 +24,7 @@ class FrontSideBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: primaryColor,
       appBar: appbarCustom("Front Side", context, centerTitle: true),
       body: Stack(
         children: [
@@ -99,6 +100,7 @@ class FrontSideBody extends StatelessWidget {
                 top: paddingSize,
                 bottom: paddingSize,
                 width: 311,
+                color: AppColors.whiteColor,
                 fontWeight: FontWeight.bold,
                 text: "Position your document inside the frame. Make sure that all the data is clearly visible."
               ),
@@ -132,8 +134,11 @@ class FrontSideBody extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            Icon(Icons.camera),
-                            MyText(text: "Take a photo")
+                            Icon(Iconsax.camera, color: whiteColor),
+
+                            SizedBox(width: 5),
+
+                            MyText(text: "Take a photo", color: AppColors.whiteColor),
                           ],
                         )
                       ),
@@ -162,8 +167,11 @@ class FrontSideBody extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              Icon(Icons.upload),
-                              MyText(text: "Upload image")
+                              Icon(Iconsax.document_upload, color: whiteColor),
+
+                              SizedBox(width: 5),
+
+                              MyText(text: "Upload image" , color: AppColors.whiteColor)
                             ],
                           )),
                     ),
@@ -181,10 +189,19 @@ class FrontSideBody extends StatelessWidget {
               style: ButtonStyle(
                 shape: MaterialStateProperty.all(
                   RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(50)),
+                      borderRadius: BorderRadius.circular(20)),
                 ),
               ),
-              onPressed: model!.frontImage == '' ? null : () {
+              // onPressed: model!.frontImage == '' ? null : () {
+              //   Navigator.push(
+              //     context, 
+              //     PageTransition(
+              //       type: PageTransitionType.rightToLeft,
+              //       child: BackSide()
+              //     )
+              //   );
+              // },
+              onPressed: () {
                 Navigator.push(
                   context, 
                   PageTransition(

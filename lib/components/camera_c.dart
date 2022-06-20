@@ -28,7 +28,7 @@ class _CameraAppState extends State<CameraApp> with WidgetsBindingObserver {
     ]);
     initCamera();
     super.initState();
-    WidgetsBinding.instance!.addObserver(this);
+    WidgetsBinding.instance.addObserver(this);
   }
 
   // @override
@@ -66,7 +66,7 @@ class _CameraAppState extends State<CameraApp> with WidgetsBindingObserver {
   @override
   void dispose() {
     SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
-    WidgetsBinding.instance!.removeObserver(this);
+    WidgetsBinding.instance.removeObserver(this);
     _controller.dispose();
     super.dispose();
   }

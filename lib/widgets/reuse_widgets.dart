@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -475,15 +476,113 @@ PreferredSizeWidget appbarCustom(String title, BuildContext context, {bool? cent
     centerTitle: centerTitle,
     title: Text(
       title,
-      style: const TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+      style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
     ),
     backgroundColor: Colors.transparent,
     elevation: 0,
     leading: IconButton(
-      icon: const Icon(Icons.arrow_back_ios_new,color: Colors.black,),
+      icon: const Icon(Iconsax.arrow_left_2 ,color: Colors.white,),
       onPressed: (){
         Navigator.pop(context);
       },
     ),
+  );
+}
+
+void createIDBottomSheet(BuildContext context) {
+  showModalBottomSheet(
+    backgroundColor: Colors.transparent,
+    shape: const RoundedRectangleBorder(
+      borderRadius: BorderRadius.only(topLeft: Radius.circular(25), topRight: Radius.circular(25)),
+    ),
+    context: context,
+    builder: (BuildContext context) {
+      return BackdropFilter(
+        filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+        child: Container(
+          decoration: BoxDecoration(
+            color: primaryColor,
+            borderRadius: const BorderRadius.only(topLeft: Radius.circular(20), topRight: Radius.circular(20)),
+          ),
+          child: Column(
+            children: <Widget>[
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(20),
+                    child: MyText(
+                      text: "Create",
+                      color: '#FFFFFF',
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold
+                    ),
+                  ),
+      
+                  IconButton(
+                    icon: Icon(Iconsax.close_circle, color: whiteColor,),
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                  ),
+                ],
+              ),
+              Column(
+                children: [
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: paddingSize, vertical: 10),
+                    child: GestureDetector(
+                      onTap: () async {
+                        
+                      },
+                      child: Row(
+                        children: [
+                          CircleAvatar(
+                            backgroundColor: secondaryColor,
+                            radius: 25,
+                            child: Icon(Iconsax.add_circle, color: whiteColor)
+                          ),
+      
+                          const SizedBox(width: 10),
+                          
+                          MyText(
+                            text: "New ID",
+                            color: "#FFFFFF"
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: paddingSize, vertical: 10),
+                    child: GestureDetector(
+                      onTap: () async {
+      
+                      },
+                      child: Row(
+                        children: [
+                          CircleAvatar(
+                            backgroundColor: secondaryColor,
+                            radius: 25,
+                            child: Icon(Iconsax.document_upload, color: whiteColor)
+                          ),
+                          
+                          const SizedBox(width: 10),
+      
+                          MyText(
+                            text: "Import ID",
+                            color: '#FFFFFF'
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+      );
+    }
   );
 }

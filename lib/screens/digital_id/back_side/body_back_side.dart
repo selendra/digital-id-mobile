@@ -23,6 +23,7 @@ class BackSideBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: primaryColor,
       appBar: appbarCustom("Back Side", context, centerTitle: true),
       body: Stack(
         children: [
@@ -95,6 +96,7 @@ class BackSideBody extends StatelessWidget {
                 top: paddingSize,
                 bottom: paddingSize,
                 width: 311,
+                color: AppColors.whiteColor,
                 fontWeight: FontWeight.bold,
                 text: "Position your document inside the frame. Make sure that all the data is clearly visible."
               ),
@@ -115,7 +117,7 @@ class BackSideBody extends StatelessWidget {
                                 builder: (context) => CameraApp()
                               )
                             );
-                            if (model!.backImage == '') {
+                            if (model!.frontImage == '') {
                               await pickImage!(img.path, 'front');
                             } else {
                               await pickImage!(img.path, 'back');
@@ -128,8 +130,11 @@ class BackSideBody extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            Icon(Icons.camera),
-                            MyText(text: "Take a photo")
+                            Icon(Iconsax.camera, color: whiteColor),
+
+                            SizedBox(width: 5),
+
+                            MyText(text: "Take a photo", color: AppColors.whiteColor),
                           ],
                         )
                       ),
@@ -147,7 +152,7 @@ class BackSideBody extends StatelessWidget {
                               // }
                               
                               final pickedFile = await Services.pickImage(ImageSource.gallery);
-                              if (model!.backImage == '') {
+                              if (model!.frontImage == '') {
                                 await pickImage!(pickedFile.path, 'front');
                               } else {
                                 await pickImage!(pickedFile.path, 'back');
@@ -158,8 +163,11 @@ class BackSideBody extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              Icon(Icons.upload),
-                              MyText(text: "Upload image")
+                              Icon(Iconsax.document_upload, color: whiteColor),
+
+                              SizedBox(width: 5),
+
+                              MyText(text: "Upload image" , color: AppColors.whiteColor)
                             ],
                           )),
                     ),
@@ -177,10 +185,24 @@ class BackSideBody extends StatelessWidget {
               style: ButtonStyle(
                 shape: MaterialStateProperty.all(
                   RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(50)),
+                      borderRadius: BorderRadius.circular(20)),
                 ),
               ),
-                onPressed:  model!.backImage == '' ? null : () {
+                // onPressed:  model!.backImage == '' ? null : () {
+                //   Navigator.push(
+                //     context, 
+                //     PageTransition(
+                //       type: PageTransitionType.rightToLeft,
+                //       child: SelfieSide()
+                //     )
+                //   );
+                //   // Navigator.push(
+                //   //     context,
+                //   //     MaterialPageRoute(
+                //   //         builder: (context) => SelfieSide())
+                //   //           );
+                // },
+                onPressed: () {
                   Navigator.push(
                     context, 
                     PageTransition(

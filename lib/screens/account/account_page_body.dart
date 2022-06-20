@@ -9,15 +9,16 @@ class AccountPageBody extends StatelessWidget {
     return Scaffold(
       backgroundColor: whiteColor,
       body: SafeArea(
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              profileWidget(context, pickImage: (){}, model: DashBoardModel()),
-              const DashboardOptions(),
-              const LinkedAccountInfo()
-            ],
+        child: MyNestedScrollView(
+          body: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: const [
+                DashboardOptions(),
+                LinkedAccountInfo()
+              ],
+            ),
           ),
         ),
       ),
