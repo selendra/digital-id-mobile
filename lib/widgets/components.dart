@@ -590,7 +590,7 @@ class CustomButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const double borderRadius = 50;
+    const double borderRadius = 20;
 
     return Padding(
       padding: edgePadding ?? EdgeInsets.zero,
@@ -646,11 +646,11 @@ class CustomButtonIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const double borderRadius = 50;
+    const double borderRadius = 20;
 
     return SizedBox(
-      width: MediaQuery.of(context).size.width / 4,
-      height: btnHeight - 15,
+      width: MediaQuery.of(context).size.width,
+      height: btnHeight,
       child: DecoratedBox(
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(borderRadius),
@@ -666,14 +666,16 @@ class CustomButtonIcon extends StatelessWidget {
               ),
             onPressed: onPressed,
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                icon!,
+                Expanded(child: Container()),
                 MyText(
                   text: text!,
                   fontWeight: FontWeight.bold,
                   color2: colorText,
                 ),
+                Expanded(child: Container()),
+                icon!,
               ],
             ),
           )),

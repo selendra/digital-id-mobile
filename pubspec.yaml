@@ -27,59 +27,51 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
-  bip39: ^1.0.6
+  basic_utils: 
+  bip39: 
+  camera: 
+  carousel_slider: 
+  connectivity: 
+  connectivity_wrapper: 
   cupertino_icons: ^1.0.2
+  cupertino_stepper: 
+  eth_sig_util: 
+  expansion_tile_card: ^2.0.0
   flutter:
     sdk: flutter
-
-  # The following adds the Cupertino Icons font to your application.
-  # Use with the CupertinoIcons class for iOS style icons.
-  connectivity:
-  connectivity_wrapper:
-  qr_flutter:
-  image_picker:
-  camera:
-  hexcolor:
-  provider:
-  flutter_launcher_icons:
-  path_provider:
-  path:
-  qr_code_scanner:
-
-  shared_preferences:
-  mnemonic:
-  wallet_connect:
-  walletconnect_dart:
-  web3dart:
-  eth_sig_util:
+  flutter_launcher_icons: 
+  flutter_share: 
+  glassmorphism: 
+  google_fonts: 
+  graphql_flutter: 
+  hexcolor: 
+  iconsax: ^0.0.8
+  image_picker: 
+  jwt_decode: 
+  mnemonic: 
+  motion_toast: 
+  page_transition: 
+  path: 
+  path_provider: 
   polkawallet_sdk: 0.4.2
-
-  # Apply glass for ui
-  glassmorphism:
-  google_fonts:
-  cupertino_stepper:
-  flutter_share:
-  carousel_slider:
-  share:
+  provider: 
+  qr_code_scanner: 
+  qr_flutter: 
+  rename: 
+  share: 
+  shared_preferences: 
   socket_io_client: 2.0.0-beta.4-nullsafety.0
-  motion_toast:
-  basic_utils:
-  page_transition:
-  graphql_flutter:
-  jwt_decode:
-  # flutter pub global activate rename
-  # flutter pub global run rename --bundleId com.onatcipli.networkUpp
-  # flutter pub global run rename --appname "Network Upp"
-  rename:
+  wallet_connect: 
+  walletconnect_dart: 
+  web3dart: 
 
 dependency_overrides:
-  encrypt:
+  encrypt: 
   # git:
   #   url: https://github.com/polkawallet-io/ui.git
   #   ref: 485a9cde97f2446d74a1aeb6d8d63e33683461a5
-
   polkawallet_sdk: 0.4.2
-  flutter_svg:
+  flutter_svg: 
   charts_flutter:
     git:
       url: https://github.com/google/charts
@@ -118,8 +110,8 @@ flutter:
     - assets/icons/
     - assets/illustration/
     - assets/images/
-    - lib/core/js_api/
-    - lib/core/js_api/dist/main.js
+    # - lib/core/js_api/
+    # - lib/core/js_api/dist/main.js
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
   # For details regarding adding assets from package dependencies, see
