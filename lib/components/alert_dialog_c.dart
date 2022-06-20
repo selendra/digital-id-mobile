@@ -1,5 +1,5 @@
-import 'package:student_id/all_export.dart';
-import 'package:student_id/components/text_c.dart';
+import 'package:digital_id/all_export.dart';
+import 'package:digital_id/components/text_c.dart';
 
 class MyDialog{
 
@@ -24,7 +24,7 @@ class MyDialog{
         return AlertDialog(
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
           title: Align(
-            child: Text(title, style: TextStyle(fontWeight: FontWeight.w600)),
+            child: Text(title, style: TextStyle(fontWeight: FontWeight.w600), textAlign: TextAlign.center,),
           ),
           content: Padding(
             padding: const EdgeInsets.only(top: 15.0, bottom: 15.0),
@@ -34,7 +34,7 @@ class MyDialog{
             btn2 ?? Container(),
             TextButton(
               onPressed: () => Navigator.pop(context),
-              child: MyText(text: 'Close'),
+              child: MyText(text: 'Close', fontWeight: FontWeight.bold,),
             ),
           ],
         );

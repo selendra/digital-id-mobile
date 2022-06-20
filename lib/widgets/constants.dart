@@ -1,6 +1,6 @@
 import 'package:hexcolor/hexcolor.dart';
 
-HexColor primaryColor = HexColor('#00A9F9');
+HexColor primaryColor = HexColor('#023859');
 
 HexColor greyColor = HexColor('#ADADAD');
 
@@ -13,3 +13,5 @@ HexColor whiteColor = HexColor('#FFFFFF');
 HexColor grey = HexColor('#EDEDED');
 
 HexColor darkGreen = HexColor('#3D6670');
+
+HexColor secondaryColor = HexColor('#035A8F');

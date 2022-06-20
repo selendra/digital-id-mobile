@@ -1,6 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:student_id/all_export.dart';
+import 'package:digital_id/all_export.dart';
 
 class MyNestedScrollView extends StatefulWidget {
   final ScrollController? controller;

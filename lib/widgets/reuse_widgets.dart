@@ -1,12 +1,25 @@
+import 'dart:convert';
 import 'dart:io';
+import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:step_progress_indicator/step_progress_indicator.dart';
-import 'package:student_id/all_export.dart';
-import 'package:student_id/components/components_c.dart';
-import 'package:student_id/components/image_edit_c.dart';
-import 'package:student_id/components/text_c.dart';
-import 'package:student_id/models/dashboard_m.dart';
+import 'package:digital_id/all_export.dart';
+import 'package:digital_id/components/alert_dialog_c.dart';
+import 'package:digital_id/components/components_c.dart';
+import 'package:digital_id/components/image_edit_c.dart';
+import 'package:digital_id/components/qr_scanner/qr_scanner.dart';
+import 'package:digital_id/components/text_c.dart';
+import 'package:digital_id/components/walletConnect_c.dart';
+import 'package:digital_id/models/dashboard_m.dart';
+import 'package:digital_id/models/digital_id_m.dart';
+import 'package:digital_id/provider/api_provider.dart';
+import 'package:digital_id/provider/digital_id_p.dart';
+import 'package:digital_id/provider/home_p.dart';
+import 'package:digital_id/services/storage.dart';
+
+import '../shared/typography.dart';
 
 // =============================== Reuse Widget ===============================
 void showAlertDialog(TextEditingController phraseKey, BuildContext context) {
@@ -52,6 +65,7 @@ void showAlertDialog(TextEditingController phraseKey, BuildContext context) {
               const SizedBox(height: 30),
               SizedBox(
                 width: MediaQuery.of(context).size.width / 3,
+                height: btnHeight,
                 child: DecoratedBox(
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(50),
@@ -71,11 +85,16 @@ void showAlertDialog(TextEditingController phraseKey, BuildContext context) {
                       onPressed: () {
                         Navigator.pop(context);
                       },
-                      child: const Text(
-                        'Submit',
-                        style: TextStyle(color: Colors.white, fontSize: 14),
+                      child: MyText(
+                        alignment: Alignment.center,
+                        width: MediaQuery.of(context).size.width,
+                        height: MediaQuery.of(context).size.height,
+                        text: "Submit",
+                        color2: Colors.white,
+                        fontWeight: FontWeight.bold
                       ),
-                    )),
+                    )
+                  ),
               ),
             ],
           ),
@@ -141,10 +160,14 @@ void qrCodeAlertDialog(BuildContext context) {
                       onPressed: () {
                         Navigator.pop(context);
                       },
-                      child: const Text(
-                        'OK',
-                        style: TextStyle(color: Colors.white, fontSize: 14),
-                      ),
+                      child: MyText(
+                        alignment: Alignment.center,
+                        width: MediaQuery.of(context).size.width,
+                        height: MediaQuery.of(context).size.height,
+                        text: "Submit",
+                        color2: Colors.white,
+                        fontWeight: FontWeight.bold
+                      )
                     )),
               ),
             ],
@@ -159,81 +182,191 @@ Widget selLogo(BuildContext context) {
   return Image.asset('assets/logos/sel.png', width: 100, height: 100);
 }
 
-Widget profileWidget(BuildContext context,
-    {@required DashBoardModel? model, @required Function? pickImage}) {
+Widget profileWidget(BuildContext context, {@required DashBoardModel? model, @required Function? pickImage}) {
   return Stack(
     children: <Widget>[
-      ImageEditComponent(
-        image: model!.cover.contains("https")
-            ? Image.network(
-                model.cover,
-                width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.height / 3,
-                fit: BoxFit.cover,
-              )
-            : Image.file(
-                File(model.cover),
-                width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.height / 3,
-                fit: BoxFit.cover,
-              ),
-        action: () async {
-          print("Cover");
-          await Components().imageOption(
-              context: context, getImage: pickImage, label: "cover");
-        },
+
+      Stack(
+        children: [
+
+          if (model!.cover.contains("https"))
+          Image.network(
+            model.cover,
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height / 3.3,
+            fit: BoxFit.cover,
+          ),
+          if (!model.cover.contains("https") && !model.cover.contains("assets/images")) 
+          Image.file(
+            File(model.cover),
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height / 3.3,
+            fit: BoxFit.cover,
+          ),
+          if (model.cover.contains("assets/images")) 
+          Image.asset(
+            model.cover,
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height / 3.3,
+            fit: BoxFit.cover,
+          ),
+
+          Container(
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height / 3.3,
+            color: Colors.black.withOpacity(0.4),
+          ),
+          
+          if (model.isEditing)
+          InkWell(
+            onTap: () async {
+              await Components().imageOption(context: context, getImage: pickImage, label: "cover");
+            },
+            child: Container(
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height / 3.3,
+              color: Colors.black.withOpacity(0.4),
+              child: MyText(text: "+ Upload image", color2: Colors.white, top: paddingSize*2,),
+            ),
+          )
+        ],
       ),
+      
       SizedBox(
         width: (MediaQuery.of(context).size.width),
-        height: MediaQuery.of(context).size.height / 3,
+        height: MediaQuery.of(context).size.height / 3.3,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
-            ImageEditComponent(
-              image: CircleAvatar(
-                radius: 60,
-                backgroundColor: Colors.white,
-                child: ClipOval(
-                    child: model.profile.contains("https")
+
+            Stack(
+              children: [
+
+                ImageEditComponent(
+                  image: CircleAvatar(
+                    radius: 60,
+                    backgroundColor: Colors.white,
+                    child: ClipOval(
+                      child: model.profile.contains("https")
                         ? Image.network(
-                            model.profile,
-                            height: 110,
-                            width: 110,
-                            fit: BoxFit.cover,
-                          )
+                          model.profile,
+                          height: 110,
+                          width: 110,
+                          fit: BoxFit.cover,
+                        )
                         : Image.file(
-                            File(model.profile),
-                            height: 110,
-                            width: 110,
-                            fit: BoxFit.cover,
-                          )),
-              ),
-              action: () async {
-                await Components().imageOption(
-                    context: context, getImage: pickImage, label: "profile");
-              },
+                          File(model.profile),
+                          height: 110,
+                          width: 110,
+                          fit: BoxFit.cover,
+                        )
+                      ),
+                  ),
+                ),
+                
+                if (model.isEditing)
+                InkWell(
+                  onTap: () async {
+                    await Components().imageOption(context: context, getImage: pickImage, label: "profile");
+                  },
+                  child: CircleAvatar(
+                    radius: 60,
+                    backgroundColor: Colors.black.withOpacity(0.4),
+                    child: ClipOval(
+                      child: Container(
+                        height: 110,
+                        width: 110,
+                        color: Colors.black.withOpacity(0.5),
+                        child: Center(
+                          child: MyText(text: "Upload image", color2: Colors.white),
+                        ),
+                      ),
+                    )
+                  ),
+                )
+              ],
             ),
+
             Container(
               margin: const EdgeInsets.only(top: 10, bottom: 10),
-              child: Text(
-                model.name,
-                style: const TextStyle(
-                  fontSize: 20,
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                ),
+              child: MyText(  
+                text: model.name == '' ? "N/A" : model.name,
+                fontSize: 20,
+                width: 200,
+                color2: Colors.white,
+                fontWeight: FontWeight.bold,
               ),
             )
           ],
         ),
       ),
+
+      // AppBar
+      Positioned(
+        top: 5,
+        left: 5,
+        child: IconButton(
+          constraints: BoxConstraints(
+            minWidth: 200, maxWidth: 300
+          ),
+          iconSize: 40,
+          onPressed: () async {
+
+            Navigator.push(context, MaterialPageRoute(builder: (context) => Account()));
+          }, 
+          icon: Row(
+            children: [
+              
+              Icon(
+                Icons.account_circle_outlined,
+                color: Colors.white,
+                size: 30,
+              ),
+
+              MyText(
+                textAlign: TextAlign.left,
+                left: 10,
+                text: model.name == '' ? "N/A" : model.name,
+                color2: Colors.white,
+              )
+            ]
+          ),
+        )
+      ),
+
+      Positioned(
+        top: 5,
+        right: 5,
+        child: Padding(
+          padding: EdgeInsets.only(right: 5),
+          child: Align(
+            alignment: Alignment.centerRight,
+            child: IconButton(
+              onPressed: () async {
+                String result = await Navigator.push(
+                  context, 
+                  MaterialPageRoute(builder: (context) => QrScanner())
+                );
+
+                print("result $result");
+
+                Provider.of<ApiProvider>(context, listen: false).scanQr(json.decode(result)['id'], context: context);
+                // Provider.of<HomeProvider>(context, listen: false).connectWS(json.decode(result), context: context);
+                // Navigator.push(context, MaterialPageRoute(builder: (context) => CreateWalletPage()));
+              }, 
+              icon: Icon(Icons.qr_code_scanner_outlined, color: Colors.white,)
+            ),
+          ),
+        )
+      )
+
     ],
   );
 }
 
 Widget divider(String title) {
   return Container(
-    color: Colors.white,
+    color: Colors.white.withOpacity(0.5),
     child: Row(children: <Widget>[
       Expanded(
         child: Container(
@@ -243,7 +376,7 @@ Widget divider(String title) {
               height: 50,
             )),
       ),
-      Text(title, style: const TextStyle(color: Colors.grey)),
+      Text(title, style:TypographyHelper.subTitleTextStyleBlack.copyWith(fontWeight: FontWeight.w400,color: Colors.grey)),
       Expanded(
         child: Container(
             margin: const EdgeInsets.only(left: 15.0, right: 10.0),
@@ -256,7 +389,7 @@ Widget divider(String title) {
   );
 }
 
-Widget titleDashboard(String title, BuildContext context, {String? title2}) {
+Widget titleDashboard(String title, BuildContext context, {Widget? title2, TabController? tabController}) {
   return Container(
     padding: const EdgeInsets.only(top: 10, bottom: 10, left: 20),
     width: MediaQuery.of(context).size.width,
@@ -266,28 +399,16 @@ Widget titleDashboard(String title, BuildContext context, {String? title2}) {
         MyText(
           text: title,
           color2: greyColor,
+          // color2: greyColor,
           fontWeight: FontWeight.w700,
           right: 5,
           fontSize: 16,
         ),
         title2 != null
-            ? Container(
-                height: 20,
-                child: const VerticalDivider(
-                  width: 5,
-                  thickness: 1,
-                  color: Colors.grey,
-                  indent: 2,
-                ))
-            : Container(),
-        title2 != null
-            ? MyText(
-                left: 5,
-                text: title2,
-                color2: Colors.blue,
-                fontWeight: FontWeight.w700,
-                fontSize: 16)
-            : Container()
+        ? Expanded(
+          child: title2
+        )
+        : Container()
       ],
     ),
   );
@@ -350,19 +471,118 @@ class SetupProgressIndicator extends StatelessWidget with PreferredSizeWidget {
   }
 }
 
-PreferredSizeWidget appbarCustom(String title, BuildContext context) {
+PreferredSizeWidget appbarCustom(String title, BuildContext context, {bool? centerTitle: false}) {
   return AppBar(
+    centerTitle: centerTitle,
     title: Text(
       title,
-      style: const TextStyle(color: Colors.black, fontWeight: FontWeight.w600),
+      style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
     ),
     backgroundColor: Colors.transparent,
     elevation: 0,
     leading: IconButton(
-      icon: const Icon(Icons.arrow_back_ios_new,color: Colors.black,),
+      icon: const Icon(Iconsax.arrow_left_2 ,color: Colors.white,),
       onPressed: (){
         Navigator.pop(context);
       },
     ),
+  );
+}
+
+void createIDBottomSheet(BuildContext context) {
+  showModalBottomSheet(
+    backgroundColor: Colors.transparent,
+    shape: const RoundedRectangleBorder(
+      borderRadius: BorderRadius.only(topLeft: Radius.circular(25), topRight: Radius.circular(25)),
+    ),
+    context: context,
+    builder: (BuildContext context) {
+      return BackdropFilter(
+        filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+        child: Container(
+          decoration: BoxDecoration(
+            color: primaryColor,
+            borderRadius: const BorderRadius.only(topLeft: Radius.circular(20), topRight: Radius.circular(20)),
+          ),
+          child: Column(
+            children: <Widget>[
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(20),
+                    child: MyText(
+                      text: "Create",
+                      color: '#FFFFFF',
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold
+                    ),
+                  ),
+      
+                  IconButton(
+                    icon: Icon(Iconsax.close_circle, color: whiteColor,),
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                  ),
+                ],
+              ),
+              Column(
+                children: [
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: paddingSize, vertical: 10),
+                    child: GestureDetector(
+                      onTap: () async {
+                        
+                      },
+                      child: Row(
+                        children: [
+                          CircleAvatar(
+                            backgroundColor: secondaryColor,
+                            radius: 25,
+                            child: Icon(Iconsax.add_circle, color: whiteColor)
+                          ),
+      
+                          const SizedBox(width: 10),
+                          
+                          MyText(
+                            text: "New ID",
+                            color: "#FFFFFF"
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: paddingSize, vertical: 10),
+                    child: GestureDetector(
+                      onTap: () async {
+      
+                      },
+                      child: Row(
+                        children: [
+                          CircleAvatar(
+                            backgroundColor: secondaryColor,
+                            radius: 25,
+                            child: Icon(Iconsax.document_upload, color: whiteColor)
+                          ),
+                          
+                          const SizedBox(width: 10),
+      
+                          MyText(
+                            text: "Import ID",
+                            color: '#FFFFFF'
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+      );
+    }
   );
 }

@@ -1,14 +1,21 @@
-import 'package:flutter/material.dart';
+import 'dart:io';
+
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:provider/provider.dart';
-import 'package:student_id/all_export.dart';
-import 'package:student_id/components/column_info_c.dart';
-import 'package:student_id/models/asset_list_m.dart';
-import 'package:student_id/models/dashboard_m.dart';
-import 'package:student_id/provider/identifier_p.dart';
-import 'package:student_id/screens/dashboard/edit_info.dart';
+import 'package:digital_id/all_export.dart';
+import 'package:digital_id/components/column_info_c.dart';
+import 'package:digital_id/components/text_c.dart';
+import 'package:digital_id/main.dart';
+import 'package:digital_id/models/asset_list_m.dart';
+import 'package:digital_id/models/dashboard_m.dart';
+import 'package:digital_id/provider/digital_id_p.dart';
+import 'package:digital_id/screens/dashboard/edit_info.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter/services.dart';
-import 'package:student_id/all_export.dart';
+import 'package:digital_id/all_export.dart';
+import 'package:digital_id/theme/theme.dart';
+
+import '../shared/typography.dart';
 
 class PhraseInput extends StatelessWidget {
   final TextEditingController? textEditingController;
@@ -109,58 +116,57 @@ class EmailInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          TextFormField(
-            controller: textEditingController,
-            onChanged: (value) {
-              //Do something wi
-            },
-            validator: (value) {
-              // Check if this field is empty
-              if (value == null || value.isEmpty) {
-                return 'This field is required';
-              }
+      padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 20),
+      child: TextFormField(
+        controller: textEditingController,
+        onChanged: (value) {
+          //Do something wi
+        },
+        validator: (value) {
+          // Check if this field is empty
+          if (value == null || value.isEmpty) {
+            return 'This field is required';
+          }
 
-              // using regular expression
-              if (!RegExp(r'\S+@\S+\.\S+').hasMatch(value)) {
-                return "Please enter a valid email address";
-              }
+          // using regular expression
+          if (!RegExp(r'\S+@\S+\.\S+').hasMatch(value)) {
+            return "Please enter a valid email address";
+          }
 
-              // the email is valid
-              return null;
-            },
-            onFieldSubmitted: (String value){
-              onFieldSubmitted!();
-            },
-            keyboardType: TextInputType.emailAddress,
-            style: const TextStyle(fontSize: 14, color: Colors.black),
-            decoration: InputDecoration(
-              label: const Text("Email"),
-              labelStyle: const TextStyle(color: Colors.grey),
-              hintStyle: TextStyle(color: Colors.grey.withOpacity(.75)),
-              contentPadding: const EdgeInsets.symmetric(vertical: 0.0, horizontal: 20.0),
-              border: const OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.grey, width: 1.0),
-                borderRadius: BorderRadius.all(Radius.circular(50.0)),
-              ),
-              focusedBorder: const OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.grey, width: 1.0),
-                borderRadius: BorderRadius.all(Radius.circular(50.0)),
-              ),
-              errorBorder: const OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.red, width: 1.0),
-                borderRadius: BorderRadius.all(Radius.circular(50.0)),
-              ),
-              enabledBorder: const OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.grey, width: 1.0),
-                borderRadius: BorderRadius.all(Radius.circular(50.0)),
-              ),
-            ),
+          // the email is valid
+          return null;
+        },
+        onFieldSubmitted: (String value){
+          onFieldSubmitted!();
+        },
+        keyboardType: TextInputType.emailAddress,
+        style: TypographyHelper.titleTextStyleBlack.copyWith(color: Colors.black87),
+        decoration: InputDecoration(
+          // label: const Text("Email"),
+          //labelStyle: const TextStyle(color: Colors.grey),
+          fillColor: Colors.white,
+          filled: true, 
+          hintText: "Email",
+          hintStyle:TypographyHelper.titleTextStyleBlack.copyWith(color: Colors.grey.withOpacity(.75)),
+          isDense: true, 
+          contentPadding: const EdgeInsets.fromLTRB(22, 22, 22, 22),
+          border:  OutlineInputBorder(
+            borderSide: BorderSide(color: Colors.grey.withOpacity(0.2), width: 1.0),
+            borderRadius: const BorderRadius.all(Radius.circular(50.0)),
           ),
-        ],
+          focusedBorder: OutlineInputBorder(
+            borderSide: BorderSide(color: Colors.grey.withOpacity(0.2), width: 1.0),
+            borderRadius: const BorderRadius.all(Radius.circular(50.0)),
+          ),
+          errorBorder: const OutlineInputBorder(
+            borderSide: BorderSide(color: Colors.red, width: 1.0),
+            borderRadius: BorderRadius.all(Radius.circular(50.0)),
+          ),
+          enabledBorder:  OutlineInputBorder(
+            borderSide: BorderSide(color: Colors.grey.withOpacity(0.2), width: 1.0),
+            borderRadius: const BorderRadius.all(Radius.circular(50.0)),
+          ),
+        ),
       ),
     );
   }
@@ -186,7 +192,7 @@ class PassInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
+      padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 20),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -214,27 +220,31 @@ class PassInput extends StatelessWidget {
               onFieldSubmitted!();
             },
             keyboardType: TextInputType.emailAddress,
-            style: const TextStyle(fontSize: 14, color: Colors.black),
+            style: TypographyHelper.titleTextStyleBlack.copyWith(color: Colors.black87),
             decoration: InputDecoration(
-              label: Text(label!),
-              labelStyle: const TextStyle(color: Colors.grey),
-              hintStyle: TextStyle(color: Colors.grey.withOpacity(.75)),
-              contentPadding: const EdgeInsets.symmetric(vertical: 0.0, horizontal: 20.0),
-              border: const OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.grey, width: 1.0),
-                borderRadius: BorderRadius.all(Radius.circular(50.0)),
+              // label: Text(label!),
+              // labelStyle: const TextStyle(color: Colors.grey),
+              fillColor: Colors.white,
+              filled: true, 
+              hintText: label!,
+              hintStyle:TypographyHelper.titleTextStyleBlack.copyWith(color: Colors.grey.withOpacity(.75)),
+              isDense: true, 
+              contentPadding: const EdgeInsets.fromLTRB(22, 22, 22, 22),
+              border: OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.grey.withOpacity(0.2), width: 1.0),
+                borderRadius:const  BorderRadius.all(Radius.circular(50.0)),
               ),
-              focusedBorder: const OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.grey, width: 1.0),
-                borderRadius: BorderRadius.all(Radius.circular(50.0)),
+              focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.grey.withOpacity(0.2), width: 1.0),
+                borderRadius: const BorderRadius.all(Radius.circular(50.0)),
               ),
               errorBorder: const OutlineInputBorder(
                 borderSide: BorderSide(color: Colors.red, width: 1.0),
                 borderRadius: BorderRadius.all(Radius.circular(50.0)),
               ),
-              enabledBorder: const OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.grey, width: 1.0),
-                borderRadius: BorderRadius.all(Radius.circular(50.0)),
+              enabledBorder:  OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.grey.withOpacity(0.2), width: 1.0),
+                borderRadius: const BorderRadius.all(Radius.circular(50.0)),
               ),
             ),
           ),
@@ -250,13 +260,14 @@ class MyInput extends StatelessWidget {
   final TextEditingController? textEditingController;
   final Function()? onFieldSubmitted;
   final Function? validator;
+  final Function? onChanged;
 
-  const MyInput({Key? key, required this.label, required this.textEditingController, this.onFieldSubmitted, required this.validator}) : super(key: key);
+  const MyInput({Key? key, required this.label, required this.textEditingController, this.onFieldSubmitted, required this.validator, this.onChanged}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
+      padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 20),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -264,6 +275,7 @@ class MyInput extends StatelessWidget {
             controller: textEditingController,
             onChanged: (value) {
               //Do something wi
+              if (onChanged != null) onChanged!(value);
             },
             validator: (value) {
               return validator!(value);
@@ -271,27 +283,31 @@ class MyInput extends StatelessWidget {
             onFieldSubmitted: (String value){
               onFieldSubmitted!();
             },
-            style: const TextStyle(fontSize: 14, color: Colors.black),
+            style: TypographyHelper.titleTextStyleBlack.copyWith(color: Colors.black87),
             decoration: InputDecoration(
-              label: Text("$label"),
-              labelStyle: const TextStyle(color: Colors.grey),
-              hintStyle: TextStyle(color: Colors.grey.withOpacity(.75)),
-              contentPadding: const EdgeInsets.symmetric(vertical: 0.0, horizontal: 20.0),
-              border: const OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.grey, width: 1.0),
-                borderRadius: BorderRadius.all(Radius.circular(50.0)),
+              // label: Text("$label"),
+              // labelStyle: const TextStyle(color: Colors.grey),
+              fillColor: Colors.white,
+              filled: true, 
+              hintText: label,
+              hintStyle:TypographyHelper.titleTextStyleBlack.copyWith(color: Colors.grey.withOpacity(.75)),
+              isDense: true, 
+              contentPadding: const EdgeInsets.fromLTRB(22, 22, 22, 22),
+              border:  OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.grey.withOpacity(0.2), width: 1.0),
+                borderRadius:const BorderRadius.all(Radius.circular(50.0)),
               ),
-              focusedBorder: const OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.grey, width: 1.0),
-                borderRadius: BorderRadius.all(Radius.circular(50.0)),
+              focusedBorder:  OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.grey.withOpacity(0.2), width: 1.0),
+                borderRadius:const BorderRadius.all(Radius.circular(50.0)),
               ),
               errorBorder: const OutlineInputBorder(
                 borderSide: BorderSide(color: Colors.red, width: 1.0),
                 borderRadius: BorderRadius.all(Radius.circular(50.0)),
               ),
-              enabledBorder: const OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.grey, width: 1.0),
-                borderRadius: BorderRadius.all(Radius.circular(50.0)),
+              enabledBorder:  OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.grey.withOpacity(0.2), width: 1.0),
+                borderRadius:const BorderRadius.all(Radius.circular(50.0)),
               ),
             ),
           ),
@@ -303,8 +319,9 @@ class MyInput extends StatelessWidget {
 
 class VerifyInput extends StatefulWidget {
   final TextEditingController? textEditingController;
+  final Function(String)? onChanged;
 
-  const VerifyInput({required this.textEditingController, Key? key})
+  const VerifyInput({required this.textEditingController, this.onChanged, Key? key})
       : super(key: key);
 
   @override
@@ -321,41 +338,33 @@ class _VerifyInputState extends State<VerifyInput> {
         keyboardType: TextInputType.number,
           inputFormatters: <TextInputFormatter>[
           FilteringTextInputFormatter.digitsOnly
-        ], // Only n
+        ], 
+        style: TypographyHelper.titleTextStyleBlack.copyWith(color: Colors.black87),// Only n
         decoration: InputDecoration(
-          label: const Text("Verify"),
-          contentPadding:
-              const EdgeInsets.symmetric(vertical: 0.0, horizontal: 20.0),
-          labelStyle: const TextStyle(color: Colors.grey),
-          enabledBorder: OutlineInputBorder(
-            borderSide: const BorderSide(
-              color: Colors.grey,
-              width: 1,
-            ),
-            borderRadius: BorderRadius.circular(50.0),
-          ),
-          focusedErrorBorder: OutlineInputBorder(
-            borderSide: const BorderSide(
-              color: Colors.red,
-              width: 1,
-            ),
-            borderRadius: BorderRadius.circular(50.0),
-          ),
-          errorBorder: OutlineInputBorder(
-            borderSide: const BorderSide(
-              color: Colors.red,
-              width: 1,
-            ),
-            borderRadius: BorderRadius.circular(50.0),
+          fillColor: Colors.white,
+          filled: true, 
+          hintText: "Verify",
+          hintStyle:TypographyHelper.titleTextStyleBlack.copyWith(color: Colors.grey.withOpacity(.75)),
+          isDense: true, 
+          contentPadding: const EdgeInsets.fromLTRB(22, 22, 22, 22),
+          border:  OutlineInputBorder(
+            borderSide: BorderSide(color: Colors.grey.withOpacity(0.2), width: 1.0),
+            borderRadius: const BorderRadius.all(Radius.circular(50.0)),
           ),
           focusedBorder: OutlineInputBorder(
-            borderSide: const BorderSide(
-              color: Colors.grey,
-              width: 1,
-            ),
-            borderRadius: BorderRadius.circular(50.0),
+            borderSide: BorderSide(color: Colors.grey.withOpacity(0.2), width: 1.0),
+            borderRadius: const BorderRadius.all(Radius.circular(50.0)),
+          ),
+          errorBorder: const OutlineInputBorder(
+            borderSide: BorderSide(color: Colors.red, width: 1.0),
+            borderRadius: BorderRadius.all(Radius.circular(50.0)),
+          ),
+          enabledBorder:  OutlineInputBorder(
+            borderSide: BorderSide(color: Colors.grey.withOpacity(0.2), width: 1.0),
+            borderRadius: const BorderRadius.all(Radius.circular(50.0)),
           ),
         ),
+        onChanged: widget.onChanged,
         validator: (value) {
           // Check if this field is empty
           if (value == null || value.isEmpty) {
@@ -393,27 +402,32 @@ class GoogleBtn extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 54,
-      margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+      height: 65,
+      margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 20),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(50),
+        border: Border.all(width: 0.5, color: Colors.grey.withOpacity(0.2)),
         color: Colors.white,
       ),
       child: TextButton(
         style: ButtonStyle(
           shape: MaterialStateProperty.all(RoundedRectangleBorder(
-            side: const BorderSide(color: Colors.grey),
+            side: BorderSide(color: Colors.grey.withOpacity(0.2)),
             borderRadius: BorderRadius.circular(50))
           )
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Image.asset('assets/logos/google-icon.png', width: 20),
-            const SizedBox(
-              width: 10,
-            ),
-            Text(title!, style: const TextStyle(color: Colors.black, fontSize: 16)),
+            Expanded(
+              flex: 2,
+              child: Image.asset('assets/logos/google-icon.png',height: 30, width: 30)),
+            // const SizedBox(
+            //   width: 10,
+            // ),
+            Expanded(
+              flex: 4,
+              child: Text(title!,textAlign: TextAlign.start, style: TypographyHelper.titleTextStyleBlack.copyWith(fontWeight: FontWeight.w600))),
           ],
         ),
         onPressed: onPressed,
@@ -435,27 +449,35 @@ class CustomBtn extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 54,
-      margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+      height: 65,
+      margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 20),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(50),
+        border: Border.all(width: 0.5, color: Colors.grey.withOpacity(0.2)),
         color: Colors.white,
       ),
       child: TextButton(
         style: ButtonStyle(
           shape: MaterialStateProperty.all(RoundedRectangleBorder(
-            side: const BorderSide(color: Colors.grey),
+            side:  BorderSide(color: Colors.grey.withOpacity(0.2)),
             borderRadius: BorderRadius.circular(50))
           )
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            SvgPicture.asset('assets/logos/$logo', width: 20),
-            const SizedBox(
-              width: 10,
+            Expanded(
+              flex: 2,
+              child: SvgPicture.asset('assets/logos/$logo', width: 30)
             ),
-            Text(title!, style: const TextStyle(color: Colors.black, fontSize: 16)),
+            // const SizedBox(
+            //   width: 10,
+            // ),
+            Expanded(
+              flex: 4,
+              child: Text(title!,textAlign: TextAlign.start, style: TypographyHelper.titleTextStyleBlack.copyWith(fontWeight: FontWeight.w600))
+            ),
           ],
         ),
         onPressed: onPressed,
@@ -506,7 +528,13 @@ class FacebookBtn extends StatelessWidget {
 class SubmitButton extends StatelessWidget {
   final String? text;
   final Function()? onPressed;
-  const SubmitButton({this.text, this.onPressed, Key? key}) : super(key: key);
+  final EdgeInsetsGeometry? padding;
+  const SubmitButton({
+    this.text, 
+    this.onPressed, 
+    this.padding = const EdgeInsets.all(20), 
+    Key? key
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -516,55 +544,15 @@ class SubmitButton extends StatelessWidget {
     const double borderRadius = 50;
 
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20),
+      padding: padding ?? EdgeInsets.zero,
       child: SizedBox(
+        height: btnHeight,
         width: MediaQuery.of(context).size.width,
         child: DecoratedBox(
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(borderRadius),
-                color: primaryColor),
-            child: ElevatedButton(
-              style: ButtonStyle(
-                  elevation: MaterialStateProperty.all(0),
-                  alignment: Alignment.center,
-                  padding: MaterialStateProperty.all(
-                      const EdgeInsets.only(top: 15, bottom: 15)),
-                  backgroundColor:
-                      MaterialStateProperty.all(Colors.transparent),
-                  shape: MaterialStateProperty.all(
-                    RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(borderRadius)),
-                  )),
-              onPressed: onPressed,
-              child: Text(
-                text!,
-                style: const TextStyle(color: accentColor, fontSize: 16),
-              ),
-            )),
-      ),
-    );
-  }
-}
-
-class CustomButton extends StatelessWidget {
-  final String? text;
-  final Function()? onPressed;
-  final Color? colorBtn;
-  final Color? colorText;
-  const CustomButton(
-      {this.text, this.colorBtn, this.colorText, this.onPressed, Key? key})
-      : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    const double borderRadius = 50;
-
-    return SizedBox(
-      width: MediaQuery.of(context).size.width,
-      child: DecoratedBox(
           decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(borderRadius),
-              color: colorBtn),
+            borderRadius: BorderRadius.circular(borderRadius),
+            color: primaryColor
+          ),
           child: ElevatedButton(
             style: ButtonStyle(
                 elevation: MaterialStateProperty.all(0),
@@ -575,15 +563,68 @@ class CustomButton extends StatelessWidget {
                     MaterialStateProperty.all(Colors.transparent),
                 shape: MaterialStateProperty.all(
                   RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(borderRadius),
-                      side: BorderSide(color: primaryColor)),
+                      borderRadius: BorderRadius.circular(borderRadius)),
                 )),
             onPressed: onPressed,
-            child: Text(
-              text!,
-              style: TextStyle(color: colorText, fontSize: 16),
+            child: MyText(
+              text: text!,
+              color2: accentColor,
+              fontWeight: FontWeight.bold
             ),
-          )),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class CustomButton extends StatelessWidget {
+  final String? text;
+  final Function()? onPressed;
+  final Color? colorBtn;
+  final Color? colorText;
+  final EdgeInsetsGeometry? edgePadding;
+  CustomButton({
+    this.text, this.colorBtn, this.colorText, this.onPressed, this.edgePadding, Key? key})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    const double borderRadius = 20;
+
+    return Padding(
+      padding: edgePadding ?? EdgeInsets.zero,
+      child: SizedBox(
+        width: MediaQuery.of(context).size.width,
+        height: btnHeight,
+        child: DecoratedBox(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(borderRadius),
+              color: colorBtn),
+            child: ElevatedButton(
+              style: ButtonStyle(
+                elevation: MaterialStateProperty.all(0),
+                alignment: Alignment.center,
+                padding: MaterialStateProperty.all(const EdgeInsets.only(top: 15, bottom: 15)),
+                backgroundColor: MaterialStateProperty.all(Colors.transparent),
+                shape: MaterialStateProperty.all(
+                  RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(borderRadius),
+                    side: BorderSide(color: primaryColor)
+                  ),
+                )
+              ),
+              onPressed: onPressed,
+              child: MyText(
+              alignment: Alignment.center,
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height,
+              text: text!,
+              fontWeight: FontWeight.bold,
+              color2: Colors.white,
+            ),
+            )),
+      )
     );
   }
 }
@@ -594,21 +635,22 @@ class CustomButtonIcon extends StatelessWidget {
   final Color? colorBtn;
   final Color? colorText;
   final Icon? icon;
-  const CustomButtonIcon(
-      {this.text, 
-      this.colorBtn, 
-      this.colorText, 
-      this.onPressed, 
-      this.icon,
-      Key? key})
-      : super(key: key);
+  const CustomButtonIcon({
+    this.text, 
+    this.colorBtn, 
+    this.colorText, 
+    this.onPressed, 
+    this.icon,
+    Key? key
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    const double borderRadius = 50;
+    const double borderRadius = 20;
 
     return SizedBox(
-      width: MediaQuery.of(context).size.width / 2.75,
+      width: MediaQuery.of(context).size.width,
+      height: btnHeight,
       child: DecoratedBox(
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(borderRadius),
@@ -617,20 +659,23 @@ class CustomButtonIcon extends StatelessWidget {
             style: ButtonStyle(
                 elevation: MaterialStateProperty.all(0),
                 alignment: Alignment.center,
-                padding: MaterialStateProperty.all(
-                    const EdgeInsets.only(top: 10, bottom: 10)),
+                // padding: MaterialStateProperty.all(
+                //     const EdgeInsets.only(top: 5, bottom: 5)),
                 backgroundColor:
                     MaterialStateProperty.all(Colors.transparent),
               ),
             onPressed: onPressed,
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                icon!,
-                Text(
-                  text!,
-                  style: TextStyle(color: colorText, fontSize: 14),
+                Expanded(child: Container()),
+                MyText(
+                  text: text!,
+                  fontWeight: FontWeight.bold,
+                  color2: colorText,
                 ),
+                Expanded(child: Container()),
+                icon!,
               ],
             ),
           )),
@@ -652,7 +697,7 @@ class EditButton extends StatelessWidget {
 
     return SizedBox(
       width: MediaQuery.of(context).size.width / 5,
-      height: MediaQuery.of(context).size.height / 20,
+      height: btnHeight,
       child: DecoratedBox(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(borderRadius),
@@ -669,9 +714,10 @@ class EditButton extends StatelessWidget {
             ),
           ),
           onPressed: onPressed,
-          child: Text(
-            text!,
-            style: const TextStyle(color: accentColor, fontSize: 14),
+          child: MyText(
+            text: text!,
+            color2: accentColor,
+            fontWeight: FontWeight.bold
           ),
         ),
       ),
@@ -680,6 +726,7 @@ class EditButton extends StatelessWidget {
 }
 
 class DashboardOptions extends StatelessWidget {
+  
   const DashboardOptions({Key? key}) : super(key: key);
 
   @override
@@ -689,7 +736,7 @@ class DashboardOptions extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          Consumer<IdentifierProvider>(
+          Consumer<DigitalIDProvider>(
             builder: (context, provider, widget){
               return Column(
                 children: [
@@ -699,10 +746,10 @@ class DashboardOptions extends StatelessWidget {
                         onPressed: () {},
                         icon: const Icon(Icons.people_alt_outlined),
                         iconSize: 40,
-                        color: provider.alreadySetup! ? Colors.blue : greyColor,
+                        color: provider.identifierModel!.completedSetpUpID! ? Colors.blue : greyColor,
                       ),
 
-                      provider.alreadySetup! 
+                      provider.identifierModel!.completedSetpUpID!
                       ? const Positioned(
                         child: Icon(Icons.check, size: 20, color: Colors.blue),
                         right: 0,
@@ -713,7 +760,7 @@ class DashboardOptions extends StatelessWidget {
                   ),
                   Text(
                     'Verify',
-                    style: TextStyle(color: provider.alreadySetup! ? Colors.blue : greyColor, fontWeight: FontWeight.w600),
+                    style: TextStyle(color: provider.identifierModel!.completedSetpUpID! ? Colors.blue : greyColor, fontWeight: FontWeight.w600),
                   )
                 ],
               );
@@ -759,8 +806,9 @@ class PersonlInfo extends StatelessWidget {
 
   final DashBoardModel? model;
   final Function? edit;
+  final Function? submitEdit;
   
-  PersonlInfo({Key? key, this.model, this.edit}) : super(key: key);
+  PersonlInfo({Key? key, this.model, this.edit, this.submitEdit}) : super(key: key);
 
   Widget _nameInfo(String? text) {
     return Padding(
@@ -826,32 +874,215 @@ class PersonlInfo extends StatelessWidget {
     );
   }
 
+  Widget _dobInfo(String? text) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Text('Phone Number', style: TextStyle(color: greyColor)),
+          Text(text!,
+            style: TextStyle(color: blackColor, fontWeight: FontWeight.w700)
+          ),
+        ]
+      ),
+    );
+  }
+
+  Widget _nationalInfo(String? text) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Text('Nationality', style: TextStyle(color: greyColor)),
+          Text(text!,
+            style: TextStyle(color: blackColor, fontWeight: FontWeight.w700)
+          ),
+        ]
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.start,
+    return Column(
       children: [
-        Expanded(
-          child: Info(model: model,)
-        ), 
-        IconButton(
-          onPressed: (){
-            edit!();
-          }, 
-          icon: Container(
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              color: Colors.grey[300]
-            ),
-            padding: const EdgeInsets.all(5),
-            child: model!.isEditing ? const Icon(Icons.edit_off_outlined) : const Icon(Icons.edit_outlined) ,
-          )
-        )
 
-      ],
-    )
-    ;
+        Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Expanded(
+              child: Info(model: model,)
+            ), 
+
+          ],
+        ),
+
+        // Show Button When Editing
+        model!.isEditing == true 
+        ? Padding(
+          padding: EdgeInsets.symmetric(horizontal: paddingSize, vertical: paddingSize),
+          child: Align(
+            alignment: Alignment.center,
+            child: ElevatedButton(
+              onPressed: (){
+                submitEdit!();
+              }, 
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all(
+                  HexColor(AppColors.primary)
+                ),
+                shape: MaterialStateProperty.all(
+                  RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(64)
+                  )
+                ),
+              ),
+              child: Container(
+                width: MediaQuery.of(context).size.width,
+                height: btnHeight,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(54)
+                ),
+                alignment: Alignment.center,
+                child: MyText(
+                  text: "Submit Edit",
+                  fontWeight: FontWeight.bold,
+                  color2: Colors.white,
+                )
+              )
+            ),
+          )
+        ) 
+        : Container(),
+
+        Consumer<DigitalIDProvider>(
+          builder: (context, provider, widget){
+            
+            if (provider.identifierModel!.completedSetpUpID == true && model!.isEditing == false)
+            return Container(
+              padding: const EdgeInsets.only(top: 10, bottom: 10, left: 20),
+              margin: EdgeInsets.only(bottom: paddingSize),
+              width: MediaQuery.of(context).size.width,
+              color: greyBackgroundColor,
+              child: Row(
+                children: [
+                  MyText(
+                    text: "Your digital ID",
+                    color2: greyColor,
+                    // color2: greyColor,
+                    fontWeight: FontWeight.w700,
+                    right: 5,
+                    fontSize: 16,
+                  ),
+                ],
+              ),
+            );
+
+            return Container();
+          }
+        ),
+
+        Consumer<DigitalIDProvider>(
+          builder: (context, provider, widget){
+            if (provider.identifierModel!.completedSetpUpID == false && model!.isEditing == false)
+            return Padding(
+              padding: EdgeInsets.symmetric(horizontal: paddingSize, vertical: paddingSize),
+              child: ElevatedButton(
+                style: ButtonStyle(
+                  shadowColor: MaterialStateProperty.all(
+                    Colors.transparent
+                  ),
+                  backgroundColor: MaterialStateProperty.all(
+                    Colors.red.withOpacity(0.2)
+                  ),
+                  padding: MaterialStateProperty.all(EdgeInsets.zero),
+                  shape: MaterialStateProperty.all(
+                    RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(54)
+                    )
+                  ),
+                ),
+                onPressed: (){
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => const DigitalIDOption()));
+                }, 
+                child: Container(
+                  width: MediaQuery.of(context).size.width,
+                  height: btnHeight,
+                  // decoration: BoxDecoration(
+                  //   borderRadius: BorderRadius.circular(12),
+                  // ),
+                  alignment: Alignment.center,
+                  child: MyText(
+                    text: "Get your digital ID",
+                    fontWeight: FontWeight.bold,
+                    color2: Colors.red,
+                  )
+                )
+              )
+            );
+
+            if (provider.identifierModel!.completedSetpUpID == true && model!.isEditing == false)
+            return CarouselWidget(
+              height: 330,
+              items: List.generate( provider.identifierModel!.lsIDCard!.length,(i) {
+                return Column(
+                  children: [
+                    Container(
+                        width: MediaQuery.of(context).size.width,
+                        height: 200,
+                        margin: EdgeInsets.symmetric(horizontal: 5.0),
+                        padding: EdgeInsets.all(8),
+                        decoration: BoxDecoration(
+                          border: Border.all(color: Colors.grey),
+                          color: Colors.grey.withOpacity(0.5),
+                          image: DecorationImage(
+                            image: FileImage(File(provider.identifierModel!.lsIDCard![i]))
+                          ),
+                          borderRadius: BorderRadius.circular(10),
+                          // color: Colors.amber
+                        ),
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: List<Widget>.generate(provider.identifierModel!.lsIDCard!.length, (int index) {
+                          return AnimatedContainer(
+                              duration: Duration(milliseconds: 300),
+                              height: 10,
+                              width: (index == i) ? 30 : 10,
+                              margin:
+                                  EdgeInsets.symmetric(horizontal: 5, vertical: 30),
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(5),
+                                  color: (index == i)
+                                      ? Colors.blue
+                                      : Colors.blue.withOpacity(0.5)));
+                        }
+                        )
+                      )
+                  ],
+                );
+              }),
+                     
+                    );
+            
+            return Container();
+            
+            // : Card(
+            //   child: Column(
+            //     children: [
+            //       Image.file(File(provider.identifierModel!.frontImage!), width: 400, height: 200,)
+            //     ],
+            //   ),
+            // )
+          },
+        ),
+      ]
+    );
   }
 }
 
@@ -1053,11 +1284,13 @@ class AddButton extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(30),
       child: SizedBox(
+        height: btnHeight,
         width: MediaQuery.of(context).size.width,
         child: DecoratedBox(
             decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(borderRadius),
-                color: primaryColor),
+              borderRadius: BorderRadius.circular(borderRadius),
+              color: primaryColor
+            ),
             child: ElevatedButton(
               style: ButtonStyle(
                   elevation: MaterialStateProperty.all(0),
@@ -1071,9 +1304,13 @@ class AddButton extends StatelessWidget {
                         borderRadius: BorderRadius.circular(borderRadius)),
                   )),
               onPressed: onPressed,
-              child: Text(
-                text!,
-                style: const TextStyle(color: accentColor, fontSize: 18),
+              child: MyText(
+                alignment: Alignment.center,
+                width: MediaQuery.of(context).size.width,
+                height: MediaQuery.of(context).size.height,
+                text: text!,
+                color2: accentColor,
+                fontWeight: FontWeight.w600
               ),
             ),
         ),
@@ -1091,6 +1328,41 @@ class PeerProgress extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.fromLTRB(24, 8, 24, 0),
       child: SetupProgressIndicator(num),
+    );
+  }
+}
+
+
+class CarouselWidget extends StatelessWidget {
+  final double? height;
+  const CarouselWidget({
+    Key? key,
+    this.onPageChanged,
+    this.items,
+    required this.height
+  }) : super(key: key);
+  final Function(int index, CarouselPageChangedReason reason)? onPageChanged;
+  final List<Widget>? items;
+  @override
+  Widget build(BuildContext context) {
+    return CarouselSlider(
+      options: CarouselOptions(
+        height: height,
+        aspectRatio: 16/9,
+        viewportFraction: 0.9,
+        initialPage: 0,
+        enableInfiniteScroll: true,
+        reverse: false,
+        autoPlay: false,
+        enlargeStrategy: CenterPageEnlargeStrategy.height,
+        autoPlayInterval: const Duration(seconds: 3),
+        autoPlayAnimationDuration: const Duration(milliseconds: 1000),
+        autoPlayCurve: Curves.fastOutSlowIn,
+        enlargeCenterPage: true,
+        onPageChanged: onPageChanged,
+        scrollDirection: Axis.horizontal,
+      ),
+      items: items,
     );
   }
 }

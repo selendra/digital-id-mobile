@@ -1,5 +1,4 @@
-import 'package:student_id/all_export.dart';
-
+import 'package:digital_id/all_export.dart';
 class MyText extends StatelessWidget{
 
   final String? text; 
@@ -19,6 +18,7 @@ class MyText extends StatelessWidget{
   final double? height; 
   final TextAlign? textAlign;
   final TextOverflow? overflow;
+  final AlignmentGeometry? alignment;
 
   MyText({
     required this.text, 
@@ -29,18 +29,25 @@ class MyText extends StatelessWidget{
     this.pLeft = 0, this.pRight = 0, this.pTop = 0, this.pBottom = 0,
     this.width, this.height, this.textAlign = TextAlign.center,
     this.overflow,
+    this.alignment,
   });
   
   Widget build(BuildContext context){
     return Container(
       margin: EdgeInsets.fromLTRB(left!, top!, right!, bottom!),
       padding: EdgeInsets.fromLTRB(pLeft!, pTop!, pRight!, pBottom!),
+      alignment: alignment,
       child: SizedBox(
         width: width,
         height: height,
         child: Text(
           text!,
-          style: TextStyle(
+          style: 
+          // GoogleFonts.inter(
+          //   fontWeight: fontWeight,
+          //   color: color2 ?? HexColor(color!),
+          //   fontSize: fontSize,),
+          TextStyle(
             fontWeight: fontWeight,
             color: color2 ?? HexColor(color!),
             fontSize: fontSize,

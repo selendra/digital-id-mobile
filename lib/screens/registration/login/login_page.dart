@@ -1,13 +1,23 @@
 import 'dart:convert';
 
+import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:provider/provider.dart';
-import 'package:student_id/all_export.dart';
-import 'package:student_id/components/alert_dialog_c.dart';
-import 'package:student_id/core/backend.dart';
-import 'package:student_id/core/config/app_config.dart';
-import 'package:student_id/provider/api_provider.dart';
-import 'package:student_id/screens/registration/login/login_page_body.dart';
-import 'package:student_id/services/storage.dart';
+import 'package:digital_id/all_export.dart';
+import 'package:digital_id/components/alert_dialog_c.dart';
+import 'package:digital_id/core/backend.dart';
+import 'package:digital_id/core/config/app_config.dart';
+import 'package:digital_id/core/decode_token.dart';
+import 'package:digital_id/core/graphql/schema.dart';
+import 'package:digital_id/models/digital_id_m.dart';
+import 'package:digital_id/provider/api_provider.dart';
+import 'package:digital_id/provider/digital_id_p.dart';
+import 'package:digital_id/provider/graphql_p.dart';
+import 'package:digital_id/provider/home_p.dart';
+import 'package:digital_id/provider/registration_p.dart';
+import 'package:digital_id/screens/otp_verify/otp_verify_page.dart';
+import 'package:digital_id/services/storage.dart';
+
+import '../../../shared/bg_shared.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -22,6 +32,7 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController passwordInputController = TextEditingController();
   bool? isChecked = false;
   bool? checkLogin = true;
+  ApiProvider? _api;
   
   final formKey = GlobalKey<FormState>();
 
@@ -40,65 +51,83 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   void isLogin() async {
+
     await StorageServices.fetchData(DbKey.login).then((value) {
-      if (value != null) Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => const Navbar()), (route) => false);
+      print("Login $value");
+      if (value != null) Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => DashboardPage()), (route) => false);
+      // if (value != null) Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => const Identifier(title: "",)), (route) => false);
     });
+
+    // Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => const ImportAccount()), (route) => false);
     // await Future.delayed(Duration(seconds: 1), (){});
     // Provider.of<ApiProvider>(context, listen: false).initApi(context: context);
     setState(() {
       checkLogin = false;
     });
+    // await StorageServices.fetchData("session").then((value) async {
+    //   print("Session $value");
+    //   if (value != null){
+
+    //     print("Start navigate");
+    //     await Navigator.push(
+    //       context, 
+    //       MaterialPageRoute(builder: (context) => WalletConnectPage())
+    //     );
+    //   }
+    // });
   }
 
   Future<void> submitLogin() async {
 
-    MyDialog().dialogLoading(context);
-    print("submitLogin");
-    try {
-      await Future.delayed(Duration(seconds: 1), (){
-        Navigator.push(context, MaterialPageRoute(builder: (context) => SetupPage()));
-      });
-      // Provider.of<ApiProvider>(context, listen: false).loginSELNetwork(email: "condaveat123@gmail.com", password: "12345").then((value) async {
-        
-      //   // Close Dialog
-      //   Navigator.pop(context);
-        
-      //   if (value == true){
-      //     await MyDialog().customDialog(context, "Message", "Successfully login");
-      //     // Navigator.push(context, MaterialPageRoute(builder: (context) => SetupPage()));
-      //   } else {
-      //     await MyDialog().customDialog(context, "Oops", "Failed login");
+    
+    Backend().login("bytesharedmin@gmail.com", "adminbyteshare5556").then((value) async {
+      Map<String, dynamic> _map = await json.decode(value.body);
+      print("_map['access_token'] $_map");
+      
+      //Decode access_token
+      JwtDecode.tryParseJwt(_map['access_token'], context);
+      GraphQLConfiguration.setToken(_map['access_token']);
+    });
+    // MyDialog().dialogLoading(context);
+    // try {
 
-      //   }
-      // });
+    //   await _api!.loginSELNetwork(email: emailInputController.text, password: passwordInputController.text).then((value) async {
 
+    //     if (value['status'] == true) {
+          
+    //       Provider.of<RegistrationProvider>(context, listen: false).email = emailInputController.text;
+    //       Provider.of<RegistrationProvider>(context, listen: false).password = passwordInputController.text;
 
-      // await Backend().login(emailInputController.text, passwordInputController.text ).then((value) async {
-      //   print("value ${value.body} ");
-      //   dynamic decode = json.decode(value.body);
-      //   Navigator.pop(context);
-      //   if (value.statusCode == 200){
-      //     // await MyDialog().customDialog(context, "Message", "${decode['message']}");
-      //     await StorageServices.storeData(decode['access_token'], DbKey.token);
-      //     Navigator.push(context, MaterialPageRoute(builder: (context) => SetupPage()));
-      //   } else {
-      //     await MyDialog().customDialog(context, "Oops", "${decode['message']}");
+    //       Map<String, dynamic> result = await _api!.query(email: emailInputController.text);
 
-      //   }
+    //       Provider.of<HomeProvider>(context, listen: false).setWallet = result['accountId'];//_api!.accountM.address!;
+    //       _api!.accountM.address = result['accountId'];//_api!.accountM.address!;
+    //       print(_api!.accountM.address);
+    //       Provider.of<HomeProvider>(context, listen: false).homeModel.email = emailInputController.text;//_api!.accountM.address!;
+    //       await _api!.encryptData(context: context);
+    //       await StorageServices.storeData(true, DbKey.login);
 
-      // });
+    //       Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => DashboardPage()), (route) => false);
+ 
+    //     } else {
+    //       Navigator.pop(context);
+    //       await MyDialog().customDialog(context, "Message", "${value['message']}");
+    //     }
+    //   });
 
-    } catch (e) {
-      print("Error submitSignUp $e");
-      Navigator.pop(context);
-    }
+    // } catch (e) {
+    //   debugPrint("Error submitSignUp $e");
+    //   // Navigator.pop(context);
+    // }
   }
 
   @override
   void initState() {
+    // initialize();
     isLogin();
-    emailInputController.text = "rithythul@gmail.com";
-    passwordInputController.text = "123456";
+    _api = Provider.of<ApiProvider>(context, listen: false);
+    // emailInputController.text = "condaveat@gmail.com";
+    // passwordInputController.text = "123456";
     super.initState();
   }
 
@@ -110,15 +139,18 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return checkLogin == false 
-    ? LoginPageBody(
-      emailInputController: emailInputController,
-      passwordInputController: passwordInputController,
-      handleRememberMe: handleRememberMe,
-      isChecked: isChecked,
-      formKey: formKey,
-      validator: validator,
-      submitLogin: submitLogin
-    ) 
+    // ? TestGlasUI(
+    //   body: 
+     ? LoginPageBody(
+        emailInputController: emailInputController,
+        passwordInputController: passwordInputController,
+        handleRememberMe: handleRememberMe,
+        isChecked: isChecked,
+        formKey: formKey,
+        validator: validator,
+        submitLogin: submitLogin
+      )
+    // ) 
     : const Scaffold(body: Center(
       child: CircularProgressIndicator(),
     ),);

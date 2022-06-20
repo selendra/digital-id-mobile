@@ -1,6 +1,66 @@
+import 'dart:io';
+import 'dart:typed_data';
+import 'dart:ui';
+
+import 'package:flutter/rendering.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_share/flutter_share.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:digital_id/all_export.dart';
+import 'package:digital_id/provider/api_provider.dart';
 
 class Services {
+
+  static ImagePicker imagePicker = ImagePicker();
+
+  static Future<XFile> pickImage(ImageSource source) async {
+
+    final pickedFile = await imagePicker.pickImage(source: source, imageQuality: 90);
+    
+    return pickedFile!;
+  }
+
+  Future<void> qrShare(GlobalKey globalKey, String _wallet) async {
+    try {
+      final RenderRepaintBoundary boundary = globalKey.currentContext!.findRenderObject() as RenderRepaintBoundary;
+
+      final image = await boundary.toImage(pixelRatio: 5.0);
+      final ByteData? byteData = await image.toByteData(format: ImageByteFormat.png);
+      final Uint8List pngBytes = byteData!.buffer.asUint8List();
+      final tempDir = await getTemporaryDirectory();
+      final file = await File("${tempDir.path}/selendra.png").create();
+      await file.writeAsBytes(pngBytes);
+
+      FlutterShare.share(title: file.path, text: _wallet);
+    } catch (e) {
+      // if (ApiProvider().isDebug == false) print("Error qrShare ${e.toString()}");
+    }
+  }
+
+  Future<void> loginEncryption(BuildContext context) async {
+
+
+
+    // Encode Data
+    // Map<String, dynamic>? map = {
+    //   'name': _registration.usrName ?? '',
+    //   'email': _registration.email,
+    //   'password': _registration.password,
+    //   'seed': _seed
+    // };
+    
+    // // Encrypt Data
+    // Encrypted _encrypted = Encryption().encryptAES(json.encode(map));
+    // await StorageServices.storeData(_encrypted.bytes, DbKey.sensitive);
+
+    // await getCurrentAccount().then((value) async {
+    // print("Finish getCurrentAccount");
+    //   // Make Web3 account Link with Email Address
+    //   await createWeb3linkSel(email: _registration.email);
+    //   print("finish createWeb3linkSel");
+    // });
+  }
 
 //   static int myNumCount = 0;
 

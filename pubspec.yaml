@@ -1,4 +1,4 @@
-name: student_id
+name: digital_id
 description: A new Flutter project.
 
 # The following line prevents the package from being accidentally published to
@@ -15,7 +15,7 @@ publish_to: "none" # Remove this line if you wish to publish to pub.dev
 # In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
-version: 1.0.0+4
+version: 1.0.0+10
 
 environment:
   sdk: ">=2.16.1 <3.0.0"
@@ -27,43 +27,61 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
-  bip39: ^1.0.6
+  basic_utils: 
+  bip39: 
+  camera: 
+  carousel_slider: 
+  connectivity: 
+  connectivity_wrapper: 
   cupertino_icons: ^1.0.2
+  cupertino_stepper: 
+  eth_sig_util: 
+  expansion_tile_card: ^2.0.0
   flutter:
     sdk: flutter
-
-
-  # The following adds the Cupertino Icons font to your application.
-  # Use with the CupertinoIcons class for iOS style icons.
-  connectivity:
-  connectivity_wrapper:
-  qr_flutter:
+  flutter_launcher_icons: 
+  flutter_share: 
+  glassmorphism: 
+  google_fonts: 
+  graphql_flutter: 
+  hexcolor: 
+  iconsax: ^0.0.8
   image_picker: 
-  camera:
-  hexcolor:
+  jwt_decode: 
+  mnemonic: 
+  motion_toast: 
+  page_transition: 
+  path: 
+  path_provider: 
+  polkawallet_sdk: 0.4.2
   provider: 
-  flutter_launcher_icons:
-  path_provider:
-  path:
-
+  qr_code_scanner: 
+  qr_flutter: 
+  rename: 
+  share: 
   shared_preferences: 
-  
+  socket_io_client: 2.0.0-beta.4-nullsafety.0
+  wallet_connect: 
+  walletconnect_dart: 
+  web3dart: 
+
 dependency_overrides:
-    # git:
-    #   url: https://github.com/polkawallet-io/ui.git
-    #   ref: 485a9cde97f2446d74a1aeb6d8d63e33683461a5
-    
-  polkawallet_sdk:
-  flutter_svg:
+  encrypt: 
+  # git:
+  #   url: https://github.com/polkawallet-io/ui.git
+  #   ref: 485a9cde97f2446d74a1aeb6d8d63e33683461a5
+  polkawallet_sdk: 0.4.2
+  flutter_svg: 
   charts_flutter:
-     git:
-       url: https://github.com/google/charts
-       path: charts_flutter
+    git:
+      url: https://github.com/google/charts
+      path: charts_flutter
   permission_handler: ^8.3.0
-  # get_storage:
+  get_storage: 2.0.2
+  get: 4.6.1
   # flutter_aes_ecb_pkcs5
   flutter_native_splash: ^2.0.4
-  responsive_framework: ^0.1.7
+  responsive_framework: 0.1.7
   share: ^2.0.4
   step_progress_indicator: ^1.0.2
 
@@ -91,8 +109,9 @@ flutter:
     - assets/logos/
     - assets/icons/
     - assets/illustration/
-    - lib/core/js_api/
-    - lib/core/js_api/dist/main.js
+    - assets/images/
+    # - lib/core/js_api/
+    # - lib/core/js_api/dist/main.js
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
   # For details regarding adding assets from package dependencies, see
@@ -102,12 +121,14 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
-  # fonts:
-  #   - family: Schyler
-  #     fonts:
-  #       - asset: fonts/Schyler-Regular.ttf
-  #       - asset: fonts/Schyler-Italic.ttf
-  #         style: italic
+  fonts:
+    - family: Quicksand
+      fonts:
+        - asset: assets/fonts/Quicksand/Quicksand-Regular.ttf
+        - asset: assets/fonts/Quicksand/Quicksand-Bold.ttf
+        - asset: assets/fonts/Quicksand/Quicksand-Light.ttf
+        - asset: assets/fonts/Quicksand/Quicksand-Medium.ttf
+        - asset: assets/fonts/Quicksand/Quicksand-VariableFont_wght.ttf
   #   - family: Trajan Pro
   #     fonts:
   #       - asset: fonts/TrajanPro.ttf

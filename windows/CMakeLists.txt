@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.14)
-project(student_id LANGUAGES CXX)
+project(digital_id LANGUAGES CXX)
 
-set(BINARY_NAME "student_id")
+set(BINARY_NAME "digital_id")
 
 cmake_policy(SET CMP0063 NEW)
 

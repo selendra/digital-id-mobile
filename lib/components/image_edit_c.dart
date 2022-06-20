@@ -1,4 +1,4 @@
-import 'package:student_id/all_export.dart';
+import 'package:digital_id/all_export.dart';
 
 class ImageEditComponent extends StatelessWidget{
   
@@ -13,23 +13,23 @@ class ImageEditComponent extends StatelessWidget{
       children: [
         image!,
 
-        Positioned(
-          top: 0,
-          right: 0,
-          child: IconButton(
-            onPressed: (){
-              action!();
-            }, 
-            icon: Container(
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: Colors.white
-              ),
-              padding: EdgeInsets.all(5),
-              child: Icon(Icons.edit_outlined),
-            )
-          ),
-        )
+        // Positioned(
+        //   top: 5,
+        //   right: 5,
+        //   child: IconButton(
+        //     onPressed: (){
+        //       action!();
+        //     }, 
+        //     icon: Container(
+        //       decoration: BoxDecoration(
+        //         shape: BoxShape.circle,
+        //         color: Colors.white
+        //       ),
+        //       padding: EdgeInsets.all(5),
+        //       child: Icon(Icons.edit_outlined),
+        //     )
+        //   ),
+        // )
       ],
     );
   }

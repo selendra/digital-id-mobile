@@ -1,6 +1,6 @@
-import 'package:student_id/all_export.dart';
-import 'package:student_id/components/text_c.dart';
-import 'package:student_id/models/dashboard_m.dart';
+import 'package:digital_id/all_export.dart';
+import 'package:digital_id/components/text_c.dart';
+import 'package:digital_id/models/dashboard_m.dart';
 
 class Info extends StatefulWidget{
 
@@ -29,6 +29,7 @@ class InfoState extends State<Info>{
               child: TextFormField(
                 style: TextStyle(fontWeight: FontWeight.w700),
                 decoration: InputDecoration(
+                  hintText: "N/A",
                   label: MyText(text: "Name", color2: greyColor),
                   floatingLabelBehavior: FloatingLabelBehavior.always,
 
@@ -42,11 +43,13 @@ class InfoState extends State<Info>{
                 controller: widget.model!.nameController,
               ),
             ),
+
             Padding(
               padding: EdgeInsets.only(bottom: 5),
               child: TextFormField(
                 style: TextStyle(fontWeight: FontWeight.w700),
                 decoration: InputDecoration(
+                  hintText: "N/A",
                   label: MyText(text: "Email", color2: greyColor),
                   floatingLabelBehavior: FloatingLabelBehavior.always,
 
@@ -65,6 +68,7 @@ class InfoState extends State<Info>{
               child: TextFormField(
                 style: TextStyle(fontWeight: FontWeight.w700),
                 decoration: InputDecoration(
+                  hintText: "N/A",
                   label: MyText(text: "Nationality", color2: greyColor),
                   floatingLabelBehavior: FloatingLabelBehavior.always,
 
@@ -78,11 +82,13 @@ class InfoState extends State<Info>{
                 controller: widget.model!.nationalityController,
               )
             ),
+
             Padding(
               padding: EdgeInsets.only(bottom: 5),
               child: TextFormField(
                 style: TextStyle(fontWeight: FontWeight.w700),
                 decoration: InputDecoration(
+                  hintText: "N/A",
                   label: MyText(text: "Phone Number", color2: greyColor),
                   floatingLabelBehavior: FloatingLabelBehavior.always,
 
@@ -94,6 +100,46 @@ class InfoState extends State<Info>{
                   enabled: widget.model!.isEditing,
                 ),
                 controller: widget.model!.phoneNumController,
+              )
+            ),
+
+            Padding(
+              padding: EdgeInsets.only(bottom: 5),
+              child: TextFormField(
+                style: TextStyle(fontWeight: FontWeight.w700),
+                decoration: InputDecoration(
+                  hintText: "N/A",
+                  label: MyText(text: "Country", color2: greyColor),
+                  floatingLabelBehavior: FloatingLabelBehavior.always,
+
+                  //Style
+                  labelStyle: TextStyle(color: greyColor),
+                  enabledBorder: widget.model!.isEditing == false ? UnderlineInputBorder(borderSide: BorderSide.none) : UnderlineInputBorder(),
+                  border: widget.model!.isEditing == false ? UnderlineInputBorder(borderSide: BorderSide.none) : UnderlineInputBorder(),
+
+                  enabled: widget.model!.isEditing,
+                ),
+                controller: widget.model!.countryController,
+              )
+            ),
+
+            Padding(
+              padding: EdgeInsets.only(bottom: 5),
+              child: TextFormField(
+                style: TextStyle(fontWeight: FontWeight.w700),
+                decoration: InputDecoration(
+                  hintText: "N/A",
+                  label: MyText(text: "Date of birth", color2: greyColor),
+                  floatingLabelBehavior: FloatingLabelBehavior.always,
+
+                  //Style
+                  labelStyle: TextStyle(color: greyColor),
+                  enabledBorder: widget.model!.isEditing == false ? UnderlineInputBorder(borderSide: BorderSide.none) : UnderlineInputBorder(),
+                  border: widget.model!.isEditing == false ? UnderlineInputBorder(borderSide: BorderSide.none) : UnderlineInputBorder(),
+
+                  enabled: widget.model!.isEditing,
+                ),
+                controller: widget.model!.dobController,
               )
             ),
           ],

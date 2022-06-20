@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:student_id/all_export.dart';
+import 'package:digital_id/all_export.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:student_id/core/config/app_config.dart';
+import 'package:digital_id/core/config/app_config.dart';
 class Navbar extends StatefulWidget {
   const Navbar({Key? key}) : super(key: key);
 
@@ -15,11 +15,11 @@ class _NavbarState extends State<Navbar>
   int _selectedIndex = 0;
 
   static const List<Widget> _options  = <Widget> [
-    DashboardPage(),
-    AccountPage(),
-    CryptosPage(),
-    StoragesPage(),
-    ToolsPage(),
+    // DashboardPage(),
+    // AccountPage(),
+    // CryptosPage(),
+    // StoragesPage(),
+    // ToolsPage(),
   ];
 
   void _onItemTap(int index){

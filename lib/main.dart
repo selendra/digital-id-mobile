@@ -1,25 +1,45 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_native_splash/flutter_native_splash.dart';
+import 'package:flutter/services.dart';
+import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:responsive_framework/responsive_framework.dart';
-import 'package:student_id/all_export.dart';
+import 'package:digital_id/all_export.dart';
 import 'package:provider/provider.dart';
-import 'package:student_id/provider/api_provider.dart';
-import 'package:student_id/provider/identifier_p.dart';
-import 'package:student_id/screens/registration/signup/signup.dart';
+import 'package:digital_id/components/walletConnect_c.dart';
+import 'package:digital_id/provider/api_provider.dart';
+import 'package:digital_id/provider/graphql_p.dart';
+import 'package:digital_id/provider/home_p.dart';
+import 'package:digital_id/provider/digital_id_p.dart';
+import 'package:digital_id/provider/registration_p.dart';
+
+import 'screens/digital_id/lading.dart';
+import 'shared/bg_shared.dart';
 
 void main() {
-  FlutterNativeSplash.removeAfter(initialization);
+  // FlutterNativeSplash.removeAfter(initialization);
+  WidgetsFlutterBinding.ensureInitialized();
+  // SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   runApp(
     MultiProvider(
       providers: [
-        ChangeNotifierProvider<IdentifierProvider>(
-          create: (context) => IdentifierProvider(),
+        ChangeNotifierProvider<DigitalIDProvider>(
+          create: (context) => DigitalIDProvider(),
         ),
         ChangeNotifierProvider<ApiProvider>(
           create: (context) => ApiProvider(),
-        )
+        ),
+        ChangeNotifierProvider<RegistrationProvider>(
+          create: (context) => RegistrationProvider(),
+        ),
+        ChangeNotifierProvider<WalletConnectComponent>(
+          create: (context) => WalletConnectComponent(),
+        ),
+        ChangeNotifierProvider<HomeProvider>(
+          create: (context) => HomeProvider(),
+        ),
+        ChangeNotifierProvider<GraphQLConfiguration>(
+          create: (context) => GraphQLConfiguration(),
+        ),
       ],
-      child: MyApp()
+      child: const MyApp()
     )
   );
 }
@@ -28,11 +48,56 @@ void initialization(BuildContext context) async {
   // This is where you can initialize the resources needed by your app while
   // the splash screen is displayed.
 }
-
-double paddingSize = 20;
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
 
   const MyApp({Key? key}) : super(key: key);
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  
+  @override
+  initState(){
+    initApiProvider();
+    WalletConnectComponent _wConnectC = WalletConnectComponent();
+    _wConnectC.setBuildContext = context;
+    super.initState();
+  }
+  
+  initApiProvider() async {
+    print("initApiProvider");
+    try {
+
+      ApiProvider _apiProvider = Provider.of<ApiProvider>(context, listen: false);
+
+      // await Provider.of<ApiProvider>(context, listen: false).addAcc(context: context, usrName: _registration.usrName ?? '', password: "1234", seed: _seed).then((value) async {
+      //   await encryptData(context: context, seed: _seed);
+      // });
+      
+      await _apiProvider.initApi(context: context).then((value) async {
+        print("_apiProvider.getKeyring.keyPairs.isNotEmpty ${_apiProvider.getKeyring.keyPairs.isNotEmpty}");
+        
+        await _apiProvider.query(email: "vayime4593@dmosoft.com").then((value) async {
+
+          Provider.of<HomeProvider>(context, listen: false).setWallet = value['accountId'];
+          _apiProvider.accountM.address = value['accountId'];
+          await _apiProvider.queryByAddr(addr: value['accountId']);
+        });
+        if (_apiProvider.getKeyring.keyPairs.isNotEmpty) {
+          await _apiProvider.getAddressIcon();
+
+          await _apiProvider.getCurrentAccount(funcName: "keyring").then((value) {
+            Provider.of<HomeProvider>(context, listen: false).setWallet = _apiProvider.accountM.address!;
+          });
+        }
+        // await Provider.of<ApiProvider>(context, listen: false).getCurrentAccount();
+      });
+    } catch (e){
+      print("Error initApiProvider $e");
+    }
+  }
 
   // This widget is the root of your application.
   @override
@@ -40,6 +105,8 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Student ID',
       theme: ThemeData(
+        fontFamily: "Quicksand",
+        scaffoldBackgroundColor: HexColor("#F3F3F3"),
         // This is the theme of your application.
         //
         // Try running your application with "flutter run". You'll see the
@@ -64,7 +131,8 @@ class MyApp extends StatelessWidget {
           const ResponsiveBreakpoint.autoScale(2460, name: "4K"),
         ],
       ),
-      home: const LoginPage(),
+      home: DashboardPage(),
+      //LoginPage(),//CreateWalletPage(),
       onGenerateRoute: RouteGenerator.generateRoute,
       initialRoute: loginRoute,
     );
