@@ -131,11 +131,7 @@ class _MyAppState extends State<MyApp> {
           const ResponsiveBreakpoint.autoScale(2460, name: "4K"),
         ],
       ),
-<<<<<<< HEAD
       home: Home(),
-=======
-      home: DashboardPage(),
->>>>>>> samnang
       //LoginPage(),//CreateWalletPage(),
       onGenerateRoute: RouteGenerator.generateRoute,
       initialRoute: loginRoute,
