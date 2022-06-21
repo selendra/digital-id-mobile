@@ -10,7 +10,8 @@ import 'package:digital_id/provider/home_p.dart';
 import 'package:digital_id/provider/digital_id_p.dart';
 import 'package:digital_id/theme/theme.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:share/share.dart';
+import 'package:flutter_share/flutter_share.dart';
+// import 'package:share/share.dart';
 class IdentityInfo extends StatelessWidget{
 
   final DashBoardModel? dashBoardModel;
@@ -33,7 +34,7 @@ class IdentityInfo extends StatelessWidget{
               children: [
                 IconButton(
                   onPressed: (){
-                    Share.share(Provider.of<HomeProvider>(context, listen: false).homeModel.wallet);
+                    FlutterShare.share(title: Provider.of<HomeProvider>(context, listen: false).homeModel.wallet);
                   }, 
                   icon: Icon(Icons.share)
                 ),

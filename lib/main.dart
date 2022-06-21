@@ -1,3 +1,4 @@
+import 'package:digital_id/provider/documents_p.dart';
 import 'package:flutter/services.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:responsive_framework/responsive_framework.dart';
@@ -38,6 +39,9 @@ void main() {
         ChangeNotifierProvider<GraphQLConfiguration>(
           create: (context) => GraphQLConfiguration(),
         ),
+        ChangeNotifierProvider<DocumentProvider>(
+          create: (context) => DocumentProvider(),
+        ),
       ],
       child: const MyApp()
     )
@@ -61,6 +65,9 @@ class _MyAppState extends State<MyApp> {
   @override
   initState(){
     // initApiProvider();
+
+    Provider.of<DocumentProvider>(context, listen: false).initJson();
+
     WalletConnectComponent _wConnectC = WalletConnectComponent();
     _wConnectC.setBuildContext = context;
     super.initState();

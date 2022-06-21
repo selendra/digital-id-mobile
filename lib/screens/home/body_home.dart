@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:digital_id/provider/documents_p.dart';
 import 'package:digital_id/screens/kyc/setup_kyc.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:provider/provider.dart';
@@ -77,6 +78,7 @@ class DashBoardBody extends StatelessWidget {
       ),
       body: Consumer<HomeProvider>(
         builder: (context, provider, widget){
+
           return SafeArea(
             child: SingleChildScrollView(
               child: Column(
@@ -105,6 +107,78 @@ class DashBoardBody extends StatelessWidget {
                       icon: Icon(Iconsax.arrow_right_3),
                       colorBtn: whiteColor.withOpacity(0.06),
                       colorText: whiteColor,
+                    ),
+                  ),
+
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Consumer<DocumentProvider>(
+                      builder: (context, provider, widget){
+                        return ListView.builder(
+                          physics: NeverScrollableScrollPhysics(),
+                          shrinkWrap: true,
+                          itemCount: provider.lsMandotaryProp!.length,
+                          itemBuilder: ((context, index) {
+                            return TextFormField(
+                              keyboardType: provider.lsMandotaryProp![index]['type'] == 'integer' ? TextInputType.number : TextInputType.text,
+                              controller: provider.lsMandotaryProp![index]['formController'],
+                              decoration: InputDecoration(
+                                
+                                hintText: provider.lsMandotaryProp![index]['key']
+                              ),
+                            );
+                          })
+                        );
+                      },
+                    ),
+                  ),
+
+                  Divider(height: 2,),
+
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Consumer<DocumentProvider>(
+                      builder: (context, provider, widget){
+                        return ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: provider.lsPopularProp!.length,
+                          itemBuilder: ((context, index) {
+                            return TextFormField(
+                              keyboardType: provider.lsPopularProp![index]['type'] == 'integer' ? TextInputType.number : TextInputType.text,
+                              controller: provider.lsPopularProp![index]['formController'],
+                              decoration: InputDecoration(
+                                
+                                hintText: provider.lsPopularProp![index]['key']
+                              ),
+                            );
+                          })
+                        );
+                      },
+                    ),
+                  ),
+
+                  Divider(height: 2,),
+
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Consumer<DocumentProvider>(
+                      builder: (context, provider, widget){
+                        return ListView.builder(
+                          physics: NeverScrollableScrollPhysics(),
+                          shrinkWrap: true,
+                          itemCount: provider.lsIssuerProp!.length,
+                          itemBuilder: ((context, index) {
+                            return TextFormField(
+                              keyboardType: provider.lsIssuerProp![index]['type'] == 'integer' ? TextInputType.number : TextInputType.text,
+                              controller: provider.lsIssuerProp![index]['formController'],
+                              decoration: InputDecoration(
+                                
+                                hintText: provider.lsIssuerProp![index]['key']
+                              ),
+                            );
+                          })
+                        );
+                      },
                     ),
                   ),
                 ],
