@@ -1,3 +1,4 @@
+import 'package:digital_id/screens/createid/create_id.dart';
 import 'package:digital_id/screens/id_detail/id_detail.dart';
 import 'package:digital_id/screens/kyc/setup_kyc.dart';
 import 'package:flutter/services.dart';
@@ -133,7 +134,7 @@ class _MyAppState extends State<MyApp> {
           const ResponsiveBreakpoint.autoScale(2460, name: "4K"),
         ],
       ),
-      home: SetUpKYC(),
+      home: CreateID(),
       //LoginPage(),//CreateWalletPage(),
       onGenerateRoute: RouteGenerator.generateRoute,
       initialRoute: loginRoute,

@@ -47,5 +47,5 @@ export 'package:iconsax/iconsax.dart';
 /// Model
 /// 
 export 'package:digital_id/models/dashboard_m.dart';
-double paddingSize = 20;
+const double paddingSize = 20;
 double btnHeight = 60;

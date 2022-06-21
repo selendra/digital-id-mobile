@@ -84,6 +84,7 @@ dependency_overrides:
   responsive_framework: 0.1.7
   share: ^2.0.4
   step_progress_indicator: ^1.0.2
+  syncfusion_flutter_datepicker: ^20.1.61
 
 flutter_icons:
   android: true
