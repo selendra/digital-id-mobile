@@ -38,6 +38,7 @@ class SetUpKYCBody extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+
             Padding(
               padding: EdgeInsets.symmetric(horizontal: paddingSize,),
               child: MyText(
@@ -87,7 +88,6 @@ class SetUpKYCBody extends StatelessWidget {
       child: CustomButtonIcon(
         onPressed: () async => {
           createIDBottomSheet(context),
-          // Navigator.push(context, MaterialPageRoute(builder: (context) => const FrontSide())),
         },
         text: 'National ID',
         icon: const Icon(Iconsax.arrow_right_3),

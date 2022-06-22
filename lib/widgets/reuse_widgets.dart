@@ -414,15 +414,13 @@ Widget titleDashboard(String title, BuildContext context, {Widget? title2, TabCo
   );
 }
 
-Widget getBalanceBox(
-    String title, TextEditingController? data, BuildContext context) {
+Widget getBalanceBox(String title, TextEditingController? data, BuildContext context) {
   return Padding(
     padding: const EdgeInsets.only(top: 20, left: 70, right: 70),
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(title,
-            style: TextStyle(color: greyColor, fontWeight: FontWeight.w700)),
+        Text(title, style: TextStyle(color: greyColor, fontWeight: FontWeight.w700)),
         Container(
           color: greyBackgroundColor,
           child: TextField(
@@ -431,8 +429,7 @@ Widget getBalanceBox(
             controller: data!,
             style: const TextStyle(fontWeight: FontWeight.w700),
             decoration: const InputDecoration(
-              contentPadding:
-                  EdgeInsets.symmetric(vertical: 0.0, horizontal: 20.0),
+              contentPadding: EdgeInsets.symmetric(vertical: 0.0, horizontal: 20.0),
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.all(Radius.circular(4.0)),
               ),
@@ -534,7 +531,10 @@ void createIDBottomSheet(BuildContext context) {
                     padding: EdgeInsets.symmetric(horizontal: paddingSize, vertical: 10),
                     child: GestureDetector(
                       onTap: () async {
-                        
+                        // Navigator.push(
+                        //   context, 
+                        //   MaterialPageRoute(builder: (context) => )
+                        // );
                       },
                       child: Row(
                         children: [
