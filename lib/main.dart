@@ -1,4 +1,5 @@
 import 'package:digital_id/provider/documents_p.dart';
+import 'package:digital_id/screens/kyc/setup_kyc.dart';
 import 'package:flutter/services.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:responsive_framework/responsive_framework.dart';
@@ -138,7 +139,7 @@ class _MyAppState extends State<MyApp> {
           const ResponsiveBreakpoint.autoScale(2460, name: "4K"),
         ],
       ),
-      home: Home(),
+      home: SetUpKYC(),
       //LoginPage(),//CreateWalletPage(),
       onGenerateRoute: RouteGenerator.generateRoute,
       initialRoute: loginRoute,

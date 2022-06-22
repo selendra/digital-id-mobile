@@ -584,7 +584,7 @@ class CustomButton extends StatelessWidget {
   final Color? colorBtn;
   final Color? colorText;
   final EdgeInsetsGeometry? edgePadding;
-  CustomButton({
+  const CustomButton({
     this.text, this.colorBtn, this.colorText, this.onPressed, this.edgePadding, Key? key})
       : super(key: key);
 
@@ -635,12 +635,14 @@ class CustomButtonIcon extends StatelessWidget {
   final Color? colorBtn;
   final Color? colorText;
   final Icon? icon;
+  final bool? bold;
   const CustomButtonIcon({
     this.text, 
     this.colorBtn, 
     this.colorText, 
     this.onPressed, 
     this.icon,
+    this.bold = false,
     Key? key
   }) : super(key: key);
 
@@ -671,7 +673,7 @@ class CustomButtonIcon extends StatelessWidget {
                 Expanded(child: Container()),
                 MyText(
                   text: text!,
-                  fontWeight: FontWeight.bold,
+                  fontWeight: bold == true ? FontWeight.bold : FontWeight.w400,
                   color2: colorText,
                 ),
                 Expanded(child: Container()),

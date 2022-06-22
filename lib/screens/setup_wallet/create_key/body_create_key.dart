@@ -151,6 +151,7 @@ class CreateKeyBody extends StatelessWidget {
                                               colorBtn: primaryColor.withOpacity(0.17),
                                               colorText: primaryColor,
                                               icon: Icon(Icons.copy_all_outlined, color: primaryColor),
+                                              bold: true,
                                             )
 
                                           ),
