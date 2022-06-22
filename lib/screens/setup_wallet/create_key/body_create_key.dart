@@ -174,12 +174,12 @@ class CreateKeyBody extends StatelessWidget {
                   child: CustomButton(
                     onPressed: () async => {
 
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => VerifyPassphrase(seed: seed,),
-                        ),
-                      ),
+                      // Navigator.push(
+                      //   context,
+                      //   MaterialPageRoute(
+                      //     builder: (context) => VerifyPassphrase(seed: seed,),
+                      //   ),
+                      // ),
                     },
                     text: 'Continue',
                     colorBtn: primaryColor,

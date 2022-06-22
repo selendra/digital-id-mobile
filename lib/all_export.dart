@@ -44,6 +44,12 @@ export 'package:digital_id/theme/theme.dart';
 
 export 'package:iconsax/iconsax.dart';
 
+export 'package:transition/transition.dart';
+
+export 'package:digital_id/core/config/app_config.dart';
+
+export 'package:digital_id/services/db_key.dart';
+
 /// Model
 /// 
 export 'package:digital_id/models/dashboard_m.dart';

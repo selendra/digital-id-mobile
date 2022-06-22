@@ -1,18 +1,41 @@
 import 'dart:convert';
 import 'dart:typed_data';
 
+import 'package:digital_id/models/smart_contract.m.dart';
+import 'package:digital_id/provider/api_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:encrypt/encrypt.dart' as encrypt;
 import 'package:encrypt/encrypt.dart';
 import 'package:pointycastle/asymmetric/api.dart';
 import 'package:basic_utils/basic_utils.dart';
 import 'package:hex/hex.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 // ignore: avoid_classes_with_only_static_members
 class StorageServices {
   
   static String? _decode;
   static SharedPreferences? _preferences;
+
+  final _storage = const FlutterSecureStorage();
+
+  Future<String>? readSecure(String key) async {
+
+    String? res = await _storage.read(key: key);
+    return res != null ? res : '';
+  }
+
+  Future<void> writeSecure(String key, String value) async {
+    await _storage.write(key: key, value: value);
+  }
+
+  Future<void> clearKeySecure(String key) async {
+    await _storage.delete(key: key);
+  }
+
+  Future<void> clearSecure() async {
+    await _storage.deleteAll();
+  }
 
   // final _storage = const FlutterSecureStorage();
 
@@ -113,6 +136,27 @@ class StorageServices {
     _preferences = await SharedPreferences.getInstance();
     await _preferences!.clear();
   }
+
+ static Future<dynamic> fetchAsset(String _path) async {
+    try {
+
+      _preferences = await SharedPreferences.getInstance();
+
+      _decode = _preferences!.getString(_path);
+
+      if (_decode != null){
+
+        final res = SmartContractModel.decode(_decode!);
+
+        return res;
+      }
+
+    } catch (e) {
+      if (ApiProvider().isDebug == true) print("Error fetchAsset $e");
+    }
+    //return _preferences.getString(_path);
+  }
+
 }
 
 class Encryption {

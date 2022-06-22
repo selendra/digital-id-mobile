@@ -1,9 +1,12 @@
 import 'dart:convert';
 import 'dart:math';
 // import 'package:flutter_aes_ecb_pkcs5_fork/flutter_aes_ecb_pkcs5_fork.dart';
-import 'package:aes_ecb_pkcs5_flutter/aes_ecb_pkcs5_flutter.dart';
+// import 'package:aes_ecb_pkcs5_flutter/aes_ecb_pkcs5_flutter.dart';
+import 'package:digital_id/provider/contract_provider.dart';
+import 'package:digital_id/services/db_key.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_aes_ecb_pkcs5/flutter_aes_ecb_pkcs5.dart';
 // import 'package:defichaindart/defichaindart.dart';
 import 'package:polkawallet_sdk/api/types/networkParams.dart';
 // import 'package:polkawallet_sdk/kabob__sdk.dart';
@@ -59,6 +62,8 @@ class ApiProvider with ChangeNotifier {
   String? _jsCode;
 
   bool isMainnet = true;
+
+  bool isDebug = false;
   
   int selNativeIndex = 0;
   int selV1Index = 1;
@@ -81,12 +86,14 @@ class ApiProvider with ChangeNotifier {
       await rootBundle.loadString('lib/core/js_api/dist/main.js').then((String js) {
         _jsCode = js;
       });
-      await _keyring.init([42]);
+
+      print("finish load main.js");
+      await _keyring.init([0, 42]);
       print("finish init keyring");
       await _sdk.init(_keyring, jsCode: _jsCode);
       print("finish init sdk");
       _apiKeyring = MyApiKeyring(_sdk.api, _sdk.api.keyring.service!);
-      await connectNode(context: context);
+      // await connectNode(context: context);
 
     // } catch (e) {
     //   // print("Error initApi $e");
@@ -355,83 +362,132 @@ class ApiProvider with ChangeNotifier {
     return false;
   }
 
-  Future<NetworkParams?> connectNode({@required BuildContext? context}) async {
-    print("connectNode");
+  Future<NetworkParams?> connectSELNode({@required BuildContext? context, String? funcName = 'keyring'}) async {
+    print("connectSELNode");
     try {
 
-      final node = NetworkParams();
+      NetworkParams node = NetworkParams();
+      NetworkParams? res = NetworkParams();
 
-      // node.name = 'Indranet hosted By Seslendra';
-      node.endpoint = 'wss://student.selendra.org';//'wss://10.1.1.117:9944';//isMainnet ? AppConfig.networkList[0].wsUrlMN : AppConfig.networkList[0].wsUrlTN;
-      node.ss58 = 42;//isMainnet ? AppConfig.networkList[0].ss58MN : AppConfig.networkList[0].ss58;
+      node.name = 'Indranet hosted By Selendra';
+      node.endpoint = isMainnet ? AppConfig.networkList[0].wsUrlMN : AppConfig.networkList[0].wsUrlTN;
+      node.ss58 = isMainnet ? AppConfig.networkList[0].ss58MN : AppConfig.networkList[0].ss58;
 
-      // node.endpoint = 'wss://rpc1-mainnet.selendra.org/';//isMainnet ? AppConfig.networkList[0].wsUrlMN : AppConfig.networkList[0].wsUrlTN;
-      // node.ss58 = 972;//isMainnet ? AppConfig.networkList[0].ss58MN : AppConfig.networkList[0].ss58;
-
-      final res = await _sdk.api.connectNode(_keyring, [node]).then((value) async {
-        // await addAcc(context: context);
-        // Check If Not Yet Login Not Allow To Auto Gernate Account
-        await StorageServices.fetchData(DbKey.login).then((login) async {
-          await StorageServices.fetchData(DbKey.sensitive).then((sensitive) async {
-            if (value == null && sensitive == null && _keyring.allAccounts.isEmpty){
-              await autoGenerateAcc(context: context);
-            }
-          });
-        });
+      await _sdk.api.connectNode(_keyring, [node]).then((value) async {
+        res = value;
+        if (getKeyring.keyPairs.isNotEmpty) await getSelNativeChainDecimal(context: context, funcName: funcName);
       });
 
       // final res = await _sdk.webView!.evalJavascript("settings.connect(${jsonEncode([node].map((e) => e.endpoint).toList())})");
 
       // if (res != null) 
 
-      notifyListeners();
-
       return res;
     } catch (e) {
-      // print("Error connectSELNode $e");
+      if (ApiProvider().isDebug == true) print("Error connectSELNode $e");
     }
     return null;
   }
 
-  Future<void> autoGenerateAcc({BuildContext? context}) async {
-    print("autoGenerateAcc");
-
+  Future<void> getSelNativeChainDecimal({@required BuildContext? context, String? funcName = 'keyring'}) async {
+    print("getSelNativeChainDecimal");
     try {
+      dynamic res;
+      
+      ContractProvider contract = Provider.of<ContractProvider>(context!, listen: false);
+      
+      // await querySELAddress().then((value) async {
+      //   await _sdk.api.service.webView!.evalJavascript('settings.getChainDecimal(api)').then((value) async {
+          
+      //     res = value;
+      //     contract.listContract[selNativeIndex].chainDecimal = res[0].toString();
+      //     await subSELNativeBalance(context: context);
 
-      String _seed = await Provider.of<ApiProvider>(context!, listen: false).generateMnemonic();
-      print("_Seed $_seed");
-      RegistrationProvider _registration = Provider.of<RegistrationProvider>(context, listen: false);
-      await Provider.of<ApiProvider>(context, listen: false).addAcc(context: context, usrName: _registration.usrName ?? '', password: "1234", seed: _seed).then((value) async {
-        await encryptData(context: context, seed: _seed);
-      });
-    } catch (e){
-      print("Error autoGenerateAcc $e");
+      //     notifyListeners();
+      //   });
+      // });
+    } catch (e) {
+      if (ApiProvider().isDebug == true) print("Error getChainDecimal $e");
     }
-
   }
 
-  Future<void> encryptData({required BuildContext? context, String? seed = ''}) async {
+  // Future<NetworkParams?> connectNode({@required BuildContext? context}) async {
+  //   print("connectNode");
+  //   try {
 
-    RegistrationProvider _registration = Provider.of<RegistrationProvider>(context!, listen: false);
+  //     final node = NetworkParams();
 
-    await getCurrentAccount().then((value) async {
+  //     // node.name = 'Indranet hosted By Seslendra';
+  //     node.endpoint = 'wss://student.selendra.org';//'wss://10.1.1.117:9944';//isMainnet ? AppConfig.networkList[0].wsUrlMN : AppConfig.networkList[0].wsUrlTN;
+  //     node.ss58 = 42;//isMainnet ? AppConfig.networkList[0].ss58MN : AppConfig.networkList[0].ss58;
+
+  //     // node.endpoint = 'wss://rpc1-mainnet.selendra.org/';//isMainnet ? AppConfig.networkList[0].wsUrlMN : AppConfig.networkList[0].wsUrlTN;
+  //     // node.ss58 = 972;//isMainnet ? AppConfig.networkList[0].ss58MN : AppConfig.networkList[0].ss58;
+
+  //     final res = await _sdk.api.connectNode(_keyring, [node]).then((value) async {
+  //       // await addAcc(context: context);
+  //       // Check If Not Yet Login Not Allow To Auto Gernate Account
+  //       await StorageServices.fetchData(DbKey.login).then((login) async {
+  //         await StorageServices.fetchData(DbKey.sensitive).then((sensitive) async {
+  //           if (value == null && sensitive == null && _keyring.allAccounts.isEmpty){
+  //             await autoGenerateAcc(context: context);
+  //           }
+  //         });
+  //       });
+  //     });
+
+  //     // final res = await _sdk.webView!.evalJavascript("settings.connect(${jsonEncode([node].map((e) => e.endpoint).toList())})");
+
+  //     // if (res != null) 
+
+  //     notifyListeners();
+
+  //     return res;
+  //   } catch (e) {
+  //     // print("Error connectSELNode $e");
+  //   }
+  //   return null;
+  // }
+
+  // Future<void> autoGenerateAcc({BuildContext? context}) async {
+  //   print("autoGenerateAcc");
+
+  //   try {
+
+  //     String _seed = await Provider.of<ApiProvider>(context!, listen: false).generateMnemonic();
+  //     print("_Seed $_seed");
+  //     RegistrationProvider _registration = Provider.of<RegistrationProvider>(context, listen: false);
+  //     await Provider.of<ApiProvider>(context, listen: false).addAcc(context: context, usrName: _registration.usrName ?? '', password: "1234", seed: _seed).then((value) async {
+  //       await encryptData(context: context, seed: _seed);
+  //     });
+  //   } catch (e){
+  //     print("Error autoGenerateAcc $e");
+  //   }
+
+  // }
+
+  // Future<void> encryptData({required BuildContext? context, String? seed = ''}) async {
+
+  //   RegistrationProvider _registration = Provider.of<RegistrationProvider>(context!, listen: false);
+
+  //   await getCurrentAccount().then((value) async {
       
-      // Encode Data
-      Map<String, dynamic>? map = {
-        'name': _registration.usrName ?? '',
-        'email': _registration.email,
-        'password': _registration.password,
-        'seed': seed,
-        'pr_key': accountM.pubKey
-      };
+  //     // Encode Data
+  //     Map<String, dynamic>? map = {
+  //       'name': _registration.usrName ?? '',
+  //       'email': _registration.email,
+  //       'password': _registration.password,
+  //       'seed': seed,
+  //       'pr_key': accountM.pubKey
+  //     };
       
-      // Encrypt Data
-      Encrypted _encrypted = Encryption().encryptAES(json.encode(map));
-      await StorageServices.storeData(_encrypted.bytes, DbKey.sensitive);
-      // Make Web3 account Link with Email Address
-      await createWeb3linkSel(email: _registration.email);
-    });
-  }
+  //     // Encrypt Data
+  //     Encrypted _encrypted = Encryption().encryptAES(json.encode(map));
+  //     await StorageServices.storeData(_encrypted.bytes, DbKey.sensitive);
+  //     // Make Web3 account Link with Email Address
+  //     await createWeb3linkSel(email: _registration.email);
+  //   });
+  // }
 
   Future<void> scanQr(String id, {BuildContext? context}) async {
     // id = id.replaceAll('"', "");
@@ -745,8 +801,8 @@ class ApiProvider with ChangeNotifier {
 
   Future<String> decryptPrivateKey(String privateKey, String password) async {
     final String key = Encrypt.passwordToEncryptKey(password);
-    final String decryted = await FlutterAesEcbPkcs5.decryptString(privateKey, key);
-    return decryted;
+    final String? decryted = await FlutterAesEcbPkcs5.decryptString(privateKey, key);
+    return decryted!;
   }
 
   Future<String> encryptPrivateKey(String privateKey, String password) async {
@@ -754,9 +810,9 @@ class ApiProvider with ChangeNotifier {
     try {
 
       final String key = Encrypt.passwordToEncryptKey(password);
-      final String encryted = await FlutterAesEcbPkcs5.encryptString(privateKey, key);
+      final String? encryted = await FlutterAesEcbPkcs5.encryptString(privateKey, key);
       print("Data encrypt $encryted");
-      return encryted;
+      return encryted!;
     } catch (e) {
       // print("Error encryptPrivateKey $e");
     }

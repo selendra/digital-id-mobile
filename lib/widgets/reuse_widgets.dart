@@ -18,6 +18,7 @@ import 'package:digital_id/provider/api_provider.dart';
 import 'package:digital_id/provider/digital_id_p.dart';
 import 'package:digital_id/provider/home_p.dart';
 import 'package:digital_id/services/storage.dart';
+import 'package:lottie/lottie.dart';
 
 import '../shared/typography.dart';
 
@@ -587,5 +588,121 @@ void createIDBottomSheet(BuildContext context) {
         ),
       );
     }
+  );
+}
+
+/* Progress */
+Widget progress({String? content}) {
+  return Material(
+    color: Colors.transparent,
+    child: Stack(
+      alignment: Alignment.center,
+      children: <Widget>[
+        Column(
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            Lottie.asset(
+              "assets/animation/blockchain-animation.json",
+              repeat: true,
+              width: 75,
+            ),
+            // CircularProgressIndicator(
+            //   backgroundColor: Colors.transparent,
+            //   valueColor: AlwaysStoppedAnimation(
+            //     hexaCodeToColor(AppColors.secondary)
+            //   )
+            // ),
+            if (content == null)
+            Container()
+            else
+            Padding(
+              padding: const EdgeInsets.only(bottom: 10.0, top: 16.0),
+              child: MyText(
+                text: content, 
+                color: AppColors.whiteColor,
+              ),
+            ),
+          ],
+        )
+      ],
+    ),
+  );
+}
+
+dialogLoading(BuildContext context, {String? content}) {
+  return showDialog(
+    barrierDismissible: true,
+    context: context,
+    builder: (context) {
+      return BackdropFilter(
+        filter: ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
+        child: progress(content: content)
+      );
+      // WillPopScope(
+      //   onWillPop: () => Future(() => false),
+      //   child: ,
+      // );
+    }
+  );
+}
+
+Future dialogSuccess(BuildContext context, Widget text, Widget title,
+    {Widget? action, Color? bgColor}) async {
+  final result = await showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          backgroundColor: bgColor,
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+          title: Align(
+            child: title,
+          ),
+          content: Padding(
+            padding: const EdgeInsets.only(top: 15.0, bottom: 15.0),
+            child: text,
+          ),
+          actions: <Widget>[action!],
+        );
+      });
+  return result;
+}
+
+Future<void> customDialog(BuildContext context, String title, String contents, {Widget? btn2}) async {
+  await showDialog(
+    context: context,
+    builder: (context) {
+      return BackdropFilter(
+        filter: ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
+        child: AlertDialog(
+          backgroundColor: HexColor(AppColors.bluebgColor),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+          title: Align(
+            child: MyText(
+              text: title,
+              fontWeight: FontWeight.w600,
+              color: AppColors.whiteColor,
+              fontSize: 18, 
+            ),
+          ),
+          content: Padding(
+            padding: const EdgeInsets.only(top: 15.0,),
+            child: MyText(
+              text: contents, 
+              color: AppColors.whiteColor,
+              textAlign: TextAlign.center
+            ),
+          ),
+          actions: <Widget>[
+            btn2 ?? Container(),
+            TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: MyText(text: 'Close', color: AppColors.whiteColor),
+            ),
+          ],
+        ),
+      );
+    },
   );
 }

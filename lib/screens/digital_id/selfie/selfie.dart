@@ -1,3 +1,4 @@
+import 'package:digital_id/services/db_key.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:digital_id/all_export.dart';

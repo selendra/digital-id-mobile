@@ -65,7 +65,7 @@ class _OTPVerifyPageState extends State<OTPVerifyPage> {
           // // Encrypt Data
           // Encrypted _encrypted = Encryption().encryptAES(json.encode(map));
           // await StorageServices.storeData(_encrypted.bytes, DbKey.sensitive);
-          await _api!.autoGenerateAcc(context: context);
+          // await _api!.autoGenerateAcc(context: context);
 
           Provider.of<HomeProvider>(context, listen: false).setWallet = _api!.accountM.address!;
 

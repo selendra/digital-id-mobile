@@ -1,6 +1,9 @@
+import 'package:digital_id/screens/create_seeds/create_seeds.dart';
 import 'package:digital_id/screens/createid/create_id.dart';
 import 'package:digital_id/screens/id_detail/id_detail.dart';
+import 'package:digital_id/screens/import_account/import_acc.dart';
 import 'package:digital_id/screens/kyc/setup_kyc.dart';
+import 'package:digital_id/screens/welcome/welcome.dart';
 import 'package:flutter/services.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:responsive_framework/responsive_framework.dart';
@@ -64,8 +67,8 @@ class _MyAppState extends State<MyApp> {
   @override
   initState(){
     initApiProvider();
-    WalletConnectComponent _wConnectC = WalletConnectComponent();
-    _wConnectC.setBuildContext = context;
+    // WalletConnectComponent _wConnectC = WalletConnectComponent();
+    // _wConnectC.setBuildContext = context;
     super.initState();
   }
   
@@ -82,19 +85,19 @@ class _MyAppState extends State<MyApp> {
       await _apiProvider.initApi(context: context).then((value) async {
         print("_apiProvider.getKeyring.keyPairs.isNotEmpty ${_apiProvider.getKeyring.keyPairs.isNotEmpty}");
         
-        await _apiProvider.query(email: "vayime4593@dmosoft.com").then((value) async {
+        // await _apiProvider.query(email: "vayime4593@dmosoft.com").then((value) async {
 
-          Provider.of<HomeProvider>(context, listen: false).setWallet = value['accountId'];
-          _apiProvider.accountM.address = value['accountId'];
-          await _apiProvider.queryByAddr(addr: value['accountId']);
-        });
-        if (_apiProvider.getKeyring.keyPairs.isNotEmpty) {
-          await _apiProvider.getAddressIcon();
+        //   Provider.of<HomeProvider>(context, listen: false).setWallet = value['accountId'];
+        //   _apiProvider.accountM.address = value['accountId'];
+        //   await _apiProvider.queryByAddr(addr: value['accountId']);
+        // });
+        // if (_apiProvider.getKeyring.keyPairs.isNotEmpty) {
+        //   await _apiProvider.getAddressIcon();
 
-          await _apiProvider.getCurrentAccount(funcName: "keyring").then((value) {
-            Provider.of<HomeProvider>(context, listen: false).setWallet = _apiProvider.accountM.address!;
-          });
-        }
+        //   await _apiProvider.getCurrentAccount(funcName: "keyring").then((value) {
+        //     Provider.of<HomeProvider>(context, listen: false).setWallet = _apiProvider.accountM.address!;
+        //   });
+        // }
         // await Provider.of<ApiProvider>(context, listen: false).getCurrentAccount();
       });
     } catch (e){
@@ -134,7 +137,7 @@ class _MyAppState extends State<MyApp> {
           const ResponsiveBreakpoint.autoScale(2460, name: "4K"),
         ],
       ),
-      home: CreateID(),
+      home: CreateSeeds(),
       //LoginPage(),//CreateWalletPage(),
       onGenerateRoute: RouteGenerator.generateRoute,
       initialRoute: loginRoute,

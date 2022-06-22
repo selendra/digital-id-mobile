@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:math';
 
+import 'package:digital_id/all_export.dart';
 import 'package:http/http.dart' as _http;
 import 'package:digital_id/core/config/app_config.dart';
 import 'package:digital_id/models/sign_up_m.dart';

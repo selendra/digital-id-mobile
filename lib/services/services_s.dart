@@ -240,16 +240,7 @@ class Services {
 //     return tmp;
 //   }
   
-//   static List<FlSpot> jsonToFlList(dynamic flJson) {
-//     List<FlSpot> tmp = [];
-//     flJson.forEach((element) {
-//       tmp.add(
-//         FlSpot(element[0], element[1])
-//       );
-//     });
-//     return tmp;
-//   }
-// }
+}
 
 // class Encryptt {
 //   static String passwordToEncryptKey(String password) {
@@ -270,4 +261,3 @@ class Services {
 //   Future<void> performImmediateUpdate() async {
 //     await InAppUpdate.performImmediateUpdate();
 //   }
-}
