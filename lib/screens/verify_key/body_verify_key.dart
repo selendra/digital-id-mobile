@@ -100,7 +100,7 @@ class VerifyPassphraseBody extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Icon(Iconsax.refresh, color: HexColor(AppColors.whiteColor), size: 3),
+                          Icon(Iconsax.refresh, color: HexColor(AppColors.whiteColor)),
                           SizedBox(width: 9),
                           MyText(
                             text: "Try Again",

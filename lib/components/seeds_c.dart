@@ -18,7 +18,7 @@ class SeedsCompoent {
           Container(
             // Minus 34 Size OF Padding Left & Right
             width: MediaQuery.of(context).size.width / 3 - _seedHeight,
-            height: 5.8,
+            // height: 5.8,
             padding: EdgeInsets.only(top: 8, bottom: 8),
             alignment: Alignment.center,
             margin: const EdgeInsets.all(4),
@@ -31,7 +31,7 @@ class SeedsCompoent {
           Container(
             // Minus 34 Size OF Padding Left & Right
             width: MediaQuery.of(context).size.width / 3 - _seedHeight,
-            height: 5.8,
+            // height: 5.8,
             padding: EdgeInsets.only(top: 8, bottom: 8),
             alignment: Alignment.center,
             margin: const EdgeInsets.all(4),

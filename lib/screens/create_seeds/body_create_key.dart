@@ -70,7 +70,7 @@ class CreateSeedsBody extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.center,
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Icon(Iconsax.refresh, color: HexColor(AppColors.whiteColor), size: 3),
+                              Icon(Iconsax.refresh, color: HexColor(AppColors.whiteColor)),
                               SizedBox(width: 9),
                               MyText(
                                 text: "Generate new seed",
@@ -94,7 +94,7 @@ class CreateSeedsBody extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.center,
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Icon(Iconsax.copy, color: HexColor(AppColors.whiteColor), size: 3),
+                              Icon(Iconsax.copy, color: HexColor(AppColors.whiteColor)),
                               SizedBox(width: 9),
                               MyText(
                                 text: "Copy",
@@ -136,7 +136,7 @@ class CreateSeedsBody extends StatelessWidget {
                   end: Alignment.topRight,
                   action: () async {
                     // Generate Random Three Number Before Navigate
-                    createKeyModel!.threeNum = await AppUtils().randomThreeEachNumber();
+                    createKeyModel!.threeNum = AppUtils().randomThreeEachNumber();
                     Navigator.push(context, Transition(child: VerifyPassphrase(createKeyModel: createKeyModel!),  transitionEffect: TransitionEffect.RIGHT_TO_LEFT));
                   },
                 ),

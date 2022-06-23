@@ -19,7 +19,7 @@ class CreateSeeds extends StatefulWidget {
 
 class _CreateWalletPagetScreenState extends State<CreateSeeds> {
   
-  CreateKeyModel _model = CreateKeyModel();
+  final CreateKeyModel _model = CreateKeyModel();
 
   void generateKey() async {
     //"orient effort sea envelope voice lucky enforce expire tragic bring skull arrange";
@@ -133,7 +133,7 @@ class _CreateWalletPagetScreenState extends State<CreateSeeds> {
   void initState() {
     _model.initial = true;
     StorageServices().readSecure(DbKey.passcode)!.then((value) => _model.passCode = value);
-    // generateKey();
+    generateKey();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _showWarning(context);
     });
