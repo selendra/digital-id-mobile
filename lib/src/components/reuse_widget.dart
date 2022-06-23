@@ -1182,3 +1182,21 @@ Future<void> fetchWalletAnimationDailog({required BuildContext? context}){
     )
   );
 }
+
+PreferredSizeWidget appbarCustom(String title, BuildContext context, {bool? centerTitle: false}) {
+  return AppBar(
+    centerTitle: centerTitle,
+    title: Text(
+      title,
+      style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+    ),
+    backgroundColor: Colors.transparent,
+    elevation: 0,
+    leading: IconButton(
+      icon: const Icon(Iconsax.arrow_left_2 ,color: Colors.white,),
+      onPressed: (){
+        Navigator.pop(context);
+      },
+    ),
+  );
+}
