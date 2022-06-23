@@ -1182,3 +1182,220 @@ Future<void> fetchWalletAnimationDailog({required BuildContext? context}){
     )
   );
 }
+
+void createIDBottomSheet(BuildContext context, List docs) {
+  showModalBottomSheet(
+    backgroundColor: Colors.transparent,
+    shape: const RoundedRectangleBorder(
+      borderRadius: BorderRadius.only(topLeft: Radius.circular(25), topRight: Radius.circular(25)),
+    ),
+    context: context,
+    builder: (BuildContext context) {
+      return BackdropFilter(
+        filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+        child: Container(
+          decoration: BoxDecoration(
+            color: hexaCodeToColor(AppColors.primary),
+            borderRadius: const BorderRadius.only(topLeft: Radius.circular(20), topRight: Radius.circular(20)),
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(20),
+                    child: MyText(
+                      text: "Create",
+                      color: '#FFFFFF',
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold
+                    ),
+                  ),
+      
+                  IconButton(
+                    icon: Icon(Iconsax.close_circle, color: Colors.white,),
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                  ),
+                ],
+              ),
+              Column(
+                children: [
+                  
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: paddingSize, vertical: 10),
+                    child: GestureDetector(
+                      onTap: () async {
+                        // Navigator.push(
+                        //   context, 
+                        //   MaterialPageRoute(builder: (context) => CreateID(docs: docs))
+                        // );
+                      },
+                      child: Row(
+                        children: [
+                          CircleAvatar(
+                            backgroundColor: hexaCodeToColor(AppColors.secondary),
+                            radius: 20,
+                            child: Icon(Iconsax.add_circle, color: Colors.white),
+                          ),
+      
+                          const SizedBox(width: 10),
+                          
+                          MyText(
+                            text: "New ID",
+                            color: "#FFFFFF"
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: paddingSize, vertical: 10),
+                    child: GestureDetector(
+                      onTap: () async {
+                        // Navigator.push(
+                        //   context, 
+                        //   MaterialPageRoute(builder: (context) => CreateID())
+                        // );
+                      },
+                      child: Row(
+                        children: [
+                          CircleAvatar(
+                            backgroundColor: hexaCodeToColor(AppColors.secondary),
+                            radius: 20,
+                            child: Icon(Iconsax.document_upload, color: Colors.white)
+                          ),
+                          
+                          const SizedBox(width: 10),
+      
+                          MyText(
+                            text: "Import ID",
+                            color: '#FFFFFF'
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+
+              const SizedBox(height: 20),
+            ],
+          ),
+        ),
+      );
+    }
+  );
+}
+
+
+class CustomButton extends StatelessWidget {
+  final bool? isIssuer;
+  final String? text;
+  final Function()? onPressed;
+  final Color? colorBtn;
+  final Color? colorText;
+  final EdgeInsetsGeometry? edgePadding;
+  const CustomButton({
+    this.isIssuer,
+    this.text, this.colorBtn, this.colorText, this.onPressed, this.edgePadding, Key? key
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    const double borderRadius = 20;
+
+    return Padding(
+      padding: edgePadding ?? EdgeInsets.zero,
+      child: SizedBox(
+        width: MediaQuery.of(context).size.width,
+        height: 60,
+        child: DecoratedBox(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(borderRadius),
+              color: colorBtn),
+            child: ElevatedButton(
+              style: ButtonStyle(
+                elevation: MaterialStateProperty.all(0),
+                alignment: Alignment.center,
+                padding: MaterialStateProperty.all(const EdgeInsets.only(top: 15, bottom: 15)),
+                backgroundColor: MaterialStateProperty.all(Colors.transparent),
+                shape: MaterialStateProperty.all(
+                  RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(borderRadius),
+                    side: BorderSide(color: hexaCodeToColor(AppColors.primaryColor))
+                  ),
+                )
+              ),
+              onPressed: onPressed,
+              child: MyText(
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height,
+              text: text!,
+              fontWeight: FontWeight.bold,
+              color2: Colors.white,
+            ),
+            )),
+      )
+    );
+  }
+}
+
+class CustomButtonIcon extends StatelessWidget {
+  final String? text;
+  final Function()? onPressed;
+  final Color? colorBtn;
+  final Color? colorText;
+  final Icon? icon;
+  final bool? bold;
+  const CustomButtonIcon({
+    this.text, 
+    this.colorBtn, 
+    this.colorText, 
+    this.onPressed, 
+    this.icon,
+    this.bold = false,
+    Key? key
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    const double borderRadius = 20;
+
+    return SizedBox(
+      width: MediaQuery.of(context).size.width,
+      height: 60,
+      child: DecoratedBox(
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(borderRadius),
+              color: colorBtn),
+          child: ElevatedButton(
+            style: ButtonStyle(
+                elevation: MaterialStateProperty.all(0),
+                alignment: Alignment.center,
+                // padding: MaterialStateProperty.all(
+                //     const EdgeInsets.only(top: 5, bottom: 5)),
+                backgroundColor:
+                    MaterialStateProperty.all(Colors.transparent),
+              ),
+            onPressed: onPressed,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Expanded(child: Container()),
+                MyText(
+                  text: text!,
+                  fontWeight: bold == true ? FontWeight.bold : FontWeight.w400,
+                  color2: colorText,
+                ),
+                Expanded(child: Container()),
+                icon!,
+              ],
+            ),
+          )),
+    );
+  }
+}

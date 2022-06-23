@@ -49,7 +49,7 @@ export 'package:wallet_apps/src/components/route_animation.dart';
 export 'package:wallet_apps/src/components/sms_component.dart';
 export 'package:wallet_apps/src/components/trx_component.dart';
 export 'package:wallet_apps/src/components/trx_option_c.dart';
-export 'package:wallet_apps/src/config/.app_config.dart';
+export 'package:wallet_apps/src/config/app_config.dart';
 export 'package:wallet_apps/src/config/size_config/size_config.dart';
 export 'package:wallet_apps/src/components/asset_item.dart';
 export 'package:wallet_apps/src/components/portfolio_cus.dart';
@@ -73,6 +73,7 @@ export 'package:wallet_apps/src/models/menu_m.dart';
 export 'package:wallet_apps/src/models/token.m.dart';
 
 export 'package:wallet_apps/src/models/m_import_acc.dart';
+export 'package:wallet_apps/src/models/dashboard_m.dart';
 // Dashboard
 
 export 'package:wallet_apps/src/models/atd.dart';

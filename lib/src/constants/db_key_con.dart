@@ -25,4 +25,7 @@ class DbKey{
   static String token = "token_key";
   static String event = "event_key";
   static String coinData = "coinData";
+  static String idKey = "idKey";
+  static String blochchainData = "blochchainData";
+  static String sensitive = "sensitive";
 }

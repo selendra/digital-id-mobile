@@ -63,6 +63,7 @@ dependencies:
   wallet_connect: 
   walletconnect_dart: 
   web3dart: 
+  
 
 dependency_overrides:
   encrypt: 
