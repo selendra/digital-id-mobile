@@ -5,8 +5,10 @@ import 'package:provider/provider.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:wallet_apps/index.dart';
 import 'package:wallet_apps/src/components/custom_button_c.dart';
+import 'package:wallet_apps/src/components/shimmer_c.dart';
 import 'package:wallet_apps/src/provider/documents_p.dart';
 import 'package:wallet_apps/src/provider/home_p.dart';
+import 'package:wallet_apps/src/screen/home/id_detail/id_detail.dart';
 import 'package:wallet_apps/src/screen/home/kyc/setup_kyc.dart';
 
 class HomeBody extends StatelessWidget {
@@ -145,7 +147,7 @@ class HomeBody extends StatelessWidget {
                 children: [
                   Row(
                     children: [
-                      SvgPicture.asset("assets/logos/selendra.svg", width: 20),
+                      Image.asset("assets/SelendraCircle-Blue.png", width: 20),
                       const SizedBox(width: 5,),
                       MyText(
                         fontSize: 16,
@@ -164,27 +166,34 @@ class HomeBody extends StatelessWidget {
                 ],
               ),
               SizedBox(height: paddingSize,),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Expanded(
-                    child: MyText(
-                      fontSize: 16,
-                      text: 'seZt2QtqVN515CqU2YrsviLLJq9grYxY89ZNAbVqVkCkffnkf',
-                      fontWeight: FontWeight.bold,
-                      color: AppColors.whiteColor,
-                      overflow: TextOverflow.ellipsis,
-                      textAlign: TextAlign.start
-                    ),
-                  ),
-                  IconButton(
-                    onPressed: (){
-                      
-                    },
-                    icon: Icon(Iconsax.copy, color: hexaCodeToColor(AppColors.whiteColor)),
-                  )
-                ],
+              Consumer<ApiProvider>(
+                builder: (context, value, child) {
+                  return Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Expanded(
+                        child: WidgetShimmer(
+                          txt: value.accountM.address, 
+                          child: MyText(
+                            right: 5,
+                            text: value.accountM.address == null ? "" : value.accountM.address!.replaceRange(10, value.accountM.address!.length - 10, "....."),
+                            color: AppColors.whiteColorHexa,
+                            fontSize: 16,
+                            textAlign: TextAlign.left
+                          )
+                        )
+                      ),
+                      IconButton(
+                        onPressed: (){
+                          
+                        },
+                        icon: Icon(Iconsax.copy, color: hexaCodeToColor(AppColors.whiteColor)),
+                      )
+                    ],
+                  );
+                }
               ),
+              
             ],
           ),
         ),
@@ -195,7 +204,7 @@ class HomeBody extends StatelessWidget {
   Widget _idCard(BuildContext context){
     return GestureDetector(
       onTap: () {
-
+        Navigator.push(context, Transition(child: IdDetail(), transitionEffect: TransitionEffect.RIGHT_TO_LEFT));
       },
       child: Padding(
         padding: const EdgeInsets.all(8.0),
@@ -239,7 +248,7 @@ class HomeBody extends StatelessWidget {
                                 ),
                                 borderRadius: BorderRadius.circular(10.0),
                               ),
-                              child: SvgPicture.asset("assets/logos/selendra.svg", width: 50)
+                              child: SvgPicture.asset("assets/male_avatar.svg", width: 50)
                             ),
                             const SizedBox(width: 5,),
                             Column(
