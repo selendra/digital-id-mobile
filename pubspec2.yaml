@@ -1,0 +1,140 @@
+name: digital_id
+description: A new Flutter project.
+
+# The following line prevents the package from being accidentally published to
+# pub.dev using `flutter pub publish`. This is preferred for private packages.
+publish_to: "none" # Remove this line if you wish to publish to pub.dev
+
+# The following defines the version and build number for your application.
+# A version number is three numbers separated by dots, like 1.2.43
+# followed by an optional build number separated by a +.
+# Both the version and the builder number may be overridden in flutter
+# build by specifying --build-name and --build-number, respectively.
+# In Android, build-name is used as versionName while build-number used as versionCode.
+# Read more about Android versioning at https://developer.android.com/studio/publish/versioning
+# In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
+# Read more about iOS versioning at
+# https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
+version: 1.0.0+10
+
+environment:
+  sdk: ">=2.16.1 <3.0.0"
+
+# Dependencies specify other packages that your package needs in order to work.
+# To automatically upgrade your package dependencies to the latest versions
+# consider running `flutter pub upgrade --major-versions`. Alternatively,
+# dependencies can be manually updated by changing the version numbers below to
+# the latest version available on pub.dev. To see which dependencies have newer
+# versions available, run `flutter pub outdated`.
+dependencies:
+  basic_utils: 
+  bip39: 
+  camera: 
+  carousel_slider: 
+  connectivity: 
+  connectivity_wrapper: 
+  cupertino_icons: ^1.0.2
+  cupertino_stepper: 
+  eth_sig_util: 
+  expansion_tile_card: ^2.0.0
+  flutter:
+    sdk: flutter
+  flutter_launcher_icons: 
+  flutter_share: 
+  glassmorphism: 
+  google_fonts: 
+  graphql_flutter: 
+  hexcolor: 
+  iconsax: ^0.0.8
+  image_picker: 
+  jwt_decode: 
+  mnemonic: 
+  motion_toast: 
+  page_transition: 
+  path: 
+  path_provider: 
+  provider: 
+  qr_code_scanner: 
+  qr_flutter: 
+  rename: 
+  url_launcher_android:
+  shared_preferences: 
+  socket_io_client: 2.0.0-beta.4-nullsafety.0
+  wallet_connect: 
+  walletconnect_dart: 
+  web3dart: 
+
+dependency_overrides:
+  encrypt: 
+  # git:
+  #   url: https://github.com/polkawallet-io/ui.git
+  #   ref: 485a9cde97f2446d74a1aeb6d8d63e33683461a5
+  polkawallet_sdk: ^0.4.7
+  flutter_svg: 
+  charts_flutter:
+    git:
+      url: https://github.com/google/charts
+      path: charts_flutter
+  permission_handler: ^8.3.0
+  get_storage: 2.0.2
+  get: 4.6.1
+  flutter_aes_ecb_pkcs5: ^0.1.2
+  flutter_native_splash: ^2.0.4
+  responsive_framework: 0.1.7
+  share_plus: 
+  step_progress_indicator: ^1.0.2
+  syncfusion_flutter_datepicker: ^20.1.61
+
+flutter_icons:
+  android: true
+  ios: true
+  image_path: "assets/logos/id_card.jpeg"
+
+dev_dependencies:
+  flutter_lints: ^2.0.1
+  flutter_test:
+    sdk: flutter
+
+# For information on the generic Dart part of this file, see the
+# following page: https://dart.dev/tools/pub/pubspec
+# The following section is specific to Flutter.
+flutter:
+  # The following line ensures that the Material Icons font is
+  # included with your application, so that you can use the icons in
+  # the material Icons class.
+  uses-material-design: true
+  # To add assets to your application, add an assets section, like this:
+  assets:
+    # - assets/images/
+    - assets/logos/
+    - assets/icons/
+    - assets/illustration/
+    - assets/images/
+    - assets/json/
+    # - lib/core/js_api/
+    # - lib/core/js_api/dist/main.js
+  # An image asset can refer to one or more resolution-specific "variants", see
+  # https://flutter.dev/assets-and-images/#resolution-aware.
+  # For details regarding adding assets from package dependencies, see
+  # https://flutter.dev/assets-and-images/#from-packages
+  # To add custom fonts to your application, add a fonts section here,
+  # in this "flutter" section. Each entry in this list should have a
+  # "family" key with the font family name, and a "fonts" key with a
+  # list giving the asset and other descriptors for the font. For
+  # example:
+  fonts:
+    - family: Quicksand
+      fonts:
+        - asset: assets/fonts/Quicksand/Quicksand-Regular.ttf
+        - asset: assets/fonts/Quicksand/Quicksand-Bold.ttf
+        - asset: assets/fonts/Quicksand/Quicksand-Light.ttf
+        - asset: assets/fonts/Quicksand/Quicksand-Medium.ttf
+        - asset: assets/fonts/Quicksand/Quicksand-VariableFont_wght.ttf
+  #   - family: Trajan Pro
+  #     fonts:
+  #       - asset: fonts/TrajanPro.ttf
+  #       - asset: fonts/TrajanPro_Bold.ttf
+  #         weight: 700
+  #
+  # For details regarding fonts from package dependencies,
+  # see https://flutter.dev/custom-fonts/#from-packages
