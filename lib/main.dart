@@ -3,6 +3,9 @@ import 'package:wallet_apps/app.dart';
 import 'package:wallet_apps/index.dart';
 import 'package:wallet_apps/src/components/walletConnect_c.dart';
 import 'package:wallet_apps/src/provider/atd_pro.dart';
+import 'package:wallet_apps/src/provider/digital_id_p.dart';
+import 'package:wallet_apps/src/provider/documents_p.dart';
+import 'package:wallet_apps/src/provider/home_p.dart';
 import 'package:wallet_apps/src/provider/presale_p.dart';
 import 'package:wallet_apps/src/provider/airdrop_p.dart';
 import 'package:wallet_apps/src/provider/provider.dart';
@@ -62,6 +65,15 @@ void main() {
         ),
         ChangeNotifierProvider<ContractsBalance>(
           create: (context) => ContractsBalance(),
+        ),
+        ChangeNotifierProvider<DigitalIDProvider>(
+          create: (context) => DigitalIDProvider(),
+        ),
+        ChangeNotifierProvider<HomeProvider>(
+          create: (context) => HomeProvider(),
+        ),
+        ChangeNotifierProvider<DocumentProvider>(
+          create: (context) => DocumentProvider(),
         ),
       ],
       child: App(),

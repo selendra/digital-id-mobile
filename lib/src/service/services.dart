@@ -13,6 +13,7 @@ import 'package:polkawallet_sdk/api/api.dart';
 
 // ignore: avoid_classes_with_only_static_members
 class AppServices {
+  
   static int myNumCount = 0;
 
   static Future noInternetConnection(GlobalKey<ScaffoldState> globalKey) async {

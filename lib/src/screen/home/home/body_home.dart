@@ -29,7 +29,7 @@ class HomePageBody extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
 
-      key: homePageModel!.globalKey,
+      // key: homePageModel!.globalKey,
       drawer: Theme(
         data: Theme.of(context).copyWith(canvasColor: Colors.transparent),
         child: Menu(),

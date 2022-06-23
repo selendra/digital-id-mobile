@@ -7,7 +7,7 @@ import 'package:provider/provider.dart';
 import 'package:wallet_apps/index.dart';
 import 'package:wallet_apps/src/components/pie_chart.dart';
 import 'package:wallet_apps/src/models/tx_history.dart';
-import 'package:wallet_apps/src/screen/home/home/home.dart';
+import 'package:wallet_apps/src/screen/home/home_page/home.dart';
 
 import 'dialog_c.dart';
 
@@ -234,7 +234,7 @@ BoxDecoration signOutColor() {
 
 Future<void> successDialog(
   BuildContext context, String operationText, {
-    Widget? route = const HomePage()
+    Widget? route// = const HomePage()
 }) async {
   await Future.delayed(Duration(milliseconds: 30), (){});
   await showDialog(
