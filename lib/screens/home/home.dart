@@ -41,7 +41,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
     if (source == ImageSource.camera){
       pickedFile = await Navigator.push(context, MaterialPageRoute(builder: (context) => CameraApp()));
     } else {
-      pickedFile = await Services.pickImage(source);
+      pickedFile = await AppServices.pickImage(source);
     }
 
     if (pickedFile != null){

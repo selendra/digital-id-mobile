@@ -49,5 +49,5 @@ export 'package:digital_id/components/nested_scroll_view_custom.dart';
 /// Model
 /// 
 export 'package:digital_id/models/dashboard_m.dart';
-double paddingSize = 20;
+const double paddingSize = 20;
 double btnHeight = 60;

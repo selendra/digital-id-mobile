@@ -151,7 +151,7 @@ class BackSideBody extends StatelessWidget {
                               //   await pickImage!(pickedFile!.path, 'back');
                               // }
                               
-                              final pickedFile = await Services.pickImage(ImageSource.gallery);
+                              final pickedFile = await AppServices.pickImage(ImageSource.gallery);
                               if (model!.frontImage == '') {
                                 await pickImage!(pickedFile.path, 'front');
                               } else {

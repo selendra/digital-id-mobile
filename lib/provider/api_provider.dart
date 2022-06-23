@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'dart:math';
-// import 'package:flutter_aes_ecb_pkcs5_fork/flutter_aes_ecb_pkcs5_fork.dart';
-import 'package:aes_ecb_pkcs5_flutter/aes_ecb_pkcs5_flutter.dart';
+import 'package:flutter_aes_ecb_pkcs5/flutter_aes_ecb_pkcs5.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 // import 'package:defichaindart/defichaindart.dart';
@@ -745,8 +744,8 @@ class ApiProvider with ChangeNotifier {
 
   Future<String> decryptPrivateKey(String privateKey, String password) async {
     final String key = Encrypt.passwordToEncryptKey(password);
-    final String decryted = await FlutterAesEcbPkcs5.decryptString(privateKey, key);
-    return decryted;
+    final String? decryted = await FlutterAesEcbPkcs5.decryptString(privateKey, key);
+    return decryted!;
   }
 
   Future<String> encryptPrivateKey(String privateKey, String password) async {
@@ -754,9 +753,9 @@ class ApiProvider with ChangeNotifier {
     try {
 
       final String key = Encrypt.passwordToEncryptKey(password);
-      final String encryted = await FlutterAesEcbPkcs5.encryptString(privateKey, key);
+      final String? encryted = await FlutterAesEcbPkcs5.encryptString(privateKey, key);
       print("Data encrypt $encryted");
-      return encryted;
+      return encryted!;
     } catch (e) {
       // print("Error encryptPrivateKey $e");
     }

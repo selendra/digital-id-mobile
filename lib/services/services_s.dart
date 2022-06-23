@@ -10,7 +10,16 @@ import 'package:path_provider/path_provider.dart';
 import 'package:digital_id/all_export.dart';
 import 'package:digital_id/provider/api_provider.dart';
 
-class Services {
+class AppServices {
+  
+  Color hexaCodeToColor(String hexaCode) {
+    /* Convert Hexa Color */
+    String colornew = '0xFF$hexaCode';
+    colornew = colornew.replaceAll('#', '');
+    final colorint = int.parse(colornew);
+    return Color(colorint);
+    // return Color(AppUtils.convertHexaColor(hexaCode));
+  }
 
   static ImagePicker imagePicker = ImagePicker();
 

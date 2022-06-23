@@ -579,14 +579,16 @@ class SubmitButton extends StatelessWidget {
 }
 
 class CustomButton extends StatelessWidget {
+  final bool? isIssuer;
   final String? text;
   final Function()? onPressed;
   final Color? colorBtn;
   final Color? colorText;
   final EdgeInsetsGeometry? edgePadding;
   const CustomButton({
-    this.text, this.colorBtn, this.colorText, this.onPressed, this.edgePadding, Key? key})
-      : super(key: key);
+    this.isIssuer,
+    this.text, this.colorBtn, this.colorText, this.onPressed, this.edgePadding, Key? key
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

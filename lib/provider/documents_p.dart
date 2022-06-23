@@ -6,6 +6,8 @@ import 'package:flutter/services.dart';
 
 class DocumentProvider extends ChangeNotifier{
 
+  String? title;
+
   Map<String, dynamic>? mandotary;
   Map<String, dynamic>? popular;
   Map<String, dynamic>? issuer;

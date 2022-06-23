@@ -1,5 +1,6 @@
 import 'package:digital_id/all_export.dart';
 import 'package:digital_id/components/text_c.dart';
+import 'package:digital_id/services/services_s.dart';
 import 'package:image_picker/image_picker.dart';
 
 class Components {
@@ -91,5 +92,80 @@ class Components {
     } else if (selected == 'gallery'){
       label == null ? await getImage!(ImageSource.gallery) : await getImage!(ImageSource.gallery, label);
     }
+  }
+}
+
+class MyGradientButton extends StatelessWidget {
+
+  final String? textButton;
+  final Widget? child;
+  final String? buttonColor;
+  final String? textColor;
+  final FontWeight? fontWeight;
+  final double? fontSize;
+  final EdgeInsetsGeometry? edgeMargin;
+  final EdgeInsetsGeometry? edgePadding;
+  final bool? hasShadow;
+  final Function? action;
+  final double? width;
+  final double? height;
+  final bool? isTransparent;
+  final List<String>? lsColor;
+  final AlignmentGeometry begin;
+  final AlignmentGeometry end;
+
+  MyGradientButton({
+    this.child,
+    this.textButton,
+    this.lsColor = const [ "#F27649", "#F28907" ],
+    this.buttonColor = AppColors.third,
+    this.textColor = AppColors.whiteColor,
+    this.fontWeight = FontWeight.bold,
+    this.fontSize = 18,
+    this.edgeMargin = const EdgeInsets.fromLTRB(0, 0, 0, 0),
+    this.edgePadding = const EdgeInsets.fromLTRB(0, 0, 0, 0),
+    this.hasShadow = false,
+    this.width = double.infinity,
+    this.height,
+    this.isTransparent = false,
+    required this.begin,
+    required this.end,
+    @required this.action,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    // final isDarkTheme = Provider.of<ThemeProvider>(context).isDark;
+
+    return Container(
+      padding: edgePadding,
+      margin: edgeMargin,
+      width: width,
+      height: height,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(8),
+        gradient: LinearGradient(
+          colors: [ AppServices().hexaCodeToColor(lsColor![0]), AppServices().hexaCodeToColor(lsColor![1]) ],
+          begin: begin,
+          end: end, 
+          stops: [0.25, 0.75],
+        ),
+        // color: action == null ? Colors.white.withOpacity(0.06) : null
+      ),
+      child: MaterialButton(
+        hoverColor: Colors.transparent,
+        highlightColor: Colors.transparent,
+        splashColor: Colors.transparent,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+        child: child ?? MyText(
+          text: textButton!,
+          color: textColor!,
+          fontWeight: fontWeight!,
+        ),
+        onPressed: action == null ? null : (){
+          action!();
+        },
+      ),
+    );
   }
 }

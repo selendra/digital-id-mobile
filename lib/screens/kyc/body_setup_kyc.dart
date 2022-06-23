@@ -1,7 +1,9 @@
 import 'package:digital_id/all_export.dart';
 import 'package:digital_id/models/kyc_content_m.dart';
+import 'package:digital_id/provider/documents_p.dart';
 import 'package:digital_id/screens/digital_id/front_side/front_side.dart';
 import 'package:expansion_tile_card/expansion_tile_card.dart';
+import 'package:provider/provider.dart';
 
 class SetUpKYCBody extends StatelessWidget {
 
@@ -11,7 +13,7 @@ class SetUpKYCBody extends StatelessWidget {
   final Function? onShowMoreIssuer;
 
   const SetUpKYCBody({
-    Key? key, 
+    Key? key,
     this.isShowMorePopularDocs,
     this.isShowMoreIssuer,
     this.onShowMorePopularDocs,
@@ -32,62 +34,71 @@ class SetUpKYCBody extends StatelessWidget {
           ),
           onPressed: () => Navigator.pop(context),
         ),
-      ),
-      body: SingleChildScrollView(
-        physics: const BouncingScrollPhysics(),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: paddingSize,),
-              child: MyText(
-                text: 'Mandatory',
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-                color: AppColors.whiteColor,
-              ),
-            ),
-      
-            _mandatory(context),
-            
-            SizedBox(height: paddingSize),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: paddingSize),
-              child: MyText(
-                text: 'Popular document',
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-                color: AppColors.whiteColor,
-              ),
-            ),
-      
-            _popularDocs(context, isShowMorePopularDocs!), //!),
-      
-            SizedBox(height: paddingSize),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: paddingSize),
-              child: MyText(
-                text: 'Issuer',
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-                color: AppColors.whiteColor,
-              ),
-            ),
-      
-            _issuer(context, isShowMoreIssuer!),
-          ],
+        title: MyText(
+          text: "Documents Type",
+          color: AppColors.whiteColor,
         ),
+      ),
+      body: Consumer<DocumentProvider>(
+        builder: (context, provider, widget){
+          return SingleChildScrollView(
+            physics: const BouncingScrollPhysics(),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+        
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: paddingSize,),
+                  child: MyText(
+                    text: 'Mandatory',
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    color: AppColors.whiteColor,
+                  ),
+                ),
+          
+                _mandatory(context, provider.lsMandotaryProp!),
+                
+                SizedBox(height: paddingSize),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: paddingSize),
+                  child: MyText(
+                    text: 'Popular document',
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    color: AppColors.whiteColor,
+                  ),
+                ),
+          
+                _popularDocs(context, isShowMorePopularDocs!, provider.lsPopularProp!), //!),
+          
+                SizedBox(height: paddingSize),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: paddingSize),
+                  child: MyText(
+                    text: 'Issuer',
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    color: AppColors.whiteColor,
+                  ),
+                ),
+          
+                _issuer(context, isShowMoreIssuer!, provider.lsIssuerProp!),
+              ],
+            ),
+          );
+        },
       ),
     );
   }
 
-  Widget _mandatory(BuildContext context) {
+  Widget _mandatory(BuildContext context, List<dynamic> ls) {
     return Padding(
       padding: EdgeInsets.all(paddingSize),
       child: CustomButtonIcon(
-        onPressed: () async => {
-          createIDBottomSheet(context),
+        onPressed: () async {
+          Provider.of<DocumentProvider>(context, listen: false).title = 'National ID';
+          createIDBottomSheet(context, ls);
         },
         text: 'National ID',
         icon: const Icon(Iconsax.arrow_right_3),
@@ -97,7 +108,7 @@ class SetUpKYCBody extends StatelessWidget {
     );
   }
 
-  Widget _popularDocs(BuildContext context, bool _isShowMorePopularDocs) {
+  Widget _popularDocs(BuildContext context, bool _isShowMorePopularDocs, List<dynamic> ls) {
     return Padding(
       padding: EdgeInsets.all(paddingSize),
       child: Column(
@@ -135,7 +146,7 @@ class SetUpKYCBody extends StatelessWidget {
     );
   }
 
-  Widget _issuer(BuildContext context, bool _isShowMoreIssuer) {
+  Widget _issuer(BuildContext context, bool _isShowMoreIssuer, List<dynamic> ls) {
     return Padding(
       padding: EdgeInsets.all(paddingSize),
       child: Column(

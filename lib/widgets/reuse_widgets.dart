@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:ui';
 
+import 'package:digital_id/screens/createid/create_id.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:step_progress_indicator/step_progress_indicator.dart';
@@ -486,7 +487,7 @@ PreferredSizeWidget appbarCustom(String title, BuildContext context, {bool? cent
   );
 }
 
-void createIDBottomSheet(BuildContext context) {
+void createIDBottomSheet(BuildContext context, List docs) {
   showModalBottomSheet(
     backgroundColor: Colors.transparent,
     shape: const RoundedRectangleBorder(
@@ -527,14 +528,15 @@ void createIDBottomSheet(BuildContext context) {
               ),
               Column(
                 children: [
+                  
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: paddingSize, vertical: 10),
                     child: GestureDetector(
                       onTap: () async {
-                        // Navigator.push(
-                        //   context, 
-                        //   MaterialPageRoute(builder: (context) => )
-                        // );
+                        Navigator.push(
+                          context, 
+                          MaterialPageRoute(builder: (context) => CreateID(docs: docs))
+                        );
                       },
                       child: Row(
                         children: [
@@ -558,7 +560,10 @@ void createIDBottomSheet(BuildContext context) {
                     padding: EdgeInsets.symmetric(horizontal: paddingSize, vertical: 10),
                     child: GestureDetector(
                       onTap: () async {
-      
+                        Navigator.push(
+                          context, 
+                          MaterialPageRoute(builder: (context) => CreateID())
+                        );
                       },
                       child: Row(
                         children: [
