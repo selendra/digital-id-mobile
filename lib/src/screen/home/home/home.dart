@@ -2,17 +2,17 @@ import 'package:carousel_slider/carousel_options.dart';
 import 'package:wallet_apps/index.dart';
 import 'package:wallet_apps/src/screen/home/home/body_home.dart';
 
-class HomePage extends StatefulWidget {
+class HomePage1 extends StatefulWidget {
 
   static final String route = "/home";
 
-  const HomePage({ Key? key }) : super(key: key);
+  const HomePage1({ Key? key }) : super(key: key);
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  State<HomePage1> createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomePageState extends State<HomePage1> {
   
   HomePageModel _model = HomePageModel();
 

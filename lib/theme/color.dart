@@ -38,7 +38,7 @@ class AppColors {
   
   /// Branding Color
   // orange
-  static const String primaryColor = "#F29F05";
+  static const String primaryColor = "#023859";
   static const String orangeColor = "#F27649";
 
   //mono black

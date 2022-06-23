@@ -2,7 +2,7 @@ import 'dart:ui';
 import 'package:provider/provider.dart';
 import 'package:wallet_apps/index.dart';
 import 'package:wallet_apps/src/components/dialog_c.dart';
-import 'package:wallet_apps/src/screen/home/home/home.dart';
+import 'package:wallet_apps/src/screen/home/home_page/home.dart';
 
 class AddAsset extends StatefulWidget {
   static const route = '/addasset';

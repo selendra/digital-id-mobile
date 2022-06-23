@@ -4,27 +4,23 @@ import 'package:iconsax/iconsax.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:wallet_apps/index.dart';
+import 'package:wallet_apps/src/components/custom_button_c.dart';
 import 'package:wallet_apps/src/provider/documents_p.dart';
 import 'package:wallet_apps/src/provider/home_p.dart';
 import 'package:wallet_apps/src/screen/home/kyc/setup_kyc.dart';
 
-class DashBoardBody extends StatelessWidget {
+class HomeBody extends StatelessWidget {
 
-  final DashBoardModel? dashModel;
-  final GlobalKey<ScaffoldState>? scaffoldKey;
-  final TabController? tabController;
-  final Function? onTab;
-  final Function? edit;
-  final Function? submitEdit;
+  
+  final HomePageModel? homePageModel;
+  final bool? pushReplacement;
+  final Function(int index)? onPageChanged;
 
-  const DashBoardBody({ 
+  const HomeBody({ 
     Key? key, 
-    this.scaffoldKey,
-    required this.dashModel, 
-    this.tabController,
-    required this.onTab,
-    required this.edit, 
-    required this.submitEdit 
+    this.homePageModel,
+    this.onPageChanged,
+    this.pushReplacement,
   }) : super(key: key);
 
   final double tabBarHeight = 55;
@@ -32,10 +28,15 @@ class DashBoardBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: homePageModel!.globalKey!,
       resizeToAvoidBottomInset: false,
-      backgroundColor: hexaCodeToColor(AppColors.primaryColor),
+      backgroundColor: hexaCodeToColor(AppColors.darkBgd),
+      drawer: Theme(
+        data: Theme.of(context).copyWith(canvasColor: Colors.transparent),
+        child: Menu(),
+      ),
       appBar: AppBar(
-        backgroundColor: hexaCodeToColor(AppColors.primaryColor),
+        backgroundColor: hexaCodeToColor(AppColors.darkBgd),
         elevation: 0,
         // leading: IconButton(
         //   icon: Icon(
@@ -53,7 +54,10 @@ class DashBoardBody extends StatelessWidget {
                 Iconsax.profile_circle,
                 color: Colors.white,
               ),
-              onPressed: () => Navigator.pop(context),
+              onPressed: () {
+                print("Open drawer ${homePageModel!.globalKey!.currentState!.hasDrawer}");
+                homePageModel!.globalKey!.currentState!.openDrawer();
+              },
             ),
           ],
         ),
@@ -103,78 +107,6 @@ class DashBoardBody extends StatelessWidget {
                       colorBtn: hexaCodeToColor(AppColors.whiteColor).withOpacity(0.06),
                       colorText: hexaCodeToColor(AppColors.whiteColor),
                       bold: true,
-                    ),
-                  ),
-
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Consumer<DocumentProvider>(
-                      builder: (context, provider, widget){
-                        return ListView.builder(
-                          physics: NeverScrollableScrollPhysics(),
-                          shrinkWrap: true,
-                          itemCount: provider.lsMandotaryProp!.length,
-                          itemBuilder: ((context, index) {
-                            return TextFormField(
-                              keyboardType: provider.lsMandotaryProp![index]['type'] == 'integer' ? TextInputType.number : TextInputType.text,
-                              controller: provider.lsMandotaryProp![index]['formController'],
-                              decoration: InputDecoration(
-                                
-                                hintText: provider.lsMandotaryProp![index]['key']
-                              ),
-                            );
-                          })
-                        );
-                      },
-                    ),
-                  ),
-
-                  Divider(height: 2,),
-
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Consumer<DocumentProvider>(
-                      builder: (context, provider, widget){
-                        return ListView.builder(
-                          shrinkWrap: true,
-                          itemCount: provider.lsPopularProp!.length,
-                          itemBuilder: ((context, index) {
-                            return TextFormField(
-                              keyboardType: provider.lsPopularProp![index]['type'] == 'integer' ? TextInputType.number : TextInputType.text,
-                              controller: provider.lsPopularProp![index]['formController'],
-                              decoration: InputDecoration(
-                                
-                                hintText: provider.lsPopularProp![index]['key']
-                              ),
-                            );
-                          })
-                        );
-                      },
-                    ),
-                  ),
-
-                  Divider(height: 2,),
-
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Consumer<DocumentProvider>(
-                      builder: (context, provider, widget){
-                        return ListView.builder(
-                          physics: NeverScrollableScrollPhysics(),
-                          shrinkWrap: true,
-                          itemCount: provider.lsIssuerProp!.length,
-                          itemBuilder: ((context, index) {
-                            return TextFormField(
-                              keyboardType: provider.lsIssuerProp![index]['type'] == 'integer' ? TextInputType.number : TextInputType.text,
-                              controller: provider.lsIssuerProp![index]['formController'],
-                              decoration: InputDecoration(
-                                
-                                hintText: provider.lsIssuerProp![index]['key']
-                              ),
-                            );
-                          })
-                        );
-                      },
                     ),
                   ),
                 ],

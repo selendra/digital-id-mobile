@@ -1,5 +1,6 @@
 import 'package:provider/provider.dart';
 import 'package:wallet_apps/index.dart';
+import 'package:wallet_apps/src/components/custom_button_c.dart';
 import 'package:wallet_apps/src/provider/documents_p.dart';
 class KYCDocs {
 
@@ -18,7 +19,7 @@ class KYCDocs {
       CustomButtonIcon(
         onPressed: () async {
           provider.title = 'National ID';
-          createIDBottomSheet(context!, provider.lsPopularProp!);
+          MyBottomSheet().createIDBottomSheet(context!, provider.lsPopularProp!);
         },
         text: 'National ID',
         icon: const Icon(Iconsax.arrow_right_3),
@@ -29,7 +30,7 @@ class KYCDocs {
       CustomButtonIcon(
         onPressed: () async {
           provider.title = 'Passport';
-          createIDBottomSheet(context!, provider.lsPopularProp!);
+          MyBottomSheet().createIDBottomSheet(context!, provider.lsPopularProp!);
         },
         text: 'Passport',
         icon: const Icon(Iconsax.arrow_right_3),
@@ -40,7 +41,7 @@ class KYCDocs {
       CustomButtonIcon(
         onPressed: () async {
           provider.title = 'Vehicle License';
-          createIDBottomSheet(context!, provider.lsPopularProp!);
+          MyBottomSheet().createIDBottomSheet(context!, provider.lsPopularProp!);
         },
         text: 'Vehicle License',
         icon: const Icon(Iconsax.arrow_right_3),
@@ -51,7 +52,7 @@ class KYCDocs {
       CustomButtonIcon(
         onPressed: () async {
           provider.title = 'Driver License';
-          createIDBottomSheet(context!, provider.lsPopularProp!);
+          MyBottomSheet().createIDBottomSheet(context!, provider.lsPopularProp!);
         },
         text: 'Driver License',
         icon: const Icon(Iconsax.arrow_right_3),
@@ -64,7 +65,7 @@ class KYCDocs {
       CustomButtonIcon(
         onPressed: () async {
           provider.title = 'MPTC';
-          createIDBottomSheet(context!, provider.lsIssuerProp!);
+          MyBottomSheet().createIDBottomSheet(context!, provider.lsIssuerProp!);
         },
         text: 'MPTC',
         icon: const Icon(Iconsax.arrow_right_3),
@@ -75,7 +76,7 @@ class KYCDocs {
       CustomButtonIcon(
         onPressed: () async {
           provider.title = 'MoEYs';
-          createIDBottomSheet(context!, provider.lsIssuerProp!);
+          MyBottomSheet().createIDBottomSheet(context!, provider.lsIssuerProp!);
         },
         text: 'MoEYs',
         icon: const Icon(Iconsax.arrow_right_3),
@@ -86,7 +87,7 @@ class KYCDocs {
       CustomButtonIcon(
         onPressed: () async {
           provider.title = 'CSX';
-          createIDBottomSheet(context!, provider.lsIssuerProp!);
+          MyBottomSheet().createIDBottomSheet(context!, provider.lsIssuerProp!);
         },
         text: 'CSX',
         icon: const Icon(Iconsax.arrow_right_3),

@@ -1,8 +1,8 @@
 cmake_minimum_required(VERSION 3.10)
 project(runner LANGUAGES CXX)
 
-set(BINARY_NAME "bitriel")
-set(APPLICATION_ID "com.selendra.bitriel")
+set(BINARY_NAME "Digital ID")
+set(APPLICATION_ID "com.selendra.digital_id")
 
 cmake_policy(SET CMP0063 NEW)
 

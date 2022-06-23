@@ -1,5 +1,6 @@
 
 
+import 'package:carousel_slider/carousel_options.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:wallet_apps/index.dart';
 import 'package:wallet_apps/src/components/camera_c.dart';
@@ -7,23 +8,38 @@ import 'package:wallet_apps/src/constants/db_key_con.dart';
 import 'package:wallet_apps/src/provider/digital_id_p.dart';
 import 'package:wallet_apps/src/provider/home_p.dart';
 import 'package:wallet_apps/src/screen/home/home/body_home.dart';
+import 'package:wallet_apps/src/screen/home/home_page/body_home.dart';
 import 'package:wallet_apps/src/service/services_s.dart';
 import 'package:encrypt/encrypt.dart';
 import 'package:encrypt/encrypt.dart' as encrypt;
 
-class Home extends StatefulWidget {
+class HomePage extends StatefulWidget {
 
   @override
   _HomeState createState() => _HomeState();
 }
 
-class _HomeState extends State<Home> with TickerProviderStateMixin {
+class _HomeState extends State<HomePage> with TickerProviderStateMixin {
   
   TextEditingController phraseKey = TextEditingController();
   DashBoardModel _dashBoardM = DashBoardModel();
   TabController? _tabController;
   final GlobalKey<ScaffoldState> globalKey = GlobalKey<ScaffoldState>();
   DigitalIDProvider? _digitalIDProvider;
+
+  // -------------------
+  HomePageModel _model = HomePageModel();
+
+  void onPageChanged(int index){
+    setState(() {
+      _model.activeIndex = index;
+    });
+    _model.pageController.jumpToPage(index);
+    // _model.pageController.animateToPage(index, duration: Duration(milliseconds: 300), curve: Curves.ease);
+  }
+
+  final bool? pushReplacement = true;
+  // -------------------
 
   Future pickImage(ImageSource source, String? label) async {
     print("pickImage");
@@ -80,6 +96,24 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
 
   @override
   void initState() {
+
+    _model.pageController.addListener(() {
+      if(_model.activeIndex != _model.pageController){
+        setState(() {
+          _model.activeIndex = _model.pageController.page!.toInt();
+        });
+      }
+    });
+
+    _model.activeIndex = 2;
+    _model.carouActiveIndex = 0;
+    _model.globalKey = GlobalKey<ScaffoldState>();
+    _model.onCarouselChanged = (int index, CarouselPageChangedReason reason) {
+      setState(() {
+        this._model.carouActiveIndex = index;
+      });
+    };
+
     _tabController = TabController(length: 3, vsync: this);
     _tabController!.addListener(() {
       onTab(_tabController!.index);
@@ -187,7 +221,10 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     return DefaultTabController(
       length: 3, 
-      child: HomePageBody(
+      child: HomeBody(
+        homePageModel: _model,
+        onPageChanged: onPageChanged,
+        pushReplacement: pushReplacement,
         // dashModel: _dashBoardM,
         // onTab: onTab,
         // tabController: _tabController,

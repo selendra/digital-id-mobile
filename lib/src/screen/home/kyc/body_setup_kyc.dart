@@ -3,6 +3,7 @@ import 'package:iconsax/iconsax.dart';
 import 'package:provider/provider.dart';
 import 'package:wallet_apps/index.dart';
 import 'package:wallet_apps/src/components/component.dart';
+import 'package:wallet_apps/src/components/custom_button_c.dart';
 import 'package:wallet_apps/src/models/kyc_content_m.dart';
 import 'package:wallet_apps/src/provider/documents_p.dart';
 import 'package:wallet_apps/theme/color.dart';
@@ -98,7 +99,7 @@ class SetUpKYCBody extends StatelessWidget {
       child: CustomButtonIcon(
         onPressed: () async {
           Provider.of<DocumentProvider>(context, listen: false).title = 'National ID';
-          createIDBottomSheet(context, ls);
+          MyBottomSheet().createIDBottomSheet(context, ls);
         },
         text: 'National ID',
         icon: const Icon(Iconsax.arrow_right_3),

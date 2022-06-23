@@ -191,9 +191,9 @@ class AppState extends State<App> {
                         theme: AppStyle.myTheme(context),
                         onGenerateRoute: router.generateRoute,
                         // debugShowCheckedModeBanner: false,
-                        routes: {
-                          HomePage.route: (_) => HomePage(),
-                        },
+                        // routes: {
+                        //   HomePage.route: (_) => HomePage(),
+                        // },
                         initialRoute: AppString.splashScreenView,
                         // builder: (context, widget) => ResponsiveWrapper.builder(
                         //   BouncingScrollWrapper.builder(context, widget!),

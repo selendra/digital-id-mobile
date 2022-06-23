@@ -1,8 +1,11 @@
+import 'dart:ui';
+
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 import 'package:wallet_apps/index.dart';
 import 'package:wallet_apps/src/components/search_c.dart';
 import 'package:wallet_apps/src/provider/search_p.dart';
+import 'package:wallet_apps/src/screen/home/createid/create_id.dart';
 
 class MyBottomSheet {
   dynamic response;
@@ -226,4 +229,108 @@ class MyBottomSheet {
       },
     );
   }
+
+  void createIDBottomSheet(BuildContext context, List docs) {
+  showModalBottomSheet(
+    backgroundColor: Colors.transparent,
+    shape: const RoundedRectangleBorder(
+      borderRadius: BorderRadius.only(topLeft: Radius.circular(25), topRight: Radius.circular(25)),
+    ),
+    context: context,
+    builder: (BuildContext context) {
+      return BackdropFilter(
+        filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+        child: Container(
+          decoration: BoxDecoration(
+            color: hexaCodeToColor(AppColors.primaryColor),
+            borderRadius: const BorderRadius.only(topLeft: Radius.circular(20), topRight: Radius.circular(20)),
+          ),
+          child: Column(
+            children: <Widget>[
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(20),
+                    child: MyText(
+                      text: "Create",
+                      color: '#FFFFFF',
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold
+                    ),
+                  ),
+      
+                  IconButton(
+                    icon: Icon(Iconsax.close_circle, color: hexaCodeToColor(AppColors.primaryColor),),
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                  ),
+                ],
+              ),
+              Column(
+                children: [
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: paddingSize, vertical: 10),
+                    child: GestureDetector(
+                      onTap: () async {
+                        Navigator.push(
+                          context, 
+                          MaterialPageRoute(builder: (context) => CreateID(docs: docs))
+                        );
+                      },
+                      child: Row(
+                        children: [
+                          CircleAvatar(
+                            backgroundColor: hexaCodeToColor(AppColors.secondary),
+                            radius: 25,
+                            child: Icon(Iconsax.add_circle, color: hexaCodeToColor(AppColors.whiteColor))
+                          ),
+      
+                          const SizedBox(width: 10),
+                          
+                          MyText(
+                            text: "New ID",
+                            color: "#FFFFFF"
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: paddingSize, vertical: 10),
+                    child: GestureDetector(
+                      onTap: () async {
+                        Navigator.push(
+                          context, 
+                          MaterialPageRoute(builder: (context) => CreateID(docs: docs))
+                        );
+                      },
+                      child: Row(
+                        children: [
+                          CircleAvatar(
+                            backgroundColor: hexaCodeToColor(AppColors.secondary),
+                            radius: 25,
+                            child: Icon(Iconsax.document_upload, color: hexaCodeToColor(AppColors.whiteColor))
+                          ),
+                          
+                          const SizedBox(width: 10),
+      
+                          MyText(
+                            text: "Import ID",
+                            color: '#FFFFFF'
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+      );
+    }
+  );
+}
 }

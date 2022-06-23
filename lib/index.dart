@@ -71,6 +71,7 @@ export 'package:wallet_apps/src/models/home_m.dart';
 export 'package:wallet_apps/src/models/menu_m.dart';
 
 export 'package:wallet_apps/src/models/token.m.dart';
+export 'package:wallet_apps/src/screen/home/home_page/home.dart';
 
 export 'package:wallet_apps/src/models/m_import_acc.dart';
 export 'package:wallet_apps/src/models/dashboard_m.dart';
@@ -188,3 +189,4 @@ export 'src/screen/home/asset_info/asset_info_c.dart';
 export 'src/screen/home/asset_info/att_activity.dart';
 
 const double paddingSize = 15.0;
+const double btnHeight = 60.0;
