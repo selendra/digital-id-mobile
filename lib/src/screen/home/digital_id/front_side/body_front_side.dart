@@ -1,6 +1,7 @@
 
 import 'package:wallet_apps/index.dart';
 import 'package:wallet_apps/src/models/digital_id_m.dart';
+import 'package:wallet_apps/src/screen/home/digital_id/back_side/back_side.dart';
 
 import '../build_dot_indecator.dart';
 
@@ -75,17 +76,17 @@ class FrontSideBody extends StatelessWidget {
               //   ),
               // ),
 
-              // model!.frontImage == ''
-              // ? Container(
-              //     width: 400,
-              //     height: MediaQuery.of(context).size.width / 2.5,
-              //     child: Image.asset(AppConfig.illusPath+"front_side_id.jpg")
-              // )
-              // : Image.file(
-              //     File(model!.frontImage!),
-              //     height: 200,
-              //     width: 400,
-              //   ),
+              model!.frontImage == ''
+              ? Container(
+                  width: 400,
+                  height: MediaQuery.of(context).size.width / 2.5,
+                  child: Image.asset("assets/logo/front_id.png")
+              )
+              : Image.file(
+                  File(model!.frontImage!),
+                  height: 200,
+                  width: 400,
+                ),
 
               MyText(
                 top: paddingSize,
@@ -193,13 +194,7 @@ class FrontSideBody extends StatelessWidget {
               //   );
               // },
               onPressed: () {
-                // Navigator.push(
-                //   context, 
-                //   PageTransition(
-                //     type: PageTransitionType.rightToLeft,
-                //     child: BackSide()
-                //   )
-                // );
+                Navigator.push(context, Transition(child: BackSide(), transitionEffect: TransitionEffect.RIGHT_TO_LEFT));
               },
               child: Container(
                 height: btnHeight,

@@ -37,6 +37,7 @@ class SetUpKYCBody extends StatelessWidget {
         ),
         title: MyText(
           text: "Documents Type",
+          fontSize: 18,
           color: AppColors.whiteColorHexa,
         ),
       ),
@@ -135,13 +136,15 @@ class SetUpKYCBody extends StatelessWidget {
             ),
           ),
 
-          CustomButton(
-            colorBtn: Colors.white.withOpacity(0.06),
-            text: _isShowMorePopularDocs == false ? "Show More" : "Show Less",
-            onPressed: () {
+          MyGradientButton(
+            textButton:  _isShowMorePopularDocs == false ? "Show More" : "Show Less",
+            begin: Alignment.bottomLeft,
+            end: Alignment.topRight,
+            action: (){
               onShowMorePopularDocs!();
             }
-          ),
+          )
+          
         ],
       ),
     );
@@ -173,13 +176,14 @@ class SetUpKYCBody extends StatelessWidget {
             ),
           ),
 
-          CustomButton(
-            colorBtn: Colors.white.withOpacity(0.06),
-            text: _isShowMoreIssuer == false ? "Show More" : "Show Less",
-            onPressed: () {
+          MyGradientButton(
+            textButton: _isShowMoreIssuer == false ? "Show More" : "Show Less",
+            begin: Alignment.bottomLeft,
+            end: Alignment.topRight,
+            action: (){
               onShowMoreIssuer!();
             }
-          ),
+          )
         ],
       ),
     );

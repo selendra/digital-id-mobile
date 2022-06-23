@@ -38,7 +38,7 @@ class IdDetailBody extends StatelessWidget {
 
     Widget _idCard(BuildContext context){
     return Padding(
-      padding: EdgeInsets.all(10),
+      padding: EdgeInsets.all(8),
       child: Stack(
         children: [
           Card(
@@ -79,7 +79,7 @@ class IdDetailBody extends StatelessWidget {
                               ),
                               borderRadius: BorderRadius.circular(10.0),
                             ),
-                            child: SvgPicture.asset("assets/logos/selendra.svg", width: 50)
+                            child: SvgPicture.asset("assets/male_avatar.svg", width: 50)
                           ),
                           const SizedBox(width: 5,),
                           Column(

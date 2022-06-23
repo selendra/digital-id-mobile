@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:wallet_apps/index.dart';
 import 'package:wallet_apps/src/models/digital_id_m.dart';
+import 'package:wallet_apps/src/screen/home/digital_id/selfie/selfie.dart';
 
 import '../build_dot_indecator.dart';
 
@@ -74,17 +75,17 @@ class BackSideBody extends StatelessWidget {
               //     ),
               //   ),
               // ),
-              // model!.backImage == ''
-              // ? Container(
-              //     width: 400,
-              //     height: MediaQuery.of(context).size.width / 2.5,
-              //     child: Image.asset(AppConfig.illusPath+"back_side_id.jpg")
-              // )
-              // : Image.file(
-              //     File(model!.backImage!),
-              //     height: 200,
-              //     width: 400,
-              //   ),
+              model!.backImage == ''
+              ? Container(
+                  width: 400,
+                  height: MediaQuery.of(context).size.width / 2.5,
+                  child: Image.asset("assets/logo/back_id.png")
+              )
+              : Image.file(
+                  File(model!.backImage!),
+                  height: 200,
+                  width: 400,
+                ),
 
               MyText(
                 top: paddingSize,
@@ -197,6 +198,7 @@ class BackSideBody extends StatelessWidget {
                 //   //           );
                 // },
                 onPressed: () {
+                  Navigator.push(context, Transition(child: SelfieSide(), transitionEffect: TransitionEffect.RIGHT_TO_LEFT));
                   // Navigator.push(
                   //   context, 
                   //   PageTransition(

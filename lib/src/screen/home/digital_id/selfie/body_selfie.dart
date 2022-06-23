@@ -69,17 +69,17 @@ class SelfieSideBody extends StatelessWidget {
                 //     ),
                 //   ),
                 // ),
-                // model!.selfieImage == ''
-                // ? Container(
-                //     width: 400,
-                //     height: MediaQuery.of(context).size.width / 2.5,
-                //     child: Image.asset(AppConfig.illusPath+"front_side_id.jpg")
-                // )
-                // : Image.file(
-                //     File(model!.selfieImage!),
-                //     height: 200,
-                //     width: 400,
-                //   ),
+                model!.selfieImage == ''
+                ? Container(
+                    width: 400,
+                    height: MediaQuery.of(context).size.width / 2.5,
+                    child: Image.asset("assets/logo/selfie.png")
+                )
+                : Image.file(
+                    File(model!.selfieImage!),
+                    height: 200,
+                    width: 400,
+                  ),
 
                 MyText(
                   top: paddingSize,
@@ -154,6 +154,7 @@ class SelfieSideBody extends StatelessWidget {
               //   );
               // }, 
               onPressed: () async {
+                // Navigator.push(context, Transition(child: SuccessSubmit(method: () async {await submit!();},), transitionEffect: TransitionEffect.RIGHT_TO_LEFT));
                 // MaterialPageRoute(builder: (context) => SuccessSubmit(method: () async {await submit!();},))
                 // Navigator.push(
                 //   context, 

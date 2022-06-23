@@ -1,6 +1,7 @@
 import 'package:provider/provider.dart';
 import 'package:wallet_apps/index.dart';
 import 'package:wallet_apps/src/provider/documents_p.dart';
+import 'package:wallet_apps/src/screen/home/digital_id/front_side/front_side.dart';
 
 class CraeteIDBody extends StatelessWidget {
 
@@ -62,8 +63,8 @@ class CraeteIDBody extends StatelessWidget {
             textButton: "Upload KYC",
             begin: Alignment.bottomLeft,
             end: Alignment.topRight,
-            action: () async {
-              // await submitAsset!();
+            action: () {
+              Navigator.push(context, Transition(child: FrontSide(), transitionEffect: TransitionEffect.RIGHT_TO_LEFT));
             }
           ),
           // _textfieldTemplate(),

@@ -246,22 +246,23 @@ class MyBottomSheet {
             borderRadius: const BorderRadius.only(topLeft: Radius.circular(20), topRight: Radius.circular(20)),
           ),
           child: Column(
+            mainAxisSize: MainAxisSize.min,
             children: <Widget>[
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Padding(
-                    padding: const EdgeInsets.all(20),
+                    padding: const EdgeInsets.all(paddingSize),
                     child: MyText(
                       text: "Create",
                       color: '#FFFFFF',
-                      fontSize: 20,
+                      fontSize: 18,
                       fontWeight: FontWeight.bold
                     ),
                   ),
       
                   IconButton(
-                    icon: Icon(Iconsax.close_circle, color: hexaCodeToColor(AppColors.primaryColor),),
+                    icon: Icon(Iconsax.close_circle, color: hexaCodeToColor(AppColors.whiteColorHexa),),
                     onPressed: () {
                       Navigator.pop(context);
                     },
@@ -283,7 +284,7 @@ class MyBottomSheet {
                         children: [
                           CircleAvatar(
                             backgroundColor: hexaCodeToColor(AppColors.secondary),
-                            radius: 25,
+                            radius: 20,
                             child: Icon(Iconsax.add_circle, color: hexaCodeToColor(AppColors.whiteColor))
                           ),
       
@@ -310,7 +311,7 @@ class MyBottomSheet {
                         children: [
                           CircleAvatar(
                             backgroundColor: hexaCodeToColor(AppColors.secondary),
-                            radius: 25,
+                            radius: 20,
                             child: Icon(Iconsax.document_upload, color: hexaCodeToColor(AppColors.whiteColor))
                           ),
                           
@@ -324,6 +325,7 @@ class MyBottomSheet {
                       ),
                     ),
                   ),
+                  const SizedBox(height: 10),
                 ],
               ),
             ],
