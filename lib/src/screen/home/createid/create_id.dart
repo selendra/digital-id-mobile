@@ -29,6 +29,12 @@ class _CreateIDState extends State<CreateID> {
       
     }
   }
+  
+  @override
+  initState(){
+    print(widget.docs);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {

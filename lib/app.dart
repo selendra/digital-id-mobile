@@ -6,6 +6,7 @@ import 'package:responsive_framework/responsive_wrapper.dart';
 import 'package:wallet_apps/index.dart';
 import 'package:wallet_apps/src/api/api.dart';
 import 'package:wallet_apps/src/constants/db_key_con.dart';
+import 'package:wallet_apps/src/provider/documents_p.dart';
 import 'package:wallet_apps/src/provider/provider.dart';
 import 'package:wallet_apps/src/screen/home/home/home.dart';
 import 'package:web3dart/web3dart.dart';
@@ -25,6 +26,7 @@ class AppState extends State<App> {
 
   @override
   void initState() {
+    Provider.of<DocumentProvider>(context, listen: false).initJson();
     MarketProvider().fetchTokenMarketPrice(context);
     // readTheme();
 

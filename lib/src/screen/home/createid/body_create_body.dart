@@ -39,14 +39,16 @@ class CraeteIDBody extends StatelessWidget {
               itemBuilder: (context, index){
                 return Column(
                   children: [
-
+                    // Text(docs![index]['formController'].text),
                     MyInputField(
                       inputType: docs![index]['type'] == 'integer' ? TextInputType.number : TextInputType.text,
-                                  
+                      focusNode: docs![index]['focusNode'],
                       controller: docs![index]['formController'],
-                      hintText: docs![index]['key'],
-                      
-                      onSubmit: () {
+                      // hintText: docs![index]['key'],
+                      onChanged: (String value){
+                        
+                      },
+                      onSubmit: (String value) {
 
                       },
                     ),

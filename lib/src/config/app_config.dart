@@ -159,6 +159,10 @@ class AppConfig {
   static String assetsPath = "assets/";
   static String animationPath = "assets/animation/";
 
+  static String mandatory = "assets/json/mandatory.json";
+  static String popular = "assets/json/popular.json";
+  static String issuer = "assets/json/issuer.json";
+
 }
 
 class DBkey {
