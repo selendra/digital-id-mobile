@@ -177,37 +177,47 @@ class FrontSideBody extends StatelessWidget {
             left: paddingSize,
             right: paddingSize,
             bottom: paddingSize,
-            child: ElevatedButton(
-              style: ButtonStyle(
-                shape: MaterialStateProperty.all(
-                  RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20)),
-                ),
-              ),
-              // onPressed: model!.frontImage == '' ? null : () {
-              //   Navigator.push(
-              //     context, 
-              //     PageTransition(
-              //       type: PageTransitionType.rightToLeft,
-              //       child: BackSide()
-              //     )
-              //   );
-              // },
-              onPressed: () {
+            child: MyGradientButton(
+              // edgeMargin: EdgeInsets.only(top: paddingSize, left: paddingSize, right: paddingSize),
+              textButton: "Next Step",
+              begin: Alignment.bottomLeft,
+              end: Alignment.topRight,
+              action: () async {
                 Navigator.push(context, Transition(child: BackSide(), transitionEffect: TransitionEffect.RIGHT_TO_LEFT));
-              },
-              child: Container(
-                height: btnHeight,
-                width: MediaQuery.of(context).size.width,
-                alignment: Alignment.center,
-                child: MyText(
-                  text: "Next Step",
-                  color2: Colors.white,
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                )
-              )
+                // await submitAsset!();
+              }
             ),
+            // child: ElevatedButton(
+            //   style: ButtonStyle(
+            //     shape: MaterialStateProperty.all(
+            //       RoundedRectangleBorder(
+            //           borderRadius: BorderRadius.circular(20)),
+            //     ),
+            //   ),
+            //   // onPressed: model!.frontImage == '' ? null : () {
+            //   //   Navigator.push(
+            //   //     context, 
+            //   //     PageTransition(
+            //   //       type: PageTransitionType.rightToLeft,
+            //   //       child: BackSide()
+            //   //     )
+            //   //   );
+            //   // },
+            //   onPressed: () {
+            //     Navigator.push(context, Transition(child: BackSide(), transitionEffect: TransitionEffect.RIGHT_TO_LEFT));
+            //   },
+            //   child: Container(
+            //     height: btnHeight,
+            //     width: MediaQuery.of(context).size.width,
+            //     alignment: Alignment.center,
+            //     child: MyText(
+            //       text: "Next Step",
+            //       color2: Colors.white,
+            //       fontSize: 20,
+            //       fontWeight: FontWeight.bold,
+            //     )
+            //   )
+            // ),
           )
         ],
       ),

@@ -136,48 +136,58 @@ class SelfieSideBody extends StatelessWidget {
             left: paddingSize,
             right: paddingSize,
             bottom: paddingSize,
-            child: ElevatedButton(
-              style: ButtonStyle(
-                shape: MaterialStateProperty.all(
-                  RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20)),
-                ),
-              ),
-              // onPressed: model!.selfieImage == '' ? null : () async {
-              //   // MaterialPageRoute(builder: (context) => SuccessSubmit(method: () async {await submit!();},))
-              //   Navigator.push(
-              //     context, 
-              //     PageTransition(
-              //       type: PageTransitionType.rightToLeft,
-              //       child: SuccessSubmit(method: () async {await submit!();},)
-              //     )
-              //   );
-              // }, 
-              onPressed: () async {
-                // Navigator.push(context, Transition(child: SuccessSubmit(method: () async {await submit!();},), transitionEffect: TransitionEffect.RIGHT_TO_LEFT));
-                // MaterialPageRoute(builder: (context) => SuccessSubmit(method: () async {await submit!();},))
-                // Navigator.push(
-                //   context, 
-                //   PageTransition(
-                //     type: PageTransitionType.rightToLeft,
-                //     child: SuccessSubmit(method: () async {await submit!();},)
-                //   )
-                // );
-              }, 
-              child: Container(
-                height: btnHeight,
-                width: MediaQuery.of(context).size.width,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(14)
-                ),
-                alignment: Alignment.center,
-                child: MyText(
-                  text: "Next Step", color2: Colors.white,
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                )
-              )
+            child: MyGradientButton(
+              // edgeMargin: EdgeInsets.only(top: paddingSize, left: paddingSize, right: paddingSize),
+              textButton: "Next Step",
+              begin: Alignment.bottomLeft,
+              end: Alignment.topRight,
+              action: () async {
+                
+                // await submitAsset!();
+              }
             ),
+            // child: ElevatedButton(
+            //   style: ButtonStyle(
+            //     shape: MaterialStateProperty.all(
+            //       RoundedRectangleBorder(
+            //           borderRadius: BorderRadius.circular(20)),
+            //     ),
+            //   ),
+            //   // onPressed: model!.selfieImage == '' ? null : () async {
+            //   //   // MaterialPageRoute(builder: (context) => SuccessSubmit(method: () async {await submit!();},))
+            //   //   Navigator.push(
+            //   //     context, 
+            //   //     PageTransition(
+            //   //       type: PageTransitionType.rightToLeft,
+            //   //       child: SuccessSubmit(method: () async {await submit!();},)
+            //   //     )
+            //   //   );
+            //   // }, 
+            //   onPressed: () async {
+            //     // Navigator.push(context, Transition(child: SuccessSubmit(method: () async {await submit!();},), transitionEffect: TransitionEffect.RIGHT_TO_LEFT));
+            //     // MaterialPageRoute(builder: (context) => SuccessSubmit(method: () async {await submit!();},))
+            //     // Navigator.push(
+            //     //   context, 
+            //     //   PageTransition(
+            //     //     type: PageTransitionType.rightToLeft,
+            //     //     child: SuccessSubmit(method: () async {await submit!();},)
+            //     //   )
+            //     // );
+            //   }, 
+            //   child: Container(
+            //     height: btnHeight,
+            //     width: MediaQuery.of(context).size.width,
+            //     decoration: BoxDecoration(
+            //       borderRadius: BorderRadius.circular(14)
+            //     ),
+            //     alignment: Alignment.center,
+            //     child: MyText(
+            //       text: "Next Step", color2: Colors.white,
+            //       fontSize: 20,
+            //       fontWeight: FontWeight.bold,
+            //     )
+            //   )
+            // ),
           )
         ],
       ),

@@ -1,5 +1,6 @@
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:wallet_apps/index.dart';
+import 'package:wallet_apps/src/screen/home/id_detail/share_id/share_id.dart';
 
 class IdDetailBody extends StatelessWidget {
   const IdDetailBody({Key? key}) : super(key: key);
@@ -15,11 +16,11 @@ class IdDetailBody extends StatelessWidget {
         actions: [
           IconButton(
             icon: const Icon(
-              Iconsax.scan,
+              Iconsax.scan_barcode,
               color: Colors.white,
             ),
             onPressed: () {
-
+              Navigator.push(context, Transition(child: ShareID(), transitionEffect: TransitionEffect.RIGHT_TO_LEFT));
             },
           ),
         ],
