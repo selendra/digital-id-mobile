@@ -6,6 +6,11 @@ import 'package:wallet_apps/src/screen/home/home_page/home.dart';
 
 class AddAsset extends StatefulWidget {
   static const route = '/addasset';
+
+  final int? network;
+
+  AddAsset({this.network = 0});
+
   @override
   State<StatefulWidget> createState() {
     return AddAssetState();
@@ -23,7 +28,7 @@ class AddAssetState extends State<AddAsset> {
   FlareControls flareController = FlareControls();
   
   String _tokenSymbol = '';
-  int initialValue = 0;
+  int? initialValue;
 
   List<Map<String, dynamic>> networkSymbol = [
     {"symbol": "Binance Smart Chain", "index": 0},
@@ -34,6 +39,7 @@ class AddAssetState extends State<AddAsset> {
   void initState() {
     _modelAsset.result = {};
     _modelAsset.match = false;
+    initialValue = widget.network!;
     AppServices.noInternetConnection(globalKey);
 
     super.initState();
@@ -134,7 +140,7 @@ class AddAssetState extends State<AddAsset> {
         await Provider.of<ContractProvider>(context, listen: false).addToken(
           _tokenSymbol,
           context,
-          network: networkSymbol[initialValue]['symbol'],
+          network: networkSymbol[initialValue!]['symbol'],
           contractAddr: _modelAsset.controllerAssetCode.text,
         );
 

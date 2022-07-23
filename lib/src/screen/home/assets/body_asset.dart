@@ -1,30 +1,86 @@
+import 'package:lottie/lottie.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:wallet_apps/index.dart';
 import 'package:wallet_apps/src/components/asset_item_c.dart';
+import 'package:wallet_apps/src/components/category_card_c.dart';
 import 'package:wallet_apps/src/components/menu_item_c.dart';
 import 'dart:math';
 import 'package:wallet_apps/src/components/pie_chart.dart';
+import 'package:wallet_apps/src/components/shimmer_c.dart';
 class AssetsPageBody extends StatelessWidget {
-  const AssetsPageBody({ Key? key }) : super(key: key);
+  final AssetPageModel? model;
+  final Function? onTapCategories;
+  final Function? onHorizontalChanged;
+
+  const AssetsPageBody({ 
+    Key? key,
+    this.onTapCategories,
+    this.model,
+    this.onHorizontalChanged,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // appBar: AppBar(
+      //   titleSpacing: 0,
+      //   title: MyText(text: "Assets", color2: Colors.white, fontSize: 17),
+      //   backgroundColor: hexaCodeToColor(AppColors.bluebgColor),
+      //   elevation: 0,
+      // ),
       body: BodyScaffold(
         physic: BouncingScrollPhysics(),
+        height: MediaQuery.of(context).size.height,
+        width: MediaQuery.of(context).size.width,
         isSafeArea: true,
         bottom: 0,
         child: Column(
           children: [
             
-            _userWallet(context),
-      
-            SizedBox(height: 25),
+            // _userWallet(context),
+            _balanceCard(context),
       
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: paddingSize),
-              child: _selendraNetworkList(context),
+              padding: const EdgeInsets.all(paddingSize),
+              child: SizedBox(
+                height: 30.sp,
+                child: categoryToken()
+              ),
             ),
+
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: paddingSize),
+              child: Row(
+                children: [
+                  MyText(
+                    text: "Assets",
+                    // text: "Selendra Network",
+                    color: AppColors.titleAssetColor,
+                    fontWeight: FontWeight.w500
+                  ),
+                  Expanded(
+                    child: Divider(
+                      thickness: 1,
+                      color: hexaCodeToColor(AppColors.titleAssetColor),
+                      indent: 2.w,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+
+            Expanded(
+              child: TabBarView(
+                controller: model!.tabController,
+                children: [
+            
+                  _selendraNetworkList(context, Provider.of<ContractProvider>(context).sortListContract),
+                  _selendraNetworkList(context, model!.nativeAssets!, ),
+                  _selendraNetworkList(context, model!.bep20Assets  !, networkIndex: 2),
+                  _selendraNetworkList(context, model!.erc20Assets!, networkIndex: 3)
+                ]
+              ),
+            )
 
             // SizedBox(height: 25),
 
@@ -35,6 +91,88 @@ class AssetsPageBody extends StatelessWidget {
     );
   }
 
+
+  Widget _balanceCard(BuildContext context){
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Card(
+        color: hexaCodeToColor(AppColors.whiteColor).withOpacity(0.06),
+        elevation: 0,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20)
+        ),
+        child: Container(
+          width: MediaQuery.of(context).size.width,
+          padding: EdgeInsets.symmetric(horizontal: paddingSize, vertical: paddingSize),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              MyText(
+                text: 'Wallet',
+                fontWeight: FontWeight.bold,
+                color: AppColors.whiteColor,
+              ),
+              SizedBox(height: paddingSize,),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Row(
+                    children: [
+                      Image.asset("assets/SelendraCircle-Blue.png", width: 20),
+                      const SizedBox(width: 5,),
+                      MyText(
+                        fontSize: 16,
+                        text: 'SEL',
+                        fontWeight: FontWeight.bold,
+                        color: AppColors.whiteColor,
+                      ),
+                    ],
+                  ),
+                  MyText(
+                    fontSize: 16,
+                    text: '0.0',
+                    fontWeight: FontWeight.bold,
+                    color: AppColors.whiteColor,
+                  ),
+                ],
+              ),
+              SizedBox(height: paddingSize,),
+              Consumer<ApiProvider>(
+                builder: (context, value, child) {
+                  return Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Expanded(
+                        child: WidgetShimmer(
+                          txt: value.accountM.address, 
+                          child: MyText(
+                            right: 5,
+                            text: value.accountM.address == null ? "" : value.accountM.address!.replaceRange(10, value.accountM.address!.length - 10, "....."),
+                            color: AppColors.whiteColorHexa,
+                            fontSize: 16,
+                            textAlign: TextAlign.left
+                          )
+                        )
+                      ),
+                      IconButton(
+                        onPressed: (){
+                          
+                        },
+                        icon: Icon(Iconsax.copy, color: hexaCodeToColor(AppColors.whiteColor)),
+                      )
+                    ],
+                  );
+                }
+              ),
+              
+              SizedBox(height: 3.h),
+              _operationRequest(context),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
 
   Widget _userWallet(BuildContext context) {
 
@@ -144,57 +282,84 @@ class AssetsPageBody extends StatelessWidget {
     );
   }
 
-  Widget _selendraNetworkList(BuildContext context){
-    return Container(
-      child: Column(
-        children: [
+  Widget _selendraNetworkList(BuildContext context, List<SmartContractModel> lsAsset, {int? networkIndex}){
+    return GestureDetector(
+      onHorizontalDragEnd: (details) {
+        print("onHorizontalChanged ${details.primaryVelocity!.toDouble()}");
+        onHorizontalChanged!(details);
+      },
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: paddingSize),
+        child: Stack(
+          children: [
 
-          Row(
-            children: [
-              MyText(
-                text: "Assets",
-                // text: "Selendra Network",
-                color: AppColors.titleAssetColor,
-                fontWeight: FontWeight.w500
-              ),
-              Expanded(
-                child: Divider(
-                  thickness: 1,
-                  color: hexaCodeToColor(AppColors.titleAssetColor),
-                  indent: 2.w,
+            ListView.builder(
+              physics: NeverScrollableScrollPhysics(),
+              itemCount: lsAsset.length,
+              itemBuilder: (context, index){
+                return GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      Transition(
+                        child: AssetInfo(
+                          index: index,
+                          scModel: lsAsset[index]
+                        ),
+                        transitionEffect: TransitionEffect.RIGHT_TO_LEFT
+                      ),
+                    );
+                  },
+                  child: AssetsItemComponent(
+                    scModel: lsAsset[index]
+                  )
+                );
+              }
+            ),
+
+            // if (lsAsset.isEmpty && )
+            // Lottie.asset(AppConfig.animationPath+"no-data.json"),
+
+            if (lsAsset.isEmpty && networkIndex != null) Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                
+                SizedBox(
+                  height: 60.sp,
+                  child: OverflowBox(
+                    minHeight: 60.h,
+                    maxHeight: 60.h,
+                    child: Lottie.asset(AppConfig.animationPath+"no-data.json", width: 60.w, height: 60.w),
+                  )
                 ),
-              ),
-            ],
-          ),
-
-          Consumer<ContractProvider>(
-            builder: (context, value, child) {
-              return Column(
-                children: [
-                  for (int index = 0; index < value.sortListContract.length; index++)
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          Transition(
-                            child: AssetInfo(
-                              index: index,
-                              scModel: value.sortListContract[index]
-                            ),
-                            transitionEffect: TransitionEffect.RIGHT_TO_LEFT
-                          ),
-                        );
-                      },
-                      child: AssetsItemComponent(
-                        scModel: value.sortListContract[index]
-                      )
-                    )
-                ]
-              );
-            },
-          ),
-        ],
-      ),
+                MyText(
+                  text: "Don't see your token?",
+                  color2: Colors.grey.shade400,
+                  bottom: 10.sp,
+                ),
+            
+                GestureDetector(
+                  onTap: (){
+                    Navigator.push(
+                      context, 
+                      MaterialPageRoute(builder: (context) => AddAsset(network: networkIndex == 2 ? 0 : 1,))
+                    );
+                  },
+                  child: MyText(
+                    fontSize: 16,
+                    text: "Import asset",
+                    color: AppColors.secondary,
+                    fontWeight: FontWeight.bold,
+                    // left: 5.sp
+                  )
+                )
+              ],
+            )
+          ]
+        )
+          
+      )
+      
     );
   }
 
@@ -288,6 +453,29 @@ class AssetsPageBody extends StatelessWidget {
           }
         )
       ],
+    );
+  }
+
+  Widget categoryToken(){
+
+    return ListView.builder(
+      shrinkWrap: true,
+      scrollDirection: Axis.horizontal,
+      itemCount: model!.categories!.length,
+      itemBuilder: (BuildContext context, int index) {
+        return Row(
+          children: [
+            CategoryCard(
+              index: index,
+              title: model!.categories![index],
+              selectedIndex: model!.categoryIndex!,
+              onTap: onTapCategories!,
+            ),
+
+            SizedBox(width: 2.5.w),
+          ],
+        );
+      }
     );
   }
 }

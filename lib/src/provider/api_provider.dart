@@ -49,7 +49,7 @@ class ApiProvider with ChangeNotifier {
 
   String? _jsCode;
 
-  bool isMainnet = false;
+  bool isMainnet = true;
   bool isDebug = true;
   
   int selNativeIndex = 0;
@@ -65,6 +65,7 @@ class ApiProvider with ChangeNotifier {
   String? funcName;
 
   bool get isConnected => _isConnected;
+  AccountM get getAccount => accountM;
 
   void setAccount(AccountM acc){
     accountM = acc;
@@ -86,7 +87,7 @@ class ApiProvider with ChangeNotifier {
       // Setup ss58Format base on Network
       // await _sdk.webView!.evalJavascript("account.setupss58Format('$isMainnet')");
 
-      await _keyring.init([0, isMainnet ? AppConfig.networkList[0].ss58MN! : AppConfig.networkList[0].ss58!]);
+      await _keyring.init([0, AppConfig.networkList[0].ss58MN!]);//isMainnet ? AppConfig.networkList[0].ss58MN! : AppConfig.networkList[0].ss58!]);
       await _sdk.init(_keyring, jsCode: _jsCode);
 
       _apiKeyring = MyApiKeyring(_sdk.api, _sdk.api.keyring.service!);
@@ -105,7 +106,7 @@ class ApiProvider with ChangeNotifier {
       NetworkParams polNode = NetworkParams();
       // NetworkParams selNode = NetworkParams();
       polNode.name = 'Polkadot(Live, hosted by PatractLabs)';
-      polNode.endpoint = isMainnet ? AppConfig.networkList[1].wsUrlMN : AppConfig.networkList[1].wsUrlTN;//'wss://westend-rpc.polkadot.io';//'wss://polkadot.elara.patract.io';//AppConfig.networkList[1].wsUrlMN; ;
+      polNode.endpoint = AppConfig.networkList[1].wsUrlMN;//isMainnet ? AppConfig.networkList[1].wsUrlMN : AppConfig.networkList[1].wsUrlTN;//'wss://westend-rpc.polkadot.io';//'wss://polkadot.elara.patract.io';//AppConfig.networkList[1].wsUrlMN; ;
       polNode.ss58 = 0;
 
       // selNode.name = 'Indranet hosted By Selendra';
@@ -427,8 +428,8 @@ class ApiProvider with ChangeNotifier {
       NetworkParams? res = NetworkParams();
 
       node.name = 'Indranet hosted By Selendra';
-      node.endpoint = isMainnet ? AppConfig.networkList[0].wsUrlMN : AppConfig.networkList[0].wsUrlTN;
-      node.ss58 = isMainnet ? AppConfig.networkList[0].ss58MN : AppConfig.networkList[0].ss58;
+      node.endpoint = AppConfig.networkList[0].wsUrlMN;// isMainnet ? AppConfig.networkList[0].wsUrlMN : AppConfig.networkList[0].wsUrlTN;
+      node.ss58 = AppConfig.networkList[0].ss58MN;// isMainnet ? AppConfig.networkList[0].ss58MN : AppConfig.networkList[0].ss58;
 
       await _sdk.api.connectNode(_keyring, [node]).then((value) async {
         res = value;

@@ -137,6 +137,24 @@ class MarketProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  Future<List<Map<String, dynamic>>> searchCoinFromMarket(String id) async {
+    try {
+
+      _res = await http.get(Uri.parse('https://api.coingecko.com/api/v3/search?query=${id.toLowerCase()}'));
+      lsCoin = List<Map<String, dynamic>>.from( (await json.decode(_res!.body))['coins'] );
+      lsCoin = lsCoin!.where((element){
+        if (element['symbol'].toLowerCase() == id.toLowerCase() && element['market_cap_rank'] != null){
+          return true;
+        }
+        return false;
+      }).toList();
+      return lsCoin!;
+    } catch (e) {
+      if (ApiProvider().isDebug == true) print("Error searchCoinFromMarket $e");
+    }
+    return lsCoin!;
+  }
+
   Future<dynamic> queryCoinFromMarket(String id) async {
     print("id $id");
     print("queryCoinFromMarket");
