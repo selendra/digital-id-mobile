@@ -21,12 +21,14 @@ class HomeBody extends StatelessWidget {
   final HomePageModel? homePageModel;
   final bool? pushReplacement;
   final Function(int index)? onPageChanged;
+  final Function? scanLogin;
 
   const HomeBody({ 
     Key? key, 
     this.homePageModel,
     this.onPageChanged,
     this.pushReplacement,
+    this.scanLogin
   }) : super(key: key);
 
   final double tabBarHeight = 55;
@@ -73,11 +75,16 @@ class HomeBody extends StatelessWidget {
               color: Colors.white,
             ),
             onPressed: () async {
-              await TrxOptionMethod.scanQR(
+              await TrxOptionMethod().scanQR(
                 context,
                 [],
                 pushReplacement!,
-              );
+              ).then((value) async {
+                print("TrxOptionMethod value $value");
+                if (value != null){
+                  await scanLogin!(value);
+                }
+              });
             },
           ),
         ],

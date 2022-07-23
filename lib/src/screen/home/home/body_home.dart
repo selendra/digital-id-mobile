@@ -16,12 +16,14 @@ class HomePageBody extends StatelessWidget {
   final HomePageModel? homePageModel;
   final bool? pushReplacement;
   final Function(int index)? onPageChanged;
+  final Function? scanLogin;
 
   const HomePageBody({ 
     Key? key, 
     this.homePageModel,
     this.onPageChanged,
     this.pushReplacement,
+    this.scanLogin
     }) : super(key: key);
 
 
@@ -73,11 +75,16 @@ class HomePageBody extends StatelessWidget {
               ),
               onPressed: () async {
                 
-                await TrxOptionMethod.scanQR(
-                  context,
-                  [],
-                  pushReplacement!,
-                );
+                // await TrxOptionMethod().scanQR(
+                //   context,
+                //   [],
+                //   pushReplacement!,
+                // ).then((value) async {
+                //   print("TrxOptionMethod value $value");
+                //   if (value != null){
+                //     await scanLogin!(value);
+                //   }
+                // });
               },
             ),
           )
@@ -295,11 +302,11 @@ class HomePageBody extends StatelessWidget {
                   begin: Alignment.bottomRight,
                   end: Alignment.topCenter,
                   action: () async {
-                    await TrxOptionMethod.scanQR(
-                      context,
-                      [],
-                      pushReplacement!
-                    );
+                    // await TrxOptionMethod.scanQR(
+                    //   context,
+                    //   [],
+                    //   pushReplacement!
+                    // );
                   },
                 ),
               ),

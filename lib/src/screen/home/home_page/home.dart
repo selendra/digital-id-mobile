@@ -1,6 +1,7 @@
 
 
 import 'package:carousel_slider/carousel_options.dart';
+import 'package:eth_sig_util/eth_sig_util.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:wallet_apps/index.dart';
 import 'package:wallet_apps/src/components/camera_c.dart';
@@ -221,6 +222,75 @@ class _HomeState extends State<HomePage> with TickerProviderStateMixin {
     
   }
 
+  Future<void> _scanLogin(String code) async {
+
+                    
+    final String? barcodeData = code;
+
+    final decode = jsonDecode(barcodeData!);
+    print("_scanLogin decode $decode");
+    if(decode["id"] == null) {
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: Text("Error"),
+          content: Text("Invalid QR Code"),
+          actions: [
+            FlatButton(
+              child: Text("OK"),
+              onPressed: () async{
+                // await _contractProvider!.hardhatClient.signTransaction(
+                //   EthPrivateKey.fromHex(_credentials),
+                //   Transaction(
+                //     to: EthereumAddress.fromHex('0xC914Bb2ba888e3367bcecEb5C2d99DF7C7423706'),
+                //     gasPrice: EtherAmount.inWei(BigInt.one),
+                //     maxGas: 100000,
+                //   )
+                // );
+
+                Navigator.pop(context);
+              },
+            )
+          ],
+        ),
+      );
+    } 
+    else{
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: Text("Message"),
+          content: Text("Valid QR Code"),
+          actions: [
+            FlatButton(
+              child: Text("OK"),
+              onPressed: () async {
+
+                List<int> convert = decode['id'].toString().codeUnits;
+                Uint8List uint8list = Uint8List.fromList(convert);
+                String _credentials = await _signId(decode['id']);
+                print("_credentials $_credentials");
+                String signedDataHex = EthSigUtil.signMessage(
+                  privateKey: _credentials,
+                  message: uint8list
+                );
+                print("signedDataHex $signedDataHex");
+                Navigator.pop(context);
+              },
+            )
+          ],
+        ),
+      );
+    }
+
+  }
+
+  Future<String> _signId(String id) async {
+
+    return await Provider.of<ApiProvider>(context, listen: false).getPrivateKey("august midnight obvious fragile pretty begin useless collect elder ability enhance series");
+
+  }
+
   @override
   void dispose() {
     super.dispose();
@@ -234,6 +304,7 @@ class _HomeState extends State<HomePage> with TickerProviderStateMixin {
         homePageModel: _model,
         onPageChanged: onPageChanged,
         pushReplacement: pushReplacement,
+        scanLogin: _scanLogin,
         // dashModel: _dashBoardM,
         // onTab: onTab,
         // tabController: _tabController,

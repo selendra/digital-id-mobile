@@ -105,6 +105,7 @@ dependencies:
   defichaindart:
   flutter_secure_storage:
   flutter_screenshot_switcher:
+  flutter_web3: ^2.1.9
   #Contact
   fluttercontactpicker: ^4.7.0
   #animation

@@ -64,6 +64,7 @@ class ContractProvider with ChangeNotifier {
   NativeService get getEth => _eth!;
 
   Web3Client get bscClient => _bscClient!;
+  Web3Client get hardhatClient => _hardHatClient!;
   String get getEtherAddress => ethAdd;
   
   double mainBalance = 0.0;

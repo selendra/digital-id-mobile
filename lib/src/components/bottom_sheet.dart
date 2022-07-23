@@ -46,7 +46,7 @@ class MyBottomSheet {
                       action: () async {
                         // Navigator.pop(context);
                         try {
-                          await TrxOptionMethod.scanQR(
+                          await TrxOptionMethod().scanQR(
                             context,
                             portfolioList!,
                             pushReplacement

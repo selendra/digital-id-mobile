@@ -1,6 +1,8 @@
 import 'package:carousel_slider/carousel_options.dart';
+import 'package:eth_sig_util/eth_sig_util.dart';
 import 'package:wallet_apps/index.dart';
 import 'package:wallet_apps/src/screen/home/home/body_home.dart';
+import 'package:web3dart/web3dart.dart';
 
 class HomePage1 extends StatefulWidget {
 
@@ -15,6 +17,8 @@ class HomePage1 extends StatefulWidget {
 class _HomePageState extends State<HomePage1> {
   
   HomePageModel _model = HomePageModel();
+
+  ContractProvider? _contractProvider;
 
   @override
   void initState() {
@@ -36,6 +40,7 @@ class _HomePageState extends State<HomePage1> {
         this._model.carouActiveIndex = index;
       });
     };
+    _contractProvider = Provider.of<ContractProvider>(context, listen: false);
   }
   
 
@@ -55,7 +60,7 @@ class _HomePageState extends State<HomePage1> {
     return HomePageBody(
       homePageModel: _model,
       onPageChanged: onPageChanged,
-      pushReplacement: pushReplacement,
+      pushReplacement: pushReplacement
     );
   }
 }
