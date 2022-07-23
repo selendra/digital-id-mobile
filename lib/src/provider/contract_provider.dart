@@ -17,7 +17,7 @@ import '../../index.dart';
 class ContractProvider with ChangeNotifier {
 
   Client? _httpClient;
-  Web3Client? _bscClient, _etherClient;
+  Web3Client? _bscClient, _etherClient, _hardHatClient;
 
   ContractService? _selToken, _selV2, _kgo, _swap, _atd, _bep20, _erc20, _conService;
   NativeService? _eth, _bnb;
@@ -34,6 +34,7 @@ class ContractProvider with ChangeNotifier {
 
   // To Get Member Variable
   ApiProvider apiProvider = ApiProvider();
+  MarketProvider? _marketProvider;
 
   /// (0 SEL Token) (1 SEL V1) (2 SEL V2) (3 KIWIGO) (4 ETH) (5 BNB)
   /// 
@@ -63,6 +64,7 @@ class ContractProvider with ChangeNotifier {
   NativeService get getEth => _eth!;
 
   Web3Client get bscClient => _bscClient!;
+  String get getEtherAddress => ethAdd;
   
   double mainBalance = 0.0;
 
@@ -169,6 +171,17 @@ class ContractProvider with ChangeNotifier {
       socketConnector: () {
       return IOWebSocketChannel.connect(AppConfig.networkList[2].wsUrlMN!).cast<String>();
     });
+  }
+
+  Future<void> initHardhatClient() async {
+    print("initHardhatClient");
+    _httpClient = Client();
+    _hardHatClient = Web3Client(ApiProvider().isMainnet ? AppConfig.networkList[4].httpUrlMN! : AppConfig.networkList[4].httpUrlTN!, _httpClient!,
+    //   socketConnector: () {
+    //   return IOWebSocketChannel.connect(AppConfig.networkList[4].wsUrlMN!).cast<String>();
+    // }
+    );
+    print("finish initHardhatClient");
   }
 
   Future<void> initSwapContract() async {
@@ -567,6 +580,48 @@ class ContractProvider with ChangeNotifier {
     return null;
   }
 
+  Future<DeployedContract?> initHardHat(String contractAddr) async {
+    try {
+
+      final String abiCode = await rootBundle.loadString('assets/abi/digital_id.json');
+      final contract = DeployedContract(
+        ContractAbi.fromJson(abiCode, 'CreadentialManagement'),
+        EthereumAddress.fromHex(contractAddr),
+      );
+
+      return contract;
+    } catch (e) {
+      if (ApiProvider().isDebug == true) print("Err initHardHat $e");
+    }
+    return null;
+  }
+
+  Future<void> orgsList() async {
+    print("orgsList");
+    try {
+      final contract = await AppUtils.contractfromAssets(AppConfig.abiPath+"digital_id.json", "0x8464135c8F25Da09e49BC8782676a84730C318bC");
+        //final contract = await initEtherContract(contractAddress);
+
+      final function = contract.function("organizationLists");
+      print("contract ${contract.findFunctionsByName("organizationLists")}");
+      final res = await _hardHatClient!.call(
+        contract: contract, 
+        function: function, 
+        params: []
+      );
+
+      print("res ${res}");
+    } on SocketException catch (e) {
+      print("Error orgsList SocketException message ${e.message}");
+      print("Error orgsList SocketException osError ${e.osError!.errorCode}");
+      print("Error orgsList SocketException SocketException ${e.address}");
+      print("Error orgsList SocketException port ${e.port}");
+    }
+    catch (e) {
+      print("Error orgsList $e");
+    }
+  }
+
   Future<bool> validateEvmAddr(String address) async {
 
     bool _isValid = false;
@@ -824,6 +879,18 @@ class ContractProvider with ChangeNotifier {
     }
   }
 
+  Future<void> getBtcAddr() async {
+    print("getBtcAddr");
+    try {
+
+      listContract[apiProvider.btcIndex].address = await StorageServices().readSecure(DbKey.bech32);
+      print("listContract[apiProvider.btcIndex].address ${listContract[apiProvider.btcIndex].address}");
+      notifyListeners();
+    } catch (e) {
+      if (ApiProvider().isDebug) print("Error getEtherAddr $e");
+    }
+  }
+
   Future<void> fetchNonBalance() async {
     await initBscClient();
     for (int i = 0; i < token!.length; i++) {
@@ -1019,7 +1086,7 @@ class ContractProvider with ChangeNotifier {
   }
 
   Future<void> addToken(String symbol, BuildContext context, {String? contractAddr, String? network}) async {
-    
+    if (_marketProvider == null) _marketProvider = Provider.of<MarketProvider>(context, listen: false);
     try {
 
       // if (symbol == 'SEL') {
@@ -1077,35 +1144,41 @@ class ContractProvider with ChangeNotifier {
           dynamic decimal;
           dynamic balance;
           dynamic tmpBalance;
-
+          
           if (network == 'Ethereum'){
-            
+            print("network $network");
             symbol = await queryEther(contractAddr!, 'symbol', []);
+            print("symbol $symbol");
             name = await queryEther(contractAddr, 'name', []);
+            print("name $name");
             decimal = await queryEther(contractAddr, 'decimals', []);
+            print("decimals $decimal");
             balance = await queryEther(contractAddr, 'balanceOf', [EthereumAddress.fromHex(ethAdd)]);
+            print("balanceOf $balance");
 
             tmpBalance = Fmt.bigIntToDouble(
               balance[0] as BigInt,
               int.parse(decimal[0].toString()),
             ).toString(); 
+            print("tmpBalance $tmpBalance");
 
           } else if (network == 'Binance Smart Chain'){
-            print("Query info bep-20 contract");
             symbol = await query(contractAddr!, 'symbol', []);
             name = await query(contractAddr, 'name', []);
             decimal = await query(contractAddr, 'decimals', []);
             balance = await query(contractAddr, 'balanceOf', [EthereumAddress.fromHex(ethAdd)]);
-            print("Decimal $decimal");
             tmpBalance = Fmt.bigIntToDouble(
               balance[0] as BigInt,
               int.parse(decimal[0].toString()),
             ).toString();
             
           }
-          print("name $name");
-          print("symbol $symbol");
-          print("finish query");
+
+          await _marketProvider!.searchCoinFromMarket(symbol[0]);
+          print("finish market ${_marketProvider!.lsCoin}");
+          print("finish lsCoin ${_marketProvider!.lsCoin!.isNotEmpty}");
+          if (_marketProvider!.lsCoin!.isNotEmpty) await _marketProvider!.queryCoinFromMarket(_marketProvider!.lsCoin![0]['id']);
+          print("finish queryCoinFromMarket");
 
           // if (network == 'Ethereum') {
 

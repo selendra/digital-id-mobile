@@ -1,6 +1,7 @@
 import 'package:wallet_apps/index.dart';
 import 'package:wallet_apps/src/components/dialog_c.dart';
 import 'package:wallet_apps/src/components/walletConnect_c.dart';
+import 'package:wallet_apps/src/screen/home/assets/assets.dart';
 import 'package:wallet_apps/src/screen/home/menu/wallet_connect/wallet_connect.dart';
 import 'package:wallet_connect/wc_session_store.dart';
 import 'package:wallet_apps/src/constants/db_key_con.dart';
@@ -31,14 +32,14 @@ class MenuBody extends StatelessWidget {
         // Wallet
         const MenuSubTitle(index: 1),
         
-        MyListTile(
-          icon: Icon(Iconsax.card_coin, color: Colors.white, size: 22.5.sp),
-          index: 2,
-          subIndex: 1,
-          onTap: () {
-            Navigator.push(context, Transition(child: Swap(), transitionEffect: TransitionEffect.RIGHT_TO_LEFT));
-          },
-        ),
+        // MyListTile(
+        //   icon: Icon(Iconsax.card_coin, color: Colors.white, size: 22.5.sp),
+        //   index: 2,
+        //   subIndex: 1,
+        //   onTap: () {
+        //     Navigator.push(context, Transition(child: Swap(), transitionEffect: TransitionEffect.RIGHT_TO_LEFT));
+        //   },
+        // ),
 
         MyListTile(
           icon: Icon(Iconsax.note_2, color: Colors.white, size: 22.5.sp),
@@ -55,7 +56,8 @@ class MenuBody extends StatelessWidget {
           subIndex: 1,
           onTap: () {
             // underContstuctionAnimationDailog(context: context);
-            Navigator.push(context, Transition(child: AddAsset(), transitionEffect: TransitionEffect.RIGHT_TO_LEFT));
+            // Navigator.push(context, Transition(child: AssetsPage(), transitionEffect: TransitionEffect.RIGHT_TO_LEFT));
+            // Navigator.push(context, Transition(child: AddAsset(), transitionEffect: TransitionEffect.RIGHT_TO_LEFT));
           },
         ),
         

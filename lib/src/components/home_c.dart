@@ -366,7 +366,7 @@ class MyBottomAppBar extends StatelessWidget {
   Widget build(BuildContext context) {
     final isDarkTheme = Provider.of<ThemeProvider>(context).isDark;
     return BottomAppBar(
-      color: hexaCodeToColor(AppColors.darkBgd),
+      color: hexaCodeToColor("#114463"),
       // isDarkTheme
       //   ? hexaCodeToColor(AppColors.darkBgd)
       //   : hexaCodeToColor(AppColors.whiteHexaColor),
@@ -378,54 +378,57 @@ class MyBottomAppBar extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
 
+            // Expanded(
+            //   child: MyIconButton(
+            //     child: Icon(Iconsax.discover_1, size: iconSize, color: index == 0 ? Colors.white : hexaCodeToColor(AppColors.iconColor)),
+            //     title: "Discover",
+            //     txtColor: index == 0 ? AppColors.whiteColorHexa : AppColors.iconColor,
+            //     onPressed: () {
+            //       // Navigator.push(context, RouteAnimation(enterPage: DiscoverPage()));
+            //       onIndexChanged!(0);
+            //     }
+            //   ),
+            // ),
             Expanded(
               child: MyIconButton(
-                child: Icon(Iconsax.discover_1, size: iconSize, color: index == 0 ? Colors.white : hexaCodeToColor(AppColors.iconColor)),
-                title: "Discover",
+                child: Icon(Iconsax.wallet_check, size: iconSize, color: index == 0 ? Colors.white : hexaCodeToColor(AppColors.iconColor)),
+                title: "Wallet",
                 txtColor: index == 0 ? AppColors.whiteColorHexa : AppColors.iconColor,
                 onPressed: () {
-                  // Navigator.push(context, RouteAnimation(enterPage: DiscoverPage()));
                   onIndexChanged!(0);
-                }
-              ),
-            ),
-            Expanded(
-              child: MyIconButton(
-                child: Icon(Iconsax.wallet_check, size: iconSize, color: index == 1 ? Colors.white : hexaCodeToColor(AppColors.iconColor)),
-                title: "Asset",
-                txtColor: index == 1 ? AppColors.whiteColorHexa : AppColors.iconColor,
-                onPressed: () {
-                  onIndexChanged!(1);
                   // Navigator.push(context, RouteAnimation(enterPage: AssetsPage()));
                 }
               ),
             ),
+
             Expanded(
               child: MyIconButton(
-                child: Icon(Iconsax.home, size: iconSize, color: index == 2 ? Colors.white : hexaCodeToColor(AppColors.iconColor)),
-                title: "Home",
-                txtColor: index == 2 ? AppColors.whiteColorHexa : AppColors.iconColor,
+                child: Icon(Iconsax.home, size: iconSize, color: index == 1 ? Colors.white : hexaCodeToColor(AppColors.iconColor)),
+                title: "Docs",
+                txtColor: index == 1 ? AppColors.whiteColorHexa : AppColors.iconColor,
                 onPressed: () {
                   // Navigator.push(context, RouteAnimation(enterPage: HomePage()));
-                  onIndexChanged!(2);
+                  onIndexChanged!(1);
                 }
               ),
             ),
+
+            // Expanded(
+            //   child: MyIconButton(
+            //     child: Icon(Iconsax.card_coin, size: iconSize, color: index == 3 ? Colors.white : hexaCodeToColor(AppColors.iconColor)),
+            //     title: "Swap",
+            //     txtColor: index == 3 ? AppColors.whiteColorHexa : AppColors.iconColor,
+            //     onPressed: () {
+            //       onIndexChanged!(3);
+            //     }
+            //   ),
+            // ),
+
             Expanded(
               child: MyIconButton(
-                child: Icon(Iconsax.card_coin, size: iconSize, color: index == 3 ? Colors.white : hexaCodeToColor(AppColors.iconColor)),
-                title: "Swap",
-                txtColor: index == 3 ? AppColors.whiteColorHexa : AppColors.iconColor,
-                onPressed: () {
-                  onIndexChanged!(3);
-                }
-              ),
-            ),
-            Expanded(
-              child: MyIconButton(
-                child: Icon(Iconsax.setting, size: iconSize, color: index == 4 ? Colors.white : hexaCodeToColor(AppColors.iconColor)),
-                title: "Setting",
-                txtColor: index == 4 ? AppColors.whiteColorHexa : AppColors.iconColor,
+                child: Icon(Iconsax.setting, size: iconSize, color: index == 2 ? Colors.white : hexaCodeToColor(AppColors.iconColor)),
+                title: "Account",
+                txtColor: index == 2 ? AppColors.whiteColorHexa : AppColors.iconColor,
                 onPressed: () {
                   underContstuctionAnimationDailog(context: context);
                   // onIndexChanged!(4);

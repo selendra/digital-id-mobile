@@ -15,6 +15,7 @@ import 'package:encrypt/encrypt.dart' as encrypt;
 
 class HomePage extends StatefulWidget {
 
+  static final String route = "/home";
   @override
   _HomeState createState() => _HomeState();
 }
@@ -31,10 +32,18 @@ class _HomeState extends State<HomePage> with TickerProviderStateMixin {
   HomePageModel _model = HomePageModel();
 
   void onPageChanged(int index){
-    setState(() {
-      _model.activeIndex = index;
-    });
-    _model.pageController.jumpToPage(index);
+    print("onPageChanged");
+    print("index $index");
+    if (index <= 1){
+
+      setState(() {
+        _model.activeIndex = index;
+      });
+      _model.pageController.jumpToPage(index);
+    } else {
+
+      underContstuctionAnimationDailog(context: context);
+    }
     // _model.pageController.animateToPage(index, duration: Duration(milliseconds: 300), curve: Curves.ease);
   }
 
@@ -105,7 +114,7 @@ class _HomeState extends State<HomePage> with TickerProviderStateMixin {
       }
     });
 
-    _model.activeIndex = 2;
+    _model.activeIndex = 1;
     _model.carouActiveIndex = 0;
     _model.globalKey = GlobalKey<ScaffoldState>();
     _model.onCarouselChanged = (int index, CarouselPageChangedReason reason) {

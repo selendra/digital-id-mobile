@@ -57,8 +57,11 @@ class AppConfig {
   }
 
   /*All network list that bitriel wallet support*/
+
+  /// [0]= selendra, [1]= polkadot, [2] = ethereum, [3] = binance smart chain
+  ///
+  /// [4] = Hardhat
   static List<NetworkParams> networkList = [
-    //[0]= selendra, [1]= polkadot, [2] = ethereum, [3] = binance smart chain
     
     NetworkParams(
       httpUrlTN: 'https://rpc.testnet.selendra.org/',
@@ -93,6 +96,16 @@ class AppConfig {
       wsUrlTN: 'wss://bsc-ws-node.nariox.org:443',
       scanMn: 'https://bscscan.com/tx/',
       scanTN: 'https://testnet.bscscan.com/tx/',
+    ),
+
+    // Hardhat
+    NetworkParams(
+      httpUrlMN: 'http://localhost:8545',
+      wsUrlMN: 'wss://localhost:8545',
+      httpUrlTN: 'https://data-seed-prebsc-2-s1.binance.org:8545/',
+      wsUrlTN: 'wss://bsc-ws-node.nariox.org:443',
+      scanMn: '',
+      scanTN: '',
     ),
   ];
 

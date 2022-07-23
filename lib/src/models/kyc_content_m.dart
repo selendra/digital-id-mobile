@@ -11,6 +11,41 @@ class KYCDocs {
 
   static List<CustomButtonIcon>? lsIssuer = [];
 
+  List<Map<String, dynamic>> data = [];
+
+  KYCDocs(){
+
+    // data = [
+    //   {
+    //     "type": "National ID",
+    //     "id": "1233452423",
+    //     "name": "Sam Allen",
+    //     "dob": "09.02.2000",
+    //     "address": "Tik L'lork, Toul Kork, Phnom Penh",
+    //     "status": "verifying",
+    //     "isVeried": false,
+    //   },
+    //   {
+    //     "type": "Driver licence",
+    //     "id": "1233452423",
+    //     "name": "Sam Allen",
+    //     "dob": "09.02.2000",
+    //     "address": "Tik L'lork, Toul Kork, Phnom Penh",
+    //     "status": "verifying",
+    //     "isVeried": false,
+    //   },
+    //   {
+    //     "type": "Covid Vaccination",
+    //     "id": "1233452423",
+    //     "name": "Sam Allen",
+    //     "dob": "09.02.2000",
+    //     "address": "Tik L'lork, Toul Kork, Phnom Penh",
+    //     "status": "verified",
+    //     "isVeried": true,
+    //   }
+    // ];
+  }
+
   static void initContext({required BuildContext? context}){
     context = context;
 

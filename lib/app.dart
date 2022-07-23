@@ -6,7 +6,6 @@ import 'package:responsive_framework/responsive_wrapper.dart';
 import 'package:wallet_apps/index.dart';
 import 'package:wallet_apps/src/api/api.dart';
 import 'package:wallet_apps/src/constants/db_key_con.dart';
-import 'package:wallet_apps/src/provider/documents_p.dart';
 import 'package:wallet_apps/src/provider/provider.dart';
 import 'package:wallet_apps/src/screen/home/home/home.dart';
 import 'package:web3dart/web3dart.dart';
@@ -26,12 +25,17 @@ class AppState extends State<App> {
 
   @override
   void initState() {
-    Provider.of<DocumentProvider>(context, listen: false).initJson();
     MarketProvider().fetchTokenMarketPrice(context);
     // readTheme();
 
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       await Provider.of<ContractProvider>(context, listen: false).getEtherAddr();
+      await Provider.of<ContractProvider>(context, listen: false).getBtcAddr();
+      await Provider.of<ContractProvider>(context, listen: false).initHardhatClient().then((value) async {
+        await Provider.of<ContractProvider>(context, listen: false).initHardHat("0x8464135c8F25Da09e49BC8782676a84730C318bC").then((value) async {
+          print("Success ${value!.address}");
+        });
+      });
       await initApi();
 
       clearOldBtcAddr();
@@ -43,18 +47,18 @@ class AppState extends State<App> {
   Future<void> initApi() async {
     
     // Fetch Name and Symbol Coin
-    await StorageServices.fetchData(DbKey.coinData).then((value) {
-      if (value == null){
+    // await StorageServices.fetchData(DbKey.coinData).then((value) {
+    //   if (value == null){
 
-        _http.get(Uri.parse("https://api.coingecko.com/api/v3/coins/list")).then((value) async {
-          dynamic data = await json.decode(value.body);
-          await StorageServices.storeData(data, DbKey.coinData);
-          Provider.of<MarketProvider>(context, listen: false).setLsCoin = data;
-        });
-      } else {
-        Provider.of<MarketProvider>(context, listen: false).setLsCoin = value;
-      }
-    });
+    //     _http.get(Uri.parse("https://api.coingecko.com/api/v3/coins/list")).then((value) async {
+    //       dynamic data = await json.decode(value.body);
+    //       await StorageServices.storeData(data, DbKey.coinData);
+    //       Provider.of<MarketProvider>(context, listen: false).setLsCoin = data;
+    //     });
+    //   } else {
+    //     Provider.of<MarketProvider>(context, listen: false).setLsCoin = value;
+    //   }
+    // });
 
     try {
     
@@ -192,10 +196,10 @@ class AppState extends State<App> {
                         title: AppString.appName,
                         theme: AppStyle.myTheme(context),
                         onGenerateRoute: router.generateRoute,
+                        routes: {
+                          HomePage.route: (_) => HomePage(),
+                        },
                         // debugShowCheckedModeBanner: false,
-                        // routes: {
-                        //   HomePage.route: (_) => HomePage(),
-                        // },
                         initialRoute: AppString.splashScreenView,
                         // builder: (context, widget) => ResponsiveWrapper.builder(
                         //   BouncingScrollWrapper.builder(context, widget!),

@@ -89,9 +89,9 @@ class HomePageBody extends StatelessWidget {
         // onPageChanged: onPageChanged,
         children: [
 
-          DiscoverPage(homePageModel: homePageModel!),
+          // DiscoverPage(homePageModel: homePageModel!),
 
-          AssetsPage(),
+          // AssetsPage(homePageModel: homePageModel,),
 
           SingleChildScrollView(
             physics: BouncingScrollPhysics(),
