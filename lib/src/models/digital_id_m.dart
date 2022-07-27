@@ -1,3 +1,6 @@
+import 'package:wallet_apps/index.dart';
+import 'package:web3dart/web3dart.dart';
+
 class DigitalIDModel {
 
   String? title = '';
@@ -36,4 +39,47 @@ class DigitalIDModel {
     };
   }
   
+}
+
+class CTypeModel {
+  
+  BigInt? orgId;
+  BigInt? CTypeId;
+  EthereumAddress? issuer;
+  String? propertiesURI;
+  String? propertiesHash;
+  bool? transferable;
+  bool? revokable;
+  bool? expirable;
+  BigInt? lifespan;
+  BigInt? status;
+
+  List<Map<String, dynamic>>? cTypeProperties;
+
+  fromQuery(List<dynamic> ls){
+    orgId = ls[0]; 
+    CTypeId = ls[1];
+    issuer = ls[2];
+    propertiesURI = ls[3];
+    propertiesHash = ls[4];
+    transferable = ls[5];
+    revokable = ls[6];
+    expirable = ls[7];
+    lifespan = ls[8];
+    status = ls[9];
+
+    return this;
+  }
+
+  cTypePropertiesFilter(Map<String, dynamic> ls){
+    print("cTypePropertiesFilter ls['properties'] ${ls['properties']['name']}");
+    List<dynamic> tmp = ls['properties'].toString().split(", ");
+
+    tmp.forEach((element) {
+      print("element ${element}");
+      // cTypeProperties!.add(
+      //   element
+      // );
+    });
+  }
 }

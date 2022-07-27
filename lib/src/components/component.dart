@@ -442,7 +442,7 @@ class BodyScaffold extends StatelessWidget {
       child: Container(
         width: MediaQuery.of(context).size.width,
         height: height,
-        color: hexaCodeToColor(AppColors.darkBgd),
+        color: hexaCodeToColor(AppColors.bgColor),
         // isDarkTheme
         //   ? Color(AppUtils.convertHexaColor(AppColors.darkBgd))
         //   : Color(AppUtils.convertHexaColor("#F5F5F5")),
@@ -456,6 +456,7 @@ class BodyScaffold extends StatelessWidget {
 class MyIconButton extends StatelessWidget {
 
   final String? title;
+  final bool? isActive;
   final Widget? child;
   final String? icon;
   final double? iconSize;
@@ -465,6 +466,7 @@ class MyIconButton extends StatelessWidget {
 
   const MyIconButton({
     this.title,
+    this.isActive = false,
     this.child,
     this.icon,
     this.iconSize,
@@ -482,22 +484,41 @@ class MyIconButton extends StatelessWidget {
       onTap: (){
         onPressed!();
       },
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          child ?? SvgPicture.asset(
-            AppConfig.iconsPath+'$icon',
-            width: iconSize ?? 30,
-            height: iconSize ?? 30,
-            color: isDarkTheme ? Colors.white : Colors.black,
-          ),
-          SizedBox(height: 5),
-          MyText(
-            text: title,
-            color: txtColor,
-            
-          )
-        ],
+      child: SizedBox(
+        width: double.infinity,
+        height: double.infinity,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+
+            Container(
+              constraints: BoxConstraints.tight(Size(50, 50)),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                color: isActive! ? hexaCodeToColor(AppColors.primary).withOpacity(0.15) : Colors.transparent,
+              ),
+              // height: 70,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  child ?? SvgPicture.asset(
+                    AppConfig.iconsPath+'$icon',
+                    width: iconSize ?? 30,
+                    height: iconSize ?? 30,
+                    color: isDarkTheme ? Colors.white : Colors.black,
+                  ),
+                  SizedBox(height: 2),
+                  MyText(
+                    text: title,
+                    color: txtColor,
+                    fontSize: 13,
+                  )
+                ],
+              ),
+            ),
+          ],
+        ),
       )
     );
   }

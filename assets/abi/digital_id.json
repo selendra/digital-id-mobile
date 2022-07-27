@@ -1,54 +1,6 @@
 [{
         "anonymous": false,
         "inputs": [{
-                "indexed": false,
-                "internalType": "address",
-                "name": "to",
-                "type": "address"
-            },
-            {
-                "indexed": false,
-                "internalType": "uint256",
-                "name": "orgId",
-                "type": "uint256"
-            },
-            {
-                "indexed": false,
-                "internalType": "string",
-                "name": "message",
-                "type": "string"
-            }
-        ],
-        "name": "CreateOrganazation",
-        "type": "event"
-    },
-    {
-        "anonymous": false,
-        "inputs": [{
-                "indexed": false,
-                "internalType": "address",
-                "name": "from",
-                "type": "address"
-            },
-            {
-                "indexed": false,
-                "internalType": "uint256",
-                "name": "orgId",
-                "type": "uint256"
-            },
-            {
-                "indexed": false,
-                "internalType": "string",
-                "name": "message",
-                "type": "string"
-            }
-        ],
-        "name": "DeleteOrganazation",
-        "type": "event"
-    },
-    {
-        "anonymous": false,
-        "inputs": [{
                 "indexed": true,
                 "internalType": "bytes32",
                 "name": "role",
@@ -116,6 +68,24 @@
             }
         ],
         "name": "RoleRevoked",
+        "type": "event"
+    },
+    {
+        "anonymous": false,
+        "inputs": [{
+                "indexed": false,
+                "internalType": "address",
+                "name": "to",
+                "type": "address"
+            },
+            {
+                "indexed": false,
+                "internalType": "uint256",
+                "name": "credentialid",
+                "type": "uint256"
+            }
+        ],
+        "name": "TransferCredential",
         "type": "event"
     },
     {

@@ -5,6 +5,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:wallet_apps/index.dart';
 import 'package:wallet_apps/src/components/camera_c.dart';
 import 'package:wallet_apps/src/constants/db_key_con.dart';
+import 'package:wallet_apps/src/models/digital_id_m.dart';
 import 'package:wallet_apps/src/provider/digital_id_p.dart';
 import 'package:wallet_apps/src/provider/home_p.dart';
 import 'package:wallet_apps/src/screen/home/home/body_home.dart';
@@ -12,6 +13,7 @@ import 'package:wallet_apps/src/screen/home/home_page/body_home.dart';
 import 'package:wallet_apps/src/service/services_s.dart';
 import 'package:encrypt/encrypt.dart';
 import 'package:encrypt/encrypt.dart' as encrypt;
+import 'package:http/http.dart' as http;
 
 class HomePage extends StatefulWidget {
 
@@ -27,13 +29,45 @@ class _HomeState extends State<HomePage> with TickerProviderStateMixin {
   TabController? _tabController;
   final GlobalKey<ScaffoldState> globalKey = GlobalKey<ScaffoldState>();
   DigitalIDProvider? _digitalIDProvider;
+  CTypeModel cTypeModel = CTypeModel();
 
   // -------------------
   HomePageModel _model = HomePageModel();
 
+  @override
+  void initState() {
+
+    _model.pageController.addListener(() {
+      if(_model.activeIndex != _model.pageController){
+        setState(() {
+          _model.activeIndex = _model.pageController.page!.toInt();
+        });
+      }
+    });
+
+    _model.activeIndex = 1;
+    _model.carouActiveIndex = 0;
+    _model.globalKey = GlobalKey<ScaffoldState>();
+    _model.onCarouselChanged = (int index, CarouselPageChangedReason reason) {
+      setState(() {
+        this._model.carouActiveIndex = index;
+      });
+    };
+
+    _tabController = TabController(length: 3, vsync: this);
+    _tabController!.addListener(() {
+      onTab(_tabController!.index);
+    });
+    _dashBoardM = Provider.of<HomeProvider>(context, listen: false).homeModel;
+    _digitalIDProvider = Provider.of<DigitalIDProvider>(context, listen: false);
+    // StorageServices.removeKey(DbKey.idKey);
+    // initBlockchainData();
+    initDigitalId();
+
+    super.initState();
+  }
+
   void onPageChanged(int index){
-    print("onPageChanged");
-    print("index $index");
     if (index <= 1){
 
       setState(() {
@@ -103,39 +137,6 @@ class _HomeState extends State<HomePage> with TickerProviderStateMixin {
     });
   }
 
-  @override
-  void initState() {
-
-    _model.pageController.addListener(() {
-      if(_model.activeIndex != _model.pageController){
-        setState(() {
-          _model.activeIndex = _model.pageController.page!.toInt();
-        });
-      }
-    });
-
-    _model.activeIndex = 1;
-    _model.carouActiveIndex = 0;
-    _model.globalKey = GlobalKey<ScaffoldState>();
-    _model.onCarouselChanged = (int index, CarouselPageChangedReason reason) {
-      setState(() {
-        this._model.carouActiveIndex = index;
-      });
-    };
-
-    _tabController = TabController(length: 3, vsync: this);
-    _tabController!.addListener(() {
-      onTab(_tabController!.index);
-    });
-    _dashBoardM = Provider.of<HomeProvider>(context, listen: false).homeModel;
-    _digitalIDProvider = Provider.of<DigitalIDProvider>(context, listen: false);
-    // StorageServices.removeKey(DbKey.idKey);
-    initBlockchainData();
-    // initDigitalId();
-
-    super.initState();
-  }
-
   // When Account Already Mint
   initBlockchainData() async {
     await StorageServices.fetchData(DbKey.blochchainData).then((value) async {
@@ -151,6 +152,9 @@ class _HomeState extends State<HomePage> with TickerProviderStateMixin {
 
   /// For Check Identity Setup (National ID, Student)
   initDigitalId() async {
+    print("initDigitalId");
+    
+    // await Provider.of<ContractProvider>(context, listen: false).orgsList();  
     // print("initDigitalId");
     // await Provider.of<DigitalIDProvider>(context, listen: false).fetchID().then((value) {
     //   print("value");
@@ -221,6 +225,24 @@ class _HomeState extends State<HomePage> with TickerProviderStateMixin {
     
   }
 
+  queryCType(BigInt orgID) async {
+    print("queryCType $orgID");
+    await Provider.of<ContractProvider>(context, listen: false).queryDigitalID("_CtypeMetadata", [orgID]).then((value) async {
+      List.from(value).forEach((data){
+        print("_CtypeMetadata ${data}}");
+      });
+      cTypeModel = CTypeModel().fromQuery(List.from(value));
+      
+      await http.get(Uri.parse(cTypeModel.propertiesURI!)).then((res) async {
+        print("propertiesURI res ${res.body}");
+        dynamic data = await json.decode(res.body);
+        print("data ${data['properties']}");
+        cTypeModel.cTypeProperties = CTypeModel().cTypePropertiesFilter(data);
+        // print("cTypeModel.cTypeProperties ${cTypeModel.cTypeProperties!['properties']}");
+      });
+    });
+  }
+
   @override
   void dispose() {
     super.dispose();
@@ -234,6 +256,8 @@ class _HomeState extends State<HomePage> with TickerProviderStateMixin {
         homePageModel: _model,
         onPageChanged: onPageChanged,
         pushReplacement: pushReplacement,
+        queryCType: queryCType,
+        cTypeModel: cTypeModel
         // dashModel: _dashBoardM,
         // onTab: onTab,
         // tabController: _tabController,

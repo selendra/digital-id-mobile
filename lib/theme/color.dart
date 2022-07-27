@@ -3,8 +3,8 @@ import 'package:wallet_apps/index.dart';
 class AppColors {
 
   static const String third = "#F39D0C"; // "#08B952";
-  static String bgColor = "#F8F8F8";
-  static String btnColor = "#00AAFF";
+  static String bgColor = "#F5F5F5";
+  static String btnColor = "#67E3C1";
   static const String whiteColor = "#FFFFFF";
   
   static const String darkGreyBlue = "#242426";
@@ -16,9 +16,9 @@ class AppColors {
   /* Background Color */
   static const String lowWhite = "#F5F5F5"; //"#090D28"; //AppConfig.bgdColor;
   static const String whiteHexaColor = "#FFFFFF"; //"#181C35";
-  static const String textColor = "#0F1112"; //"#585D86";
+  static const String textColor = "#37374F"; //"#585D86";
   static const String textBtnColor = "#000000";
-  static const String secondary = "#F39D0C"; // "#08B952";
+  static const String secondary = "#37374F"; // "#08B952";
   static const String secondarytext = "#F39D0C"; //"#40FF90";
   static const String selected = "#00642A";
   static const String redColor = "#FF0000";
@@ -33,7 +33,7 @@ class AppColors {
   static const String darkSecondaryText = "B3B3B3";
 
   //blue
-  static const String primary = "#03A9F4";
+  static const String primary = "#67E3C1";
   static const String blue = "#004C7B";
   
   /// Branding Color
@@ -96,4 +96,16 @@ class AppColors {
 
   /* Token Name Text Color */
   static const String tokenNameColor = "#C2C2C2";
+
+  /* New Color */
+  static const String newBgColor = "#FAFAFA";
+  static const String newPrimary = "#67E3C1";
+  static const String newSecondary = "#D5ECC2";
+  static const String newThird = "#FFD3B4";
+  static const String newFourth = "#FFAAA7";
+  static const String newText = "#37374F";
+  static const String newCard = "#FFFFFF";
+
+  static const String txtPrimary = "#00A861";
+  static const String txtSecondary = "#F1AE00";
 }

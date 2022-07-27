@@ -39,6 +39,8 @@ class AssetsPageBody extends StatelessWidget {
             
             // _userWallet(context),
             _balanceCard(context),
+
+            _operationRequest(context),
       
             Padding(
               padding: const EdgeInsets.all(paddingSize),
@@ -96,8 +98,7 @@ class AssetsPageBody extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Card(
-        color: hexaCodeToColor(AppColors.whiteColor).withOpacity(0.06),
-        elevation: 0,
+        color: hexaCodeToColor(AppColors.newCard),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(20)
         ),
@@ -110,7 +111,7 @@ class AssetsPageBody extends StatelessWidget {
               MyText(
                 text: 'Wallet',
                 fontWeight: FontWeight.bold,
-                color: AppColors.whiteColor,
+                color: AppColors.newText,
               ),
               SizedBox(height: paddingSize,),
               Row(
@@ -124,7 +125,7 @@ class AssetsPageBody extends StatelessWidget {
                         fontSize: 16,
                         text: 'SEL',
                         fontWeight: FontWeight.bold,
-                        color: AppColors.whiteColor,
+                        color: AppColors.newText,
                       ),
                     ],
                   ),
@@ -132,7 +133,7 @@ class AssetsPageBody extends StatelessWidget {
                     fontSize: 16,
                     text: '0.0',
                     fontWeight: FontWeight.bold,
-                    color: AppColors.whiteColor,
+                    color: AppColors.newText,
                   ),
                 ],
               ),
@@ -148,7 +149,7 @@ class AssetsPageBody extends StatelessWidget {
                           child: MyText(
                             right: 5,
                             text: value.accountM.address == null ? "" : value.accountM.address!.replaceRange(10, value.accountM.address!.length - 10, "....."),
-                            color: AppColors.whiteColorHexa,
+                            color: AppColors.newText,
                             fontSize: 16,
                             textAlign: TextAlign.left
                           )
@@ -158,15 +159,12 @@ class AssetsPageBody extends StatelessWidget {
                         onPressed: (){
                           
                         },
-                        icon: Icon(Iconsax.copy, color: hexaCodeToColor(AppColors.whiteColor)),
+                        icon: Icon(Iconsax.copy, color: hexaCodeToColor(AppColors.newText)),
                       )
                     ],
                   );
                 }
               ),
-              
-              SizedBox(height: 3.h),
-              _operationRequest(context),
             ],
           ),
         ),
@@ -394,65 +392,82 @@ class AssetsPageBody extends StatelessWidget {
 
   Widget _operationRequest(BuildContext context) {
     double width = 30.w;
-    double height = 7.h;
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        
-        MyGradientButton(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
+    double height = 6.h;
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: paddingSize),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          
+          Expanded(
+            child: MyGradientButton(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
 
-            children: [
-              MyText(
-                text: "Send",
-                color: AppColors.whiteColorHexa,
-                fontWeight: FontWeight.w700,
+                children: [
+                  
+                  Row(
+                    children: [
+                      MyText(
+                        text: "Send",
+                        color: AppColors.whiteColorHexa,
+                        fontWeight: FontWeight.w700,
+                      ),
+
+                      Icon(Iconsax.export, color: hexaCodeToColor(AppColors.whiteColorHexa)),
+                      
+                    ],
+                  ),
+                ],
               ),
-            ],
+              height: height,
+              width: width,
+              lsColor: [AppColors.newPrimary, AppColors.newPrimary],
+              begin: Alignment.bottomRight, 
+              end: Alignment.topLeft, 
+              action: (){
+                Navigator.push(
+                  context, 
+                  Transition(child: SubmitTrx("", true, []), transitionEffect: TransitionEffect.RIGHT_TO_LEFT)
+                );
+              }
+            )
           ),
-          height: height,
-          width: width,
-          lsColor: ["#035A8F", "#035A8F"],
-          begin: Alignment.bottomRight, 
-          end: Alignment.topLeft, 
-          action: (){
-            Navigator.push(
-              context, 
-              Transition(child: SubmitTrx("", true, []), transitionEffect: TransitionEffect.RIGHT_TO_LEFT)
-            );
-          }
-        ),
 
-        SizedBox(width: 10,),
-        
-        MyGradientButton(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
+          SizedBox(width: 10,),
+          
+          Expanded(
+            child: MyGradientButton(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+          
+                children: [
+                  Icon(Iconsax.import, color: hexaCodeToColor(AppColors.whiteColorHexa)),
 
-            children: [
-              MyText(
-                text: "Receieve",
-                color: AppColors.whiteColorHexa,
-                fontWeight: FontWeight.w700,
+                  MyText(
+                    text: "Receieve",
+                    color: AppColors.whiteColorHexa,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ],
               ),
-            ],
-          ),
-          height: height,
-          width: width,
-          lsColor: ["#035A8F", "#035A8F"],
-          begin: Alignment.bottomRight, 
-          end: Alignment.topLeft, 
-          action: (){
-            Navigator.push(
-              context, 
-              Transition(child: ReceiveWallet(), transitionEffect: TransitionEffect.RIGHT_TO_LEFT)
-            );
-          }
-        )
-      ],
+              height: height,
+              width: width,
+              lsColor: [AppColors.newPrimary, AppColors.newPrimary],
+              begin: Alignment.bottomRight, 
+              end: Alignment.topLeft, 
+              action: (){
+                Navigator.push(
+                  context, 
+                  Transition(child: ReceiveWallet(), transitionEffect: TransitionEffect.RIGHT_TO_LEFT)
+                );
+              }
+            ),
+          )
+        ],
+      ),
     );
   }
 
