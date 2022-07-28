@@ -10,7 +10,6 @@ class WelcomeBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isDarkTheme = Provider.of<ThemeProvider>(context).isDark;
     return Container(
       height: MediaQuery.of(context).size.height,
       child: Column(
@@ -33,9 +32,7 @@ class WelcomeBody extends StatelessWidget {
                   text: "Welcome!",
                   fontWeight: FontWeight.bold,
                   fontSize: 20,
-                  color: isDarkTheme
-                      ? AppColors.whiteColorHexa
-                      : AppColors.textColor,
+                  color: AppColors.newText
                 ),
                 SizedBox(
                   height: 25,
@@ -44,9 +41,7 @@ class WelcomeBody extends StatelessWidget {
                   padding: const EdgeInsets.only(left: 20, right: 20),
                   child: MyText(
                     text: "Bitriel offer users to store, make transaction, invest, buy, sell crypto assets, and more!",
-                    color: isDarkTheme
-                        ? AppColors.lowWhite
-                        : AppColors.textColor,
+                    color: AppColors.newText
                   ),
                 )
               ]
@@ -55,25 +50,20 @@ class WelcomeBody extends StatelessWidget {
           
           Column(
             children: [
-              MyGradientButton(
+              MyFlatButton(
+                isTransparent: false,
+                buttonColor: AppColors.newPrimary,
                 edgeMargin: const EdgeInsets.only(left: 20, right: 20, bottom: 16),
                 textButton: AppString.createAccTitle,
-                begin: Alignment.bottomLeft,
-                end: Alignment.topRight,
                 action: () {
-                  // PassCodeComponent().passCode(context: context, inputController: inputController!);
-    
                   Navigator.push(context, Transition(child: Passcode(label: PassCodeLabel.fromCreateSeeds,), transitionEffect: TransitionEffect.RIGHT_TO_LEFT));
-                  // Navigator.pushNamed(context, AppString.contentBackup);
-                  // Navigator.push(context,MaterialPageRoute(builder: (context) => ContentsBackup()));
-                  // Navigator.push(context, MaterialPageRoute(builder: (context) => MyUserInfo("error shallow spin vault lumber destroy tattoo steel rose toilet school speed")));
                 },
               ),
               MyFlatButton(
+                textColor: AppColors.newText,
                 isTransparent: true,
                 buttonColor: AppColors.whiteHexaColor,
-                edgeMargin:
-                    const EdgeInsets.only(left: 20, right: 20, bottom: 16),
+                edgeMargin: const EdgeInsets.only(left: 20, right: 20, bottom: 16),
                 textButton: AppString.importAccTitle,
                 action: () {
                   // Navigator.push(context, MaterialPageRoute(builder: (context) => Passcode(label: PassCodeLabel.fromImportSeeds)));

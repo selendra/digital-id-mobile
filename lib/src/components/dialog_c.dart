@@ -115,13 +115,13 @@ class DialogComponents {
             shape: const RoundedRectangleBorder(
               borderRadius: BorderRadius.all(Radius.circular(20)),
             ),
-            backgroundColor: hexaCodeToColor(AppColors.bluebgColor),
+            backgroundColor: hexaCodeToColor(AppColors.newBgColor),
             title: titles != null ? MyText(
               text: titles,
               fontWeight: FontWeight.bold,
-              color: AppColors.whiteColorHexa//isDarkTheme == false ? AppColors.darkCard : AppColors.whiteHexaColor,
+              color: AppColors.newText//isDarkTheme == false ? AppColors.darkCard : AppColors.whiteHexaColor,
             ) : Container(),
-            buttonPadding: btn2 != null ? EdgeInsets.only(left: 24, right: 24, bottom: 24) : EdgeInsets.zero,
+            buttonPadding: btn2 != null ? EdgeInsets.only(left: 20, right: 20) : EdgeInsets.zero,
             content: contents != null ? Column(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -136,7 +136,7 @@ class DialogComponents {
                 MyText(
                   text: contents,
                   // fontSize: 17,
-                  color: AppColors.whiteColorHexa, 
+                  color: AppColors.newText, 
                 )
               ],
             ) : contents2,

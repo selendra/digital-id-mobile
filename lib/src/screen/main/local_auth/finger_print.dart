@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:wallet_apps/index.dart';
 import 'package:wallet_apps/src/components/dialog_c.dart';
 import 'package:wallet_apps/src/screen/home/home/home.dart';
@@ -72,25 +74,39 @@ class _FingerPrintState extends State<FingerPrint> {
       await showDialog(
         context: context,
         builder: (context) {
-          return AlertDialog(
-            backgroundColor: hexaCodeToColor(AppColors.darkBgd),
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
-            title: Align(
-              child: Text('Message', style: TextStyle(color: hexaCodeToColor(AppColors.whiteColorHexa)),),
-            ),
-            content: Padding(
-              padding: const EdgeInsets.only(top: 15.0, bottom: 15.0),
-              child: MyText(
-                text: "Your device doesn't have finger print! Set up to enable this feature",
-                color: AppColors.lowWhite
+          return BackdropFilter(
+            filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+            child: AlertDialog(
+              backgroundColor: hexaCodeToColor(AppColors.newBgColor),
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+              title: Align(
+                child: Text('Message', style: TextStyle(color: hexaCodeToColor(AppColors.newText)),),
               ),
-            ),
-            actions: <Widget>[
-              TextButton(
-                onPressed: () => Navigator.pop(context),
-                child: const Text('Close'),
+              content: Padding(
+                padding: const EdgeInsets.only(top: 15.0),
+                child: MyText(
+                  text: "Your device doesn't have finger print! Set up to enable this feature",
+                  color: AppColors.newText
+                ),
               ),
-            ],
+              actions: <Widget>[
+                MyFlatButton(
+                  edgeMargin: const EdgeInsets.all(20),
+                  textButton: "Complete",
+                  buttonColor: AppColors.newPrimary,
+                  action: () async {  
+                    Navigator.pop(context);
+                  },
+                )
+                // TextButton(
+                //   onPressed: () => Navigator.pop(context),
+                //   child: MyText(
+                //     text: "Close",
+                //     color: AppColors.newPrimary
+                //   ),
+                // ),
+              ],
+            ),
           );
         },
       );
@@ -124,9 +140,7 @@ class _FingerPrintState extends State<FingerPrint> {
               text: widget.isEnable == true ? 'Finger Print authentication' : 'Increase your \nsecurity!',
               fontSize: 21.sp,
               fontWeight: FontWeight.bold,
-              color: isDarkTheme
-                ? AppColors.whiteColorHexa
-                : AppColors.textColor,
+              color: AppColors.newText
             ),
             const SizedBox(
               height: 20.0,
@@ -136,9 +150,7 @@ class _FingerPrintState extends State<FingerPrint> {
               top: 20.0,
               width: 80.w,
               text: widget.isEnable == true ? 'Validating Finger Print' : 'Activate biometrics for your wallet to make it even more secure.',
-              color: isDarkTheme
-                ? AppColors.whiteColorHexa
-                : AppColors.textColor,
+              color: AppColors.newText
             ),
 
             Expanded(
@@ -147,11 +159,10 @@ class _FingerPrintState extends State<FingerPrint> {
 
             Column(
               children: [
-                MyGradientButton(
+                MyFlatButton(
                   edgeMargin: const EdgeInsets.only(left: 20, right: 20, bottom: 16),
                   textButton: widget.isEnable == true ? "Process biometry now" : "Enable biometry now",
-                  begin: Alignment.bottomLeft,
-                  end: Alignment.topRight,
+                  buttonColor: AppColors.newPrimary,
                   action: () async {
                     authenticate();
                   },
@@ -160,6 +171,7 @@ class _FingerPrintState extends State<FingerPrint> {
                 ? Container() 
                 : MyFlatButton(
                   isTransparent: true,
+                  textColor: AppColors.newText,
                   buttonColor: AppColors.whiteHexaColor,
                   edgeMargin: const EdgeInsets.only(left: 20, right: 20, bottom: 16),
                   textButton: "Skip",

@@ -24,7 +24,6 @@ class VerifyPassphraseBody extends StatelessWidget {
   Widget build(BuildContext context) {
 
     return Scaffold(
-      backgroundColor: hexaCodeToColor(AppColors.darkBgd),
       body: SafeArea(
         child: Container(
           height: MediaQuery.of(context).size.height,
@@ -45,7 +44,7 @@ class VerifyPassphraseBody extends StatelessWidget {
                 Container(
                   padding: EdgeInsets.all(10),
                   decoration: BoxDecoration(
-                    color: hexaCodeToColor(AppColors.whiteColorHexa).withOpacity(0.06),
+                    color: hexaCodeToColor(AppColors.newText).withOpacity(0.05),
                     borderRadius: BorderRadius.circular(12)
                   ),
                   child: Column(
@@ -101,12 +100,12 @@ class VerifyPassphraseBody extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Icon(Iconsax.refresh, color: hexaCodeToColor(AppColors.whiteColorHexa), size: 3.h),
+                          Icon(Iconsax.refresh, color: hexaCodeToColor(AppColors.newText), size: 3.h),
                           SizedBox(width: 9),
                           MyText(
                             text: "Try Again",
                             fontSize: 14,
-                            color: AppColors.whiteColorHexa,
+                            color: AppColors.newText,
                             fontWeight: FontWeight.bold,  
                           ),
                         ],
@@ -117,10 +116,9 @@ class VerifyPassphraseBody extends StatelessWidget {
                 ),
   
                 Flexible(child: Container()),
-                MyGradientButton(
+                MyFlatButton(
                   textButton: "Continue",
-                  begin: Alignment.bottomLeft,
-                  end: Alignment.topRight,
+                  buttonColor: AppColors.newPrimary,
                   action: () async {
                     await Navigator.push(
                       context, 

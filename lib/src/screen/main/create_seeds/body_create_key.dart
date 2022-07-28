@@ -15,7 +15,6 @@ class CreateSeedsBody extends StatelessWidget {
   Widget build(BuildContext context) {
 
     return Scaffold(
-      backgroundColor: hexaCodeToColor(AppColors.darkBgd),
       body: SafeArea(
         child: SizedBox(
           height: MediaQuery.of(context).size.height,
@@ -31,26 +30,33 @@ class CreateSeedsBody extends StatelessWidget {
                 ),
                 
                 SizedBox(height: 7.h),
-                Column(
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: SeedsCompoent().getColumn(context, createKeyModel!.seed!, 0),
-                        ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: SeedsCompoent().getColumn(context, createKeyModel!.seed!, 1),
-                        ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: SeedsCompoent().getColumn(context, createKeyModel!.seed!, 2),
-                        ),
-                      ],
-                    ),
-                  ],
+                Container(
+                  padding: EdgeInsets.all(10),
+                  decoration: BoxDecoration(
+                    color: hexaCodeToColor(AppColors.newText).withOpacity(0.05),
+                    borderRadius: BorderRadius.circular(12)
+                  ),
+                  child: Column(
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: SeedsCompoent().getColumn(context, createKeyModel!.seed!, 0, moreSize: 2.5),
+                          ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: SeedsCompoent().getColumn(context, createKeyModel!.seed!, 1, moreSize: 2.5),
+                          ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: SeedsCompoent().getColumn(context, createKeyModel!.seed!, 2, moreSize: 2.5),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
 
                 SizedBox(height: 3.h),
@@ -66,12 +72,12 @@ class CreateSeedsBody extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.center,
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Icon(Iconsax.refresh, color: hexaCodeToColor(AppColors.whiteColorHexa), size: 3.h),
+                              Icon(Iconsax.refresh, color: hexaCodeToColor(AppColors.newText), size: 3.h),
                               SizedBox(width: 9),
                               MyText(
                                 text: "Generate new seed",
                                 fontSize: 14,
-                                color: AppColors.whiteColorHexa,
+                                color: AppColors.newText,
                                 fontWeight: FontWeight.bold,  
                               ),
                             ],
@@ -90,12 +96,12 @@ class CreateSeedsBody extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.center,
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Icon(Iconsax.copy, color: hexaCodeToColor(AppColors.whiteColorHexa), size: 3.h),
+                              Icon(Iconsax.copy, color: hexaCodeToColor(AppColors.newText), size: 3.h),
                               SizedBox(width: 9),
                               MyText(
                                 text: "Copy",
                                 fontSize: 14,
-                                color: AppColors.whiteColorHexa,
+                                color: AppColors.newText,
                                 fontWeight: FontWeight.bold,  
                               ),
                             ],
@@ -121,15 +127,16 @@ class CreateSeedsBody extends StatelessWidget {
                 SizedBox(height: 7.h),
                 MyText(
                   text: "After writing and securing your 12 words, click continue to proceed",
-                  color: AppColors.lowWhite,
+                  color: AppColors.newText,
                 ),
 
 
                 Expanded(child: Container()),
-                MyGradientButton(
+                MyFlatButton(
+                  isTransparent: false,
                   textButton: "Continue",
-                  begin: Alignment.bottomLeft,
-                  end: Alignment.topRight,
+                  buttonColor: AppColors.newPrimary,
+                  textColor: AppColors.newText,
                   action: () async {
                     // Generate Random Three Number Before Navigate
                     createKeyModel!.threeNum = await AppUtils().randomThreeEachNumber();

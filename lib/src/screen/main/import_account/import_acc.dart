@@ -286,12 +286,11 @@ class ImportAccState extends State<ImportAcc> {
       contents: "You have successfully create your account.",
       textButton: "Complete",
       image: Image.asset("assets/icons/success.png", width: 20.w, height: 10.h),
-      btn2: MyGradientButton(
+      btn2: MyFlatButton(
         edgeMargin: const EdgeInsets.only(left: 20, right: 20),
         textButton: "Complete",
-        begin: Alignment.bottomLeft,
-        end: Alignment.topRight,
-        action: () async {
+        buttonColor: AppColors.newPrimary,
+        action: () async {  
           Navigator.pop(context);
         },
       )
@@ -337,16 +336,19 @@ class ImportAccState extends State<ImportAcc> {
   Widget build(BuildContext context) {
     return Scaffold(
       key: globalKey,
-      body: Container(
-        height: MediaQuery.of(context).size.height,
-        child: ImportAccBody(
-          reImport: widget.reimport,
-          importAccModel: _importAccModel,
-          onChanged: onChanged,
-          onSubmit: widget.reimport != null ? onSubmitIm : onSubmit,
-          clearInput: clearInput,
-          enable: enable,
-          submit: widget.reimport != null ? onSubmitIm : addAccount,
+      body: GestureDetector(
+        onTapDown: (_) => FocusManager.instance.primaryFocus?.unfocus(),
+        child: Container(
+          height: MediaQuery.of(context).size.height,
+          child: ImportAccBody(
+            reImport: widget.reimport,
+            importAccModel: _importAccModel,
+            onChanged: onChanged,
+            onSubmit: widget.reimport != null ? onSubmitIm : onSubmit,
+            clearInput: clearInput,
+            enable: enable,
+            submit: widget.reimport != null ? onSubmitIm : addAccount,
+          ),
         ),
       )
     );

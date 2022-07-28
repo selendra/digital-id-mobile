@@ -225,10 +225,9 @@ class MySeedField extends StatelessWidget {
               // ignore: prefer_if_null_operators
               inputAction == null ? TextInputAction.next : inputAction,
           style: TextStyle(
-              color: isDarkTheme
-                  ? hexaCodeToColor(AppColors.whiteColorHexa)
-                  : hexaCodeToColor(AppColors.textColor),
-              fontSize: 16.0.sp),
+            color: hexaCodeToColor(AppColors.newText),
+            fontSize: 16.0.sp
+          ),
           validator: (String? value){
             validateField!(value);
           },
@@ -239,7 +238,7 @@ class MySeedField extends StatelessWidget {
             hintText: hintText,
             hintStyle: TextStyle(
               fontSize: 15.sp,
-              color: hexaCodeToColor(AppColors.shadowBlueColor),
+              color: hexaCodeToColor(AppColors.newText),
               // fontSize: 16.0,
               fontWeight: FontWeight.w600
             ),
@@ -254,7 +253,7 @@ class MySeedField extends StatelessWidget {
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(20.0),
               borderSide: BorderSide(
-                color: Colors.transparent,
+                color: hexaCodeToColor(AppColors.newText),
                 width: 0.0,
               ),
             ),
@@ -268,7 +267,7 @@ class MySeedField extends StatelessWidget {
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(20.0),
               borderSide: BorderSide(
-                color: Colors.transparent,
+                color: hexaCodeToColor(AppColors.newText),
                 width: 0.0,
               ),
             ),
@@ -276,7 +275,7 @@ class MySeedField extends StatelessWidget {
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(20.0),
               borderSide: BorderSide(
-                color: Colors.transparent,
+                color: hexaCodeToColor(AppColors.newPrimary),
                 width: 0.0,
               ),
             ),

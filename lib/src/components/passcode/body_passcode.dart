@@ -52,14 +52,14 @@ class PasscodeBody extends StatelessWidget{
 
             if (titleStatus == null ) MyText(
               text: isFirst! ? 'PIN!' : 'Verify PIN!',
-              color: AppColors.whiteColorHexa,
+              color: AppColors.newText,
               fontSize: 22,
               fontWeight: FontWeight.bold,
             ) 
             // For Change PIN
             else MyText(
               text: titleStatus,
-              color: titleStatus == "Invalid PassCode" ? AppColors.redColor : AppColors.whiteColorHexa,
+              color: titleStatus == "Invalid PassCode" ? AppColors.redColor : AppColors.newText,
               fontSize: 22,
               fontWeight: FontWeight.bold,
             ),
@@ -80,7 +80,7 @@ class PasscodeBody extends StatelessWidget{
             // For Change PIN
             else MyText(
               text: subStatus,
-              color: AppColors.whiteColorHexa,
+              color: AppColors.newText,
               fontWeight: FontWeight.bold,
             ), 
 
@@ -116,8 +116,8 @@ class PasscodeBody extends StatelessWidget{
                 onPressedDigit!();
               }, 
               child: MyText(
-                text: is4digits == false ? "Use 4 digits passcode" : "Use 6 digits passcode",
-                color2: isFirst! == true || isNewPass == true ? hexaCodeToColor(AppColors.primaryColor) : hexaCodeToColor(AppColors.whiteColorHexa).withOpacity(0),
+                text: is4digits == false ? "Swtich to 4 digits passcode" : "Swtich to 6 digits passcode",
+                color2: isFirst! == true || isNewPass == true ? hexaCodeToColor(AppColors.primaryColor) : hexaCodeToColor(AppColors.newText).withOpacity(0),
                 fontWeight: FontWeight.bold,
               ),
             ),
@@ -144,7 +144,7 @@ class PasscodeBody extends StatelessWidget{
             text: 'Assign a security ', 
             style: TextStyle(
               fontSize: 17.sp,
-              color: Colors.white
+              color: hexaCodeToColor(AppColors.newText),
             )
           ),
           TextSpan(
@@ -152,14 +152,14 @@ class PasscodeBody extends StatelessWidget{
             style: TextStyle(
               fontSize: 17.sp,
               fontWeight: FontWeight.bold,
-              color: Colors.white
+              color: hexaCodeToColor(AppColors.newText),
             )
           ),
           TextSpan(
             text: 'that will be required when opening in the future', 
             style: TextStyle(
               fontSize: 17.sp,
-              color: Colors.white
+              color: hexaCodeToColor(AppColors.newText),
             )
           ),
         ],
@@ -174,21 +174,21 @@ class PasscodeBody extends StatelessWidget{
             text: 'Enter ', 
             style: TextStyle(
               fontSize: 17.sp,
-              color: Colors.white
+              color: hexaCodeToColor(AppColors.newText),
             )
           ),
           TextSpan(
             text: 'pin ',
             style: TextStyle(
               fontSize: 17.sp,
-              color: Colors.white
+              color: hexaCodeToColor(AppColors.newText),
             )
           ),
           TextSpan(
             text: 'code', 
             style: TextStyle(
               fontSize: 17.sp,
-              color: Colors.white
+              color: hexaCodeToColor(AppColors.newText),
             )
           ),
         ],
@@ -216,16 +216,16 @@ class ReusePinNum extends StatelessWidget {
         obscureText: true,
         textAlign: TextAlign.center,
         decoration: InputDecoration(
-          contentPadding: EdgeInsets.only(bottom: -16.0.sp, left: -5.sp),
+          contentPadding: EdgeInsets.only(bottom: -18.2.sp, left: -6.5.sp),
           border: outlineInputBorder,
           filled: true,
-          fillColor: hexaCodeToColor(AppColors.passcodeColor),
+          fillColor: hexaCodeToColor(AppColors.newCard),
         ),
         style: TextStyle(
           fontWeight: FontWeight.bold,
           fontSize: 29.sp,
           color: hexaCodeToColor(
-            AppColors.secondary,
+            AppColors.newPrimary,
           ),
         ),
       ),
@@ -320,7 +320,7 @@ class ReuseNumPad extends StatelessWidget {
                 },
                 child: Transform.rotate(
                   angle: 70.6858347058,
-                  child: Icon(Iconsax.shield_cross, color: hexaCodeToColor(AppColors.lowWhite), size: 20.sp),
+                  child: Icon(Iconsax.shield_cross, color: hexaCodeToColor(AppColors.newText), size: 20.sp),
                 ),
               )
             ],
@@ -345,14 +345,14 @@ class ReuseKeyBoardNum extends StatelessWidget {
           shape: MaterialStateProperty.all(
             RoundedRectangleBorder(borderRadius: BorderRadius.circular(50))
           ),
-          backgroundColor: MaterialStateProperty.all(Colors.white.withOpacity(0.06))
+          backgroundColor: MaterialStateProperty.all(hexaCodeToColor(AppColors.primary))
         ),
         onPressed: onPressed,
         child: child == null ? Text(
           '$n',
           style: TextStyle(
             fontSize: 16.sp * MediaQuery.of(context).textScaleFactor,
-            color: Colors.white,
+            color: hexaCodeToColor(AppColors.newText),
             fontWeight: FontWeight.bold,
           ),
         ) : child!,

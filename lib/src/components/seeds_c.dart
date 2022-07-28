@@ -36,7 +36,7 @@ class SeedsCompoent {
             alignment: Alignment.center,
             margin: const EdgeInsets.all(4),
             decoration: BoxDecoration(
-              color: Colors.white.withOpacity(0.06),
+              color: hexaCodeToColor(AppColors.newPrimary),
               borderRadius: const BorderRadius.all(Radius.circular(50)),
             ),
             // color: grey,
@@ -49,14 +49,14 @@ class SeedsCompoent {
                   if ( (i * 3 + pos + 1) < 10)
                   MyText(
                     text: (i * 3 + pos + 1).toString() + '. ' + se[i * 3 + pos],
-                    color: AppColors.whiteColorHexa,
+                    color: AppColors.newText,
                     fontSize: 15,
                     fontWeight: FontWeight.bold
                   )
 
                   else MyText(
                     text: (i * 3 + pos + 1).toString() + '. ' + se[i * 3 + pos],
-                    color: AppColors.whiteColorHexa,
+                    color: AppColors.newText,
                     fontSize: 15,
                     fontWeight: FontWeight.bold
                   ),
@@ -82,13 +82,13 @@ class SeedsCompoent {
         padding: const EdgeInsets.all(8),
         margin: const EdgeInsets.all(4),
         decoration: BoxDecoration(
-          color: Colors.white.withOpacity(0.06),
+          color: hexaCodeToColor(AppColors.newText).withOpacity(0.05),
           borderRadius: const BorderRadius.all(Radius.circular(50)),
         ), 
         // color: grey,
         child: MyText(
           text: txt,
-          color2: Colors.white, fontSize: 15, fontWeight: FontWeight.bold
+          color2: hexaCodeToColor(AppColors.newText), fontSize: 15, fontWeight: FontWeight.bold
         ),
       )
     );
@@ -111,7 +111,7 @@ class SeedContents extends StatelessWidget{
         SizedBox(height: 50),
         MyText(
           text: title,
-          color: AppColors.whiteColorHexa,
+          color: AppColors.newText,
           fontSize: 18,
           fontWeight: FontWeight.bold,
         ),
@@ -119,7 +119,7 @@ class SeedContents extends StatelessWidget{
         SizedBox(height: 5.5.h),
         MyText(
           text: subTitle,
-          color: AppColors.lowWhite,
+          color: AppColors.newText,
           fontWeight: FontWeight.w400,
           textAlign: TextAlign.start,
         ),

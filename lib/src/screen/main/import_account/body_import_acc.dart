@@ -60,10 +60,9 @@ class ImportAccBody extends StatelessWidget {
             ),
 
             Expanded(child: Container()),
-            MyGradientButton(
+            MyFlatButton(
               textButton: "Continue",
-              begin: Alignment.bottomLeft,
-              end: Alignment.topRight,
+              buttonColor: AppColors.newPrimary,
               action: onSubmit,
             ),
           ],

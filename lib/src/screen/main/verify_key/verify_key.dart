@@ -102,11 +102,10 @@ class _VerifyPassphraseState extends State<VerifyPassphrase> {
           contents: "You have successfully create your account.",
           textButton: "Complete",
           image: Image.asset("assets/icons/success.png", width: 20.w, height: 10.h),
-          btn2: MyGradientButton(
+          btn2: MyFlatButton(
             edgeMargin: const EdgeInsets.only(left: 20, right: 20),
             textButton: "Complete",
-            begin: Alignment.bottomLeft,
-            end: Alignment.topRight,
+            buttonColor: AppColors.newPrimary,
             action: () async {  
               Navigator.pop(context);
             },
@@ -125,11 +124,10 @@ class _VerifyPassphraseState extends State<VerifyPassphrase> {
           titles: "Opps",
           contents: "Wrong verify seed. Please try again!",
           textButton: "Close",
-          btn2: MyGradientButton(
+          btn2: MyFlatButton(
             edgeMargin: const EdgeInsets.only(left: 20, right: 20),
             textButton: "Close",
-            begin: Alignment.bottomLeft,
-            end: Alignment.topRight,
+            buttonColor: AppColors.newPrimary,
             action: () async {  
               Navigator.pop(context);
             },
