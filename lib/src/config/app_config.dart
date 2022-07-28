@@ -88,7 +88,7 @@ class AppConfig {
       scanTN: 'https://rinkeby.etherscan.io/tx',
     ),
 
-    //Bscscan
+    //Bscscan 
     NetworkParams(
       httpUrlMN: 'https://bsc-dataseed.binance.org/',
       wsUrlMN: 'wss://bsc-ws-node.nariox.org:443',
@@ -100,8 +100,8 @@ class AppConfig {
 
     // Hardhat
     NetworkParams(
-      httpUrlMN: 'http://localhost:8545',
-      wsUrlMN: 'wss://localhost:8545',
+      httpUrlMN: 'http://192.168.43.38:8545',
+      // wsUrlMN: 'wss://localhost:8545',
       httpUrlTN: 'https://data-seed-prebsc-2-s1.binance.org:8545/',
       wsUrlTN: 'wss://bsc-ws-node.nariox.org:443',
       scanMn: '',

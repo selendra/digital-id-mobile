@@ -6,7 +6,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:wallet_apps/index.dart';
 import 'package:wallet_apps/src/components/camera_c.dart';
 import 'package:wallet_apps/src/constants/db_key_con.dart';
-import 'package:wallet_apps/src/models/account.m.dart';
+import 'package:wallet_apps/src/models/digital_id_m.dart';
 import 'package:wallet_apps/src/provider/digital_id_p.dart';
 import 'package:wallet_apps/src/provider/home_p.dart';
 import 'package:wallet_apps/src/screen/home/home/body_home.dart';
@@ -16,7 +16,7 @@ import 'package:wallet_apps/src/service/http_request/post_request.dart';
 import 'package:wallet_apps/src/service/services_s.dart';
 import 'package:encrypt/encrypt.dart';
 import 'package:encrypt/encrypt.dart' as encrypt;
-import 'package:polkawallet_sdk/storage/keyring.dart';
+import 'package:http/http.dart' as http;
 
 class HomePage extends StatefulWidget {
 
@@ -32,13 +32,45 @@ class _HomeState extends State<HomePage> with TickerProviderStateMixin {
   TabController? _tabController;
   final GlobalKey<ScaffoldState> globalKey = GlobalKey<ScaffoldState>();
   DigitalIDProvider? _digitalIDProvider;
+  CTypeModel cTypeModel = CTypeModel();
 
   // -------------------
   HomePageModel _model = HomePageModel();
 
+  @override
+  void initState() {
+
+    _model.pageController.addListener(() {
+      if(_model.activeIndex != _model.pageController){
+        setState(() {
+          _model.activeIndex = _model.pageController.page!.toInt();
+        });
+      }
+    });
+
+    _model.activeIndex = 1;
+    _model.carouActiveIndex = 0;
+    _model.globalKey = GlobalKey<ScaffoldState>();
+    _model.onCarouselChanged = (int index, CarouselPageChangedReason reason) {
+      setState(() {
+        this._model.carouActiveIndex = index;
+      });
+    };
+
+    _tabController = TabController(length: 3, vsync: this);
+    _tabController!.addListener(() {
+      onTab(_tabController!.index);
+    });
+    _dashBoardM = Provider.of<HomeProvider>(context, listen: false).homeModel;
+    _digitalIDProvider = Provider.of<DigitalIDProvider>(context, listen: false);
+    // StorageServices.removeKey(DbKey.idKey);
+    // initBlockchainData();
+    initDigitalId();
+
+    super.initState();
+  }
+
   void onPageChanged(int index){
-    print("onPageChanged");
-    print("index $index");
     if (index <= 1){
 
       setState(() {
@@ -108,38 +140,6 @@ class _HomeState extends State<HomePage> with TickerProviderStateMixin {
     });
   }
 
-  @override
-  void initState() {
-
-    _model.pageController.addListener(() {
-      if(_model.activeIndex != _model.pageController){
-        setState(() {
-          _model.activeIndex = _model.pageController.page!.toInt();
-        });
-      }
-    });
-
-    _model.activeIndex = 1;
-    _model.carouActiveIndex = 0;
-    _model.globalKey = GlobalKey<ScaffoldState>();
-    _model.onCarouselChanged = (int index, CarouselPageChangedReason reason) {
-      setState(() {
-        this._model.carouActiveIndex = index;
-      });
-    };
-
-    _tabController = TabController(length: 3, vsync: this);
-    _tabController!.addListener(() {
-      onTab(_tabController!.index);
-    });
-    _dashBoardM = Provider.of<HomeProvider>(context, listen: false).homeModel;
-    _digitalIDProvider = Provider.of<DigitalIDProvider>(context, listen: false);
-    // StorageServices.removeKey(DbKey.idKey);
-    initBlockchainData();
-    // initDigitalId();
-    super.initState();
-  }
-
   // When Account Already Mint
   initBlockchainData() async {
     await StorageServices.fetchData(DbKey.blochchainData).then((value) async {
@@ -155,6 +155,9 @@ class _HomeState extends State<HomePage> with TickerProviderStateMixin {
 
   /// For Check Identity Setup (National ID, Student)
   initDigitalId() async {
+    print("initDigitalId");
+    
+    // await Provider.of<ContractProvider>(context, listen: false).orgsList();  
     // print("initDigitalId");
     // await Provider.of<DigitalIDProvider>(context, listen: false).fetchID().then((value) {
     //   print("value");
@@ -225,127 +228,22 @@ class _HomeState extends State<HomePage> with TickerProviderStateMixin {
     
   }
 
-  Future<void> _scanLogin(String code) async {
-
-    final api = Provider.of<ApiProvider>(context, listen: false);
-    
-    final ethAddr = await StorageServices().readSecure(DbKey.ethAddr);
-                    
-    final String? barcodeData = code;
-
-    final decode = jsonDecode(barcodeData!);
-    print("_scanLogin decode $decode");
-    if(decode["id"] == null) {
-      showDialog(
-        context: context,
-        builder: (context) => AlertDialog(
-          title: Text("Error"),
-          content: Text("Invalid QR Code"),
-          actions: [
-            FlatButton(
-              child: Text("OK"),
-              onPressed: () async{
-                // await _contractProvider!.hardhatClient.signTransaction(
-                //   EthPrivateKey.fromHex(_credentials),
-                //   Transaction(
-                //     to: EthereumAddress.fromHex('0xC914Bb2ba888e3367bcecEb5C2d99DF7C7423706'),
-                //     gasPrice: EtherAmount.inWei(BigInt.one),
-                //     maxGas: 100000,
-                //   )
-                // );
-
-                Navigator.pop(context);
-              },
-            )
-          ],
-        ),
-      );
-    } 
-    else{
-      showDialog(
-        context: context,
-        builder: (context) => AlertDialog(
-          title: Text("Message"),
-          content: Text("Valid QR Code"),
-          actions: [
-            FlatButton(
-              child: Text("OK"),  
-              onPressed: () async {
-
-                List<int> convert = decode['id'].toString().codeUnits;
-                Uint8List uint8list = Uint8List.fromList(convert);
-                // String _credentials = await _signId(decode['id']);
-                String _credentials = await getMnemonic();
-                print("_credentials $_credentials");
-                String signedDataHex = EthSigUtil.signPersonalMessage(
-                  privateKey: _credentials,
-                  message: uint8list
-                );
-                print("signedDataHex $signedDataHex");
-                
-
-                print("${decode}");
-                print("${decode['link']}");
-                print("${decode['id']}");
-                print("${ethAddr}");
-                // print("pub Key: ${api.getKeyring.keyPairs[0].pubKey}");
-
-                Navigator.of(context).pop(context);
-
-                await PostRequest().postQrDigital(decode['link'], decode['id'], signedDataHex, ethAddr!);
-              },
-            )
-          ],
-        ),
-      );
-    }
-
-  }
-  
-  // Future<String> _signId(String id) async {
-
-  //   // final passcode = await StorageServices().readSecure(DbKey.passcode);
-    
-  //   // ApiProvider _apiProvider = await Provider.of<ApiProvider>(context, listen: false);
-  //   // print("_apiProvider.getKeyring ${_apiProvider.getKeyring.allAccounts}");
-  //   // print("passcode ${passcode}");
-  //   // return await _apiProvider.apiKeyring.getDecryptedSeed(_apiProvider.getKeyring, passcode).then((res) async {
-  //   //   print("read mnemonic: ${res!.seed}");
-
-  //   //   return res.seed!;
-  //   // });
-
-  //   return await Provider.of<ApiProvider>(context, listen: false).getPrivateKey("august midnight obvious fragile pretty begin useless collect elder ability enhance series");
-
-  // }
-
-  Future<String> getMnemonic() async{
-    final passcode = await StorageServices().readSecure(DbKey.passcode);
-    ApiProvider _apiProvider = await Provider.of<ApiProvider>(context, listen: false);
-    return await _apiProvider.apiKeyring.getDecryptedSeed(_apiProvider.getKeyring, passcode).then((res) async {
-      return await Provider.of<ApiProvider>(context, listen: false).getPrivateKey(res!.seed!);
+  queryCType(BigInt orgID) async {
+    print("queryCType $orgID");
+    await Provider.of<ContractProvider>(context, listen: false).queryDigitalID("_CtypeMetadata", [orgID]).then((value) async {
+      List.from(value).forEach((data){
+        print("_CtypeMetadata ${data}}");
+      });
+      cTypeModel = CTypeModel().fromQuery(List.from(value));
+      
+      await http.get(Uri.parse(cTypeModel.propertiesURI!)).then((res) async {
+        print("propertiesURI res ${res.body}");
+        dynamic data = await json.decode(res.body);
+        print("data ${data['properties']}");
+        cTypeModel.cTypeProperties = CTypeModel().cTypePropertiesFilter(data);
+        // print("cTypeModel.cTypeProperties ${cTypeModel.cTypeProperties!['properties']}");
+      });
     });
-
-    
-  }
-
-  Future<void> _getPendingDocs() async{
-
-    String signMessage = "";
-
-    List<int> convert = signMessage.codeUnits;
-    Uint8List uint8list = Uint8List.fromList(convert);
-    String _credentials = await await Provider.of<ApiProvider>(context, listen: false).getPrivateKey("august midnight obvious fragile pretty begin useless collect elder ability enhance series");
-    print("_credentials $_credentials");
-    String signedDataHex = EthSigUtil.signPersonalMessage(
-      privateKey: _credentials,
-      message: uint8list
-    );
-
-    print("signedDataHex $signedDataHex");
-
-    await GetRequest().getUnApproveDocs(signedDataHex);
-
   }
 
   @override
@@ -361,8 +259,8 @@ class _HomeState extends State<HomePage> with TickerProviderStateMixin {
         homePageModel: _model,
         onPageChanged: onPageChanged,
         pushReplacement: pushReplacement,
-        scanLogin: _scanLogin,
-        getPendingDocs: _getPendingDocs,
+        queryCType: queryCType,
+        cTypeModel: cTypeModel
         // dashModel: _dashBoardM,
         // onTab: onTab,
         // tabController: _tabController,

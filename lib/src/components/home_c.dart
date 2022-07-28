@@ -366,16 +366,16 @@ class MyBottomAppBar extends StatelessWidget {
   Widget build(BuildContext context) {
     final isDarkTheme = Provider.of<ThemeProvider>(context).isDark;
     return BottomAppBar(
-      color: hexaCodeToColor("#114463"),
+      color: Colors.white,
       // isDarkTheme
       //   ? hexaCodeToColor(AppColors.darkBgd)
       //   : hexaCodeToColor(AppColors.whiteHexaColor),
       // shape: const CircularNotchedRectangle(),
       notchMargin: 8.0,
       child: SizedBox(
-        height: 9.h,
+        height: 9.5.h,
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
 
             // Expanded(
@@ -391,9 +391,10 @@ class MyBottomAppBar extends StatelessWidget {
             // ),
             Expanded(
               child: MyIconButton(
-                child: Icon(Iconsax.wallet_check, size: iconSize, color: index == 0 ? Colors.white : hexaCodeToColor(AppColors.iconColor)),
+                child: Icon(Iconsax.wallet_check, size: iconSize, color: hexaCodeToColor(index == 0 ? AppColors.primary : AppColors.textColor)),
                 title: "Wallet",
-                txtColor: index == 0 ? AppColors.whiteColorHexa : AppColors.iconColor,
+                txtColor: index == 0 ? AppColors.primary : AppColors.textColor,
+                isActive: index == 0 ? true : false,
                 onPressed: () {
                   onIndexChanged!(0);
                   // Navigator.push(context, RouteAnimation(enterPage: AssetsPage()));
@@ -403,9 +404,10 @@ class MyBottomAppBar extends StatelessWidget {
 
             Expanded(
               child: MyIconButton(
-                child: Icon(Iconsax.home, size: iconSize, color: index == 1 ? Colors.white : hexaCodeToColor(AppColors.iconColor)),
+                child: Icon(Iconsax.home, size: iconSize, color: hexaCodeToColor(index == 1 ? AppColors.primary : AppColors.textColor)),
                 title: "Docs",
-                txtColor: index == 1 ? AppColors.whiteColorHexa : AppColors.iconColor,
+                txtColor: index == 1 ? AppColors.primary : AppColors.textColor,
+                isActive: index == 1 ? true : false,
                 onPressed: () {
                   // Navigator.push(context, RouteAnimation(enterPage: HomePage()));
                   onIndexChanged!(1);
@@ -426,9 +428,10 @@ class MyBottomAppBar extends StatelessWidget {
 
             Expanded(
               child: MyIconButton(
-                child: Icon(Iconsax.setting, size: iconSize, color: index == 2 ? Colors.white : hexaCodeToColor(AppColors.iconColor)),
+                child: Icon(Iconsax.setting, size: iconSize, color: hexaCodeToColor(index == 2 ? AppColors.primary : AppColors.textColor)),
                 title: "Account",
-                txtColor: index == 2 ? AppColors.whiteColorHexa : AppColors.iconColor,
+                txtColor: index == 2 ? AppColors.primary : AppColors.textColor,
+                isActive: index == 2 ? true : false,
                 onPressed: () {
                   underContstuctionAnimationDailog(context: context);
                   // onIndexChanged!(4);

@@ -600,18 +600,18 @@ class ContractProvider with ChangeNotifier {
   Future<void> orgsList() async {
     print("orgsList");
     try {
-      final contract = await AppUtils.contractfromAssets(AppConfig.abiPath+"digital_id.json", "0x8464135c8F25Da09e49BC8782676a84730C318bC");
+      
+      final contract = await AppUtils.contractfromAssets(AppConfig.abiPath+"digital_id.json", "0x25844414275e6a5fe4b379EFec3FA63C1381DaE0");
         //final contract = await initEtherContract(contractAddress);
 
       final function = contract.function("organizationLists");
-      print("contract ${contract.findFunctionsByName("organizationLists")}");
       final res = await _hardHatClient!.call(
         contract: contract, 
         function: function, 
         params: []
       );
 
-      print("res ${res}");
+      print("res ${res[0]}");
     } on SocketException catch (e) {
       print("Error orgsList SocketException message ${e.message}");
       print("Error orgsList SocketException osError ${e.osError!.errorCode}");
@@ -620,6 +620,33 @@ class ContractProvider with ChangeNotifier {
     }
     catch (e) {
       print("Error orgsList $e");
+    }
+  }
+
+  Future<dynamic> queryDigitalID(String functionName, List<dynamic> param) async {
+    print("queryOrgById");
+    print("param $param");
+    try {
+      final contract = await AppUtils.contractfromAssets(AppConfig.abiPath+"digital_id.json", "0x25844414275e6a5fe4b379EFec3FA63C1381DaE0");
+
+      final function = contract.function(functionName);
+      final res = await _hardHatClient!.call(
+        contract: contract, 
+        function: function, 
+        params: param
+        // [
+        //   BigInt.from(0)
+        // ]
+      );
+      return res;
+    } on SocketException catch (e) {
+      print("Error queryDigitalID SocketException message ${e.message}");
+      print("Error queryDigitalID SocketException osError ${e.osError!.errorCode}");
+      print("Error queryDigitalID SocketException SocketException ${e.address}");
+      print("Error queryDigitalID SocketException port ${e.port}");
+    }
+    catch (e) {
+      print("Error queryDigitalID $e");
     }
   }
 

@@ -32,7 +32,8 @@ class AppState extends State<App> {
       await Provider.of<ContractProvider>(context, listen: false).getEtherAddr();
       await Provider.of<ContractProvider>(context, listen: false).getBtcAddr();
       await Provider.of<ContractProvider>(context, listen: false).initHardhatClient().then((value) async {
-        await Provider.of<ContractProvider>(context, listen: false).initHardHat("0x8464135c8F25Da09e49BC8782676a84730C318bC").then((value) async {
+        // 0x25844414275e6a5fe4b379EFec3FA63C1381DaE0
+        await Provider.of<ContractProvider>(context, listen: false).initHardHat("0x25844414275e6a5fe4b379EFec3FA63C1381DaE0").then((value) async {
           print("Success ${value!.address}");
         });
       });

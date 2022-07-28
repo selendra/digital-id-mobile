@@ -17,7 +17,7 @@ class AssetsItemComponent extends StatelessWidget {
     final isDarkTheme = Provider.of<ThemeProvider>(context).isDark;
 
     return rowDecorationStyle(
-        color: hexaCodeToColor(AppColors.darkBgd),
+        color: hexaCodeToColor(AppColors.bgColor),
         child: Row(
           children: <Widget>[
 
@@ -60,9 +60,10 @@ class AssetsItemComponent extends StatelessWidget {
                         text: scModel!.symbol != null ? '${scModel!.symbol} ' : '',
                         fontSize: 15.5,
                         fontWeight: FontWeight.bold,
-                        color: isDarkTheme
-                          ? AppColors.whiteColorHexa
-                          : AppColors.textColor,
+                        color: AppColors.textColor,
+                        // isDarkTheme
+                        //   ? AppColors.whiteColorHexa
+                        //   : AppColors.textColor,
                         textAlign: TextAlign.start,
                       ),
             
@@ -70,9 +71,9 @@ class AssetsItemComponent extends StatelessWidget {
                         text: ApiProvider().isMainnet ? scModel!.org : scModel!.orgTest,
                         fontSize: 12,
                         fontWeight: FontWeight.bold,
-                        color: isDarkTheme
-                          ? AppColors.darkSecondaryText
-                          : AppColors.darkSecondaryText,
+                        // color: isDarkTheme
+                        //   ? AppColors.darkSecondaryText
+                        //   : AppColors.darkSecondaryText,
                         textAlign: TextAlign.start,
                       )
                       
@@ -83,7 +84,7 @@ class AssetsItemComponent extends StatelessWidget {
                     top: 4.0,
                     text: scModel!.name ?? '',
                     fontSize: 12,
-                    color: AppColors.tokenNameColor
+                    // color: AppColors.tokenNameColor
                   )
                 ],
               ),
@@ -100,13 +101,13 @@ class AssetsItemComponent extends StatelessWidget {
                     text: scModel!.marketPrice!.isNotEmpty ? '\$ ${scModel!.marketPrice}' : '\$0.0',
                     fontSize: 15.5,
                     fontWeight: FontWeight.bold,
-                    color: AppColors.whiteColorHexa
+                    color: AppColors.textColor
                   )
                   : MyText(
                     text: '',
                     fontSize: 15.5,
                     fontWeight: FontWeight.bold,
-                    color: AppColors.whiteColorHexa
+                    color: AppColors.textColor
                   ),
 
                   scModel!.change24h != null ? Container(
@@ -123,9 +124,10 @@ class AssetsItemComponent extends StatelessWidget {
                             fontWeight: FontWeight.bold,
                             color: double.parse(scModel!.change24h!).isNegative
                               ? '#FF0000'
-                              : isDarkTheme
-                                ? '#00FF00'
-                                : '#66CD00',
+                              : AppColors.textColor
+                              // isDarkTheme
+                              //   ? '#00FF00'
+                              //   : '#66CD00',
                           ),
                         )
                         : Container(),
@@ -150,9 +152,10 @@ class AssetsItemComponent extends StatelessWidget {
                   text: double.parse(scModel!.balance!.replaceAll(",", "")).toStringAsFixed(5),//!.length > 7 ? double.parse(scModel!.balance!).toStringAsFixed(4) : scModel!.balance,
                   textAlign: TextAlign.right,
                   fontWeight: FontWeight.bold,
-                  color: isDarkTheme
-                    ? AppColors.whiteColorHexa
-                    : AppColors.textColor,
+                  color: AppColors.textColor,
+                  // isDarkTheme
+                  //   ? AppColors.whiteColorHexa
+                  //   : AppColors.textColor,
                   bottom: 4.0,
                   overflow: TextOverflow.fade,
                 ) 
