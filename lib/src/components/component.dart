@@ -807,3 +807,40 @@ class ThreeDotLoading extends StatelessWidget{
     );
   }
 }
+
+class MyBanner extends StatelessWidget{
+
+  final Widget? child;
+  final bool? isApprove;
+  /// Color As Hexa
+  final String? color;
+
+  MyBanner({this.child, this.color, this.isApprove});
+
+  Widget build(BuildContext context){
+    return Stack(
+      children: [
+        child!,
+
+        Positioned(
+          right: -25,
+          top: 10,
+          child: Transform.rotate(
+            angle: 69.8,
+            child: Container(
+              color: hexaCodeToColor(color!),
+              height: 25,
+              width: 100,
+              alignment: Alignment.center,
+              child: MyText(
+                fontSize: 13,
+                text: isApprove == false ? "Pending" : "Approved",
+                color2: Colors.white
+              ),
+            ),
+          ),
+        )
+      ],
+    );
+  }
+}

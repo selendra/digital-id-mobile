@@ -1,27 +1,28 @@
 import 'package:wallet_apps/index.dart';
+import 'package:wallet_apps/src/screen/home/id_detail/id_detail.dart';
 
 class CardDocument extends StatelessWidget{
 
-  Map<String, dynamic>? data;
+  final Map<String, dynamic>? data;
 
-  CardDocument({required this.data});
+  final bool? isDetail;
+
+  CardDocument({required this.data, required this.isDetail});
   
   Widget build(BuildContext context){
     return GestureDetector(
-      onTap: () async {
-        // Navigator.push(context, Transition(child: IdDetail(), transitionEffect: TransitionEffect.RIGHT_TO_LEFT));
+      onTap: isDetail == true ? null : () async {
+        Navigator.push(context, Transition(child: IdDetail(data: data), transitionEffect: TransitionEffect.RIGHT_TO_LEFT));
       },
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: ClipRect(
-          child: Banner(
-            message: "Pending", 
-            textStyle: TextStyle(fontSize: 12.sp),
-            location: BannerLocation.topEnd,
-            color: hexaCodeToColor(AppColors.txtSecondary),
+          child: MyBanner(
+            isApprove: data!['isApprove'],
+            color: data!['isApprove'] == false ? AppColors.txtSecondary : AppColors.txtPrimary,
             child: Card(
               margin: EdgeInsets.all(0),
-              color: hexaCodeToColor(AppColors.primary).withOpacity(0.4),
+              color: hexaCodeToColor(data!['color']).withOpacity(0.4),
               elevation: 0,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(18)
@@ -33,7 +34,7 @@ class CardDocument extends StatelessWidget{
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-        
+                  
                     Expanded(
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
@@ -87,6 +88,7 @@ class CardDocument extends StatelessWidget{
                                   ],
                                 ),
                               
+                                SizedBox(height: 5,),
                                 Row(
                                   children: [
                                     MyText(
@@ -103,6 +105,7 @@ class CardDocument extends StatelessWidget{
                                   ],
                                 ),
                           
+                                SizedBox(height: 5,),
                                 Row(
                                   children: [
                                     MyText(
@@ -119,6 +122,7 @@ class CardDocument extends StatelessWidget{
                                   ],
                                 ),
                           
+                                SizedBox(height: 5,),
                                 Row(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
@@ -140,6 +144,7 @@ class CardDocument extends StatelessWidget{
                                   ],
                                 ),
                           
+                                SizedBox(height: 5,),
                                 Row(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
@@ -163,7 +168,7 @@ class CardDocument extends StatelessWidget{
                           
                                 Expanded(child: Container()),
                           
-                                Align(
+                                isDetail == true ? Container() : Align(
                                   alignment: Alignment.bottomRight,
                                   child: Container(
                                     width: 20.w,

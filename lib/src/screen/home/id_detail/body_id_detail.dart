@@ -1,23 +1,27 @@
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:wallet_apps/index.dart';
+import 'package:wallet_apps/src/components/document_card_c.dart';
 import 'package:wallet_apps/src/screen/home/id_detail/share_id/share_id.dart';
 
 class IdDetailBody extends StatelessWidget {
-  const IdDetailBody({Key? key}) : super(key: key);
+
+  final Map<String, dynamic>? data;
+
+  IdDetailBody({this.data});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: hexaCodeToColor(AppColors.primaryColor),
       appBar: AppBar(
-        backgroundColor: hexaCodeToColor(AppColors.primaryColor),
+        iconTheme: IconThemeData(color: hexaCodeToColor(AppColors.textColor)),
+        titleSpacing: 0,
         elevation: 0,
-        title: Text('National ID'),
+        title: MyText(text: data!['type'], color: AppColors.textColor,),
         actions: [
           IconButton(
-            icon: const Icon(
+            icon: Icon(
               Iconsax.scan_barcode,
-              color: Colors.white,
+              color: hexaCodeToColor(AppColors.textColor),
             ),
             onPressed: () {
               Navigator.push(context, Transition(child: ShareID(), transitionEffect: TransitionEffect.RIGHT_TO_LEFT));
@@ -25,23 +29,29 @@ class IdDetailBody extends StatelessWidget {
           ),
         ],
       ),
-      body: Column(
-        children: [
-          _idCard(context),
+      body: Padding(
+        padding: const EdgeInsets.all(paddingSize),
+        child: Column(
+          children: [
 
-          SizedBox(height: paddingSize),
+            CardDocument(data: data!, isDetail: true,),
 
-          _cardInformation(context),
-        ],
+            SizedBox(height: paddingSize),
+
+            _cardInformation(context),
+          ],
+        ),
       ),
     );
   }
 
-    Widget _idCard(BuildContext context){
+  Widget _idCard(BuildContext context){
     return Padding(
       padding: EdgeInsets.all(8),
       child: Stack(
         children: [
+
+          
           Card(
             margin: EdgeInsets.all(0),
             color: Colors.white.withOpacity(0.06),
@@ -58,10 +68,10 @@ class IdDetailBody extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       MyText(
-                        text: 'ID: 000000000',
+                        text: data!['type'],
                         fontSize: 14,
                         fontWeight: FontWeight.bold,
-                        color: AppColors.whiteColorHexa,
+                        color: AppColors.textColor,
                       ),
                     ],
                   ),
@@ -92,12 +102,14 @@ class IdDetailBody extends StatelessWidget {
                                     fontSize: 14,
                                     text: 'Name: ',
                                     fontWeight: FontWeight.bold,
-                                    color: AppColors.whiteColorHexa,
+                                    
+                                    color: AppColors.textColor,
                                   ),
                                   MyText(
                                     fontSize: 14,
-                                    text: 'Sam Allen',
-                                    color: AppColors.whiteColorHexa,
+                                    text: data!['name'],
+                                    
+                                    color: AppColors.textColor,
                                   ),
                                 ],
                               ),
@@ -107,12 +119,14 @@ class IdDetailBody extends StatelessWidget {
                                     fontSize: 14,
                                     text: 'Date Of Birth: ',
                                     fontWeight: FontWeight.bold,
-                                    color: AppColors.whiteColorHexa,
+                                    
+                                    color: AppColors.textColor,
                                   ),
                                   MyText(
                                     fontSize: 14,
-                                    text: '09.02.2000',
-                                    color: AppColors.whiteColorHexa,
+                                    text: data!['dob'],
+                                    
+                                    color: AppColors.textColor,
                                   ),
                                 ],
                               ),
@@ -125,15 +139,17 @@ class IdDetailBody extends StatelessWidget {
                                       fontSize: 14,
                                       text: 'Address: ',
                                       fontWeight: FontWeight.bold,
-                                      color: AppColors.whiteColorHexa,
+                                      
+                                    color: AppColors.textColor,
                                     ),
                                     Expanded(
                                       child: MyText(
                                         fontSize: 14,
                                         textAlign: TextAlign.start,
                                         // width: MediaQuery.of(context).size.width / 1.5,
-                                        text: 'Tik L`lork, Toul Kork, Phnom Penh',
-                                        color: AppColors.whiteColorHexa,
+                                        text: data!['address'],
+                                        
+                                    color: AppColors.textColor,
                                       ),
                                     ),
                                   ],
@@ -182,12 +198,14 @@ class IdDetailBody extends StatelessWidget {
                 fontSize: 14,
                 text: 'Name: ',
                 fontWeight: FontWeight.bold,
-                color: AppColors.whiteColorHexa,
+                
+                                    color: AppColors.textColor,
               ),
               MyText(
                 fontSize: 14,
-                text: 'Sam Allen',
-                color: AppColors.whiteColorHexa,
+                text: data!['name'],
+                
+                                    color: AppColors.textColor,
               ),
             ],
           ),
@@ -200,12 +218,14 @@ class IdDetailBody extends StatelessWidget {
                 fontSize: 14,
                 text: 'Date Of Birth: ',
                 fontWeight: FontWeight.bold,
-                color: AppColors.whiteColorHexa,
+                
+                                    color: AppColors.textColor,
               ),
               MyText(
                 fontSize: 14,
-                text: '09.02.2000',
-                color: AppColors.whiteColorHexa,
+                text: data!['dob'],
+                
+                                    color: AppColors.textColor,
               ),
             ],
           ),
@@ -219,14 +239,37 @@ class IdDetailBody extends StatelessWidget {
                 fontSize: 14,
                 text: 'Address: ',
                 fontWeight: FontWeight.bold,
-                color: AppColors.whiteColorHexa,
+                
+                                    color: AppColors.textColor,
               ),
               MyText(
                 fontSize: 14,
                 textAlign: TextAlign.start,
                 // width: MediaQuery.of(context).size.width / 1.5,
-                text: 'Tik L`lork, Toul Kork, Phnom Penh',
-                color: AppColors.whiteColorHexa,
+                text: data!['address'],
+                
+                                    color: AppColors.textColor,
+              ),
+            ],
+          ),
+
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              MyText(
+                fontSize: 14,
+                text: 'Address: ',
+                fontWeight: FontWeight.bold,
+                
+                                    color: AppColors.textColor,
+              ),
+              MyText(
+                fontSize: 14,
+                textAlign: TextAlign.start,
+                // width: MediaQuery.of(context).size.width / 1.5,
+                text: data!['address'],
+                
+                                    color: AppColors.textColor,
               ),
             ],
           ),

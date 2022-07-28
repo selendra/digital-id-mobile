@@ -130,7 +130,7 @@ class HomeBody extends StatelessWidget {
                       //   )                        
                     
                       for(int i = 0; i < KYCDocs().data.length; i++)
-                        CardDocument(data: KYCDocs().data[i],),
+                        CardDocument(data: KYCDocs().data[i], isDetail: false,),
                     
                       if (KYCDocs().data.isEmpty)
                         SizedBox(height: paddingSize,),

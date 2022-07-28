@@ -24,6 +24,8 @@ class KYCDocs {
         "address": "Tik L'lork, Toul Kork, Phnom Penh",
         "status": "verifying",
         "isVeried": false,
+        "color": "#D5ECC2",
+        "isApprove": false
       },
       {
         "type": "Driver licence",
@@ -33,6 +35,8 @@ class KYCDocs {
         "address": "Tik L'lork, Toul Kork, Phnom Penh",
         "status": "verifying",
         "isVeried": false,
+        "color": "#98DDCA",
+        "isApprove": true
       },
       {
         "type": "Covid Vaccination",
@@ -42,6 +46,8 @@ class KYCDocs {
         "address": "Tik L'lork, Toul Kork, Phnom Penh",
         "status": "verified",
         "isVeried": true,
+        "color": "#FFAAA7",
+        "isApprove": false
       }
     ];
   }
