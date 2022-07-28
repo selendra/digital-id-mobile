@@ -22,13 +22,15 @@ class HomeBody extends StatelessWidget {
   final bool? pushReplacement;
   final Function(int index)? onPageChanged;
   final Function? scanLogin;
+  final Function? getPendingDocs;
 
   const HomeBody({ 
     Key? key, 
     this.homePageModel,
     this.onPageChanged,
     this.pushReplacement,
-    this.scanLogin
+    this.scanLogin,
+    this.getPendingDocs,
   }) : super(key: key);
 
   final double tabBarHeight = 55;
@@ -117,13 +119,18 @@ class HomeBody extends StatelessWidget {
                         // _balanceCard(context),
                       
                         if (KYCDocs().data.isEmpty)
-                          Center(
-                            child: MyText(
-                              text: "No document has setup",
-                              fontSize: 20,
-                              width: 55.w,
-                              color2: Colors.white,
-                            ),
+                          Column(
+                            children: [
+                              Image.asset("assets/logo/document.png"),
+                              Center(
+                                child: MyText(
+                                  text: "No document has setup",
+                                  fontSize: 20,
+                                  width: 55.w,
+                                  color2: Colors.white,
+                                ),
+                              ),
+                            ],
                           )                        
                       
                         else for(int i = 0; i < KYCDocs().data.length; i++)
@@ -139,6 +146,20 @@ class HomeBody extends StatelessWidget {
                               Navigator.push(context, MaterialPageRoute(builder: (context) => SetUpKYC()))
                             },
                             text: 'Setup Document',
+                            icon: Icon(Iconsax.arrow_right_3),
+                            colorBtn: hexaCodeToColor(AppColors.whiteColor).withOpacity(0.06),
+                            colorText: hexaCodeToColor(AppColors.whiteColor),
+                            bold: true,
+                          ),
+                        ),
+
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: CustomButtonIcon(
+                            onPressed: () async => {
+                              await getPendingDocs!(),
+                            },
+                            text: 'Pending Document',
                             icon: Icon(Iconsax.arrow_right_3),
                             colorBtn: hexaCodeToColor(AppColors.whiteColor).withOpacity(0.06),
                             colorText: hexaCodeToColor(AppColors.whiteColor),

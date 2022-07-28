@@ -6,13 +6,17 @@ import 'package:image_picker/image_picker.dart';
 import 'package:wallet_apps/index.dart';
 import 'package:wallet_apps/src/components/camera_c.dart';
 import 'package:wallet_apps/src/constants/db_key_con.dart';
+import 'package:wallet_apps/src/models/account.m.dart';
 import 'package:wallet_apps/src/provider/digital_id_p.dart';
 import 'package:wallet_apps/src/provider/home_p.dart';
 import 'package:wallet_apps/src/screen/home/home/body_home.dart';
 import 'package:wallet_apps/src/screen/home/home_page/body_home.dart';
+import 'package:wallet_apps/src/service/http_request/get_request.dart';
+import 'package:wallet_apps/src/service/http_request/post_request.dart';
 import 'package:wallet_apps/src/service/services_s.dart';
 import 'package:encrypt/encrypt.dart';
 import 'package:encrypt/encrypt.dart' as encrypt;
+import 'package:polkawallet_sdk/storage/keyring.dart';
 
 class HomePage extends StatefulWidget {
 
@@ -133,7 +137,6 @@ class _HomeState extends State<HomePage> with TickerProviderStateMixin {
     // StorageServices.removeKey(DbKey.idKey);
     initBlockchainData();
     // initDigitalId();
-
     super.initState();
   }
 
@@ -224,6 +227,9 @@ class _HomeState extends State<HomePage> with TickerProviderStateMixin {
 
   Future<void> _scanLogin(String code) async {
 
+    final api = Provider.of<ApiProvider>(context, listen: false);
+    
+    final ethAddr = await StorageServices().readSecure(DbKey.ethAddr);
                     
     final String? barcodeData = code;
 
@@ -263,19 +269,30 @@ class _HomeState extends State<HomePage> with TickerProviderStateMixin {
           content: Text("Valid QR Code"),
           actions: [
             FlatButton(
-              child: Text("OK"),
+              child: Text("OK"),  
               onPressed: () async {
 
                 List<int> convert = decode['id'].toString().codeUnits;
                 Uint8List uint8list = Uint8List.fromList(convert);
-                String _credentials = await _signId(decode['id']);
+                // String _credentials = await _signId(decode['id']);
+                String _credentials = await getMnemonic();
                 print("_credentials $_credentials");
-                String signedDataHex = EthSigUtil.signMessage(
+                String signedDataHex = EthSigUtil.signPersonalMessage(
                   privateKey: _credentials,
                   message: uint8list
                 );
                 print("signedDataHex $signedDataHex");
-                Navigator.pop(context);
+                
+
+                print("${decode}");
+                print("${decode['link']}");
+                print("${decode['id']}");
+                print("${ethAddr}");
+                // print("pub Key: ${api.getKeyring.keyPairs[0].pubKey}");
+
+                Navigator.of(context).pop(context);
+
+                await PostRequest().postQrDigital(decode['link'], decode['id'], signedDataHex, ethAddr!);
               },
             )
           ],
@@ -284,10 +301,50 @@ class _HomeState extends State<HomePage> with TickerProviderStateMixin {
     }
 
   }
+  
+  // Future<String> _signId(String id) async {
 
-  Future<String> _signId(String id) async {
+  //   // final passcode = await StorageServices().readSecure(DbKey.passcode);
+    
+  //   // ApiProvider _apiProvider = await Provider.of<ApiProvider>(context, listen: false);
+  //   // print("_apiProvider.getKeyring ${_apiProvider.getKeyring.allAccounts}");
+  //   // print("passcode ${passcode}");
+  //   // return await _apiProvider.apiKeyring.getDecryptedSeed(_apiProvider.getKeyring, passcode).then((res) async {
+  //   //   print("read mnemonic: ${res!.seed}");
 
-    return await Provider.of<ApiProvider>(context, listen: false).getPrivateKey("august midnight obvious fragile pretty begin useless collect elder ability enhance series");
+  //   //   return res.seed!;
+  //   // });
+
+  //   return await Provider.of<ApiProvider>(context, listen: false).getPrivateKey("august midnight obvious fragile pretty begin useless collect elder ability enhance series");
+
+  // }
+
+  Future<String> getMnemonic() async{
+    final passcode = await StorageServices().readSecure(DbKey.passcode);
+    ApiProvider _apiProvider = await Provider.of<ApiProvider>(context, listen: false);
+    return await _apiProvider.apiKeyring.getDecryptedSeed(_apiProvider.getKeyring, passcode).then((res) async {
+      return await Provider.of<ApiProvider>(context, listen: false).getPrivateKey(res!.seed!);
+    });
+
+    
+  }
+
+  Future<void> _getPendingDocs() async{
+
+    String signMessage = "";
+
+    List<int> convert = signMessage.codeUnits;
+    Uint8List uint8list = Uint8List.fromList(convert);
+    String _credentials = await await Provider.of<ApiProvider>(context, listen: false).getPrivateKey("august midnight obvious fragile pretty begin useless collect elder ability enhance series");
+    print("_credentials $_credentials");
+    String signedDataHex = EthSigUtil.signPersonalMessage(
+      privateKey: _credentials,
+      message: uint8list
+    );
+
+    print("signedDataHex $signedDataHex");
+
+    await GetRequest().getUnApproveDocs(signedDataHex);
 
   }
 
@@ -305,6 +362,7 @@ class _HomeState extends State<HomePage> with TickerProviderStateMixin {
         onPageChanged: onPageChanged,
         pushReplacement: pushReplacement,
         scanLogin: _scanLogin,
+        getPendingDocs: _getPendingDocs,
         // dashModel: _dashBoardM,
         // onTab: onTab,
         // tabController: _tabController,
