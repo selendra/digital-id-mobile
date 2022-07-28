@@ -18,6 +18,7 @@ class DocumentProvider extends ChangeNotifier{
   Future<void> initJson() async {
     lsMandotaryProp = [];
     final jsonData = await rootBundle.loadString(AppConfig.mandatory);
+    print("jsonData jsonData ${jsonData}");
     mandotary = json.decode(jsonData);
     popular = json.decode(jsonData);
     popular!['properties'].addAll({

@@ -102,9 +102,7 @@ class MyInputField extends StatelessWidget {
             prefixStyle: TextStyle(color: hexaCodeToColor(AppColors.textColor), fontSize: 18.0),
             /* Prefix Text */
             filled: true,
-            fillColor: isDarkTheme
-                ? Colors.white.withOpacity(0.06)
-                : hexaCodeToColor(AppColors.whiteHexaColor),
+            fillColor: hexaCodeToColor(AppColors.whiteColor),
 
             enabledBorder: myTextInputBorder(controller!.text != ""
                 ? isDarkTheme
@@ -123,7 +121,7 @@ class MyInputField extends StatelessWidget {
                 : hexaCodeToColor(AppColors.textColor),
             /* Border Color When Focusing */
             contentPadding: const EdgeInsets.fromLTRB(
-                paddingSize, 0, paddingSize, 0), // Default padding = -10.0 px
+                paddingSize, 0, paddingSize, 0), // Default padding = -10.0 px  
             suffixIcon: suffixIcon,
             suffixIconConstraints: BoxConstraints(
               minWidth: 0,
@@ -248,7 +246,7 @@ class MySeedField extends StatelessWidget {
                 color: hexaCodeToColor(AppColors.textColor), fontSize: 18.0),
             /* Prefix Text */
             filled: true,
-            fillColor: hexaCodeToColor(AppColors.whiteHexaColor).withOpacity(0.06),
+            fillColor: hexaCodeToColor(AppColors.whiteColor),
 
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(20.0),

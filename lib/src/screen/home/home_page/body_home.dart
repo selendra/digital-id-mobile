@@ -132,19 +132,19 @@ class HomeBody extends StatelessWidget {
                       for(int i = 0; i < KYCDocs().data.length; i++)
                         CardDocument(data: KYCDocs().data[i],),
                     
-                      // if (KYCDocs().data.isEmpty)
-                      //   SizedBox(height: paddingSize,),
+                      if (KYCDocs().data.isEmpty)
+                        SizedBox(height: paddingSize,),
                     
-                      // CustomButtonIcon(
-                      //   onPressed: () async => {
-                      //     Navigator.push(context, MaterialPageRoute(builder: (context) => SetUpKYC()))
-                      //   },
-                      //   text: 'Setup Document',
-                      //   icon: Icon(Iconsax.arrow_right_3),
-                      //   colorBtn: hexaCodeToColor(AppColors.whiteColor).withOpacity(0.06),
-                      //   colorText: hexaCodeToColor(AppColors.whiteColor),
-                      //   bold: true,
-                      // ),
+                      CustomButtonIcon(
+                        onPressed: () async => {
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => SetUpKYC()))
+                        },
+                        text: 'Setup Document',
+                        icon: Icon(Iconsax.arrow_right_3),
+                        colorBtn: hexaCodeToColor(AppColors.newPrimary),
+                        colorText: hexaCodeToColor(AppColors.whiteColor),
+                        bold: true,
+                      ),
 
                     ],
                   )

@@ -31,14 +31,15 @@ class SetUpKYCBody extends StatelessWidget {
         leading: IconButton(
           icon: const Icon(
             Iconsax.arrow_left_2,
-            color: Colors.white,
+            color: Colors.black,
           ),
           onPressed: () => Navigator.pop(context),
         ),
         title: MyText(
           text: "Documents Type",
           fontSize: 18,
-          color: AppColors.whiteColorHexa,
+          color: AppColors.newText,
+          fontWeight: FontWeight.bold,
         ),
       ),
       body: Consumer<DocumentProvider>(
@@ -55,7 +56,7 @@ class SetUpKYCBody extends StatelessWidget {
                     text: 'Mandatory',
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
-                    color: AppColors.whiteColorHexa,
+                    color: AppColors.newText,
                   ),
                 ),
           
@@ -68,7 +69,7 @@ class SetUpKYCBody extends StatelessWidget {
                     text: 'Popular document',
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
-                    color: AppColors.whiteColorHexa,
+                    color: AppColors.newText,
                   ),
                 ),
           
@@ -78,10 +79,10 @@ class SetUpKYCBody extends StatelessWidget {
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: paddingSize),
                   child: MyText(
-                    text: 'Issuer',
+                    text: 'Issuers',
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
-                    color: AppColors.whiteColorHexa,
+                    color: AppColors.newText,
                   ),
                 ),
           
@@ -95,22 +96,76 @@ class SetUpKYCBody extends StatelessWidget {
   }
 
   Widget _mandatory(BuildContext context, List<dynamic> ls) {
-    return Padding(
-      padding: EdgeInsets.all(paddingSize),
-      child: CustomButtonIcon(
-        onPressed: () async {
-          Provider.of<DocumentProvider>(context, listen: false).title = 'National ID';
-          MyBottomSheet().createIDBottomSheet(context, ls);
-        },
-        text: 'National ID',
-        icon: const Icon(Iconsax.arrow_right_3),
-        colorBtn: Colors.white.withOpacity(0.06),
-        colorText: Colors.white,
+    return GestureDetector(
+      onTap: () async{
+        Provider.of<DocumentProvider>(context, listen: false).title = 'National ID';
+        MyBottomSheet().createIDBottomSheet(context, ls);
+      },
+      child: Padding(
+        padding: EdgeInsets.all(paddingSize),
+        child: Center(
+          child: Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(20),
+              color: hexaCodeToColor(AppColors.newCard),
+            ),
+            width: MediaQuery.of(context).size.width,
+            child: Padding(
+              padding: EdgeInsets.all(paddingSize),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  SizedBox(
+                    height: 50,
+                    child: SvgPicture.asset("assets/logo/national-id.svg"),
+                  ),
+                  MyText(
+                    top: 2.h,
+                    text: "National ID",
+                    fontSize: 16,
+                  )
+                ],
+              ),
+            ),
+          ),
+        ),
       ),
     );
   }
 
   Widget _popularDocs(BuildContext context, bool _isShowMorePopularDocs, List<dynamic> ls) {
+    // return GestureDetector(
+    //   onTap: () async{
+    //     Provider.of<DocumentProvider>(context, listen: false).title = 'National ID';
+    //     MyBottomSheet().createIDBottomSheet(context, ls);
+    //   },
+    //   child: Padding(
+    //     padding: EdgeInsets.all(paddingSize),
+    //     child: Center(
+    //       child: Container(
+    //         decoration: BoxDecoration(
+    //           borderRadius: BorderRadius.circular(20),
+    //           color: hexaCodeToColor(AppColors.newCard),
+    //         ),
+    //         width: MediaQuery.of(context).size.width,
+    //         child: Padding(
+    //           padding: EdgeInsets.all(paddingSize),
+    //           child: Column(
+    //             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+    //             children: [
+    //               SvgPicture.asset("assets/logo/national-id.svg"),
+    //               MyText(
+    //                 top: 2.h,
+    //                 text: "National ID",
+    //                 fontSize: 16,
+    //               )
+    //             ],
+    //           ),
+    //         ),
+    //       ),
+    //     ),
+    //   ),
+    // );
     return Padding(
       padding: EdgeInsets.all(paddingSize),
       child: Column(
@@ -136,10 +191,11 @@ class SetUpKYCBody extends StatelessWidget {
             ),
           ),
 
-          MyGradientButton(
+          MyFlatButton(
+            isTransparent: true,
+            textColor: AppColors.newPrimary,
             textButton:  _isShowMorePopularDocs == false ? "Show More" : "Show Less",
-            begin: Alignment.bottomLeft,
-            end: Alignment.topRight,
+            buttonColor: AppColors.newPrimary,
             action: (){
               onShowMorePopularDocs!();
             }
@@ -176,10 +232,11 @@ class SetUpKYCBody extends StatelessWidget {
             ),
           ),
 
-          MyGradientButton(
+          MyFlatButton(
+            isTransparent: true,
+            textColor: AppColors.newPrimary,
             textButton: _isShowMoreIssuer == false ? "Show More" : "Show Less",
-            begin: Alignment.bottomLeft,
-            end: Alignment.topRight,
+            buttonColor: AppColors.newPrimary,
             action: (){
               onShowMoreIssuer!();
             }

@@ -7,9 +7,9 @@ class KYCDocs {
 
   static BuildContext? context;
 
-  static List<CustomButtonIcon>? lsPopularDocs = [];
+  static List<CustomButtonCard>? lsPopularDocs = [];
 
-  static List<CustomButtonIcon>? lsIssuer = [];
+  static List<CustomButtonCard>? lsIssuer = [];
 
   List<Map<String, dynamic>> data = [];
 
@@ -52,29 +52,34 @@ class KYCDocs {
     DocumentProvider provider = Provider.of<DocumentProvider>(context!, listen: false);
   
     lsPopularDocs =  [
-      CustomButtonIcon(
+      CustomButtonCard(
         onPressed: () async {
           provider.title = 'National ID';
           MyBottomSheet().createIDBottomSheet(context!, provider.lsPopularProp!);
         },
         text: 'National ID',
-        icon: const Icon(Iconsax.arrow_right_3),
-        colorBtn: Colors.white.withOpacity(0.06),
-        colorText: Colors.white,
+        image: SvgPicture.asset("assets/logo/national-id.svg"),
       ),
 
-      CustomButtonIcon(
+      CustomButtonCard(
         onPressed: () async {
           provider.title = 'Passport';
           MyBottomSheet().createIDBottomSheet(context!, provider.lsPopularProp!);
         },
         text: 'Passport',
-        icon: const Icon(Iconsax.arrow_right_3),
-        colorBtn: Colors.white.withOpacity(0.06),
-        colorText: Colors.white,
+        image: SvgPicture.asset("assets/logo/passport.svg"),
       ),
 
-      CustomButtonIcon(
+      CustomButtonCard(
+        onPressed: () async {
+          provider.title = 'Land Title';
+          MyBottomSheet().createIDBottomSheet(context!, provider.lsPopularProp!);
+        },
+        text: 'Land Title',
+        image: SvgPicture.asset("assets/logo/land-title.svg"),
+      ),
+
+      CustomButtonCard(
         onPressed: () async {
           provider.title = 'Vehicle License';
           Navigator.push(
@@ -90,12 +95,10 @@ class KYCDocs {
           );
         },
         text: 'Vehicle License',
-        icon: const Icon(Iconsax.arrow_right_3),
-        colorBtn: Colors.white.withOpacity(0.06),
-        colorText: Colors.white,
+        image: SvgPicture.asset("assets/logo/vehicle-license.svg"),
       ),
 
-      CustomButtonIcon(
+      CustomButtonCard(
         onPressed: () async {
           provider.title = 'Driver License';
           Navigator.push(
@@ -111,15 +114,14 @@ class KYCDocs {
           );
         },
         text: 'Driver License',
-        icon: const Icon(Iconsax.arrow_right_3),
-        colorBtn: Colors.white.withOpacity(0.06),
-        colorText: Colors.white,
+        image: SvgPicture.asset("assets/logo/driver-license.svg"),
       ),
     ];
 
     lsIssuer =  [
       
-      CustomButtonIcon(
+      
+      CustomButtonCard(
         onPressed: () async {
           provider.title = 'MPTC';
           Navigator.push(
@@ -135,12 +137,10 @@ class KYCDocs {
           );
         },
         text: 'MPTC',
-        icon: const Icon(Iconsax.arrow_right_3),
-        colorBtn: Colors.white.withOpacity(0.06),
-        colorText: Colors.white,
+        image: Image.network("https://asset.cambodia.gov.kh/mptc/media/2020/05/cropped-PTC-HD-LOGO-512px-6.png"),
       ),
 
-      CustomButtonIcon(
+      CustomButtonCard(
         onPressed: () async {
           provider.title = 'MoEYs';
           Navigator.push(
@@ -156,30 +156,7 @@ class KYCDocs {
           );
         },
         text: 'MoEYs',
-        icon: const Icon(Iconsax.arrow_right_3),
-        colorBtn: Colors.white.withOpacity(0.06),
-        colorText: Colors.white,
-      ),
-
-      CustomButtonIcon(
-        onPressed: () async {
-          provider.title = 'CSX';
-          Navigator.push(
-            context!, 
-            Transition(
-              child: IssuerListForm(
-                createID: (){
-                  MyBottomSheet().createIDBottomSheet(context!, provider.lsPopularProp!);
-                },
-              ),
-              transitionEffect: TransitionEffect.RIGHT_TO_LEFT
-            )
-          );
-        },
-        text: 'CSX',
-        icon: const Icon(Iconsax.arrow_right_3),
-        colorBtn: Colors.white.withOpacity(0.06),
-        colorText: Colors.white,
+        image: Image.network("https://upload.wikimedia.org/wikipedia/commons/thumb/9/93/MoEYS_%28Cambodia%29.svg/444px-MoEYS_%28Cambodia%29.svg.png?20110624073833")
       ),
 
     ];

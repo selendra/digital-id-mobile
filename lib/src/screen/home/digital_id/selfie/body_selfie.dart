@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:wallet_apps/index.dart';
 import 'package:wallet_apps/src/models/digital_id_m.dart';
+import 'package:wallet_apps/src/screen/home/digital_id/success/success.dart';
 
 import '../build_dot_indecator.dart';
 
@@ -17,7 +18,6 @@ class SelfieSideBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: hexaCodeToColor(AppColors.primaryColor),
       appBar: appbarCustom("Selfie With Front Side", context, centerTitle: true),  
       body: Stack(
         children: [
@@ -85,7 +85,7 @@ class SelfieSideBody extends StatelessWidget {
                   top: paddingSize,
                   bottom: paddingSize,
                   width: 311,
-                  color: AppColors.whiteColorHexa,
+                  color: AppColors.newText,
                   fontWeight: FontWeight.bold,
                   text: "Position your document inside the frame. Make sure that all the data is clearly visible."
                 ),
@@ -97,14 +97,14 @@ class SelfieSideBody extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Icon(Iconsax.camera, color: Colors.white),
+                        Icon(Iconsax.camera, color: Colors.black),
 
                         SizedBox(width: 5),
 
                         MyText(
                           fontWeight: FontWeight.bold,
                           text: "Take a selfie",
-                          color: AppColors.whiteColorHexa,
+                          color: AppColors.newText,
                         ),
                       ],
                     ),
@@ -136,14 +136,14 @@ class SelfieSideBody extends StatelessWidget {
             left: paddingSize,
             right: paddingSize,
             bottom: paddingSize,
-            child: MyGradientButton(
+            child: MyFlatButton(
               // edgeMargin: EdgeInsets.only(top: paddingSize, left: paddingSize, right: paddingSize),
               textButton: "Next Step",
-              begin: Alignment.bottomLeft,
-              end: Alignment.topRight,
+              buttonColor: AppColors.newPrimary,
               action: () async {
-                
+                Navigator.push(context, Transition(child: SuccessSubmit(), transitionEffect: TransitionEffect.RIGHT_TO_LEFT));
                 // await submitAsset!();
+                
               }
             ),
             // child: ElevatedButton(
