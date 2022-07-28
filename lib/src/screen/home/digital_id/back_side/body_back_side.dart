@@ -18,7 +18,6 @@ class BackSideBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: hexaCodeToColor(AppColors.primaryColor),
       appBar: appbarCustom("Back Side", context, centerTitle: true),
       body: Stack(
         children: [
@@ -91,7 +90,7 @@ class BackSideBody extends StatelessWidget {
                 top: paddingSize,
                 bottom: paddingSize,
                 width: 311,
-                color: AppColors.whiteColorHexa,
+                color: AppColors.newText,
                 fontWeight: FontWeight.bold,
                 text: "Position your document inside the frame. Make sure that all the data is clearly visible."
               ),
@@ -125,11 +124,11 @@ class BackSideBody extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            Icon(Iconsax.camera, color: Colors.white),
+                            Icon(Iconsax.camera, color: Colors.black),
 
                             SizedBox(width: 5),
 
-                            MyText(text: "Take a photo", color: AppColors.whiteColorHexa),
+                            MyText(text: "Take a photo", color: AppColors.newText,),
                           ],
                         )
                       ),
@@ -158,11 +157,11 @@ class BackSideBody extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              Icon(Iconsax.document_upload, color: Colors.white),
+                              Icon(Iconsax.document_upload, color: Colors.black),
 
                               SizedBox(width: 5),
 
-                              MyText(text: "Upload image" , color: AppColors.whiteColorHexa)
+                              MyText(text: "Upload image" , color: AppColors.newText)
                             ],
                           )),
                     ),
@@ -176,11 +175,10 @@ class BackSideBody extends StatelessWidget {
             left: paddingSize,
             right: paddingSize,
             bottom: paddingSize,
-            child: MyGradientButton(
+            child: MyFlatButton(
               // edgeMargin: EdgeInsets.only(top: paddingSize, left: paddingSize, right: paddingSize),
               textButton: "Next Step",
-              begin: Alignment.bottomLeft,
-              end: Alignment.topRight,
+              buttonColor: AppColors.newPrimary,
               action: () async {
                 Navigator.push(context, Transition(child: SelfieSide(), transitionEffect: TransitionEffect.RIGHT_TO_LEFT));
                 // await submitAsset!();

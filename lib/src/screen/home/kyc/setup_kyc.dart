@@ -1,5 +1,6 @@
 import 'package:wallet_apps/index.dart';
 import 'package:wallet_apps/src/models/kyc_content_m.dart';
+import 'package:wallet_apps/src/provider/documents_p.dart';
 import 'package:wallet_apps/src/screen/home/kyc/body_setup_kyc.dart';
 
 class SetUpKYC extends StatefulWidget {
@@ -29,6 +30,7 @@ class _SetUpKYCState extends State<SetUpKYC> {
   void initState() {
     super.initState();
     KYCDocs.initContext(context: context);
+    Provider.of<DocumentProvider>(context, listen: false).initJson();
   }
 
   @override

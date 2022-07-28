@@ -242,48 +242,58 @@ class MyBottomSheet {
         filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
         child: Container(
           decoration: BoxDecoration(
-            color: hexaCodeToColor(AppColors.primaryColor),
+            color: hexaCodeToColor(AppColors.newBgColor),
             borderRadius: const BorderRadius.only(topLeft: Radius.circular(20), topRight: Radius.circular(20)),
           ),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              Stack(
+                // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.all(paddingSize),
-                    child: MyText(
-                      text: "Create",
-                      color: '#FFFFFF',
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold
+                  Align(
+                    alignment: Alignment.topCenter,
+                    child: Padding(
+                      padding: EdgeInsets.all(10),
+                      child: MyText(
+                        top: 5,
+                        text: "Create",
+                        color: AppColors.newText,
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold
+                      ),
                     ),
                   ),
       
-                  IconButton(
-                    icon: Icon(Iconsax.close_circle, color: hexaCodeToColor(AppColors.whiteColorHexa),),
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
+                  Positioned(
+                    right: 10,
+                    top: 0,
+                    child: IconButton(
+                      padding: EdgeInsets.zero,
+                      icon: Icon(Iconsax.close_circle, color: hexaCodeToColor(AppColors.newText)),
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                    ),
                   ),
                 ],
               ),
               Column(
                 children: [
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: paddingSize, vertical: 10),
-                    child: GestureDetector(
-                      onTap: () async {
-                        Navigator.push(
-                          context, 
-                          MaterialPageRoute(builder: (context) => CreateID(docs: docs))
-                        );
-                      },
+                  InkWell(
+                    onTap: () async {
+                      Navigator.push(
+                        context, 
+                        MaterialPageRoute(builder: (context) => CreateID(docs: docs))
+                      );
+                    },
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(horizontal: paddingSize, vertical: 10),
                       child: Row(
                         children: [
                           CircleAvatar(
-                            backgroundColor: hexaCodeToColor(AppColors.secondary),
+                            backgroundColor: hexaCodeToColor(AppColors.primary),
                             radius: 20,
                             child: Icon(Iconsax.add_circle, color: hexaCodeToColor(AppColors.whiteColor))
                           ),
@@ -292,25 +302,26 @@ class MyBottomSheet {
                           
                           MyText(
                             text: "New ID",
-                            color: "#FFFFFF"
+                            color: AppColors.newText,
                           )
                         ],
                       ),
                     ),
                   ),
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: paddingSize, vertical: 10),
-                    child: GestureDetector(
-                      onTap: () async {
-                        Navigator.push(
-                          context, 
-                          MaterialPageRoute(builder: (context) => CreateID(docs: docs))
-                        );
-                      },
+
+                  InkWell(
+                    onTap: () async {
+                      Navigator.push(
+                        context, 
+                        MaterialPageRoute(builder: (context) => CreateID(docs: docs))
+                      );
+                    },
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(horizontal: paddingSize, vertical: 10),
                       child: Row(
                         children: [
                           CircleAvatar(
-                            backgroundColor: hexaCodeToColor(AppColors.secondary),
+                            backgroundColor: hexaCodeToColor(AppColors.newPrimary),
                             radius: 20,
                             child: Icon(Iconsax.document_upload, color: hexaCodeToColor(AppColors.whiteColor))
                           ),
@@ -319,7 +330,7 @@ class MyBottomSheet {
       
                           MyText(
                             text: "Import ID",
-                            color: '#FFFFFF'
+                            color: AppColors.newText,
                           )
                         ],
                       ),

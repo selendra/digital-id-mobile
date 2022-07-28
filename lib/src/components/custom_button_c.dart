@@ -106,3 +106,51 @@ class CustomButtonIcon extends StatelessWidget {
     );
   }
 }
+
+class CustomButtonCard extends StatelessWidget {
+  final String? text;
+  final Function()? onPressed;
+  final Widget? image;
+  const CustomButtonCard({
+    this.text, 
+    this.onPressed,
+    this.image,
+    Key? key
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+
+    return GestureDetector(
+      onTap: onPressed,
+      child: Center(
+        child: Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(20),
+            color: hexaCodeToColor(AppColors.newCard),
+          ),
+          width: MediaQuery.of(context).size.width,
+          child: Padding(
+            padding: EdgeInsets.all(paddingSize),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                SizedBox(
+                  height: 50,
+                  child: image!,
+                ),
+                
+                MyText(
+                  top: 2.h,
+                  text: text!,
+                  fontSize: 16,
+                  color: AppColors.newText,
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}

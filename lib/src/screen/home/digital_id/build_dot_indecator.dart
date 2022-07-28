@@ -22,8 +22,8 @@ class ReuseDotIndecator extends StatelessWidget {
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(5),
                 color: (index == indexPoint)
-                    ? Colors.blue
-                    : Colors.blue.withOpacity(0.5)));
+                    ? hexaCodeToColor(AppColors.newPrimary)
+                    : hexaCodeToColor(AppColors.newPrimary).withOpacity(0.5)));
       }
       )
     );

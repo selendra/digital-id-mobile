@@ -17,13 +17,13 @@ class IssuerListForm extends StatelessWidget {
         leading: IconButton(
           icon: const Icon(
             Iconsax.arrow_left_2,
-            color: Colors.white,
+            color: Colors.black,
           ),
           onPressed: () => Navigator.pop(context),
         ),
         title: MyText(
           text: "Documents Type",
-          color: AppColors.whiteColorHexa,
+          color: AppColors.newText,
         ),
       ),
       body: Container(
@@ -37,8 +37,8 @@ class IssuerListForm extends StatelessWidget {
               },
               text: 'Certificate Grade 9',
               icon: const Icon(Iconsax.arrow_right_3),
-              colorBtn: Colors.white.withOpacity(0.06),
-              colorText: Colors.white,
+              colorBtn: Colors.white,
+              colorText: hexaCodeToColor(AppColors.newText),
             ),
 
             SizedBox(
@@ -50,8 +50,8 @@ class IssuerListForm extends StatelessWidget {
               },
               text: 'Certificate Grade 12',
               icon: const Icon(Iconsax.arrow_right_3),
-              colorBtn: Colors.white.withOpacity(0.06),
-              colorText: Colors.white,
+              colorBtn: Colors.white,
+              colorText: hexaCodeToColor(AppColors.newText),
             ),
             
           ],

@@ -1188,12 +1188,12 @@ PreferredSizeWidget appbarCustom(String title, BuildContext context, {bool? cent
     centerTitle: centerTitle,
     title: Text(
       title,
-      style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+      style: TextStyle(color: hexaCodeToColor(AppColors.newText), fontWeight: FontWeight.bold),
     ),
     backgroundColor: Colors.transparent,
     elevation: 0,
     leading: IconButton(
-      icon: const Icon(Iconsax.arrow_left_2 ,color: Colors.white,),
+      icon: const Icon(Iconsax.arrow_left_2 ,color: Colors.black,),
       onPressed: (){
         Navigator.pop(context);
       },

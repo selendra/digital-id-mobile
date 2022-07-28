@@ -2,6 +2,7 @@ import 'package:provider/provider.dart';
 import 'package:wallet_apps/index.dart';
 import 'package:wallet_apps/src/provider/documents_p.dart';
 import 'package:wallet_apps/src/screen/home/digital_id/front_side/front_side.dart';
+import 'package:wallet_apps/src/utils/string_extension.dart';
 
 class CraeteIDBody extends StatelessWidget {
 
@@ -15,16 +16,21 @@ class CraeteIDBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: hexaCodeToColor(AppColors.primaryColor),
       appBar: AppBar(
         elevation: 0,
-        backgroundColor: hexaCodeToColor(AppColors.primaryColor),
+        leading: IconButton(
+          icon: const Icon(
+            Iconsax.arrow_left_2,
+            color: Colors.black,
+          ),
+          onPressed: () => Navigator.pop(context),
+        ),
         title: Consumer<DocumentProvider>(
           builder: (context, provider, widget){
             return  MyText(
               text: provider.title,
               fontWeight: FontWeight.w600,
-              color: AppColors.whiteHexaColor,
+              color: AppColors.newText,
             );
           }
         ),
@@ -45,7 +51,7 @@ class CraeteIDBody extends StatelessWidget {
                       inputType: docs![index]['type'] == 'integer' ? TextInputType.number : TextInputType.text,
                       focusNode: docs![index]['focusNode'],
                       controller: docs![index]['formController'],
-                      // hintText: docs![index]['key'],
+                      hintText: camelToSentence(docs![index]['key']),
                       onChanged: (String value){
                         
                       },
@@ -60,11 +66,10 @@ class CraeteIDBody extends StatelessWidget {
             ),
           ),
 
-          MyGradientButton(
-            edgeMargin: EdgeInsets.only(top: paddingSize, left: paddingSize, right: paddingSize),
+          MyFlatButton(
+            edgeMargin: EdgeInsets.all(paddingSize),
             textButton: "Upload KYC",
-            begin: Alignment.bottomLeft,
-            end: Alignment.topRight,
+            buttonColor: AppColors.newPrimary, 
             action: () async {
               Navigator.push(context, Transition(child: FrontSide(), transitionEffect: TransitionEffect.RIGHT_TO_LEFT));
               // await submitAsset!();
