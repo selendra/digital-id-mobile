@@ -58,18 +58,14 @@ class HomeBody extends StatelessWidget {
             
         //   },
         // ),
-        leading: Row(
-          children: [
-            IconButton(
-              icon: Icon(
-                Iconsax.profile_circle,
-                color: hexaCodeToColor(AppColors.secondary),
-              ),
-              onPressed: () {
-                homePageModel!.globalKey!.currentState!.openDrawer();
-              },
-            ),
-          ],
+        leading: IconButton(
+          icon: Icon(
+            Iconsax.profile_circle,
+            color: hexaCodeToColor(AppColors.secondary),
+          ),
+          onPressed: () {
+            homePageModel!.globalKey!.currentState!.openDrawer();
+          },
         ),
         actions: <Widget>[
           IconButton(
