@@ -172,6 +172,11 @@ class AppConfig {
   static String assetsPath = "assets/";
   static String animationPath = "assets/animation/";
 
+  static String iconPath = "assets/icons/";
+  static String illusPath = "assets/illustration/";
+  static String logoPath = "assets/logo/";
+  static String imagePath = "assets/images/";
+
   static String mandatory = "assets/json/mandatory.json";
   static String popular = "assets/json/popular.json";
   static String issuer = "assets/json/issuer.json";
@@ -257,11 +262,6 @@ class PresaleConfig {
       "symbol": "ETH"
     }
   ];
-
-  static String iconPath = "assets/icons/";
-  static String illusPath = "assets/illustration/";
-  static String logoPath = "assets/logos/";
-  static String imagePath = "assets/images/";
   // static String mandatory = "assets/json/mandatory.json";
   // static String popular = "assets/json/popular.json";
   // static String issuer = "assets/json/issuer.json";

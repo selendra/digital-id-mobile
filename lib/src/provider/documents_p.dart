@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/services.dart';
 import 'package:wallet_apps/index.dart';
+import 'package:wallet_apps/src/models/kyc_content_m.dart';
 
 class DocumentProvider extends ChangeNotifier{
 
@@ -14,6 +15,77 @@ class DocumentProvider extends ChangeNotifier{
   List<dynamic>? lsMandotaryProp = [];
   List<dynamic>? lsPopularProp = [];
   List<dynamic>? lsIssuerProp = [];
+
+  KYCDocs kycDocs = KYCDocs();
+
+  DocumentProvider(){
+    kycDocs.data = [];
+    // kycDocs.data = [
+    //   {
+    //     "type": "National ID",
+    //     "id": "1233452423",
+    //     "name": "Sam Allen",
+    //     "dob": "09.02.2000",
+    //     "gender": "Female",
+    //     "address": "Tik L'lork, Toul Kork, Phnom Penh",
+    //     "status": "verifying",
+    //     "isVeried": false,
+    //     "color": "#D5ECC2",
+    //     "height": "165",
+    //     "identity": "Scar on the left side 1cm",
+    //     "isApprove": false
+    //   },
+    //   {
+    //     "type": "Driver licence",
+    //     "id": "1233452423",
+    //     "name": "Sam Allen",
+    //     "dob": "09.02.2000",
+    //     "gender": "Male",
+    //     "address": "Tik L'lork, Toul Kork, Phnom Penh",
+    //     "status": "verifying",
+    //     "isVeried": false,
+    //     "color": "#98DDCA",
+    //     "height": "175",
+    //     "identity": "Scar on the left side 1cm",
+    //     "isApprove": true
+    //   },
+    //   {
+    //     "type": "Covid Vaccination",
+    //     "id": "1233452423",
+    //     "name": "Sam Allen",
+    //     "dob": "09.02.2000",
+    //     "gender": "Male",
+    //     "address": "Tik L'lork, Toul Kork, Phnom Penh",
+    //     "status": "verified",
+    //     "isVeried": true,
+    //     "color": "#FFAAA7",
+    //     "height": "188",
+    //     "identity": "Scar on the left side 1cm",
+    //     "isApprove": false
+    //   }
+    // ];
+
+    // docsFilter();
+
+  }
+
+  /// Status Filter
+  void docsFilter(){
+    kycDocs.pending = [];
+    kycDocs.approve = [];
+    kycDocs.data.forEach((element) {
+      if (element['isApprove'] == false) {
+        kycDocs.pending.add(element);
+      } else {
+        kycDocs.approve.add(element);
+      }
+    });
+    
+    print("kycDocs.pending ${kycDocs.pending}");
+    print("kycDocs.approve ${kycDocs.approve}");
+
+    // notifyListeners();
+  }
   
   Future<void> initJson() async {
     lsMandotaryProp = [];

@@ -24,6 +24,8 @@ class HomeBody extends StatelessWidget {
   final CTypeModel? cTypeModel;
   final Function(int index)? onPageChanged;
   final Function? queryCType;
+  final TabController? tabBarController;
+  final Color? selectedColor;
 
   const HomeBody({ 
     Key? key, 
@@ -31,7 +33,9 @@ class HomeBody extends StatelessWidget {
     this.onPageChanged,
     this.pushReplacement,
     this.cTypeModel,
-    this.queryCType
+    this.queryCType,
+    this.tabBarController,
+    this.selectedColor
   }) : super(key: key);
 
   final double tabBarHeight = 55;
@@ -49,15 +53,6 @@ class HomeBody extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: hexaCodeToColor(AppColors.bgColor),
         elevation: 0,
-        // leading: IconButton(
-        //   icon: Icon(
-        //     Iconsax.profile_circle,
-        //     color: Colors.white,
-        //   ),
-        //   onPressed: () => {
-            
-        //   },
-        // ),
         leading: IconButton(
           icon: Icon(
             Iconsax.profile_circle,
@@ -93,62 +88,91 @@ class HomeBody extends StatelessWidget {
         onPageChanged: onPageChanged,
         children: [
       
-          // DiscoverPage(homePageModel: homePageModel!),
-      
           AssetsPage(homePageControl: homePageModel!.pageController,),
       
-          Consumer<HomeProvider>(
+          Consumer<DocumentProvider>(
             builder: (context, provider, widget){
         
-              return Container(
-                padding: EdgeInsets.symmetric(horizontal: paddingSize),
-                child: SingleChildScrollView(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
+              return provider.kycDocs.data.isNotEmpty ? Column(
+                children: [ 
 
-                      // Align(
-                      //   alignment: Alignment.topLeft,
-                      //   child: MyText(
-                      //     textAlign: TextAlign.start,
-                      //     text: "Other organization:",
-                      //     fontSize: 18,
-                      //     width: 55.w,
-                      //   ),
-                      // ),
-
-                      // OrgCardComponent(),
-                    
-                      // if (KYCDocs().data.isEmpty)
-                      //   Center(
-                      //     child: MyText(
-                      //       text: "No document has setup",
-                      //       fontSize: 20,
-                      //       width: 55.w,
-                      //       color2: Colors.white,
-                      //     ),
-                      //   )                        
-                    
-                      for(int i = 0; i < KYCDocs().data.length; i++)
-                        CardDocument(data: KYCDocs().data[i], isDetail: false,),
-                    
-                      if (KYCDocs().data.isEmpty)
-                        SizedBox(height: paddingSize,),
-                    
-                      CustomButtonIcon(
-                        onPressed: () async => {
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => SetUpKYC()))
-                        },
-                        text: 'Setup Document',
-                        icon: Icon(Iconsax.arrow_right_3),
-                        colorBtn: hexaCodeToColor(AppColors.newPrimary),
-                        colorText: hexaCodeToColor(AppColors.whiteColor),
-                        bold: true,
+                  Container(
+                    height: kToolbarHeight - 8.0,
+                    padding: EdgeInsets.all(5),
+                    margin: EdgeInsets.only(left: paddingSize, right: paddingSize, bottom: paddingSize, top: paddingSize),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(20.0),
+                    ),
+                    child: TabBar(
+                      controller: tabBarController,
+                      indicator: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20.0),
+                        color: selectedColor!.withOpacity(0.2),
                       ),
+                      labelColor: selectedColor,
+                      unselectedLabelColor: hexaCodeToColor("#D9D9D9"),
+                      tabs: ["Pending", "Approved"].map((e) => Tab(
+                        text: e,
+                      )).toList(),
+                    ),
+                  ),
 
-                    ],
-                  )
-                ),
+                  Expanded(
+                    child: TabBarView(
+                      controller: tabBarController,
+                      children: [
+
+                        ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: provider.kycDocs.pending.length,
+                          itemBuilder: (context, index){
+                            return CardDocument(data: provider.kycDocs.pending[index], isDetail: false,);
+                          }
+                        ),
+
+                        ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: provider.kycDocs.approve.length,
+                          itemBuilder: (context, index){
+                            return CardDocument(data: provider.kycDocs.approve[index], isDetail: false,);
+                          }
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ) 
+              : Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+
+                  Image.asset(AppConfig.logoPath+"document.png", width: 178, height: 178,),
+                  
+                  MyText(
+                    top: 20.sp,
+                    text: "Empty list",
+                    fontWeight: FontWeight.bold,
+                    fontSize: 18,
+                  ),
+
+                  MyText(
+                    top: 15.sp,
+                    text: "No document has found",
+                    bottom: 30.sp,
+                  ),
+
+                  MyFlatButton(
+                    height: 33.sp,
+                    edgeMargin: EdgeInsets.symmetric(horizontal: paddingSize),
+                    textButton: "Setup Selendra ID",
+                    // textColor: AppColors.whiteColor,
+                    buttonColor: AppColors.newPrimary,
+                    action: () {
+                      Navigator.pop(context);
+                    },
+                  ),
+                ],
               );
             }
           ),
@@ -156,6 +180,19 @@ class HomeBody extends StatelessWidget {
           Container()
       
         ],
+      ),
+
+      floatingActionButton: Consumer<DocumentProvider>(
+        builder: (context, provider, widget){
+          
+          return provider.kycDocs.data.isNotEmpty ? FloatingActionButton(
+            onPressed: () {
+              Navigator.push(context, MaterialPageRoute(builder: (context) => SetUpKYC()));
+            },
+            child: Icon(Iconsax.add_circle, color: Colors.white, size: 9.w,),
+            backgroundColor: hexaCodeToColor(AppColors.newPrimary),
+          ) : Container();
+        }
       ),
     );
   }
