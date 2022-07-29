@@ -69,7 +69,7 @@ dependencies:
 
   ######## Permission Package ########
   # Camera
-  qr_flutter: 
+  qr_flutter: ^4.0.0
   qr_code_scanner: ^1.0.0
 
   # Chart
