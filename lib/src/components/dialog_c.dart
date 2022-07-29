@@ -162,6 +162,84 @@ class DialogComponents {
       }
     );
   }
+
+  Future<void> dialogQR({ required BuildContext? context, required GlobalKey? keyQrShare, required Map<String, dynamic>? data, bool? isDarkTheme}) async {
+    return await showDialog(
+      context: context!, 
+      builder: (BuildContext context){
+        return BackdropFilter(
+          filter: ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
+          child: AlertDialog(
+            shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(20)),
+            ),
+            backgroundColor: hexaCodeToColor(AppColors.newBgColor),
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(30),
+                  child: Container(
+                    height: 50,
+                    width: 50,
+                    alignment: Alignment.center,
+                    child: Image.asset(AppConfig.assetsPath+"SelendraCircle-Blue.png", fit: BoxFit.cover,),
+                  ),
+                ),
+
+                MyText(
+                  top: paddingSize,
+                  text: data!['type'],
+                  fontSize: 17,
+                  fontWeight: FontWeight.bold,
+                ),
+                
+                MyText(
+                  top: paddingSize-5,
+                  text: "Scan the QR code",
+                ),
+
+                Container(
+                  margin: EdgeInsets.symmetric(vertical: paddingSize*2),
+                  child: qrCodeGenerator(
+                    Provider.of<ApiProvider>(context).accountM.address!,
+                    "",
+                    keyQrShare!,
+                  ),
+                ),
+                
+                MyFlatButton(
+                  textButton: "Share",
+                  textColor: AppColors.whiteColor,
+                  buttonColor: AppColors.newPrimary,
+                  action: () {
+                    Navigator.pop(context);
+                  },
+                ),
+              ],
+            ),
+            // actions: [
+        
+            //   TextButton(
+            //     style: ButtonStyle(
+            //       padding: MaterialStateProperty.all(EdgeInsets.zero)
+            //     ),
+            //     onPressed: () async {
+            //       // await FlutterScreenshotSwitcher.enableScreenshots();
+            //       Navigator.pop(context);
+            //     },
+            //     child: MyText(
+            //       text: "Close",
+            //       color: AppColors.lowWhite
+            //     ),
+            //   )
+            // ],
+          ),
+        );
+      }
+    );
+  }
 }
 
 void messageToast(){

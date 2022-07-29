@@ -823,17 +823,11 @@ Widget qrCodeGenerator(String wallet, String logoName, GlobalKey _keyQrShare) {
   return Column(
     mainAxisSize: MainAxisSize.min,
     children: <Widget>[
-      Container(
-        decoration: BoxDecoration(
-          border: Border.all(
-            width: 2,
-            color: hexaCodeToColor(AppColors.secondarytext),
-          ),
-          borderRadius: BorderRadius.circular(6),
-          color: Colors.white,
-        ),
-        width: 45.w,
+      SizedBox(
+        height: 150,
+        width: 150,
         child: QrImage(
+          padding: EdgeInsets.zero,
           backgroundColor: Colors.white,
 
           //embeddedImage: AssetImage(logoName),
@@ -842,7 +836,7 @@ Widget qrCodeGenerator(String wallet, String logoName, GlobalKey _keyQrShare) {
           ),
           // version: QrVersions.auto,
           data: wallet,
-        ),
+        )
       ),
     ],
   );

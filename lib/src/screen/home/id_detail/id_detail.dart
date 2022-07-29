@@ -12,9 +12,13 @@ class IdDetail extends StatefulWidget {
 }
 
 class _IdDetailState extends State<IdDetail> {
+
+  final GlobalKey? keyQrShare = GlobalKey();
+  
   @override
   Widget build(BuildContext context) {
     return IdDetailBody(
+      keyQrShare: keyQrShare,
       data: widget.data
     );
     

@@ -62,9 +62,7 @@ class ShareIDBody extends StatelessWidget {
                     "",
                     "",
                     keyQrShare!,
-                  ),
-
-                  
+                  ),                  
 
                   Container(
                     height: 50,
