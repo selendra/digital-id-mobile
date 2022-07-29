@@ -123,9 +123,10 @@ class MenuState extends State<Menu> {
       key: _menuModel.globalKey,
       child: SafeArea(
         child: Container(
-          color: isDarkTheme
-            ? hexaCodeToColor(AppColors.darkBgd)
-            : hexaCodeToColor(AppColors.lowWhite),
+          color: hexaCodeToColor(AppColors.bgColor),
+          // color: isDarkTheme
+          //   ? hexaCodeToColor(AppColors.darkBgd)
+          //   : hexaCodeToColor(AppColors.lowWhite),
           child: SingleChildScrollView(
             child: MenuBody(
               userInfo: widget.userData,

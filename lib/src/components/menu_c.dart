@@ -24,7 +24,7 @@ class MenuHeader extends StatelessWidget {
       padding: EdgeInsets.symmetric(horizontal: 3.w, vertical: 2.h),
       margin:  EdgeInsets.symmetric(horizontal: 3.w, vertical: 2.h),
       decoration: BoxDecoration(
-        color: hexaCodeToColor("#114463"),
+        color: Colors.white,//hexaCodeToColor("#114463"),
         borderRadius: BorderRadius.circular(12),
       ),
       child: Consumer<ApiProvider>(

@@ -116,6 +116,8 @@ class AppState extends State<App> {
 
       final res = await StorageServices.fetchData(DbKey.themeMode);
 
+      print("res $res");
+
       if (res != null) {
         await Provider.of<ThemeProvider>(context, listen: false).changeMode();
       }
