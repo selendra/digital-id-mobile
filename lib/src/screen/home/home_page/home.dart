@@ -253,6 +253,68 @@ class _HomeState extends State<HomePage> with TickerProviderStateMixin {
     });
   }
 
+  Future<void> _scanLogin(String code) async {
+
+                    
+    final String? barcodeData = code;
+
+    final decode = jsonDecode(barcodeData!);
+    print("_scanLogin decode $decode");
+    if(decode["id"] == null) {
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: Text("Error"),
+          content: Text("Invalid QR Code"),
+          actions: [
+            MyFlatButton(
+              textButton: "Ok",
+              buttonColor: AppColors.newPrimary,
+              action: () {
+                Navigator.pop(context);
+              },
+            )
+          ],
+        ),
+      );
+    } 
+    else{
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: Text("Message"),
+          content: Text("Valid QR Code"),
+          actions: [
+            MyFlatButton(
+              textButton: "Ok",
+              buttonColor: AppColors.newPrimary,
+              action: () async {
+
+                List<int> convert = decode['id'].toString().codeUnits;
+                Uint8List uint8list = Uint8List.fromList(convert);
+                String _credentials = await _signId(decode['id']);
+                print("_credentials $_credentials");
+                String signedDataHex = EthSigUtil.signMessage(
+                  privateKey: _credentials,
+                  message: uint8list
+                );
+                print("signedDataHex $signedDataHex");
+                Navigator.pop(context);
+              },
+            )
+          ],
+        ),
+      );
+    }
+
+  }
+
+  Future<String> _signId(String id) async {
+
+    return await Provider.of<ApiProvider>(context, listen: false).getPrivateKey("august midnight obvious fragile pretty begin useless collect elder ability enhance series");
+
+  }
+
   @override
   void dispose() {
     _tabBarController.dispose();
@@ -271,6 +333,7 @@ class _HomeState extends State<HomePage> with TickerProviderStateMixin {
         cTypeModel: cTypeModel,
         tabBarController: _tabBarController,
         selectedColor: _selectedColor,
+        scanLogin: _scanLogin
         // dashModel: _dashBoardM,
         // onTab: onTab,
         // tabController: _tabController,

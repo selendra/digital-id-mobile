@@ -26,6 +26,7 @@ class HomeBody extends StatelessWidget {
   final Function? queryCType;
   final TabController? tabBarController;
   final Color? selectedColor;
+  final Function? scanLogin;
 
   const HomeBody({ 
     Key? key, 
@@ -35,7 +36,8 @@ class HomeBody extends StatelessWidget {
     this.cTypeModel,
     this.queryCType,
     this.tabBarController,
-    this.selectedColor
+    this.selectedColor,
+    this.scanLogin,
   }) : super(key: key);
 
   final double tabBarHeight = 55;
@@ -73,7 +75,12 @@ class HomeBody extends StatelessWidget {
                 context,
                 [],
                 pushReplacement!,
-              );
+              ).then((value) async {
+                print("TrxOptionMethod value $value");
+                if (value != null){
+                  await scanLogin!(value);
+                }
+              });
             },
           ),
         ],
