@@ -15,7 +15,7 @@ class CardDocument extends StatelessWidget{
         Navigator.push(context, Transition(child: IdDetail(data: data), transitionEffect: TransitionEffect.RIGHT_TO_LEFT));
       },
       child: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.symmetric(vertical: 8),
         child: ClipRect(
           child: MyBanner(
             isApprove: data!['isApprove'],

@@ -27,6 +27,10 @@ class HomePage extends StatefulWidget {
 
 class _HomeState extends State<HomePage> with TickerProviderStateMixin {
   
+  late TabController _tabBarController;
+
+  final _selectedColor = hexaCodeToColor(AppColors.newPrimary);
+  
   TextEditingController phraseKey = TextEditingController();
   DashBoardModel _dashBoardM = DashBoardModel();
   TabController? _tabController;
@@ -39,6 +43,8 @@ class _HomeState extends State<HomePage> with TickerProviderStateMixin {
 
   @override
   void initState() {
+
+    _tabBarController = TabController(length: 2, vsync: this);
 
     _model.pageController.addListener(() {
       if(_model.activeIndex != _model.pageController){
@@ -248,6 +254,7 @@ class _HomeState extends State<HomePage> with TickerProviderStateMixin {
 
   @override
   void dispose() {
+    _tabBarController.dispose();
     super.dispose();
   }
 
@@ -260,7 +267,9 @@ class _HomeState extends State<HomePage> with TickerProviderStateMixin {
         onPageChanged: onPageChanged,
         pushReplacement: pushReplacement,
         queryCType: queryCType,
-        cTypeModel: cTypeModel
+        cTypeModel: cTypeModel,
+        tabBarController: _tabBarController,
+        selectedColor: _selectedColor,
         // dashModel: _dashBoardM,
         // onTab: onTab,
         // tabController: _tabController,

@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:http/http.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:provider/provider.dart';
@@ -62,128 +64,117 @@ class QrScannerState extends State<QrScanner> with SingleTickerProviderStateMixi
 
   @override
   Widget build(BuildContext context) {
-    final isDarkTheme = Provider.of<ThemeProvider>(context).isDark;
     return Scaffold(
+      appBar: AppBar(
+        elevation: 0,
+        leading: IconButton(
+          icon: const Icon(
+            Iconsax.arrow_left_2,
+            color: Colors.black,
+          ),
+          onPressed: () => Navigator.pop(context),
+        ),
+        title: MyText(
+          text: "Digital Scan",
+          fontSize: 18,
+          color: AppColors.newText,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
       body: BodyScaffold(
         physic: const NeverScrollableScrollPhysics(),
         height: MediaQuery.of(context).size.height,
         bottom: 0,
         child: Column(
           children: [
-            MyAppBar(
-              title: "Scanning",
-              color: isDarkTheme
-                ? hexaCodeToColor(AppColors.darkBgd).withOpacity(0)
-                : hexaCodeToColor(AppColors.whiteHexaColor),
-              onPressed: () {
-                Navigator.pop(context);
-              },
-            ),
             Expanded(
-              child: MobileScanner(
-                fit: BoxFit.contain,
-                // allowDuplicates: false,
-                onDetect: (barcode, args) {
-                  setState(() {
-                    this.barcode = barcode.rawValue;
-                    
-                    final String? barcodeData = this.barcode;
+              child: Stack(
+                children: [
+                  MobileScanner(
+                    // fit: BoxFit.contain,
+                    onDetect: (barcode, args) {
+                      setState(() {
+                        this.barcode = barcode.rawValue;
+                        
+                        final String? barcodeData = this.barcode;
+                
+                        Navigator.pop(context, barcodeData);
+                
+                        // if(decode["id"] == null) {
+                        //   showDialog(
+                        //     context: context,
+                        //     builder: (context) => AlertDialog(
+                        //       title: Text("Error"),
+                        //       content: Text("Invalid QR Code"),
+                        //       actions: [
+                        //         FlatButton(
+                        //           child: Text("OK"),
+                        //           onPressed: () async{
+                        //             // await client.signTransaction(
+                        //             //   credentials, 
+                        //             //   transaction
+                        //             // )
+                        //             // await client.signTransaction(
+                        //             //   credentials,
+                        //             //   Transaction(
+                        //             //     to: EthereumAddress.fromHex('0xC914Bb2ba888e3367bcecEb5C2d99DF7C7423706'),
+                        //             //     gasPrice: EtherAmount.inWei(BigInt.one),
+                        //             //     maxGas: 100000,
+                        //             //     value: EtherAmount.fromUnitAndValue(EtherUnit.ether, 1),
+                        //             //   ),
+                        //             // );
+                
+                        //             await client.dispose();
+                
+                        //             Navigator.pop(context);
+                        //           },
+                        //         )
+                        //       ],
+                        //     ),
+                        //   );
+                        // } 
+                        // else{
+                        //   showDialog(
+                        //     context: context,
+                        //     builder: (context) => AlertDialog(
+                        //       title: Text("Error"),
+                        //       content: Text("Valid QR Code"),
+                        //       actions: [
+                        //         FlatButton(
+                        //           child: Text("OK"),
+                        //           onPressed: () {
+                
+                        //             Navigator.pop(context);
+                        //           },
+                        //         )
+                        //       ],
+                        //     ),
+                        //   );
+                        // }
+                      });
+                    },
+                  ),
 
-                    Navigator.pop(context, barcodeData);
-
-                    // if(decode["id"] == null) {
-                    //   showDialog(
-                    //     context: context,
-                    //     builder: (context) => AlertDialog(
-                    //       title: Text("Error"),
-                    //       content: Text("Invalid QR Code"),
-                    //       actions: [
-                    //         FlatButton(
-                    //           child: Text("OK"),
-                    //           onPressed: () async{
-                    //             // await client.signTransaction(
-                    //             //   credentials, 
-                    //             //   transaction
-                    //             // )
-                    //             // await client.signTransaction(
-                    //             //   credentials,
-                    //             //   Transaction(
-                    //             //     to: EthereumAddress.fromHex('0xC914Bb2ba888e3367bcecEb5C2d99DF7C7423706'),
-                    //             //     gasPrice: EtherAmount.inWei(BigInt.one),
-                    //             //     maxGas: 100000,
-                    //             //     value: EtherAmount.fromUnitAndValue(EtherUnit.ether, 1),
-                    //             //   ),
-                    //             // );
-
-                    //             await client.dispose();
-
-                    //             Navigator.pop(context);
-                    //           },
-                    //         )
-                    //       ],
-                    //     ),
-                    //   );
-                    // } 
-                    // else{
-                    //   showDialog(
-                    //     context: context,
-                    //     builder: (context) => AlertDialog(
-                    //       title: Text("Error"),
-                    //       content: Text("Valid QR Code"),
-                    //       actions: [
-                    //         FlatButton(
-                    //           child: Text("OK"),
-                    //           onPressed: () {
-
-                    //             Navigator.pop(context);
-                    //           },
-                    //         )
-                    //       ],
-                    //     ),
-                    //   );
-                    // }
-                  });
-                },
-              ),
-              // child: QRView(
-              //   key: qrKey,
-              //   onQRViewCreated: (QRViewController qrView) async {
-              //     await _onQrViewCreated(qrView);
-              //   },
-              //   overlay: QrScannerOverlayShape(
-              //     borderRadius: 10,
-              //     borderWidth: 10,
-              //   ),
-              // )
-            ),
-
-            Align(
-              alignment: Alignment.bottomCenter,
-              child: Container(
-                alignment: Alignment.bottomCenter,
-                height: 100,
-                color: Colors.black.withOpacity(0.4),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Center(
-                      child: SizedBox(
-                        width: MediaQuery.of(context).size.width - 50,
-                        height: 50,
-                        child: FittedBox(
-                          child: Text(
-                            barcode ?? 'Scan something!',
-                            overflow: TextOverflow.fade,
-                            style: Theme.of(context)
-                                .textTheme
-                                .headline4!
-                                .copyWith(color: Colors.white),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
+                  // BackdropFilter(
+                  //   filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
+                  //   child: Center(
+                  //     child: Card(
+                  //       elevation: 10,
+                  //       color: Colors.black.withOpacity(0.5),
+                  //       child: const SizedBox(
+                  //         width: 300,
+                  //         height: 200,
+                  //         child: Center(
+                  //           child: Text(
+                  //             'Some Text',
+                  //             style: TextStyle(fontSize: 30, color: Colors.white),
+                  //           ),
+                  //         ),
+                  //       ),
+                  //     ),
+                  //   ),
+                  // ),
+                ],
               ),
             ),
           ],

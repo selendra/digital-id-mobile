@@ -24,6 +24,8 @@ class HomeBody extends StatelessWidget {
   final CTypeModel? cTypeModel;
   final Function(int index)? onPageChanged;
   final Function? queryCType;
+  final TabController? tabBarController;
+  final Color? selectedColor;
 
   const HomeBody({ 
     Key? key, 
@@ -31,7 +33,9 @@ class HomeBody extends StatelessWidget {
     this.onPageChanged,
     this.pushReplacement,
     this.cTypeModel,
-    this.queryCType
+    this.queryCType,
+    this.tabBarController,
+    this.selectedColor
   }) : super(key: key);
 
   final double tabBarHeight = 55;
@@ -92,7 +96,6 @@ class HomeBody extends StatelessWidget {
         controller: homePageModel!.pageController,
         onPageChanged: onPageChanged,
         children: [
-      
           // DiscoverPage(homePageModel: homePageModel!),
       
           AssetsPage(homePageControl: homePageModel!.pageController,),
@@ -101,52 +104,106 @@ class HomeBody extends StatelessWidget {
             builder: (context, provider, widget){
         
               return Container(
-                padding: EdgeInsets.symmetric(horizontal: paddingSize),
                 child: SingleChildScrollView(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(horizontal: paddingSize),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
 
-                      // Align(
-                      //   alignment: Alignment.topLeft,
-                      //   child: MyText(
-                      //     textAlign: TextAlign.start,
-                      //     text: "Other organization:",
-                      //     fontSize: 18,
-                      //     width: 55.w,
-                      //   ),
-                      // ),
+                        // Align(
+                        //   alignment: Alignment.topLeft,
+                        //   child: MyText(
+                        //     textAlign: TextAlign.start,
+                        //     text: "Other organization:",
+                        //     fontSize: 18,
+                        //     width: 55.w,
+                        //   ),
+                        // ),
 
-                      // OrgCardComponent(),
-                    
-                      // if (KYCDocs().data.isEmpty)
-                      //   Center(
-                      //     child: MyText(
-                      //       text: "No document has setup",
-                      //       fontSize: 20,
-                      //       width: 55.w,
-                      //       color2: Colors.white,
-                      //     ),
-                      //   )                        
-                    
-                      for(int i = 0; i < KYCDocs().data.length; i++)
-                        CardDocument(data: KYCDocs().data[i], isDetail: false,),
-                    
-                      if (KYCDocs().data.isEmpty)
-                        SizedBox(height: paddingSize,),
-                    
-                      CustomButtonIcon(
-                        onPressed: () async => {
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => SetUpKYC()))
-                        },
-                        text: 'Setup Document',
-                        icon: Icon(Iconsax.arrow_right_3),
-                        colorBtn: hexaCodeToColor(AppColors.newPrimary),
-                        colorText: hexaCodeToColor(AppColors.whiteColor),
-                        bold: true,
-                      ),
+                        // OrgCardComponent(),
+                      
+                        // if (KYCDocs().data.isEmpty)
+                        //   Center(
+                        //     child: MyText(
+                        //       text: "No document has setup",
+                        //       fontSize: 20,
+                        //       width: 55.w,
+                        //       color2: Colors.white,
+                        //     ),
+                        //   )                        
+                        Container(
+                          height: kToolbarHeight - 8.0,
+                          padding: EdgeInsets.all(5),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(20.0),
+                          ),
+                          child: TabBar(
+                            controller: tabBarController,
+                            indicator: BoxDecoration(
+                              borderRadius: BorderRadius.circular(20.0),
+                              color: selectedColor!.withOpacity(0.2),
+                            ),
+                            labelColor: selectedColor,
+                            unselectedLabelColor: hexaCodeToColor("#D9D9D9"),
+                            tabs: ["Pending", "Approved"].map((e) => Tab(
+                              text: e,
+                            )).toList(),
+                          ),
+                        ),
 
-                    ],
+                        // TabBarView(
+                        //   controller: tabBarController,
+                        //   children: [
+                        //     CustomButtonIcon(
+                        //       onPressed: () async => {
+                        //         Navigator.push(context, MaterialPageRoute(builder: (context) => SetUpKYC()))
+                        //       },
+                        //       text: 'Pending',
+                        //       icon: Icon(Iconsax.arrow_right_3),
+                        //       colorBtn: hexaCodeToColor(AppColors.newPrimary),
+                        //       colorText: hexaCodeToColor(AppColors.whiteColor),
+                        //       bold: true,
+                        //     ),
+
+                        //     CustomButtonIcon(
+                        //       onPressed: () async => {
+                        //         Navigator.push(context, MaterialPageRoute(builder: (context) => SetUpKYC()))
+                        //       },
+                        //       text: 'Approved',
+                        //       icon: Icon(Iconsax.arrow_right_3),
+                        //       colorBtn: hexaCodeToColor(AppColors.newPrimary),
+                        //       colorText: hexaCodeToColor(AppColors.whiteColor),
+                        //       bold: true,
+                        //     ),
+
+
+                        //     // for(int i = 0; i < KYCDocs().data.length; i++)
+                        //     //   CardDocument(data: KYCDocs().data[i], isDetail: false,),
+                      
+                        //   ],
+                        // ),
+
+                        for(int i = 0; i < KYCDocs().data.length; i++)
+                          CardDocument(data: KYCDocs().data[i], isDetail: false,),
+                      
+                        // if (KYCDocs().data.isEmpty)
+                        //   SizedBox(height: paddingSize,),
+                      
+                        // CustomButtonIcon(
+                        //   onPressed: () async => {
+                        //     Navigator.push(context, MaterialPageRoute(builder: (context) => SetUpKYC()))
+                        //   },
+                        //   text: 'Setup Document',
+                        //   icon: Icon(Iconsax.arrow_right_3),
+                        //   colorBtn: hexaCodeToColor(AppColors.newPrimary),
+                        //   colorText: hexaCodeToColor(AppColors.whiteColor),
+                        //   bold: true,
+                        // ),
+
+                      ],
+                    ),
                   )
                 ),
               );
@@ -156,6 +213,14 @@ class HomeBody extends StatelessWidget {
           Container()
       
         ],
+      ),
+
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.push(context, MaterialPageRoute(builder: (context) => SetUpKYC()));
+        },
+        child: Icon(Iconsax.add_circle, color: Colors.white, size: 9.w,),
+        backgroundColor: hexaCodeToColor(AppColors.newPrimary),
       ),
     );
   }
