@@ -42,7 +42,7 @@ class MenuBody extends StatelessWidget {
         // ),
 
         MyListTile(
-          icon: Icon(Iconsax.note_2, color: Colors.white, size: 22.5.sp),
+          icon: Icon(Iconsax.note_2, color: hexaCodeToColor(AppColors.textColor), size: 22.5.sp),
           index: 1,
           subIndex: 0,
           onTap: () {
@@ -51,7 +51,7 @@ class MenuBody extends StatelessWidget {
         ),
 
         MyListTile(
-          icon: Icon(Iconsax.wallet_check, color: Colors.white, size: 22.5.sp),
+          icon: Icon(Iconsax.wallet_check, color: hexaCodeToColor(AppColors.textColor), size: 22.5.sp),
           index: 1,
           subIndex: 1,
           onTap: () {
@@ -117,7 +117,7 @@ class MenuBody extends StatelessWidget {
         // ),
 
         MyListTile(
-          icon: Icon(Iconsax.finger_scan, color: Colors.white, size: 22.5.sp),
+          icon: Icon(Iconsax.finger_scan, color: hexaCodeToColor(AppColors.textColor), size: 22.5.sp),
           enable: false,
           index: 3,
           subIndex: 1,
@@ -130,17 +130,17 @@ class MenuBody extends StatelessWidget {
           onTap: null,
         ),
 
-        const MenuSubTitle(index: 5),
+        // const MenuSubTitle(index: 5),
 
-        MyListTile(
-          icon: Icon(Iconsax.people, color: Colors.white, size: 22.5.sp),
-          index: 5,
-          subIndex: 0,
-          onTap: () async {
-            Navigator.push(context, Transition(child: About(), transitionEffect: TransitionEffect.RIGHT_TO_LEFT));
-            //_launchInBrowser('https://selendra.com/privacy');
-          },
-        ),
+        // MyListTile(
+        //   icon: Icon(Iconsax.people, color: Colors.white, size: 22.5.sp),
+        //   index: 5,
+        //   subIndex: 0,
+        //   onTap: () async {
+        //     Navigator.push(context, Transition(child: About(), transitionEffect: TransitionEffect.RIGHT_TO_LEFT));
+        //     //_launchInBrowser('https://selendra.com/privacy');
+        //   },
+        // ),
       ],
     );
   }

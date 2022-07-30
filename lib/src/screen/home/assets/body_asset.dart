@@ -137,7 +137,6 @@ class AssetsPageBody extends StatelessWidget {
                   ),
                 ],
               ),
-              SizedBox(height: paddingSize,),
               Consumer<ApiProvider>(
                 builder: (context, value, child) {
                   return Row(
@@ -414,8 +413,9 @@ class AssetsPageBody extends StatelessWidget {
                         color: AppColors.whiteColorHexa,
                         fontWeight: FontWeight.w700,
                       ),
+                      SizedBox(width: 10.sp,),
 
-                      Icon(Iconsax.export, color: hexaCodeToColor(AppColors.whiteColorHexa)),
+                      Icon(Iconsax.export, color: hexaCodeToColor(AppColors.whiteColorHexa), size: 18.sp,),
                       
                     ],
                   ),
@@ -444,10 +444,11 @@ class AssetsPageBody extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
           
                 children: [
-                  Icon(Iconsax.import, color: hexaCodeToColor(AppColors.whiteColorHexa)),
+                  Icon(Iconsax.import, color: hexaCodeToColor(AppColors.whiteColorHexa), size: 18.sp),
 
+                  SizedBox(width: 10.sp,),
                   MyText(
-                    text: "Receieve",
+                    text: "Receive",
                     color: AppColors.whiteColorHexa,
                     fontWeight: FontWeight.w700,
                   ),
@@ -480,6 +481,7 @@ class AssetsPageBody extends StatelessWidget {
       itemBuilder: (BuildContext context, int index) {
         return Row(
           children: [
+
             CategoryCard(
               index: index,
               title: model!.categories![index],

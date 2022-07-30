@@ -178,6 +178,7 @@ class AppConfig {
   static String imagePath = "assets/images/";
 
   static String mandatory = "assets/json/mandatory.json";
+  static String selendra_id = "assets/json/selendra_id.json";
   static String popular = "assets/json/popular.json";
   static String issuer = "assets/json/issuer.json";
 

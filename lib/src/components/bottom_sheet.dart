@@ -279,6 +279,7 @@ class MyBottomSheet {
                   ),
                 ],
               ),
+              
               Column(
                 children: [
                   InkWell(

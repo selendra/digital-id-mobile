@@ -8,10 +8,12 @@ class DocumentProvider extends ChangeNotifier{
   String? title;
 
   Map<String, dynamic>? mandotary;
+  Map<String, dynamic>? selendra;
   Map<String, dynamic>? popular;
   Map<String, dynamic>? issuer;
 
   // List Properties
+  List<dynamic>? selendraID = [];
   List<dynamic>? lsMandotaryProp = [];
   List<dynamic>? lsPopularProp = [];
   List<dynamic>? lsIssuerProp = [];
@@ -133,6 +135,22 @@ class DocumentProvider extends ChangeNotifier{
         'formController': TextEditingController(),
         'focusNode': FocusNode(),
         'type': value['type']
+      });
+    });
+
+    final myJson = await rootBundle.loadString(AppConfig.selendra_id);
+    selendra = json.decode(myJson);
+    print("Init selendra ${selendra!['properties']}");
+    Map<String, dynamic>.from(selendra!['properties']).forEach((key, value) {
+      print("value['editable'] ${value['editable']}");
+      selendraID!.add({
+        'key': key,
+        'value': value,
+        'formController': TextEditingController(),
+        'focusNode': FocusNode(),
+        'type': value['type'],
+        'editable': value['editable'],
+        'description': value['description']
       });
     });
 

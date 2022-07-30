@@ -391,9 +391,9 @@ class MyBottomAppBar extends StatelessWidget {
             // ),
             Expanded(
               child: MyIconButton(
-                child: Icon(Iconsax.wallet_check, size: iconSize, color: hexaCodeToColor(index == 0 ? AppColors.primary : AppColors.textColor)),
+                child: Icon(Iconsax.wallet_check, size: iconSize, color: hexaCodeToColor(index == 0 ? AppColors.primary : AppColors.greyCode)),
                 title: "Wallet",
-                txtColor: index == 0 ? AppColors.primary : AppColors.textColor,
+                txtColor: index == 0 ? AppColors.primary : AppColors.greyCode,
                 isActive: index == 0 ? true : false,
                 onPressed: () {
                   onIndexChanged!(0);
@@ -404,9 +404,9 @@ class MyBottomAppBar extends StatelessWidget {
 
             Expanded(
               child: MyIconButton(
-                child: Icon(Iconsax.home, size: iconSize, color: hexaCodeToColor(index == 1 ? AppColors.primary : AppColors.textColor)),
+                child: Icon(Iconsax.home, size: iconSize, color: hexaCodeToColor(index == 1 ? AppColors.primary : AppColors.greyCode)),
                 title: "Docs",
-                txtColor: index == 1 ? AppColors.primary : AppColors.textColor,
+                txtColor: index == 1 ? AppColors.primary : AppColors.greyCode,
                 isActive: index == 1 ? true : false,
                 onPressed: () {
                   // Navigator.push(context, RouteAnimation(enterPage: HomePage()));
@@ -428,9 +428,9 @@ class MyBottomAppBar extends StatelessWidget {
 
             Expanded(
               child: MyIconButton(
-                child: Icon(Iconsax.setting, size: iconSize, color: hexaCodeToColor(index == 2 ? AppColors.primary : AppColors.textColor)),
+                child: Icon(Iconsax.setting, size: iconSize, color: hexaCodeToColor(index == 2 ? AppColors.primary : AppColors.greyCode)),
                 title: "Account",
-                txtColor: index == 2 ? AppColors.primary : AppColors.textColor,
+                txtColor: index == 2 ? AppColors.primary : AppColors.greyCode ,
                 isActive: index == 2 ? true : false,
                 onPressed: () {
                   underContstuctionAnimationDailog(context: context);

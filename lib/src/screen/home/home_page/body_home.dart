@@ -14,6 +14,7 @@ import 'package:wallet_apps/src/models/kyc_content_m.dart';
 import 'package:wallet_apps/src/provider/documents_p.dart';
 import 'package:wallet_apps/src/provider/home_p.dart';
 import 'package:wallet_apps/src/screen/home/assets/assets.dart';
+import 'package:wallet_apps/src/screen/home/createid/create_id.dart';
 import 'package:wallet_apps/src/screen/home/id_detail/id_detail.dart';
 import 'package:wallet_apps/src/screen/home/kyc/setup_kyc.dart';
 
@@ -176,7 +177,13 @@ class HomeBody extends StatelessWidget {
                     // textColor: AppColors.whiteColor,
                     buttonColor: AppColors.newPrimary,
                     action: () {
-                      Navigator.pop(context);
+                      // MyBottomSheet().createIDBottomSheet(context, Provider.of<DocumentProvider>(context, listen: false).selendraID!);
+                      Provider.of<DocumentProvider>(context, listen: false).title = "Selendra ID";
+                      Navigator.push(
+                        context, 
+                        MaterialPageRoute(builder: (context) => CreateID(docs: Provider.of<DocumentProvider>(context, listen: false).selendraID!))
+                      );
+                      // Navigator.push(context, MaterialPageRoute(builder: (context) => SetUpKYC()));
                     },
                   ),
                 ],

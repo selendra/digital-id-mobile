@@ -9,6 +9,7 @@ import 'package:wallet_apps/src/constants/db_key_con.dart';
 import 'package:wallet_apps/src/models/digital_id_m.dart';
 import 'package:wallet_apps/src/models/kyc_content_m.dart';
 import 'package:wallet_apps/src/provider/digital_id_p.dart';
+import 'package:wallet_apps/src/provider/documents_p.dart';
 import 'package:wallet_apps/src/provider/home_p.dart';
 import 'package:wallet_apps/src/screen/home/home/body_home.dart';
 import 'package:wallet_apps/src/screen/home/home_page/body_home.dart';
@@ -74,7 +75,16 @@ class _HomeState extends State<HomePage> with TickerProviderStateMixin {
     // initBlockchainData();
     initDigitalId();
 
+    fetchSelendraID();
+
     super.initState();
+  }
+
+  void fetchSelendraID() async {
+    await StorageServices.fetchData(DbKey.selendraID).then((value) {
+      if (value != null) _model.isSelendraID = value;
+      else Provider.of<DocumentProvider>(context, listen: false).initJson();
+    });
   }
 
   void onPageChanged(int index){
