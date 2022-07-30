@@ -72,11 +72,10 @@ class CTypeModel {
   }
 
   cTypePropertiesFilter(Map<String, dynamic> ls){
-    print("cTypePropertiesFilter ls['properties'] ${ls['properties']['name']}");
     List<dynamic> tmp = ls['properties'].toString().split(", ");
 
     tmp.forEach((element) {
-      print("element ${element}");
+      // print("element ${element}");
       // cTypeProperties!.add(
       //   element
       // );

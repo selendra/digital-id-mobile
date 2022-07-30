@@ -28,6 +28,7 @@ class HomeBody extends StatelessWidget {
   final TabController? tabBarController;
   final Color? selectedColor;
   final Function? scanLogin;
+  final Function? deleteAccount;
 
   const HomeBody({ 
     Key? key, 
@@ -39,6 +40,7 @@ class HomeBody extends StatelessWidget {
     this.tabBarController,
     this.selectedColor,
     this.scanLogin,
+    this.deleteAccount
   }) : super(key: key);
 
   final double tabBarHeight = 55;
@@ -61,8 +63,9 @@ class HomeBody extends StatelessWidget {
             Iconsax.profile_circle,
             color: hexaCodeToColor(AppColors.secondary),
           ),
-          onPressed: () {
-            homePageModel!.globalKey!.currentState!.openDrawer();
+          onPressed: () async {
+            await deleteAccount!();
+            // homePageModel!.globalKey!.currentState!.openDrawer();
           },
         ),
         actions: <Widget>[
@@ -191,7 +194,7 @@ class HomeBody extends StatelessWidget {
             }
           ),
       
-          Container()
+          Account()
       
         ],
       ),

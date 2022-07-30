@@ -35,15 +35,18 @@ class IdDetailBody extends StatelessWidget {
       ),
       body: Padding(
         padding: const EdgeInsets.all(paddingSize),
-        child: Column(
-          children: [
-
-            CardDocument(data: data!, isDetail: true,),
-
-            SizedBox(height: paddingSize*2),
-
-            _cardInformation(context),
-          ],
+        child: SingleChildScrollView(
+          physics: BouncingScrollPhysics(),
+          child: Column(
+            children: [
+        
+              CardDocument(data: data!, isDetail: true, margin: EdgeInsets.zero,),
+        
+              SizedBox(height: paddingSize*2),
+        
+              _cardInformation(context),
+            ],
+          ),
         ),
       ),
     );
@@ -310,6 +313,20 @@ class IdDetailBody extends StatelessWidget {
           textAlign: TextAlign.start,
           // width: MediaQuery.of(context).size.width / 1.5,
           text: data!['identity'],
+          color: AppColors.textColor,
+          bottom: paddingSize*2,
+        ),
+
+        MyText(
+          text: 'Expired Date: ',
+          fontWeight: FontWeight.bold,
+          color: AppColors.textColor,
+          bottom: paddingSize,
+        ),
+        MyText(
+          textAlign: TextAlign.start,
+          // width: MediaQuery.of(context).size.width / 1.5,
+          text: data!['expired_date'],
           color: AppColors.textColor,
           bottom: paddingSize*2,
         ),

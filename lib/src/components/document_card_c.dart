@@ -7,11 +7,13 @@ class CardDocument extends StatelessWidget{
 
   final bool? isDetail;
 
-  CardDocument({required this.data, required this.isDetail});
+  final EdgeInsets? margin;
+
+  CardDocument({required this.data, required this.isDetail, this.margin = const EdgeInsets.symmetric(horizontal: paddingSize)});
   
   Widget build(BuildContext context){
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: paddingSize),
+      margin: margin,
       child: Column(
         children: [
     
@@ -67,7 +69,7 @@ class CardDocument extends StatelessWidget{
                                   
                                     MyText(
                                       textAlign: TextAlign.start,
-                                      text: 'National ID',
+                                      text: data!['type'],
                                       fontSize: 16,
                                       fontWeight: FontWeight.bold,
                                       
@@ -162,7 +164,7 @@ class CardDocument extends StatelessWidget{
                                           fontSize: 14,
                                           textAlign: TextAlign.start,
                                           // width: MediaQuery.of(context).size.width / 1.5,
-                                          text: '${data!['address']}',
+                                          text: '${data!['expired_date']}',
                                           
                                           overflow: TextOverflow.ellipsis,
                                         ),
