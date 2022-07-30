@@ -85,7 +85,8 @@ dependencies:
   share:
 
   vibration: ^1.7.4-nullsafety.0
- 
+  
+  flip_card: ^0.6.0
   # flutter pub global activate rename
   # flutter pub global run rename --bundleId com.onatcipli.networkUpp
   # flutter pub global run rename --appname "Network Upp"

@@ -1,3 +1,4 @@
+import 'package:flip_card/flip_card.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:wallet_apps/index.dart';
 import 'package:wallet_apps/src/components/dialog_c.dart';
@@ -40,7 +41,14 @@ class IdDetailBody extends StatelessWidget {
           child: Column(
             children: [
         
-              CardDocument(data: data!, isDetail: true, margin: EdgeInsets.zero,),
+              FlipCard(
+                direction: FlipDirection.HORIZONTAL,
+                front: CardDocument(data: data!, isDetail: true, margin: EdgeInsets.zero,),
+                back: ClipRRect(
+                  borderRadius: BorderRadius.circular(18.0),
+                  child: Image.network("https://www.identity-cards.net/sites/default/files/Cambodia%20ID.jpg")
+                )
+              ),
         
               SizedBox(height: paddingSize*2),
         
