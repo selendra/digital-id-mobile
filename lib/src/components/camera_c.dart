@@ -86,7 +86,6 @@ SystemChrome.setPreferredOrientations(orientation == Orientation.portrait
     return FutureBuilder<void>(
       future: _initializeControllerFuture,
       builder: (context, snapshot) {
-        print("snapshot.connectionState ${snapshot.connectionState}");
         if (snapshot.connectionState == ConnectionState.done) {
           // If the Future is complete, display the preview.
           return Stack(

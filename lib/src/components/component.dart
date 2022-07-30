@@ -159,9 +159,10 @@ class MyFlatButton extends StatelessWidget {
       padding: edgePadding,
       margin: edgeMargin,
       width: width,
-      height: 6.h,
+      height: height ?? 6.h,
 
-      decoration: BoxDecoration(borderRadius: BorderRadius.circular(size8), 
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(size18), 
         boxShadow: [
           if (hasShadow!)
             BoxShadow(
@@ -183,7 +184,7 @@ class MyFlatButton extends StatelessWidget {
         color: isTransparent! ? Colors.transparent : hexaCodeToColor(buttonColor!),
         disabledColor: isDarkTheme ? Colors.grey.shade700 : Colors.grey.shade400,
         focusColor: hexaCodeToColor(AppColors.secondary),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(size18)),
         child: MyText(
           text: textButton!,
           color: textColor!,

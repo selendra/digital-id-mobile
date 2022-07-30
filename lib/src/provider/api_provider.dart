@@ -49,7 +49,7 @@ class ApiProvider with ChangeNotifier {
 
   String? _jsCode;
 
-  bool isMainnet = true;
+  bool isMainnet = false;
   bool isDebug = true;
   
   int selNativeIndex = 0;
@@ -309,16 +309,9 @@ class ApiProvider with ChangeNotifier {
       }
     });
 
-    print("balance_list: ${balance_list}");
-    print("balance_list length: ${balance_list.length}");
-    
-
     total = balance_list.reduce((a, b) => a + b);;
 
-
     contract.totalAmount = total;
-  
-    print("total: ${contract.totalAmount}");
   }
 
   Future<void> getBtcBalance({@required BuildContext? context}) async {
@@ -428,8 +421,8 @@ class ApiProvider with ChangeNotifier {
       NetworkParams? res = NetworkParams();
 
       node.name = 'Indranet hosted By Selendra';
-      node.endpoint = AppConfig.networkList[0].wsUrlMN;// isMainnet ? AppConfig.networkList[0].wsUrlMN : AppConfig.networkList[0].wsUrlTN;
-      node.ss58 = AppConfig.networkList[0].ss58MN;// isMainnet ? AppConfig.networkList[0].ss58MN : AppConfig.networkList[0].ss58;
+      node.endpoint = isMainnet ? AppConfig.networkList[0].wsUrlMN : AppConfig.networkList[0].wsUrlTN;
+      node.ss58 = isMainnet ? AppConfig.networkList[0].ss58MN : AppConfig.networkList[0].ss58;
 
       await _sdk.api.connectNode(_keyring, [node]).then((value) async {
         res = value;

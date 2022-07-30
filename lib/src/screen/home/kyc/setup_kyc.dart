@@ -4,7 +4,10 @@ import 'package:wallet_apps/src/provider/documents_p.dart';
 import 'package:wallet_apps/src/screen/home/kyc/body_setup_kyc.dart';
 
 class SetUpKYC extends StatefulWidget {
-  const SetUpKYC({Key? key}) : super(key: key);
+
+  final bool? isSelendraID;
+
+  SetUpKYC({Key? key, this.isSelendraID}) : super(key: key);
 
   @override
   State<SetUpKYC> createState() => _SetUpKYCState();

@@ -24,7 +24,7 @@ class MenuHeader extends StatelessWidget {
       padding: EdgeInsets.symmetric(horizontal: 3.w, vertical: 2.h),
       margin:  EdgeInsets.symmetric(horizontal: 3.w, vertical: 2.h),
       decoration: BoxDecoration(
-        color: hexaCodeToColor("#114463"),
+        color: Colors.white,//hexaCodeToColor("#114463"),
         borderRadius: BorderRadius.circular(12),
       ),
       child: Consumer<ApiProvider>(
@@ -120,20 +120,21 @@ class MenuSubTitle extends StatelessWidget {
       padding: const EdgeInsets.only(left: 16.0, top: 16, bottom: 8),
       // color: isDarkTheme
       //   ? hexaCodeToColor(AppColors.whiteColorHexa).withOpacity(0.06)
-      //   : Colors.grey[200],
+      //   : hexaCodeToColor(AppColors.textColor),
       height: 55,
       width: double.infinity,
       alignment: Alignment.centerLeft,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
+          
           Row(
             children: [
               Align(
                 alignment: Alignment.centerLeft,
                 child: MyText(
                   text: MenuModel.listTile[index!]['title'].toString(),
-                  color: "#D4D6E3",
+                  color: AppColors.textColor,
                   textAlign: TextAlign.start,
                   fontWeight: FontWeight.bold,
                 ),
@@ -141,7 +142,7 @@ class MenuSubTitle extends StatelessWidget {
               Expanded(
                 child: Divider(
                   thickness: 0.5,
-                  color: hexaCodeToColor("#D4D6E3"),
+                  color: hexaCodeToColor(AppColors.textColor),
                   indent: 10,
                 ),
               ),
@@ -178,7 +179,7 @@ class MyListTile extends StatelessWidget {
       onTap: onTap,
       leading: icon ?? Image.asset(
         MenuModel.listTile[index!]['sub'][subIndex]['icon'].toString(),
-        color: isDarkTheme ? Colors.white : Colors.black,
+        color: isDarkTheme ? Colors.white : hexaCodeToColor(AppColors.textColor),
         width: 22.5.sp,
         height: 22.5.sp
       ),

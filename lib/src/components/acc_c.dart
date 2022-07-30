@@ -17,7 +17,7 @@ class ListTileComponent extends StatelessWidget{
         alignment: Alignment.center,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(8),
-          color: hexaCodeToColor(AppColors.bluebgColor)
+          color: isDarkTheme ? hexaCodeToColor(AppColors.bluebgColor) : Colors.white
         ),
         height: 8.h,
         child: Padding(

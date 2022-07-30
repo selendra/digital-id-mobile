@@ -42,16 +42,18 @@ class CraeteIDBody extends StatelessWidget {
             child: ListView.builder(
               itemCount: docs!.length,
               shrinkWrap: true,
-              physics: NeverScrollableScrollPhysics(),
+              physics: BouncingScrollPhysics(),
               itemBuilder: (context, index){
                 return Column(
                   children: [
+
                     // Text(docs![index]['formController'].text),
                     MyInputField(
                       inputType: docs![index]['type'] == 'integer' ? TextInputType.number : TextInputType.text,
                       focusNode: docs![index]['focusNode'],
                       controller: docs![index]['formController'],
                       hintText: camelToSentence(docs![index]['key']),
+                      enableInput: docs![index]['editable'],
                       onChanged: (String value){
                         
                       },

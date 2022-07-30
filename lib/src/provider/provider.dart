@@ -23,22 +23,17 @@ class ContractsBalance extends ChangeNotifier {
         print("selTokenWallet");
         await contractProvider.selv2TokenWallet(context);
         print("selv2TokenWallet");
-        await contractProvider.ethWallet();
-        print("ethWallet");
-        await contractProvider.bnbWallet();
-        print("bnbWallet");
-        await contractProvider.kgoTokenWallet();
+        // await contractProvider.ethWallet();
+        // print("ethWallet");
+        // await contractProvider.bnbWallet();
+        // print("bnbWallet");
+        // await contractProvider.kgoTokenWallet();
         print("kgoTokenWallet");
-
-        //()[0]['current_price'].toString();
-        print(await Provider.of<MarketProvider>(context, listen: false).queryCoinFromMarket('ethereum'));
-        print(await Provider.of<MarketProvider>(context, listen: false).queryCoinFromMarket('usdt'));
         // if (apiProvider.isMainnet) await contractProvider.getBep20Balance(contractIndex: 8);
 
         // if(apiProvider.isMainnet == false) await Attendance().getAttBalance(context: context); // Disable For Mainnet
         // This Method Is Also Request Polkadot Contract
-        await apiProvider.getBtcBalance(context: context);
-        print("getBtcBalance");
+        // await apiProvider.getBtcBalance(context: context);
   //4
         /// Fetch and Fill Market Price Into Asset
         await Provider.of<MarketProvider>(context, listen: false).fetchTokenMarketPrice(context);

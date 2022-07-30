@@ -11,11 +11,11 @@ class MarketProvider with ChangeNotifier {
   List<Map<String, dynamic>>? lsCoin;
 
   List<String> id = [
-    'kiwigo',
-    'ethereum',
-    'binancecoin',
-    'polkadot',
-    'bitcoin',
+    // 'kiwigo',
+    // 'ethereum',
+    // 'binancecoin',
+    // 'polkadot',
+    // 'bitcoin',
     'selendra'
   ];
 

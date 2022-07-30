@@ -398,12 +398,14 @@ class ContractProvider with ChangeNotifier {
       
       // 1. Add Default Asset First
       listContract.forEach((element) {
-        // if (element.show!) 
-        // print("element.balance! ${element.balance!}");
-        if (element.marketPrice!.isNotEmpty) element.money = double.parse(element.balance!.replaceAll(",", "")) * double.parse(element.marketPrice!);
-        else element.money = 0.0;
-        mainBalance = mainBalance + element.money!;//double.parse(element.balance!.replaceAll(",", ""));
-        sortListContract.addAll({element});
+        if (element.show!){
+
+          // print("element.balance! ${element.balance!}");
+          if (element.marketPrice!.isNotEmpty) element.money = double.parse(element.balance!.replaceAll(",", "")) * double.parse(element.marketPrice!);
+          else element.money = 0.0;
+          mainBalance = mainBalance + element.money!;//double.parse(element.balance!.replaceAll(",", ""));
+          sortListContract.addAll({element});
+        } 
       });
 
       // 2. Add Imported Asset
@@ -912,7 +914,6 @@ class ContractProvider with ChangeNotifier {
     try {
 
       listContract[apiProvider.btcIndex].address = await StorageServices().readSecure(DbKey.bech32);
-      print("listContract[apiProvider.btcIndex].address ${listContract[apiProvider.btcIndex].address}");
       notifyListeners();
     } catch (e) {
       if (ApiProvider().isDebug) print("Error getEtherAddr $e");

@@ -66,7 +66,7 @@ class AppConfig {
     NetworkParams(
       httpUrlTN: 'https://rpc.testnet.selendra.org/',
       httpUrlMN: 'https://app.selendra.org/',
-      wsUrlTN: 'wss://rpc1-testnet.selendra.org/',
+      wsUrlTN: 'wss://rpc-testnet.selendra.org',
       wsUrlMN: 'wss://api-mainnet.selendra.org',
       ss58: 204,
       ss58MN: 972
@@ -172,7 +172,13 @@ class AppConfig {
   static String assetsPath = "assets/";
   static String animationPath = "assets/animation/";
 
+  static String iconPath = "assets/icons/";
+  static String illusPath = "assets/illustration/";
+  static String logoPath = "assets/logo/";
+  static String imagePath = "assets/images/";
+
   static String mandatory = "assets/json/mandatory.json";
+  static String selendra_id = "assets/json/selendra_id.json";
   static String popular = "assets/json/popular.json";
   static String issuer = "assets/json/issuer.json";
 
@@ -257,11 +263,6 @@ class PresaleConfig {
       "symbol": "ETH"
     }
   ];
-
-  static String iconPath = "assets/icons/";
-  static String illusPath = "assets/illustration/";
-  static String logoPath = "assets/logos/";
-  static String imagePath = "assets/images/";
   // static String mandatory = "assets/json/mandatory.json";
   // static String popular = "assets/json/popular.json";
   // static String issuer = "assets/json/issuer.json";

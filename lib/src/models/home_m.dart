@@ -44,5 +44,8 @@ class HomePageModel {
   PageController pageController = PageController(initialPage: 1);
   late int activeIndex;
   late int carouActiveIndex;
+
+  /// For Selendra ID
+  late bool? isSelendraID;
   late final Function(int index, CarouselPageChangedReason reason)? onCarouselChanged;
 }

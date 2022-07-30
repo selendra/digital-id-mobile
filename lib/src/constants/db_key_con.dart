@@ -17,6 +17,7 @@ class DbKey{
   static String bio = "bio_key";
   static String private = "private_key";
   static String btcwif = "btcwif_key";
+  static String selendraID = "selendra_id";
 
   static String txtHistory = "txthistory_key";
   

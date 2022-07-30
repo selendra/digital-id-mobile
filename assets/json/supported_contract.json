@@ -24,7 +24,7 @@
         "org_test": "BEP-20",
         "balance": "0.0",
         "isContain": true,
-        "show": false
+        "show": true
     },
     {
         "id": "selendra v2",
@@ -39,103 +39,5 @@
         "balance": "0.0",
         "isContain": true,
         "show": true
-    },
-    {
-        "id": "kiwigo",
-        "name": "KIWIGO",
-        "contract": "0x5d3AfBA1924aD748776E4Ca62213BF7acf39d773",
-        "contract_test": "",
-        "address": "",
-        "logo": "assets/Kiwi-GO-White-1.png",
-        "symbol": "KGO",
-        "org": "BEP-20",
-        "org_test": "BEP-20",
-        "balance": "0.0",
-        "isContain": true,
-        "show": true
-    },
-    {
-        "id": "ethereum",
-        "name": "Ethereum",
-        "contract": "0x2170ed0880ac9a755fd29b2688956bd959f933f8",
-        "contract_test": "",
-        "address": "",
-        "logo": "assets/eth.png",
-        "symbol": "ETH",
-        "org": "",
-        "org_test": "",
-        "balance": "0.0",
-        "show": true,
-        "isContain": true
-    },
-    {
-        "id": "binance smart chain",
-        "name": "Binance Coin",
-        "contract": "",
-        "contract_test": "",
-        "address": "",
-        "logo": "assets/logo/bnb.png",
-        "symbol": "BNB",
-        "org": "Smart Chain",
-        "org_test": "",
-        "balance": "0.0",
-        "show": true,
-        "isContain": true
-    },
-    {
-        "id": "polkadot",
-        "symbol": "DOT",
-        "name": "Polkadot",
-        "contract": "",
-        "contract_test": "",
-        "address": "",
-        "logo": "assets/icons/polkadot.png",
-        "org": "",
-        "org_test": "BEP-20",
-        "balance": "0.0",
-        "show": true,
-        "isContain": true
-    },
-    {
-        "id": "bitcoin",
-        "symbol": "BTC",
-        "name": "Bitcoin",
-        "contract": "",
-        "contract_test": "",
-        "address": "",
-        "logo": "assets/logo/btc_logo.png",
-        "org": "",
-        "org_test": "",
-        "balance": "0.0",
-        "show": true,
-        "isContain": true
-    },
-    {
-        "id": "rikreay",
-        "symbol": "REKREAY",
-        "name": "Rekreay",
-        "contract": "0x9B71571dd5967878356Cab2Bb2E860Fa81Ce46f0",
-        "contract_test": "",
-        "address": "",
-        "logo": "assets/logo/rekreay.jpeg",
-        "org": "BEP-20",
-        "org_test": "BEP-20",
-        "balance": "0.0",
-        "show": true,
-        "isContain": true
-    },
-    {
-        "id": "attendant",
-        "name": "ATTENDANT",
-        "contract": "",
-        "contract_test": "0xF3a8002d76Acff8162A95892f7d6C8a7963Eed26",
-        "address": "",
-        "logo": "assets/attd_fingerprint.png",
-        "symbol": "ATT",
-        "org": "BEP-20",
-        "balance": "0.0",
-        "org_test": "BEP-20",
-        "show": false,
-        "isContain": true
     }
 ]

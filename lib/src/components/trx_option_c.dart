@@ -115,7 +115,6 @@ class TrxOptionMethod {
     bool pushReplacement,
   ) async {
     final data = await Navigator.push(context, Transition(child: QrScanner(), transitionEffect: TransitionEffect.RIGHT_TO_LEFT));
-    print("data data $data");
     return data;
   }
 }

@@ -12,45 +12,8 @@ class KYCDocs {
   static List<CustomButtonCard>? lsIssuer = [];
 
   List<Map<String, dynamic>> data = [];
-
-  KYCDocs(){
-
-    data = [
-      {
-        "type": "National ID",
-        "id": "1233452423",
-        "name": "Sam Allen",
-        "dob": "09.02.2000",
-        "address": "Tik L'lork, Toul Kork, Phnom Penh",
-        "status": "verifying",
-        "isVeried": false,
-        "color": "#D5ECC2",
-        "isApprove": false
-      },
-      {
-        "type": "Driver licence",
-        "id": "1233452423",
-        "name": "Sam Allen",
-        "dob": "09.02.2000",
-        "address": "Tik L'lork, Toul Kork, Phnom Penh",
-        "status": "verifying",
-        "isVeried": false,
-        "color": "#98DDCA",
-        "isApprove": true
-      },
-      {
-        "type": "Covid Vaccination",
-        "id": "1233452423",
-        "name": "Sam Allen",
-        "dob": "09.02.2000",
-        "address": "Tik L'lork, Toul Kork, Phnom Penh",
-        "status": "verified",
-        "isVeried": true,
-        "color": "#FFAAA7",
-        "isApprove": false
-      }
-    ];
-  }
+  List<Map<String, dynamic>> pending = [];
+  List<Map<String, dynamic>> approve = [];
 
   static void initContext({required BuildContext? context}){
     context = context;
@@ -125,8 +88,7 @@ class KYCDocs {
     ];
 
     lsIssuer =  [
-      
-      
+    
       CustomButtonCard(
         onPressed: () async {
           provider.title = 'MPTC';

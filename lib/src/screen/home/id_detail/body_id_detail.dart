@@ -1,5 +1,6 @@
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:wallet_apps/index.dart';
+import 'package:wallet_apps/src/components/dialog_c.dart';
 import 'package:wallet_apps/src/components/document_card_c.dart';
 import 'package:wallet_apps/src/screen/home/id_detail/share_id/share_id.dart';
 
@@ -7,7 +8,9 @@ class IdDetailBody extends StatelessWidget {
 
   final Map<String, dynamic>? data;
 
-  IdDetailBody({this.data});
+  final GlobalKey? keyQrShare;
+
+  IdDetailBody({this.data, this.keyQrShare});
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +19,7 @@ class IdDetailBody extends StatelessWidget {
         iconTheme: IconThemeData(color: hexaCodeToColor(AppColors.textColor)),
         titleSpacing: 0,
         elevation: 0,
-        title: MyText(text: data!['type'], color: AppColors.textColor,),
+        title: MyText(text: data!['type'], color: AppColors.textColor, fontSize: 17, fontWeight: FontWeight.bold,),
         actions: [
           IconButton(
             icon: Icon(
@@ -24,22 +27,26 @@ class IdDetailBody extends StatelessWidget {
               color: hexaCodeToColor(AppColors.textColor),
             ),
             onPressed: () {
-              Navigator.push(context, Transition(child: ShareID(), transitionEffect: TransitionEffect.RIGHT_TO_LEFT));
+              DialogComponents().dialogQR(context: context, keyQrShare: keyQrShare, data: data);
+              // Navigator.push(context, Transition(child: ShareID(), transitionEffect: TransitionEffect.RIGHT_TO_LEFT));
             },
           ),
         ],
       ),
       body: Padding(
         padding: const EdgeInsets.all(paddingSize),
-        child: Column(
-          children: [
-
-            CardDocument(data: data!, isDetail: true,),
-
-            SizedBox(height: paddingSize),
-
-            _cardInformation(context),
-          ],
+        child: SingleChildScrollView(
+          physics: BouncingScrollPhysics(),
+          child: Column(
+            children: [
+        
+              CardDocument(data: data!, isDetail: true, margin: EdgeInsets.zero,),
+        
+              SizedBox(height: paddingSize*2),
+        
+              _cardInformation(context),
+            ],
+          ),
         ),
       ),
     );
@@ -50,7 +57,6 @@ class IdDetailBody extends StatelessWidget {
       padding: EdgeInsets.all(8),
       child: Stack(
         children: [
-
           
           Card(
             margin: EdgeInsets.all(0),
@@ -188,93 +194,143 @@ class IdDetailBody extends StatelessWidget {
   }
 
   Widget _cardInformation(BuildContext context){
-    return Padding(
-      padding: const EdgeInsets.all(10.0),
-      child: Column(
-        children: [
-          Row(
-            children: [
-              MyText(
-                fontSize: 14,
-                text: 'Name: ',
-                fontWeight: FontWeight.bold,
-                
-                                    color: AppColors.textColor,
-              ),
-              MyText(
-                fontSize: 14,
-                text: data!['name'],
-                
-                                    color: AppColors.textColor,
-              ),
-            ],
-          ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        MyText(
+          // fontSize: 18,
+          text: 'Name ',
+          fontWeight: FontWeight.bold,
+          color: AppColors.textColor,
+          bottom: paddingSize,
+        ),
 
-          SizedBox(height: 10,),
+        MyText(
+          text: data!['name'],
+          color: AppColors.textColor,
+          bottom: paddingSize*2,
+        ),
 
-          Row(
-            children: [
-              MyText(
-                fontSize: 14,
-                text: 'Date Of Birth: ',
-                fontWeight: FontWeight.bold,
-                
-                                    color: AppColors.textColor,
+        Row(
+          children: [
+            
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  MyText(
+                    text: 'Date Of Birth ',
+                    fontWeight: FontWeight.bold,
+                    color: AppColors.textColor,
+                    bottom: paddingSize,
+                  ),
+            
+                  MyText(
+                    text: data!['dob'],
+                    color: AppColors.textColor,
+                  )
+                ],
               ),
-              MyText(
-                fontSize: 14,
-                text: data!['dob'],
-                
-                                    color: AppColors.textColor,
-              ),
-            ],
-          ),
+            ),
 
-          SizedBox(height: 10,),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  MyText(
+                    text: 'Gender',
+                    fontWeight: FontWeight.bold,
+                    color: AppColors.textColor,
+                    bottom: paddingSize,
+                  ),
+            
+                  MyText(
+                    text: data!['gender'],
+                    color: AppColors.textColor,
+                  )
+                ],
+              ),
+            ),
 
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              MyText(
-                fontSize: 14,
-                text: 'Address: ',
-                fontWeight: FontWeight.bold,
-                
-                                    color: AppColors.textColor,
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  MyText(
+                    text: 'Height',
+                    fontWeight: FontWeight.bold,
+                    color: AppColors.textColor,
+                    bottom: paddingSize,
+                  ),
+            
+                  MyText(
+                    text: data!['height'],
+                    color: AppColors.textColor,
+                  )
+                ],
               ),
-              MyText(
-                fontSize: 14,
-                textAlign: TextAlign.start,
-                // width: MediaQuery.of(context).size.width / 1.5,
-                text: data!['address'],
-                
-                                    color: AppColors.textColor,
-              ),
-            ],
-          ),
+            ),
+          ],
+        ),
 
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              MyText(
-                fontSize: 14,
-                text: 'Address: ',
-                fontWeight: FontWeight.bold,
-                
-                                    color: AppColors.textColor,
-              ),
-              MyText(
-                fontSize: 14,
-                textAlign: TextAlign.start,
-                // width: MediaQuery.of(context).size.width / 1.5,
-                text: data!['address'],
-                
-                                    color: AppColors.textColor,
-              ),
-            ],
-          ),
-        ],
-      ),
+        SizedBox(height: paddingSize*2,),
+
+        MyText(
+          text: 'Gender',
+          fontWeight: FontWeight.bold,
+          color: AppColors.textColor,
+          bottom: paddingSize,
+        ),
+        MyText(
+          textAlign: TextAlign.start,
+          // width: MediaQuery.of(context).size.width / 1.5,
+          text: data!['gender'],
+          color: AppColors.textColor,
+          bottom: paddingSize*2,
+        ),
+
+        MyText(
+          text: 'Address',
+          fontWeight: FontWeight.bold,
+          color: AppColors.textColor,
+          bottom: paddingSize,
+        ),
+        MyText(
+          textAlign: TextAlign.start,
+          // width: MediaQuery.of(context).size.width / 1.5,
+          text: data!['address'],
+          color: AppColors.textColor,
+          bottom: paddingSize*2,
+        ),
+
+        MyText(
+          text: 'Identity: ',
+          fontWeight: FontWeight.bold,
+          color: AppColors.textColor,
+          bottom: paddingSize,
+        ),
+        MyText(
+          textAlign: TextAlign.start,
+          // width: MediaQuery.of(context).size.width / 1.5,
+          text: data!['identity'],
+          color: AppColors.textColor,
+          bottom: paddingSize*2,
+        ),
+
+        MyText(
+          text: 'Expired Date: ',
+          fontWeight: FontWeight.bold,
+          color: AppColors.textColor,
+          bottom: paddingSize,
+        ),
+        MyText(
+          textAlign: TextAlign.start,
+          // width: MediaQuery.of(context).size.width / 1.5,
+          text: data!['expired_date'],
+          color: AppColors.textColor,
+          bottom: paddingSize*2,
+        ),
+      ],
     );
   }
 

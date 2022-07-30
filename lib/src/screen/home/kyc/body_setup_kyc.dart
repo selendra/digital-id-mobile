@@ -23,10 +23,13 @@ class SetUpKYCBody extends StatelessWidget {
     this.onShowMoreIssuer
   }) : super(key: key);
 
+  final double titleSize = 17;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        titleSpacing: 0,
         elevation: 0,
         leading: IconButton(
           icon: const Icon(
@@ -36,6 +39,7 @@ class SetUpKYCBody extends StatelessWidget {
           onPressed: () => Navigator.pop(context),
         ),
         title: MyText(
+          textAlign: TextAlign.left,
           text: "Documents Type",
           fontSize: 18,
           color: AppColors.newText,
@@ -50,11 +54,12 @@ class SetUpKYCBody extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
         
+                SizedBox(height: paddingSize),
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: paddingSize,),
                   child: MyText(
                     text: 'Mandatory',
-                    fontSize: 20,
+                    fontSize: titleSize,
                     fontWeight: FontWeight.bold,
                     color: AppColors.newText,
                   ),
@@ -67,7 +72,7 @@ class SetUpKYCBody extends StatelessWidget {
                   padding: EdgeInsets.symmetric(horizontal: paddingSize),
                   child: MyText(
                     text: 'Popular document',
-                    fontSize: 20,
+                    fontSize: titleSize,
                     fontWeight: FontWeight.bold,
                     color: AppColors.newText,
                   ),
@@ -80,7 +85,7 @@ class SetUpKYCBody extends StatelessWidget {
                   padding: EdgeInsets.symmetric(horizontal: paddingSize),
                   child: MyText(
                     text: 'Issuers',
-                    fontSize: 20,
+                    fontSize: titleSize,
                     fontWeight: FontWeight.bold,
                     color: AppColors.newText,
                   ),

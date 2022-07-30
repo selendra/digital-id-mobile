@@ -7,7 +7,9 @@ import 'package:wallet_apps/index.dart';
 import 'package:wallet_apps/src/components/camera_c.dart';
 import 'package:wallet_apps/src/constants/db_key_con.dart';
 import 'package:wallet_apps/src/models/digital_id_m.dart';
+import 'package:wallet_apps/src/models/kyc_content_m.dart';
 import 'package:wallet_apps/src/provider/digital_id_p.dart';
+import 'package:wallet_apps/src/provider/documents_p.dart';
 import 'package:wallet_apps/src/provider/home_p.dart';
 import 'package:wallet_apps/src/screen/home/home/body_home.dart';
 import 'package:wallet_apps/src/screen/home/home_page/body_home.dart';
@@ -73,20 +75,27 @@ class _HomeState extends State<HomePage> with TickerProviderStateMixin {
     // initBlockchainData();
     initDigitalId();
 
+    fetchSelendraID();
+
     super.initState();
   }
 
+  void fetchSelendraID() async {
+    await StorageServices.fetchData(DbKey.selendraID).then((value) {
+      if (value != null) _model.isSelendraID = value;
+      else Provider.of<DocumentProvider>(context, listen: false).initJson();
+    });
+  }
+
   void onPageChanged(int index){
-    if (index <= 1){
+    setState(() {
+      _model.activeIndex = index;
+    });
+    _model.pageController.jumpToPage(index);
+    //  else {
 
-      setState(() {
-        _model.activeIndex = index;
-      });
-      _model.pageController.jumpToPage(index);
-    } else {
-
-      underContstuctionAnimationDailog(context: context);
-    }
+    //   underContstuctionAnimationDailog(context: context);
+    // }
     // _model.pageController.animateToPage(index, duration: Duration(milliseconds: 300), curve: Curves.ease);
   }
 
@@ -357,6 +366,42 @@ class _HomeState extends State<HomePage> with TickerProviderStateMixin {
 
   }
 
+  Future<void> _deleteAccount() async {
+
+    dialogLoading(context);
+
+    final _api = await Provider.of<ApiProvider>(context, listen: false);
+    
+    try {
+      await _api.apiKeyring.deleteAccount(
+        _api.getKeyring,
+        Provider.of<ApiProvider>(context, listen: false).getKeyring.current,
+      );
+
+      final mode = await StorageServices.fetchData(DbKey.themeMode);
+      // final event = await StorageServices.fetchData(DbKey.event);
+
+      await StorageServices().clearStorage();
+
+      // Re-Save Them Mode
+      await StorageServices.storeData(mode, DbKey.themeMode);
+      // await StorageServices.storeData(event, DbKey.event);
+
+      await StorageServices().clearSecure();
+      
+      Provider.of<ContractProvider>(context, listen: false).resetConObject();
+
+      await Future.delayed(Duration(seconds: 2), () {});
+      
+      Provider.of<WalletProvider>(context, listen: false).clearPortfolio();
+
+      Navigator.pushAndRemoveUntil(context, RouteAnimation(enterPage: Welcome()), ModalRoute.withName('/'));
+    } catch (e) {
+      if (ApiProvider().isDebug == true) print("_deleteAccount ${e.toString()}");
+      // await dialog(context, e.toString(), 'Opps');
+    }
+  }
+
   @override
   void dispose() {
     _tabBarController.dispose();
@@ -377,6 +422,7 @@ class _HomeState extends State<HomePage> with TickerProviderStateMixin {
         selectedColor: _selectedColor,
         scanLogin: _scanLogin,
         getPendingDocs: _getPendingDocs,
+        deleteAccount: _deleteAccount
         // dashModel: _dashBoardM,
         // onTab: onTab,
         // tabController: _tabController,

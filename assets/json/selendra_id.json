@@ -4,38 +4,46 @@
     "title": "Person",
     "type": "object",
     "properties": {
+        "id": {
+            "type": "string",
+            "description": "Your selendra ID",
+            "editable": true
+        },
         "firstName": {
             "type": "string",
-            "description": "The person's first name."
+            "description": "The person's first name.",
+            "editable": true
         },
         "lastName": {
             "type": "string",
-            "description": "The person's last name."
+            "description": "The person's last name.",
+            "editable": true
         },
         "age": {
             "description": "Age in years which must be equal to or greater than zero.",
             "type": "integer",
-            "minimum": 0
+            "minimum": 0,
+            "editable": true
         },
         "type": {
             "type": "string",
-            "description": "National ID"
-        },
-        "id": {
-            "type": "string",
-            "description": "Your selendra ID"
+            "description": "Selendra ID",
+            "editable": false
         },
         "dob": {
             "type": "string",
-            "description": "Your birthday"
+            "description": "Your birthday",
+            "editable": true
         },
         "gender": {
             "type": "string",
-            "description": "Your gender"
+            "description": "Your gender",
+            "editable": true
         },
         "address": {
             "type": "string",
-            "description": "Your address"
+            "description": "Your address",
+            "editable": true
         }
     }
 }
