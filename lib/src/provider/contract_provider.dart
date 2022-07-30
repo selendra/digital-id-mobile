@@ -392,9 +392,9 @@ class ContractProvider with ChangeNotifier {
       mainBalance = 0;
       sortListContract.clear();
       
-      await StorageServices.fetchData(DbKey.hdWallet).then((value) {
-        listContract[apiProvider.btcIndex].address = value;
-      });
+      // await StorageServices.fetchData(DbKey.hdWallet).then((value) {
+      //   listContract[apiProvider.btcIndex].address = value;
+      // });
       
       // 1. Add Default Asset First
       listContract.forEach((element) {

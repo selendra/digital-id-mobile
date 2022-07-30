@@ -433,8 +433,7 @@ class MyBottomAppBar extends StatelessWidget {
                 txtColor: index == 2 ? AppColors.primary : AppColors.greyCode ,
                 isActive: index == 2 ? true : false,
                 onPressed: () {
-                  underContstuctionAnimationDailog(context: context);
-                  // onIndexChanged!(4);
+                  onIndexChanged!(2);
                 }
               ),
             ),

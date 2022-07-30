@@ -87,7 +87,7 @@ class ApiProvider with ChangeNotifier {
       // Setup ss58Format base on Network
       // await _sdk.webView!.evalJavascript("account.setupss58Format('$isMainnet')");
 
-      await _keyring.init([0, AppConfig.networkList[0].ss58MN!]);//isMainnet ? AppConfig.networkList[0].ss58MN! : AppConfig.networkList[0].ss58!]);
+      await _keyring.init([0, isMainnet ? AppConfig.networkList[0].ss58MN! : AppConfig.networkList[0].ss58!]);
       await _sdk.init(_keyring, jsCode: _jsCode);
 
       _apiKeyring = MyApiKeyring(_sdk.api, _sdk.api.keyring.service!);
