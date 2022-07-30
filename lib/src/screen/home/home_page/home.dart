@@ -344,7 +344,7 @@ class _HomeState extends State<HomePage> with TickerProviderStateMixin {
 
     List<int> convert = signMessage.codeUnits;
     Uint8List uint8list = Uint8List.fromList(convert);
-    String _credentials = await await Provider.of<ApiProvider>(context, listen: false).getPrivateKey("august midnight obvious fragile pretty begin useless collect elder ability enhance series");
+    String _credentials = await getMnemonic();
     print("_credentials $_credentials");
     String signedDataHex = EthSigUtil.signPersonalMessage(
       privateKey: _credentials,
