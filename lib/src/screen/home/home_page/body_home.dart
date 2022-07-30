@@ -27,6 +27,7 @@ class HomeBody extends StatelessWidget {
   final TabController? tabBarController;
   final Color? selectedColor;
   final Function? scanLogin;
+  final Function? getPendingDocs;
 
   const HomeBody({ 
     Key? key, 
@@ -38,6 +39,7 @@ class HomeBody extends StatelessWidget {
     this.tabBarController,
     this.selectedColor,
     this.scanLogin,
+    this.getPendingDocs
   }) : super(key: key);
 
   final double tabBarHeight = 55;

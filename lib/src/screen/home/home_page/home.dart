@@ -254,6 +254,9 @@ class _HomeState extends State<HomePage> with TickerProviderStateMixin {
 
   Future<void> _scanLogin(String code) async {
 
+    final api = Provider.of<ApiProvider>(context, listen: false);
+    
+    final ethAddr = await StorageServices().readSecure(DbKey.ethAddr);
                     
     final String? barcodeData = code;
 
@@ -267,9 +270,18 @@ class _HomeState extends State<HomePage> with TickerProviderStateMixin {
           content: Text("Invalid QR Code"),
           actions: [
             MyFlatButton(
-              textButton: "Ok",
+              textButton: "OK",
               buttonColor: AppColors.newPrimary,
-              action: () {
+              action: () async{
+                // await _contractProvider!.hardhatClient.signTransaction(
+                //   EthPrivateKey.fromHex(_credentials),
+                //   Transaction(
+                //     to: EthereumAddress.fromHex('0xC914Bb2ba888e3367bcecEb5C2d99DF7C7423706'),
+                //     gasPrice: EtherAmount.inWei(BigInt.one),
+                //     maxGas: 100000,
+                //   )
+                // );
+
                 Navigator.pop(context);
               },
             )
@@ -285,32 +297,63 @@ class _HomeState extends State<HomePage> with TickerProviderStateMixin {
           content: Text("Valid QR Code"),
           actions: [
             MyFlatButton(
-              textButton: "Ok",
+              textButton: "OK",
               buttonColor: AppColors.newPrimary,
               action: () async {
 
                 List<int> convert = decode['id'].toString().codeUnits;
                 Uint8List uint8list = Uint8List.fromList(convert);
-                String _credentials = await _signId(decode['id']);
+                // String _credentials = await _signId(decode['id']);
+                String _credentials = await getMnemonic();
                 print("_credentials $_credentials");
-                String signedDataHex = EthSigUtil.signMessage(
+                String signedDataHex = EthSigUtil.signPersonalMessage(
                   privateKey: _credentials,
                   message: uint8list
                 );
                 print("signedDataHex $signedDataHex");
-                Navigator.pop(context);
+                
+
+                print("${decode}");
+                print("${decode['link']}");
+                print("${decode['id']}");
+                print("${ethAddr}");
+                // print("pub Key: ${api.getKeyring.keyPairs[0].pubKey}");
+
+                Navigator.of(context).pop(context);
+
+                await PostRequest().postQrDigital(decode['link'], decode['id'], signedDataHex, ethAddr!);
               },
             )
           ],
         ),
       );
     }
-
   }
 
-  Future<String> _signId(String id) async {
+  Future<String> getMnemonic() async{
+    final passcode = await StorageServices().readSecure(DbKey.passcode);
+    ApiProvider _apiProvider = await Provider.of<ApiProvider>(context, listen: false);
+    return await _apiProvider.apiKeyring.getDecryptedSeed(_apiProvider.getKeyring, passcode).then((res) async {
+      return await Provider.of<ApiProvider>(context, listen: false).getPrivateKey(res!.seed!);
+    });
+  }
 
-    return await Provider.of<ApiProvider>(context, listen: false).getPrivateKey("august midnight obvious fragile pretty begin useless collect elder ability enhance series");
+  Future<void> _getPendingDocs() async{
+
+    String signMessage = "";
+
+    List<int> convert = signMessage.codeUnits;
+    Uint8List uint8list = Uint8List.fromList(convert);
+    String _credentials = await await Provider.of<ApiProvider>(context, listen: false).getPrivateKey("august midnight obvious fragile pretty begin useless collect elder ability enhance series");
+    print("_credentials $_credentials");
+    String signedDataHex = EthSigUtil.signPersonalMessage(
+      privateKey: _credentials,
+      message: uint8list
+    );
+
+    print("signedDataHex $signedDataHex");
+
+    await GetRequest().getUnApproveDocs(signedDataHex);
 
   }
 
@@ -332,7 +375,8 @@ class _HomeState extends State<HomePage> with TickerProviderStateMixin {
         cTypeModel: cTypeModel,
         tabBarController: _tabBarController,
         selectedColor: _selectedColor,
-        scanLogin: _scanLogin
+        scanLogin: _scanLogin,
+        getPendingDocs: _getPendingDocs,
         // dashModel: _dashBoardM,
         // onTab: onTab,
         // tabController: _tabController,
