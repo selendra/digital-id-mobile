@@ -9,7 +9,19 @@ class CardDocument extends StatelessWidget{
 
   final EdgeInsets? margin;
 
-  CardDocument({required this.data, required this.isDetail, this.margin = const EdgeInsets.symmetric(horizontal: paddingSize)});
+  final String? colorString;
+
+  final String? textColor;
+
+  final double? bottomPadding;
+
+  CardDocument({
+    required this.data, 
+    required this.isDetail, 
+    this.margin = const EdgeInsets.symmetric(horizontal: paddingSize), 
+    this.colorString, this.textColor,
+    this.bottomPadding
+  });
   
   Widget build(BuildContext context){
     return Container(
@@ -27,7 +39,7 @@ class CardDocument extends StatelessWidget{
                 color: data!['isApprove'] == false ? AppColors.txtSecondary : AppColors.txtPrimary,
                 child: Card(
                   margin: EdgeInsets.all(0),
-                  color: hexaCodeToColor(data!['color']).withOpacity(0.4),
+                  color: colorString != null ? hexaCodeToColor(colorString!) : hexaCodeToColor(data!['color']).withOpacity(0.4),
                   elevation: 0,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(18)
@@ -72,7 +84,7 @@ class CardDocument extends StatelessWidget{
                                       text: data!['type'],
                                       fontSize: 16,
                                       fontWeight: FontWeight.bold,
-                                      
+                                      color: textColor ?? AppColors.newText,
                                     ),
                               
                                     SizedBox(height: 3.h,),
@@ -82,13 +94,13 @@ class CardDocument extends StatelessWidget{
                                         MyText(
                                           fontSize: 14,
                                           text: 'ID: ',
-                                          fontWeight: FontWeight.bold,
-                                          
+                                          fontWeight: FontWeight.bold, 
+                                          color: textColor ?? AppColors.newText,
                                         ),
                                         MyText(
                                           fontSize: 14,
                                           text: '${data!['id']}',
-                                          
+                                          color: textColor ?? AppColors.newText,
                                         ),
                                       ],
                                     ),
@@ -100,12 +112,12 @@ class CardDocument extends StatelessWidget{
                                           fontSize: 14,
                                           text: 'Name: ',
                                           fontWeight: FontWeight.bold,
-                                          
+                                          color: textColor ?? AppColors.newText,
                                         ),
                                         MyText(
                                           fontSize: 14,
                                           text: '${data!['name']}',
-                                          
+                                          color: textColor ?? AppColors.newText,
                                         ),
                                       ],
                                     ),
@@ -117,12 +129,12 @@ class CardDocument extends StatelessWidget{
                                           fontSize: 14,
                                           text: 'DOB: ',
                                           fontWeight: FontWeight.bold,
-                                          
+                                          color: textColor ?? AppColors.newText,
                                         ),
                                         MyText(
                                           fontSize: 14,
                                           text: '${data!['dob']}',
-                                          
+                                          color: textColor ?? AppColors.newText,
                                         ),
                                       ],
                                     ),
@@ -135,7 +147,7 @@ class CardDocument extends StatelessWidget{
                                           fontSize: 14,
                                           text: 'Address: ',
                                           fontWeight: FontWeight.bold,
-                                          
+                                          color: textColor ?? AppColors.newText,
                                         ),
                                         MyText(
                                           width: 20.w,
@@ -143,7 +155,7 @@ class CardDocument extends StatelessWidget{
                                           textAlign: TextAlign.start,
                                           // width: MediaQuery.of(context).size.width / 1.5,
                                           text: '${data!['address']}',
-                                          
+                                          color: textColor ?? AppColors.newText,
                                           overflow: TextOverflow.ellipsis,
                                         ),
                                       ],
@@ -157,7 +169,7 @@ class CardDocument extends StatelessWidget{
                                           fontSize: 14,
                                           text: 'Expired date: ',
                                           fontWeight: FontWeight.bold,
-                                          
+                                          color: textColor ?? AppColors.newText,
                                         ),
                                         MyText(
                                           width: 20.w,
@@ -165,7 +177,7 @@ class CardDocument extends StatelessWidget{
                                           textAlign: TextAlign.start,
                                           // width: MediaQuery.of(context).size.width / 1.5,
                                           text: '${data!['expired_date']}',
-                                          
+                                          color: textColor ?? AppColors.newText,
                                           overflow: TextOverflow.ellipsis,
                                         ),
                                       ],
@@ -204,7 +216,8 @@ class CardDocument extends StatelessWidget{
             ),
           ),
     
-          SizedBox(height: paddingSize.sp,)
+          // If Detail remove Bottom Padding
+          colorString == null ? SizedBox(height: bottomPadding ?? paddingSize.sp,) : Container()
         ],
       ),
     );

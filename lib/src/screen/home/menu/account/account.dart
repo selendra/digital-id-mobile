@@ -202,8 +202,8 @@ class _AccountState extends State<Account> {
   @override
   void initState() {
 
-    _accountModel.currentAcc = Provider.of<ApiProvider>(context, listen: false).getKeyring.keyPairs[0];
-    _accountModel.editNameController.text = Provider.of<ApiProvider>(context, listen: false).accountM.name!;
+    // _accountModel.currentAcc = Provider.of<ApiProvider>(context, listen: false).getKeyring.keyPairs[0];
+    // _accountModel.editNameController.text = Provider.of<ApiProvider>(context, listen: false).accountM.name!;
     super.initState();
   }
 

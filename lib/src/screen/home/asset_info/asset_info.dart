@@ -239,7 +239,6 @@ class _AssetInfoState extends State<AssetInfo> {
                   // AppBar
                   Expanded(
                       child: Container(
-                        color: hexaCodeToColor(AppColors.bluebgColor),
                         child: Padding(
                             padding: const EdgeInsets.symmetric(horizontal: paddingSize),
                             child: Row(
@@ -253,13 +252,9 @@ class _AssetInfoState extends State<AssetInfo> {
                                     alignment: Alignment.centerLeft,
                                     padding: const EdgeInsets.only(right: 16),
                                     child: Icon(
-                                      Platform.isAndroid
-                                        ? Icons.arrow_back
-                                        : Icons.arrow_back_ios,
-                                      color: isDarkTheme
-                                        ? Colors.white
-                                        : Colors.black,
-                                      size: 22.5.sp
+                                      Iconsax.arrow_left_2,
+                                      size: 22.5.sp,
+                                      color: hexaCodeToColor(AppColors.newText),
                                     )
                                   )
                                 ),
@@ -278,9 +273,7 @@ class _AssetInfoState extends State<AssetInfo> {
                                   left: 2.w,
                                   fontSize: 18.0,
                                   fontWeight: FontWeight.bold,
-                                  color: isDarkTheme
-                                    ? AppColors.whiteHexaColor
-                                    : AppColors.blackColor,
+                                  color: AppColors.newText,
                                   text: widget.scModel!.symbol!
                                   // widget.scModel!.id! == null
                                   //     ? widget.scModel!.symbol!
@@ -295,9 +288,7 @@ class _AssetInfoState extends State<AssetInfo> {
                                   child: MyText(
                                     text: widget.scModel!.org,
                                     fontWeight: FontWeight.w700,
-                                    color: isDarkTheme
-                                      ? AppColors.whiteHexaColor
-                                      : AppColors.darkCard,
+                                    color: AppColors.newText,
                                   )
                                 ),
                               ],
@@ -399,7 +390,7 @@ class _AssetInfoState extends State<AssetInfo> {
                                 border: Border(
                                   bottom: BorderSide(
                                     color: _tabIndex == 0
-                                        ? hexaCodeToColor("#D4D6E3")
+                                        ? hexaCodeToColor(AppColors.newPrimary)
                                         : Colors.transparent,
                                     width: 2,
                                   ),
@@ -409,10 +400,8 @@ class _AssetInfoState extends State<AssetInfo> {
                                 fontWeight: FontWeight.bold,
                                 text: "Activity",
                                 color: _tabIndex == 0
-                                    ? AppColors.whiteColorHexa
-                                    : isDarkTheme
-                                        ? AppColors.iconColor
-                                        : AppColors.textColor,
+                                    ? AppColors.newPrimary
+                                    : "#D9D9D9"
                               ),
                             ),
                           ),
@@ -432,7 +421,7 @@ class _AssetInfoState extends State<AssetInfo> {
                                 border: Border(
                                   bottom: BorderSide(
                                     color: _tabIndex == 1
-                                      ? hexaCodeToColor("#D4D6E3")
+                                      ? hexaCodeToColor(AppColors.newPrimary)
                                       : Colors.transparent,
                                     width: 2,
                                   ),
@@ -442,8 +431,8 @@ class _AssetInfoState extends State<AssetInfo> {
                                 fontWeight: FontWeight.w600,
                                 text: "Details",
                                 color: _tabIndex == 1
-                                    ? AppColors.whiteColorHexa
-                                    : AppColors.iconColor
+                                    ? AppColors.newPrimary
+                                    : "#D9D9D9"
                               ),
                             ),
                           ),

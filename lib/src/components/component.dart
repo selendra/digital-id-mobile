@@ -271,6 +271,7 @@ class MyGradientButton extends StatelessWidget {
 }
 
 class MyText extends StatelessWidget {
+
   final String? text;
   final String? color;
   final Color? color2;
@@ -288,6 +289,7 @@ class MyText extends StatelessWidget {
   final double? height;
   final TextAlign? textAlign;
   final TextOverflow? overflow;
+  final Alignment? alignment;
 
   MyText({
     this.text,
@@ -307,6 +309,7 @@ class MyText extends StatelessWidget {
     this.height,
     this.textAlign = TextAlign.center,
     this.overflow,
+    this.alignment
   }){
     fontSize = fontSize!.sp;
   }
@@ -316,19 +319,18 @@ class MyText extends StatelessWidget {
     return Container(
       margin: EdgeInsets.fromLTRB(left!, top!, right!, bottom!),
       padding: EdgeInsets.fromLTRB(pLeft!, pTop!, pRight!, pBottom!),
-      child: SizedBox(
-        width: width,
-        height: height,
-        child: Text(
-          text!,
-          style: TextStyle(
-            fontWeight: fontWeight,
-            color: color != null ? Color(AppUtils.convertHexaColor(color!)) : color2,
-            fontSize: fontSize!
-          ),
-          textAlign: textAlign,
-          overflow: overflow,
+      alignment: alignment,
+      width: width,
+      height: height,
+      child: Text(
+        text!,
+        style: TextStyle(
+          fontWeight: fontWeight,
+          color: color != null ? Color(AppUtils.convertHexaColor(color!)) : color2,
+          fontSize: fontSize!
         ),
+        textAlign: textAlign,
+        overflow: overflow,
       ),
     );
   }

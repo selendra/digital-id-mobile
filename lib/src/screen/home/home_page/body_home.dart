@@ -6,6 +6,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:wallet_apps/index.dart';
 import 'package:wallet_apps/src/components/cards/org_card_c.dart';
 import 'package:wallet_apps/src/components/custom_button_c.dart';
+import 'package:wallet_apps/src/components/dialog_c.dart';
 import 'package:wallet_apps/src/components/document_card_c.dart';
 import 'package:wallet_apps/src/components/scroll_speed.dart';
 import 'package:wallet_apps/src/components/shimmer_c.dart';
@@ -73,20 +74,28 @@ class HomeBody extends StatelessWidget {
         actions: <Widget>[
           IconButton(
             icon: Icon(
-              Iconsax.scan,
-                color: hexaCodeToColor(AppColors.secondary),
+              Iconsax.scan_barcode,
+              // homePageModel!.pageController.page == 2 ? Iconsax.scan_barcode : Iconsax.scan,
+              color: hexaCodeToColor(AppColors.secondary),
             ),
             onPressed: () async {
-              await TrxOptionMethod().scanQR(
-                context,
-                [],
-                pushReplacement!,
-              ).then((value) async {
-                print("TrxOptionMethod value $value");
-                if (value != null){
-                  await scanLogin!(value);
-                }
-              });
+
+              if (homePageModel!.pageController.page == 2 ){
+
+                DialogComponents().dialogQR(context: context, keyQrShare: GlobalKey(), data: {"type": "Selendra ID"});
+              } else {
+
+                await TrxOptionMethod().scanQR(
+                  context,
+                  [],
+                  pushReplacement!,
+                ).then((value) async {
+                  print("TrxOptionMethod value $value");
+                  if (value != null){
+                    await scanLogin!(value);
+                  }
+                });
+              }
             },
           ),
         ],
@@ -201,10 +210,12 @@ class HomeBody extends StatelessWidget {
         ],
       ),
 
-      floatingActionButton: Consumer<DocumentProvider>(
+      floatingActionButton: 
+      //  
+      Consumer<DocumentProvider>(
         builder: (context, provider, widget){
           
-          return provider.kycDocs.data.isNotEmpty ? FloatingActionButton(
+          return provider.kycDocs.data.isNotEmpty && homePageModel!.pageController.page.toString() == "1.0" ? FloatingActionButton(
             onPressed: () {
               Navigator.push(context, MaterialPageRoute(builder: (context) => SetUpKYC()));
             },

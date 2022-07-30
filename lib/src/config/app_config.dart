@@ -64,8 +64,8 @@ class AppConfig {
   static List<NetworkParams> networkList = [
     
     NetworkParams(
-      httpUrlTN: 'https://rpc.testnet.selendra.org/',
-      httpUrlMN: 'https://app.selendra.org/',
+      httpUrlTN: 'https://rpc-testnet.selendra.org/',
+      httpUrlMN: 'https://rpc-mainnet.selendra.org/',
       wsUrlTN: 'wss://rpc-testnet.selendra.org',
       wsUrlMN: 'wss://api-mainnet.selendra.org',
       ss58: 204,

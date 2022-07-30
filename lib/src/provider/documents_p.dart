@@ -88,6 +88,21 @@ class DocumentProvider extends ChangeNotifier{
     
     print("kycDocs.pending ${kycDocs.pending}");
     print("kycDocs.approve ${kycDocs.approve}");
+    kycDocs.selendra.add({
+      "type": "Selendar ID",
+      "id": "1233452423",
+      "name": "Sam Allen",
+      "dob": "09.02.2000",
+      "gender": "Male",
+      "address": "Tik L'lork, Toul Kork, Phnom Penh",
+      "status": "verified",
+      "isVeried": true,
+      "color": "#FFAAA7",
+      "height": "188",
+      "identity": "Scar on the left side 1cm",
+      "expired_date": "2022.01.21 - 2025.01.21",
+      "isApprove": false
+    });
 
     // notifyListeners();
   }
