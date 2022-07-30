@@ -3,6 +3,7 @@ import 'package:wallet_apps/index.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:wallet_apps/src/components/acc_c.dart';
 import 'package:wallet_apps/src/components/appbar_c.dart';
+import 'package:wallet_apps/src/components/shimmer_c.dart';
 import 'package:wallet_apps/src/models/account.m.dart';
 import 'package:wallet_apps/src/screen/home/menu/account/c_account.dart';
 import 'package:wallet_apps/src/screen/home/menu/backup/body_backup_key.dart';
@@ -41,17 +42,8 @@ class AccountBody extends StatelessWidget{
     return Scaffold(
       body: BodyScaffold(
         height: MediaQuery.of(context).size.height,
-        child: accountModel!.loading
-        ? const Center( child: CircularProgressIndicator())
-        : Column(
+        child: Column(
           children: [
-
-            MyAppBar(
-              title: "Account",
-              onPressed: () {
-                Navigator.pop(context);
-              },
-            ),
 
             Container(
               padding: const EdgeInsets.all(16.0),
@@ -99,7 +91,7 @@ class AccountBody extends StatelessWidget{
                                     decoration: BoxDecoration(
                                       borderRadius:BorderRadius.circular(5),
                                     ),
-                                    child: randomAvatar(value.accountM.addressIcon ?? '')
+                                    // child: randomAvatar(value.accountM.addressIcon ?? '')
                                     // SvgPicture.string(
                                     //   value.accountM.addressIcon ?? '',
                                     // ),
@@ -107,25 +99,35 @@ class AccountBody extends StatelessWidget{
                                 },
                               ),
                               
-                              MyText(
-                                text: provider.accountM.name ?? '',
-                                color: isDarkTheme
-                                  ? AppColors.whiteColorHexa
-                                  : AppColors.textColor,
-                                fontSize: 20,
-                              ),
+                              // MyText(
+                              //   text: provider.accountM.name ?? '',
+                              //   color: isDarkTheme
+                              //     ? AppColors.whiteColorHexa
+                              //     : AppColors.textColor,
+                              //   fontSize: 20,
+                              // ),
+                              // WidgetShimmer(
+                              //   txt: provider.accountM.address, 
+                              //   child: MyText(
+                              //     right: 5,
+                              //     text: provider.accountM.address,
+                              //     color: AppColors.newText,
+                              //     fontSize: 16,
+                              //     textAlign: TextAlign.left
+                              //   )
+                              // ),
 
-                              Padding(
-                                padding: const EdgeInsets.all(paddingSize),
-                                child: MyText(
-                                  text: provider.accountM.address ?? '',
-                                  color: isDarkTheme
-                                    ? AppColors.whiteColorHexa
-                                    : AppColors.textColor,
-                                  fontSize: 16,
-                                  // width: MediaQuery.of(context).size.width/1.5,
-                                ),
-                              )
+                              // Padding(
+                              //   padding: const EdgeInsets.all(paddingSize),
+                              //   child: MyText(
+                              //     text: provider.accountM.address ?? '',
+                              //     color: isDarkTheme
+                              //       ? AppColors.whiteColorHexa
+                              //       : AppColors.textColor,
+                              //     fontSize: 16,
+                              //     // width: MediaQuery.of(context).size.width/1.5,
+                              //   ),
+                              // )
                             ],
                           );
                         }

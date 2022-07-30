@@ -65,8 +65,8 @@ class HomeBody extends StatelessWidget {
             Iconsax.profile_circle,
             color: hexaCodeToColor(AppColors.secondary),
           ),
-          onPressed: () async {
-            await deleteAccount!();
+          onPressed: () async   {
+            // await deleteAccount!();
             // homePageModel!.globalKey!.currentState!.openDrawer();
           },
         ),
@@ -212,7 +212,8 @@ class HomeBody extends StatelessWidget {
             backgroundColor: hexaCodeToColor(AppColors.newPrimary),
           ) : Container();
         }
-      ),
+      )
+      //  : Container(),
     );
   }
 
