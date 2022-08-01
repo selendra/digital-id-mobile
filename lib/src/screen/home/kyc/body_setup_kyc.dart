@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:provider/provider.dart';
@@ -101,6 +103,7 @@ class SetUpKYCBody extends StatelessWidget {
   }
 
   Widget _mandatory(BuildContext context, List<dynamic> ls) {
+    final _random = Random();
     return GestureDetector(
       onTap: () async{
         Provider.of<DocumentProvider>(context, listen: false).title = 'National ID';
@@ -112,24 +115,32 @@ class SetUpKYCBody extends StatelessWidget {
           child: Container(
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(20),
-              color: hexaCodeToColor(AppColors.newCard),
+              // color: hexaCodeToColor(AppColors.blue),
+              color: Colors.primaries[_random.nextInt(Colors.primaries.length)][_random.nextInt(9) * 100],
             ),
-            width: MediaQuery.of(context).size.width,
-            child: Padding(
-              padding: EdgeInsets.all(paddingSize),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  SizedBox(
-                    height: 50,
-                    child: SvgPicture.asset("assets/logo/national-id.svg"),
-                  ),
-                  MyText(
-                    top: 2.h,
-                    text: "National ID",
-                    fontSize: 16,
-                  )
-                ],
+            padding: EdgeInsets.only(top: 1, bottom: 5, left: 1, right: 1,),
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20),
+                color: hexaCodeToColor(AppColors.newCard),
+              ),
+              width: MediaQuery.of(context).size.width,
+              child: Padding(
+                padding: EdgeInsets.all(paddingSize),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    SizedBox(
+                      height: 50,
+                      child: SvgPicture.asset("assets/logo/national-id.svg"),
+                    ),
+                    MyText(
+                      top: 2.h,
+                      text: "National ID",
+                      fontSize: 16,
+                    )
+                  ],
+                ),
               ),
             ),
           ),

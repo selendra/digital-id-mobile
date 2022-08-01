@@ -11,17 +11,22 @@ class KYCDocs {
 
   static List<CustomButtonCard>? lsIssuer = [];
 
+  static Map<String, dynamic> _docJson = {};
+
   List<Map<String, dynamic>> data = [];
 
   List<Map<String, dynamic>> selendra = [];
   List<Map<String, dynamic>> pending = [];
   List<Map<String, dynamic>> approve = [];
 
-  static void initContext({required BuildContext? context}){
+  static void initContext({required BuildContext? context}) async {
+    
     context = context;
+  
+    print("Hello jkj ${_docJson}");
 
     DocumentProvider provider = Provider.of<DocumentProvider>(context!, listen: false);
-  
+
     lsPopularDocs =  [
       CustomButtonCard(
         onPressed: () async {

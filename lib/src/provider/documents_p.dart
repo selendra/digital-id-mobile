@@ -168,4 +168,12 @@ class DocumentProvider extends ChangeNotifier{
 
     notifyListeners();
   }
+
+  void initDocs() async {
+
+    await rootBundle.loadString(AppConfig.docJson).then((value) {
+      // _docJson = 
+      print(json.decode(value)['mandatory']);
+    });
+  }
 }

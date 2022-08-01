@@ -181,6 +181,7 @@ class AppConfig {
   static String selendra_id = "assets/json/selendra_id.json";
   static String popular = "assets/json/popular.json";
   static String issuer = "assets/json/issuer.json";
+  static String docJson = "assets/json/documents.json";
 
 }
 
