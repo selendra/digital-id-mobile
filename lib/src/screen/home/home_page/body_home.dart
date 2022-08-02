@@ -133,6 +133,7 @@ class HomeBody extends StatelessWidget {
                         color: selectedColor!.withOpacity(0.2),
                       ),
                       labelColor: selectedColor,
+                      labelStyle: TextStyle(fontWeight: FontWeight.bold),
                       unselectedLabelColor: hexaCodeToColor("#D9D9D9"),
                       tabs: ["Pending", "Approved"].map((e) => Tab(
                         text: e,

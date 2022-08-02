@@ -83,7 +83,7 @@ class _HomeState extends State<HomePage> with TickerProviderStateMixin {
   void fetchSelendraID() async {
     await StorageServices.fetchData(DbKey.selendraID).then((value) {
       if (value != null) _model.isSelendraID = value;
-      else Provider.of<DocumentProvider>(context, listen: false).initJson();
+      else Provider.of<DocumentProvider>(context, listen: false).initSelendraDocs();
     });
   }
 

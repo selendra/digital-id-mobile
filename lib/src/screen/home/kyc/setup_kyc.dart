@@ -32,8 +32,6 @@ class _SetUpKYCState extends State<SetUpKYC> {
   @override
   void initState() {
     super.initState();
-    KYCDocs.initContext(context: context);
-    Provider.of<DocumentProvider>(context, listen: false).initJson();
     Provider.of<DocumentProvider>(context, listen: false).initDocs();
   }
 

@@ -1,44 +1,54 @@
 {
-    "mandatory": [
+    "docs": [
         {
-            "title": "National ID",
-            "image": "assets/logo/national-id.svg",
-            "color": "#"
-        }
-    ],
-
-    "popular": [
-        {
-            "title": "Passport",
-            "image": "assets/logo/passport.svg",
-            "color": "#"
+            "type": "Mandatory",
+            "docs_list": [
+                {
+                    "title": "National ID",
+                    "image": "assets/logo/national-id.svg",
+                    "color": "#FF5733"
+                }
+            ]
         },
         {
-            "title": "Land Title",
-            "image": "assets/logo/land-title.svg",
-            "color": "#"
+            "type": "Popular",
+            "docs_list": [
+                {
+                    "title": "Passport",
+                    "image": "assets/logo/passport.svg",
+                    "color": "#FFAC33"
+                },
+                {
+                    "title": "Land Title",
+                    "image": "assets/logo/land-title.svg",
+                    "color": "#C7FF33"
+                },
+                {
+                    "title": "Vehicle License",
+                    "image": "assets/logo/vehicle-license.svg",
+                    "color": "#49FF33"
+                },
+                {
+                    "title": "Driver License",
+                    "image": "assets/logo/driver-license.svg",
+                    "color": "#33FFC1"
+                }
+            ]
         },
         {
-            "title": "Vehicle License",
-            "image": "assets/logo/vehicle-license.svg",
-            "color": "#"
-        },
-        {
-            "title": "Driver License",
-            "image": "assets/logo/driver-license.svg",
-            "color": "#"
-        }
-    ],
-    "issuer": [
-        {
-            "title": "MPTC",
-            "image": "https://asset.cambodia.gov.kh/mptc/media/2020/05/cropped-PTC-HD-LOGO-512px-6.png",
-            "color": "#"
-        },
-        {
-            "title": "MoEYs",
-            "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/93/MoEYS_%28Cambodia%29.svg/444px-MoEYS_%28Cambodia%29.svg.png?20110624073833",
-            "color": "#"
+            "type": "Issuer",
+            "docs_list": [
+                {
+                    "title": "MPTC",
+                    "image": "https://asset.cambodia.gov.kh/mptc/media/2020/05/cropped-PTC-HD-LOGO-512px-6.png",
+                    "color": "#33D7FF"
+                },
+                {
+                    "title": "MoEYs",
+                    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/93/MoEYS_%28Cambodia%29.svg/444px-MoEYS_%28Cambodia%29.svg.png?20110624073833",
+                    "color": "#3380FF"
+                }
+            ]
         }
     ]
 }
