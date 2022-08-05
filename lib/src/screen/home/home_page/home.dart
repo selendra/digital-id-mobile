@@ -47,11 +47,13 @@ class _HomeState extends State<HomePage> with TickerProviderStateMixin {
   void initState() {
 
     _tabBarController = TabController(length: 2, vsync: this);
+    
+    _model.pageController = PageController(initialPage: 1);
 
-    _model.pageController.addListener(() {
+    _model.pageController!.addListener(() {
       if(_model.activeIndex != _model.pageController){
         setState(() {
-          _model.activeIndex = _model.pageController.page!.toInt();
+          _model.activeIndex = _model.pageController!.page!.toInt();
         });
       }
     });
@@ -91,7 +93,7 @@ class _HomeState extends State<HomePage> with TickerProviderStateMixin {
     setState(() {
       _model.activeIndex = index;
     });
-    _model.pageController.jumpToPage(index);
+    _model.pageController!.jumpToPage(index);
     //  else {
 
     //   underContstuctionAnimationDailog(context: context);

@@ -12,6 +12,7 @@ import 'package:wallet_apps/src/components/scroll_speed.dart';
 import 'package:wallet_apps/src/components/shimmer_c.dart';
 import 'package:wallet_apps/src/models/digital_id_m.dart';
 import 'package:wallet_apps/src/models/kyc_content_m.dart';
+import 'package:wallet_apps/src/provider/digital_id_p.dart';
 import 'package:wallet_apps/src/provider/documents_p.dart';
 import 'package:wallet_apps/src/provider/home_p.dart';
 import 'package:wallet_apps/src/screen/home/assets/assets.dart';
@@ -74,13 +75,13 @@ class HomeBody extends StatelessWidget {
         actions: <Widget>[
           IconButton(
             icon: Icon(
-              Iconsax.scan_barcode,
-              // homePageModel!.pageController.page == 2 ? Iconsax.scan_barcode : Iconsax.scan,
+              // Iconsax.scan_barcode,
+              homePageModel!.activeIndex == 2 ? Iconsax.scan_barcode : Iconsax.scan,
               color: hexaCodeToColor(AppColors.secondary),
             ),
             onPressed: () async {
 
-              if (homePageModel!.pageController.page == 2 ){
+              if (homePageModel!.pageController!.page == 2 ){
 
                 DialogComponents().dialogQR(context: context, keyQrShare: GlobalKey(), data: {"type": "Selendra ID"});
               } else {
@@ -109,122 +110,152 @@ class HomeBody extends StatelessWidget {
         controller: homePageModel!.pageController,
         onPageChanged: onPageChanged,
         children: [
-      
           AssetsPage(homePageControl: homePageModel!.pageController,),
-      
-          Consumer<DocumentProvider>(
-            builder: (context, provider, widget){
-        
-              return provider.kycDocs.data.isNotEmpty ? Column(
-                children: [ 
-
-                  Container(
-                    height: kToolbarHeight - 8.0,
-                    padding: EdgeInsets.all(5),
-                    margin: EdgeInsets.only(left: paddingSize, right: paddingSize, bottom: paddingSize, top: paddingSize),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(20.0),
-                    ),
-                    child: TabBar(
-                      controller: tabBarController,
-                      indicator: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20.0),
-                        color: selectedColor!.withOpacity(0.2),
-                      ),
-                      labelColor: selectedColor,
-                      labelStyle: TextStyle(fontWeight: FontWeight.bold),
-                      unselectedLabelColor: hexaCodeToColor("#D9D9D9"),
-                      tabs: ["Pending", "Approved"].map((e) => Tab(
-                        text: e,
-                      )).toList(),
-                    ),
-                  ),
-
-                  Expanded(
-                    child: TabBarView(
-                      controller: tabBarController,
-                      children: [
-
-                        ListView.builder(
-                          shrinkWrap: true,
-                          itemCount: provider.kycDocs.pending.length,
-                          itemBuilder: (context, index){
-                            return CardDocument(data: provider.kycDocs.pending[index], isDetail: false,);
-                          }
-                        ),
-
-                        ListView.builder(
-                          shrinkWrap: true,
-                          itemCount: provider.kycDocs.approve.length,
-                          itemBuilder: (context, index){
-                            return CardDocument(data: provider.kycDocs.approve[index], isDetail: false,);
-                          }
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ) 
-              : Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-
-                  Image.asset(AppConfig.logoPath+"document.png", width: 178, height: 178,),
-                  
-                  MyText(
-                    top: 20.sp,
-                    text: "Empty list",
-                    fontWeight: FontWeight.bold,
-                    fontSize: 18,
-                  ),
-
-                  MyText(
-                    top: 15.sp,
-                    text: "No document has found",
-                    bottom: 30.sp,
-                  ),
-
-                  MyFlatButton(
-                    height: 33.sp,
-                    edgeMargin: EdgeInsets.symmetric(horizontal: paddingSize),
-                    textButton: "Setup Selendra ID",
-                    // textColor: AppColors.whiteColor,
-                    buttonColor: AppColors.newPrimary,
-                    action: () {
-                      // MyBottomSheet().createIDBottomSheet(context, Provider.of<DocumentProvider>(context, listen: false).selendraID!);
-                      Provider.of<DocumentProvider>(context, listen: false).title = "Selendra ID";
-                      Navigator.push(
-                        context, 
-                        MaterialPageRoute(builder: (context) => CreateID(docs: Provider.of<DocumentProvider>(context, listen: false).selendraID!))
-                      );
-                      // Navigator.push(context, MaterialPageRoute(builder: (context) => SetUpKYC()));
-                    },
-                  ),
-                ],
-              );
-            }
-          ),
-      
-          Account()
-      
-        ],
-      ),
-
-      floatingActionButton: 
-      //  
+  
       Consumer<DocumentProvider>(
         builder: (context, provider, widget){
-          
-          return provider.kycDocs.data.isNotEmpty && homePageModel!.pageController.page.toString() == "1.0" ? FloatingActionButton(
-            onPressed: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context) => SetUpKYC()));
-            },
-            child: Icon(Iconsax.add_circle, color: Colors.white, size: 9.w,),
-            backgroundColor: hexaCodeToColor(AppColors.newPrimary),
-          ) : Container();
+    
+          return provider.kycDocs.data.isNotEmpty ? Column(
+            children: [ 
+
+              GestureDetector(
+                child: MyText(
+                  text: "Connect contract",
+                ),
+                onTap: (){
+                  Provider.of<DigitalIdBSCProvider>(context, listen: false).initContract(context);
+                },
+              ),
+
+              GestureDetector(
+                child: MyText(
+                  text: "Query contract",
+                ),
+                onTap: () async {
+                  await Provider.of<DigitalIdBSCProvider>(context, listen: false).getLastID();
+                },
+              ),
+
+              GestureDetector(
+                child: MyText(
+                  text: "Create ORG",
+                ),
+                onTap: () async {
+                  await Provider.of<DigitalIdBSCProvider>(context, listen: false).mintOrg();
+                },
+              ),
+
+              Container(
+                height: kToolbarHeight - 8.0,
+                padding: EdgeInsets.all(5),
+                margin: EdgeInsets.only(left: paddingSize, right: paddingSize, bottom: paddingSize, top: paddingSize),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(20.0),
+                ),
+                child: TabBar(
+                  controller: tabBarController,
+                  indicator: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20.0),
+                    color: selectedColor!.withOpacity(0.2),
+                  ),
+                  labelColor: selectedColor,
+                  labelStyle: TextStyle(fontWeight: FontWeight.bold),
+                  unselectedLabelStyle: TextStyle(fontWeight: FontWeight.normal),
+                  unselectedLabelColor: hexaCodeToColor("#D9D9D9"),
+                  tabs: ["Pending", "Approved"].map((e) => Tab(
+                    text: e,
+                  )).toList(),
+                ),
+              ),
+
+              Expanded(
+                child: TabBarView(
+                  controller: tabBarController,
+                  children: [
+
+                    ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: provider.kycDocs.pending.length,
+                      itemBuilder: (context, index){
+                        return CardDocument(data: provider.kycDocs.pending[index], isDetail: false,);
+                      }
+                    ),
+
+                    ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: provider.kycDocs.approve.length,
+                      itemBuilder: (context, index){
+                        return CardDocument(data: provider.kycDocs.approve[index], isDetail: false,);
+                      }
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ) 
+          : Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+
+              Image.asset(AppConfig.logoPath+"document.png", width: 178, height: 178,),
+              
+              MyText(
+                top: 20.sp,
+                text: "Empty list",
+                fontWeight: FontWeight.bold,
+                fontSize: 18,
+              ),
+
+              MyText(
+                top: 15.sp,
+                text: "No document has found",
+                bottom: 30.sp,
+              ),
+
+              MyFlatButton(
+                height: 33.sp,
+                edgeMargin: EdgeInsets.symmetric(horizontal: paddingSize),
+                textButton: "Setup Selendra ID",
+                // textColor: AppColors.whiteColor,
+                buttonColor: AppColors.newPrimary,
+                action: () {
+                  // MyBottomSheet().createIDBottomSheet(context, Provider.of<DocumentProvider>(context, listen: false).selendraID!);
+                  Provider.of<DocumentProvider>(context, listen: false).title = "Selendra ID";
+                  Navigator.push(
+                    context, 
+                    MaterialPageRoute(builder: (context) => CreateID(docs: Provider.of<DocumentProvider>(context, listen: false).selendraID!))
+                  );
+                  // Navigator.push(context, MaterialPageRoute(builder: (context) => SetUpKYC()));
+                },
+              ),
+            ],
+          );
         }
-      )
+      ),
+  
+      Account()
+        ],
+        // itemCount: 3,
+        // itemBuilder: (context, index) {
+        //   return listPage(index);
+        // },
+      ),
+
+      // floatingActionButton: 
+      // //  
+      // Consumer<DocumentProvider>(
+      //   builder: (context, provider, widget){
+          
+      //     return provider.kycDocs.data.isNotEmpty && homePageModel!.pageController!.page.toString() == "1.0" ? FloatingActionButton(
+      //       onPressed: () {
+      //         Navigator.push(context, MaterialPageRoute(builder: (context) => SetUpKYC()));
+      //       },
+      //       child: Icon(Iconsax.add_circle, color: Colors.white, size: 9.w,),
+      //       backgroundColor: hexaCodeToColor(AppColors.newPrimary),
+      //     ) : Container();
+      //   }
+      // )
       //  : Container(),
     );
   }

@@ -99,7 +99,7 @@ class AppColors {
 
   /* New Color */
   static const String newBgColor = "#FAFAFA";
-  static const String newPrimary = "#67E3C1";
+  static const String newPrimary = "#00D299";
   static const String newSecondary = "#D5ECC2";
   static const String newThird = "#FFD3B4";
   static const String newFourth = "#FFAAA7";

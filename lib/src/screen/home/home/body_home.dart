@@ -93,7 +93,7 @@ class HomePageBody extends StatelessWidget {
       body: PageView(
         physics: CustomPageViewScrollPhysics(),
         controller: homePageModel!.pageController,
-        // onPageChanged: onPageChanged,
+        onPageChanged: onPageChanged,
         children: [
 
           // DiscoverPage(homePageModel: homePageModel!),

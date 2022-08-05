@@ -24,10 +24,10 @@ class _HomePageState extends State<HomePage1> {
   void initState() {
     super.initState();
     
-    _model.pageController.addListener(() {
+    _model.pageController!.addListener(() {
       if(_model.activeIndex != _model.pageController){
         setState(() {
-          _model.activeIndex = _model.pageController.page!.toInt();
+          _model.activeIndex = _model.pageController!.page!.toInt();
         });
       }
     });
@@ -49,7 +49,7 @@ class _HomePageState extends State<HomePage1> {
     setState(() {
       _model.activeIndex = index;
     });
-    _model.pageController.jumpToPage(index);
+    _model.pageController!.jumpToPage(index);
     // _model.pageController.animateToPage(index, duration: Duration(milliseconds: 300), curve: Curves.ease);
   }
 

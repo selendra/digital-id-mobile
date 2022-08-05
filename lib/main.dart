@@ -75,6 +75,9 @@ void main() {
         ChangeNotifierProvider<DocumentProvider>(
           create: (context) => DocumentProvider(),
         ),
+        ChangeNotifierProvider<DigitalIdBSCProvider>(
+          create: (context) => DigitalIdBSCProvider(),
+        ),
       ],
       child: App(),
     ),

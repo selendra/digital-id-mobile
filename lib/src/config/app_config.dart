@@ -15,7 +15,8 @@ class AppConfig {
   static const spreedSheetId = '1hFKqaUe1q_6A-b-_ZnEAC574d51fCi1bTWQKCluHF2E';
 
   /*Coingecko api url fetch asset price */
-  static const coingeckoBaseUrl = 'https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=';
+  static const coingeckoBaseUrl =
+      'https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=';
 
   static const erc20Abi = 'assets/abi/erc20.json';
 
@@ -42,14 +43,13 @@ class AppConfig {
   ''';
   static const speedsheetId = '1PAmEFBWmjFV1EueEFXn7V60svNTLc6vN0QfROeDqQHA';
 
-
   static const kmpiAddr = '5GZ9uD6RgN84bpBuic1HWq9AP7k2SSFtK9jCVkrncZsuARQU';
 
   late ApiProvider api;
   late String swapAddr;
 
-  AppConfig(){
-    if (ApiProvider().isMainnet){
+  AppConfig() {
+    if (ApiProvider().isMainnet) {
       swapAddr = '0xa857d61c5802C4e299a5B972DE1ACCaD085cE765';
     } else {
       swapAddr = '0xE5DD12570452057fc85B8cE9820aD676390f865B';
@@ -62,16 +62,14 @@ class AppConfig {
   ///
   /// [4] = Hardhat
   static List<NetworkParams> networkList = [
-    
     NetworkParams(
-      httpUrlTN: 'https://rpc-testnet.selendra.org/',
-      httpUrlMN: 'https://rpc-mainnet.selendra.org/',
-      wsUrlTN: 'wss://rpc-testnet.selendra.org',
-      wsUrlMN: 'wss://rpc-mainnet.selendra.org',
-      ss58: 204,
-      ss58MN: 972
-    ),
-    
+        httpUrlTN: 'https://rpc-testnet.selendra.org/',
+        httpUrlMN: 'https://rpc-mainnet.selendra.org/',
+        wsUrlTN: 'wss://rpc-testnet.selendra.org',
+        wsUrlMN: 'wss://rpc-mainnet.selendra.org',
+        ss58: 204,
+        ss58MN: 972),
+
     NetworkParams(
       wsUrlMN: 'wss://rpc.polkadot.io',
       wsUrlTN: 'wss://westend-rpc.polkadot.io',
@@ -80,15 +78,17 @@ class AppConfig {
 
     // Ethereum
     NetworkParams(
-      httpUrlMN: 'https://mainnet.infura.io/v3/93a7248515ca45d0ba4bbbb8c33f1bda',
+      httpUrlMN:
+          'https://mainnet.infura.io/v3/93a7248515ca45d0ba4bbbb8c33f1bda',
       wsUrlMN: 'wss://mainnet.infura.io/ws/v3/93a7248515ca45d0ba4bbbb8c33f1bda',
-      httpUrlTN: 'https://rinkeby.infura.io/v3/93a7248515ca45d0ba4bbbb8c33f1bda',
+      httpUrlTN:
+          'https://rinkeby.infura.io/v3/93a7248515ca45d0ba4bbbb8c33f1bda',
       wsUrlTN: 'wss://rinkeby.infura.io/ws/v3/93a7248515ca45d0ba4bbbb8c33f1bda',
       scanMn: 'https://etherscan.io/tx/',
       scanTN: 'https://rinkeby.etherscan.io/tx',
     ),
 
-    //Bscscan 
+    //Bscscan
     NetworkParams(
       httpUrlMN: 'https://bsc-dataseed.binance.org/',
       wsUrlMN: 'wss://bsc-ws-node.nariox.org:443',
@@ -182,7 +182,6 @@ class AppConfig {
   static String popular = "assets/json/popular.json";
   static String issuer = "assets/json/issuer.json";
   static String docJson = "assets/json/documents.json";
-
 }
 
 class DBkey {
@@ -191,10 +190,9 @@ class DBkey {
 }
 
 class PresaleConfig {
-
   String mainNet = '0xEbc71fA80a0B6D41c944Ed96289e530D0A92a31F';
   String testNet = '0xeBf7E248689534C2757a20DCfe7ffe0bb04b9e93';
-  
+
   // Presale Support Token
   // MainNet
   Map<String, dynamic> baseMain = {
