@@ -69,7 +69,7 @@ class CardDocument extends StatelessWidget{
                                 ),
                                 child: ClipRRect(
                                   borderRadius: BorderRadius.circular(18),
-                                  child: Image.asset("assets/avatar.jpeg", fit: BoxFit.cover,),
+                                  child: Image.asset("assets/4x6.jpg", fit: BoxFit.cover,),
                                 )
                               ),
                                 

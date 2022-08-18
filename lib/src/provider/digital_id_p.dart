@@ -99,7 +99,7 @@ class DigitalIDProvider extends ChangeNotifier {
 }
 
 class DigitalIdBSCProvider extends ChangeNotifier {
-  final String _contract = "0xC4BBb2840E9C4A3f3523DF393eC97Ffd8974174b";
+  final String _contract = "0xA2D89f7DCfC1C5C642f17B7f4B8A406FA01caAab";
 
   DeployedContract? _deployedContract;
 
@@ -146,7 +146,7 @@ class DigitalIdBSCProvider extends ChangeNotifier {
 }
 
 // class DigitalIdBSCProvider extends ChangeNotifier {
-//   final String _contract = "0xC4BBb2840E9C4A3f3523DF393eC97Ffd8974174b";
+//   final String _contract = "0xA2D89f7DCfC1C5C642f17B7f4B8A406FA01caAab";
 
 //   DeployedContract? _deployedContract;
 
