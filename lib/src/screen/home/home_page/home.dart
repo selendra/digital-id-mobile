@@ -11,7 +11,6 @@ import 'package:wallet_apps/src/models/kyc_content_m.dart';
 import 'package:wallet_apps/src/provider/digital_id_p.dart';
 import 'package:wallet_apps/src/provider/documents_p.dart';
 import 'package:wallet_apps/src/provider/home_p.dart';
-import 'package:wallet_apps/src/screen/home/home/body_home.dart';
 import 'package:wallet_apps/src/screen/home/home_page/body_home.dart';
 import 'package:wallet_apps/src/service/http_request/get_request.dart';
 import 'package:wallet_apps/src/service/http_request/post_request.dart';

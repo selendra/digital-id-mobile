@@ -49,7 +49,7 @@ class ApiProvider with ChangeNotifier {
 
   String? _jsCode;
 
-  bool isMainnet = true;
+  bool isMainnet = false;
   bool isDebug = true;
   
   int selNativeIndex = 0;
@@ -387,6 +387,18 @@ class ApiProvider with ChangeNotifier {
       return res;
     } catch (e) {
       if (ApiProvider().isDebug == true) print("Error validateEther $e");
+    }
+    return false;
+  }
+
+  Future<bool> connectToHandler() async {
+    print("connectToHandler");
+    try {
+
+      dynamic res = await _sdk.api.service.webView!.evalJavascript('keyring.handler()');
+      return res;
+    } catch (e) {
+      if (ApiProvider().isDebug == true) print("Error connectToHandler $e");
     }
     return false;
   }

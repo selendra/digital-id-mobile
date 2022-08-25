@@ -583,12 +583,13 @@ class ContractProvider with ChangeNotifier {
     return null;
   }
 
-  Future<DeployedContract?> initHardHat(String contractAddr) async {
+  Future<DeployedContract?> initDigitalContract(String contractAddr) async {
+    print("initDigitalContract");
     try {
 
-      final String abiCode = await rootBundle.loadString('assets/abi/digital_id.json');
+      final String abiCode = await rootBundle.loadString('assets/abi/Identity.json');
       final contract = DeployedContract(
-        ContractAbi.fromJson(abiCode, 'CreadentialManagement'),
+        ContractAbi.fromJson(abiCode, 'Identity'),
         EthereumAddress.fromHex(contractAddr),
       );
 
@@ -599,18 +600,20 @@ class ContractProvider with ChangeNotifier {
     return null;
   }
 
-  Future<void> orgsList() async {
-    print("orgsList");
+  Future<void> getContentOf() async {
+    print("getContentOf");
     try {
       
-      final contract = await AppUtils.contractfromAssets(AppConfig.abiPath+"digital_id.json", "0x25844414275e6a5fe4b379EFec3FA63C1381DaE0");
+      final contract = await AppUtils.contractfromAssets(AppConfig.abiPath+"Identity.json", "0x223190e4e6A3E8bc85D47aAC761cff7bd61F063B");
         //final contract = await initEtherContract(contractAddress);
 
-      final function = contract.function("organizationLists");
+      final function = contract.function("getContentOf");
       final res = await _hardHatClient!.call(
         contract: contract, 
         function: function, 
-        params: []
+        params: [
+          BigInt.from(1)
+        ]
       );
 
       print("res ${res[0]}");
@@ -621,7 +624,7 @@ class ContractProvider with ChangeNotifier {
       print("Error orgsList SocketException port ${e.port}");
     }
     catch (e) {
-      print("Error orgsList $e");
+      print("Error getContentOf $e");
     }
   }
 
@@ -629,7 +632,7 @@ class ContractProvider with ChangeNotifier {
     print("queryOrgById");
     print("param $param");
     try {
-      final contract = await AppUtils.contractfromAssets(AppConfig.abiPath+"digital_id.json", "0x25844414275e6a5fe4b379EFec3FA63C1381DaE0");
+      final contract = await AppUtils.contractfromAssets(AppConfig.abiPath+"Identity.json", "0x223190e4e6A3E8bc85D47aAC761cff7bd61F063B");
 
       final function = contract.function(functionName);
       final res = await _hardHatClient!.call(

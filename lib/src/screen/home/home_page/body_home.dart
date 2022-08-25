@@ -119,32 +119,41 @@ class HomeBody extends StatelessWidget {
               return provider.kycDocs.data.isNotEmpty ? Column(
                 children: [ 
 
-                  // GestureDetector(
-                  //   child: MyText(
-                  //     text: "Connect contract",
-                  //   ),
-                  //   onTap: (){
-                  //     Provider.of<DigitalIdBSCProvider>(context, listen: false).initContract(context);
-                  //   },
-                  // ),
+                  GestureDetector(
+                    child: MyText(
+                      text: "Connect contract",
+                    ),
+                    onTap: (){
+                      Provider.of<DigitalIdBSCProvider>(context, listen: false).initContract(context);
+                    },
+                  ),
 
-                  // GestureDetector(
-                  //   child: MyText(
-                  //     text: "Query contract",
-                  //   ),
-                  //   onTap: () async {
-                  //     await Provider.of<DigitalIdBSCProvider>(context, listen: false).getLastID();
-                  //   },
-                  // ),
+                  GestureDetector(
+                    child: MyText(
+                      text: "Query contract",
+                    ),
+                    onTap: () async {
+                      await Provider.of<DigitalIdBSCProvider>(context, listen: false).organizationLists();
+                    },
+                  ),
 
-                  // GestureDetector(
-                  //   child: MyText(
-                  //     text: "Create ORG",
-                  //   ),
-                  //   onTap: () async {
-                  //     await Provider.of<DigitalIdBSCProvider>(context, listen: false).mintOrg();
-                  //   },
-                  // ),
+                  GestureDetector(
+                    child: MyText(
+                      text: "Create ORG",
+                    ),
+                    onTap: () async {
+                      await Provider.of<DigitalIdBSCProvider>(context, listen: false).mintOrg();
+                    },
+                  ),
+
+                  GestureDetector(
+                    child: MyText(
+                      text: "Connect Handler",
+                    ),
+                    onTap: () async {
+                      await Provider.of<ApiProvider>(context, listen: false).connectToHandler();
+                    },
+                  ),
 
                   Container(
                     height: kToolbarHeight - 8.0,

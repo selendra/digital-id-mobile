@@ -99,7 +99,9 @@ class DigitalIDProvider extends ChangeNotifier {
 }
 
 class DigitalIdBSCProvider extends ChangeNotifier {
-  final String _contract = "0xA2D89f7DCfC1C5C642f17B7f4B8A406FA01caAab";
+  
+  final String _contract = "0x223190e4e6A3E8bc85D47aAC761cff7bd61F063B";
+  // 0x223190e4e6A3E8bc85D47aAC761cff7bd61F063B
 
   DeployedContract? _deployedContract;
 
@@ -119,11 +121,12 @@ class DigitalIdBSCProvider extends ChangeNotifier {
     );
   }
 
-  Future<void> getLastID() async {
+  Future<void> organizationLists() async {
     print("getLastID");
     await _contractProvider!.bscClient.call(
       contract: _deployedContract!,
-      function: ContractFunction('lastID', []),
+      // function: ContractFunction('lastID', []),
+      function: ContractFunction('organizationLists', []),
       params: []
     ).then((value) {
       print("value $value");
@@ -131,22 +134,30 @@ class DigitalIdBSCProvider extends ChangeNotifier {
   }
 
   Future<void> mintOrg() async {
-    print("mintOrg");
-    final function = _deployedContract!.function('mintOrganization');
-    await _contractProvider!.bscClient.call(
-      contract: _deployedContract!,
-      function: function,
-      params: [
-        "selendra org"
-      ]
-    ).then((value) {
-      print("value $value");
-    });
+
+    try{
+
+      print("mintOrg");
+      final function = _deployedContract!.function('createOrg');
+      await _contractProvider!.bscClient.call(
+        contract: _deployedContract!,
+        function: function,
+        params: [
+          "Selendra org",
+          "Selendra blockchain",
+          "https://selendra.org/"
+        ]
+      ).then((value) {
+        print("value $value");
+      });
+    } catch (e) {
+      print("Error mintOrg $e");
+    }
   }
 }
 
 // class DigitalIdBSCProvider extends ChangeNotifier {
-//   final String _contract = "0xA2D89f7DCfC1C5C642f17B7f4B8A406FA01caAab";
+//   final String _contract = "0x223190e4e6A3E8bc85D47aAC761cff7bd61F063B";
 
 //   DeployedContract? _deployedContract;
 

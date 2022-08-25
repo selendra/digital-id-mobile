@@ -6,7 +6,6 @@ import 'package:wallet_apps/index.dart';
 import 'package:wallet_apps/src/components/dialog_c.dart';
 import 'package:wallet_apps/src/models/swap_m.dart';
 import 'package:wallet_apps/src/provider/provider.dart';
-import 'package:wallet_apps/src/screen/home/home/home.dart';
 import 'package:wallet_apps/src/screen/home/menu/swap/body_swap.dart';
 import 'package:wallet_apps/src/screen/home/menu/swap/des_swap.dart';
 

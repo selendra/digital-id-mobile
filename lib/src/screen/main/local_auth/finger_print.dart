@@ -2,7 +2,6 @@ import 'dart:ui';
 
 import 'package:wallet_apps/index.dart';
 import 'package:wallet_apps/src/components/dialog_c.dart';
-import 'package:wallet_apps/src/screen/home/home/home.dart';
 import 'package:local_auth_ios/local_auth_ios.dart';
 
 class FingerPrint extends StatefulWidget {

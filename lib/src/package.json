@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "@selendra/eth-providers": "^1.2.5"
+  }
+}

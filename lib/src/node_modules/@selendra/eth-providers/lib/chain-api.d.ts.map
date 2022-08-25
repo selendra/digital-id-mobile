@@ -1,0 +1,1 @@
+{"version":3,"file":"chain-api.d.ts","sourceRoot":"","sources":["../src/chain-api.ts"],"names":[],"mappings":"AAOA,OAAO,EAAE,UAAU,EAAc,MAAM,eAAe,CAAC;AACvD,OAAO,KAAK,EAAE,UAAU,EAAE,MAAM,qBAAqB,CAAC;AA+BtD,eAAO,MAAM,cAAc,EAAE,UAG5B,CAAC;AAEF,eAAO,MAAM,gBAAgB,gFAO1B,UAAU,KAAQ,UA2BnB,CAAC;AAEH,eAAO,MAAM,SAAS,cAAe,MAAM,GAAG,MAAM,EAAE,0CAA4B,UAajF,CAAC"}

@@ -63,12 +63,12 @@ class AppConfig {
   /// [4] = Hardhat
   static List<NetworkParams> networkList = [
     NetworkParams(
-        httpUrlTN: 'https://rpc-testnet.selendra.org/',
-        httpUrlMN: 'https://rpc-mainnet.selendra.org/',
+        httpUrlTN: 'https://rpc.testnet.selendra.org/',
+        httpUrlMN: 'https://app.selendra.org/',
         wsUrlTN: 'wss://rpc-testnet.selendra.org',
         wsUrlMN: 'wss://rpc-mainnet.selendra.org',
         ss58: 204,
-        ss58MN: 972),
+        ss58MN: 204),
 
     NetworkParams(
       wsUrlMN: 'wss://rpc.polkadot.io',
@@ -102,8 +102,9 @@ class AppConfig {
     NetworkParams(
       httpUrlMN: 'http://192.168.43.38:8545',
       // wsUrlMN: 'wss://localhost:8545',
-      httpUrlTN: 'https://data-seed-prebsc-2-s1.binance.org:8545/',
-      wsUrlTN: 'wss://bsc-ws-node.nariox.org:443',
+      // httpUrlTN: 'https://data-seed-prebsc-2-s1.binance.org:8545/',
+      // httpUrlTN: 'https://rpc.testnet.selendra.org/',
+      wsUrlTN: 'https://rpc-testnet.selendra.org/', //wss://bsc-ws-node.nariox.org:443',
       scanMn: '',
       scanTN: '',
     ),
