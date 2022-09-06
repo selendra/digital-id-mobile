@@ -15,7 +15,8 @@ import { ContractPromise } from "@polkadot/api-contract";
 import acc from './account';
 import { ethers } from "ethers";
 import { EvmRpcProvider } from "@selendra/eth-providers";
-import {abi} from './Identity.json';
+import {abi} from './selendra/Identity.json';
+import { addJson } from "./selendra/kumandra";
 
 let keyring = new Keyring({ ss58Format: 204, type: "sr25519" });
 
@@ -30,6 +31,40 @@ function send(path: string, data: any) {
 }
 
 (<any>window).send = send;
+
+
+async function mintCredential(mnemonic, privateKey, jsonString, schemaDid, wssSubstrate) {
+  console.log("Steat mintCredential");
+
+  console.log("mnemonic", mnemonic);
+  console.log("wssSubstrate", wssSubstrate);
+  console.log("privateKey", privateKey);
+  console.log("jsonString", jsonString);
+  console.log("schemaDid", schemaDid);
+
+  // const hash = await bindaccount(mnemonic, privateKey, wssSubstrate, wssEvm);
+  // console.log("Hash bindaccount ",hash);
+
+  const provider = EvmRpcProvider.from(network);
+  await provider.isReady();
+  console.log("await provider.isReady()", await provider.isReady());
+  const wallet = new ethers.Wallet(privateKey, provider);
+  console.log("wallet", wallet.address);
+  const contract = new ethers.Contract(contractAddress, abi, wallet);
+  console.log("contract", contract.address);
+
+  const ipfsHash = await addJson(jsonString);
+  console.log("ipfsHash", ipfsHash);
+  try {
+    const tx = await contract.mintDocument(ipfsHash, schemaDid);
+    console.log("tx", tx);
+    await tx.wait();
+    return true;
+  } catch (error) {
+    console.log("Error", error);
+    throw error;
+  }
+}
 
 /**
  * Generate a set of new mnemonic.
@@ -582,7 +617,7 @@ async function verifySignature(message: string, signature: string, address: stri
 }
 
 const network = "wss://rpc-testnet.selendra.org";
-const contractAddress = "0x223190e4e6A3E8bc85D47aAC761cff7bd61F063B";
+const contractAddress = "0xaA3cE26BC4742a03a8cD4c1Ba152c1687263481E";
 // const ipfs = process.env.NEXT_PUBLIC_IPFS_ADDRESS || "";
 
 // const ipfs_address = (cid) => ${ipfs}/files/${cid};
@@ -633,7 +668,8 @@ export default {
   signAsync,
   makeTx,
   addSignatureAndSend,
-  handler
+  handler,
+  mintCredential
   //signTxAsExtension,
   //signBytesAsExtension,
   //verifySignature,

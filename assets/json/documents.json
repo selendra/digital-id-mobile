@@ -4,9 +4,11 @@
             "type": "Mandatory",
             "docs_list": [
                 {
-                    "title": "National ID",
-                    "image": "assets/logo/national-id.svg",
-                    "color": "#FF5733"
+                    "name": "National ID",
+                    "logo": "assets/logo/national-id.svg",
+                    "color": "#FF5733",
+                    "description": "Interoperable Nominated Proof-of-Stake network for developing and running Substrate-based and EVM compatible blockchain applications.",
+                    "website": ""
                 }
             ]
         },
@@ -14,40 +16,38 @@
             "type": "Popular",
             "docs_list": [
                 {
-                    "title": "Passport",
-                    "image": "assets/logo/passport.svg",
-                    "color": "#FFAC33"
+                    "name": "Passport",
+                    "logo": "assets/logo/passport.svg",
+                    "color": "#FFAC33",
+                    "description": "Interoperable Nominated Proof-of-Stake network for developing and running Substrate-based and EVM compatible blockchain applications.",
+                    "website": ""
                 },
                 {
-                    "title": "Land Title",
-                    "image": "assets/logo/land-title.svg",
-                    "color": "#C7FF33"
+                    "name": "Land Title",
+                    "logo": "assets/logo/land-title.svg",
+                    "color": "#C7FF33",
+                    "description": "Interoperable Nominated Proof-of-Stake network for developing and running Substrate-based and EVM compatible blockchain applications.",
+                    "website": ""
                 },
                 {
-                    "title": "Vehicle License",
-                    "image": "assets/logo/vehicle-license.svg",
-                    "color": "#49FF33"
+                    "name": "Vehicle License",
+                    "logo": "assets/logo/vehicle-license.svg",
+                    "color": "#49FF33",
+                    "description": "Interoperable Nominated Proof-of-Stake network for developing and running Substrate-based and EVM compatible blockchain applications.",
+                    "website": ""
                 },
                 {
-                    "title": "Driver License",
-                    "image": "assets/logo/driver-license.svg",
-                    "color": "#33FFC1"
+                    "name": "Driver License",
+                    "logo": "assets/logo/driver-license.svg",
+                    "color": "#33FFC1",
+                    "description": "Interoperable Nominated Proof-of-Stake network for developing and running Substrate-based and EVM compatible blockchain applications.",
+                    "website": ""
                 }
             ]
         },
         {
             "type": "Issuer",
             "docs_list": [
-                {
-                    "title": "MPTC",
-                    "image": "https://asset.cambodia.gov.kh/mptc/media/2020/05/cropped-PTC-HD-LOGO-512px-6.png",
-                    "color": "#33D7FF"
-                },
-                {
-                    "title": "MoEYs",
-                    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/93/MoEYS_%28Cambodia%29.svg/444px-MoEYS_%28Cambodia%29.svg.png?20110624073833",
-                    "color": "#3380FF"
-                }
             ]
         }
     ]

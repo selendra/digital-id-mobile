@@ -118,6 +118,15 @@ class AppUtils {
 
     return [rd1, rd2, rd3];
   }
+
+  static List<MapEntry<String, dynamic>> mapToList(Map<String, dynamic> data){
+    print("mapToList $data");
+    (Map<String, dynamic>.from(data)).entries.toList().forEach((e){
+      print(e.key);
+    });
+    print("(Map<String, dynamic>.from(data)).entries.toList() ${(Map<String, dynamic>.from(data)).entries.toList()}");
+    return (Map<String, dynamic>.from(data)).entries.toList();
+  }
 }
 
 class ContractParser {}

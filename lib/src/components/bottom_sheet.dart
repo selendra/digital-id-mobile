@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:wallet_apps/index.dart';
 import 'package:wallet_apps/src/components/search_c.dart';
 import 'package:wallet_apps/src/provider/search_p.dart';
-import 'package:wallet_apps/src/screen/home/createid/create_id.dart';
+import 'package:wallet_apps/src/screen/home/create_document/create_document.dart';
 
 class MyBottomSheet {
   dynamic response;
@@ -230,7 +230,7 @@ class MyBottomSheet {
     );
   }
 
-  void createIDBottomSheet(BuildContext context, List docs) {
+  void createDocumentBottomSheet(BuildContext context, String? ownerId) {
   showModalBottomSheet(
     backgroundColor: Colors.transparent,
     shape: const RoundedRectangleBorder(
@@ -286,7 +286,7 @@ class MyBottomSheet {
                     onTap: () async {
                       Navigator.push(
                         context, 
-                        MaterialPageRoute(builder: (context) => CreateID(docs: docs))
+                        MaterialPageRoute(builder: (context) => CreateDocument(ownerId: ownerId,))
                       );
                     },
                     child: Padding(
@@ -314,7 +314,7 @@ class MyBottomSheet {
                     onTap: () async {
                       Navigator.push(
                         context, 
-                        MaterialPageRoute(builder: (context) => CreateID(docs: docs))
+                        MaterialPageRoute(builder: (context) => CreateDocument(ownerId: ownerId))
                       );
                     },
                     child: Padding(

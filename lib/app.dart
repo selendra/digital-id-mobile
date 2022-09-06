@@ -30,9 +30,10 @@ class AppState extends State<App> {
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       await Provider.of<ContractProvider>(context, listen: false).getEtherAddr();
       await Provider.of<ContractProvider>(context, listen: false).getBtcAddr();
+      
       // await Provider.of<ContractProvider>(context, listen: false).initHardhatClient().then((value) async {
       //   // 0x25844414275e6a5fe4b379EFec3FA63C1381DaE0
-      //   await Provider.of<ContractProvider>(context, listen: false).initDigitalContract("0x223190e4e6A3E8bc85D47aAC761cff7bd61F063B").then((value) async {
+      //   await Provider.of<ContractProvider>(context, listen: false).initDigitalContract(didAddress).then((value) async {
       //     print("Success ${value!.address}");
       //   });
       // });

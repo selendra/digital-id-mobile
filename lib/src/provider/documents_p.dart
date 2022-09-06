@@ -1,11 +1,17 @@
-import 'dart:convert';
-import 'package:flutter/services.dart';
 import 'package:wallet_apps/index.dart';
-import 'package:wallet_apps/src/components/custom_button_c.dart';
+import 'package:wallet_apps/src/api/api.dart';
+import 'package:wallet_apps/src/models/documents/credential_m.dart';
+import 'package:wallet_apps/src/models/documents/document_m.dart';
 import 'package:wallet_apps/src/models/document_schema.dart';
-import 'package:wallet_apps/src/models/kyc_content_m.dart';
+import 'package:wallet_apps/src/models/documents/org_m.dart';
+import 'package:http/http.dart' as _http;
+import 'package:wallet_apps/src/models/documents/schemas_m.dart';
+import 'package:wallet_apps/src/service/http_request/get_request.dart';
 
 class DocumentProvider extends ChangeNotifier{
+
+  _http.Response? _res;
+  Map<String, dynamic>? object;
 
   String? title;
 
@@ -14,236 +20,136 @@ class DocumentProvider extends ChangeNotifier{
   Map<String, dynamic>? popular;
   Map<String, dynamic>? issuer;
 
+  List<DocumentSchema>? lsDocs;
+  List<OrgModel>? lsOrgDocs;
+  List<CredentialModel>? lsCredentailDocs;
   // List Properties
   List<dynamic>? selendraID = [];
   List<dynamic>? lsMandotaryProp = [];
   List<dynamic>? lsPopularProp = [];
   List<dynamic>? lsIssuerProp = [];
+  List<Map<String, dynamic>>? assetsMinted;
 
-  KYCDocs kycDocs = KYCDocs();
+  DocumentModel docsModel = DocumentModel();
+  SchemasModel? schemaDocs;
 
-  List<DocumentSchema>? lsDocs;
+  BuildContext? context;
 
   DocumentProvider(){
-    kycDocs.data = [];
-    kycDocs.data = [
-      {
-        "type": "National ID",
-        "id": "1233452423",
-        "name": "Sam Allen",
-        "dob": "09.02.2000",
-        "gender": "Female",
-        "address": "Tik L'lork, Toul Kork, Phnom Penh",
-        "status": "verifying",
-        "isVeried": false,
-        "color": "#D5ECC2",
-        "height": "165",
-        "identity": "Scar on the left side 1cm",
-        "expired_date": "2022.01.21 - 2025.01.21",
-        "isApprove": false
-      },
-      {
-        "type": "Driver licence",
-        "id": "1233452423",
-        "name": "Sam Allen",
-        "dob": "09.02.2000",
-        "gender": "Male",
-        "address": "Tik L'lork, Toul Kork, Phnom Penh",
-        "status": "verifying",
-        "isVeried": false,
-        "color": "#98DDCA",
-        "height": "175",
-        "identity": "Scar on the left side 1cm",
-        "expired_date": "2022.01.21 - 2025.01.21",
-        "isApprove": true
-      },
-      {
-        "type": "Covid Vaccination",
-        "id": "1233452423",
-        "name": "Sam Allen",
-        "dob": "09.02.2000",
-        "gender": "Male",
-        "address": "Tik L'lork, Toul Kork, Phnom Penh",
-        "status": "verified",
-        "isVeried": true,
-        "color": "#FFAAA7",
-        "height": "188",
-        "identity": "Scar on the left side 1cm",
-        "expired_date": "2022.01.21 - 2025.01.21",
-        "isApprove": false
-      }
-    ];
 
-    docsFilter();
+    // Initialize All Field
+    initField();
+    
+    // Call Query Method
+    queryListOfOrgs();
+
+    // docsModel.data = [
+      // {
+      //   "type": "National ID",
+      //   "id": "1233452423",
+      //   "name": "Sam Allen",
+      //   "dob": "09.02.2000",
+      //   "gender": "Female",
+      //   "address": "Tik L'lork, Toul Kork, Phnom Penh",
+      //   "status": "verifying",
+      //   "isVeried": false,
+      //   "color": "#D5ECC2",
+      //   "height": "165",
+      //   "identity": "Scar on the left side 1cm",
+      //   "expired_date": "2022.01.21 - 2025.01.21",
+      //   "isApprove": false
+      // },
+      // {
+      //   "type": "Driver licence",
+      //   "id": "1233452423",
+      //   "name": "Sam Allen",
+      //   "dob": "09.02.2000",
+      //   "gender": "Male",
+      //   "address": "Tik L'lork, Toul Kork, Phnom Penh",
+      //   "status": "verifying",
+      //   "isVeried": false,
+      //   "color": "#98DDCA",
+      //   "height": "175",
+      //   "identity": "Scar on the left side 1cm",
+      //   "expired_date": "2022.01.21 - 2025.01.21",
+      //   "isApprove": true
+      // },
+      // {
+      //   "type": "Covid Vaccination",
+      //   "id": "1233452423",
+      //   "name": "Sam Allen",
+      //   "dob": "09.02.2000",
+      //   "gender": "Male",
+      //   "address": "Tik L'lork, Toul Kork, Phnom Penh",
+      //   "status": "verified",
+      //   "isVeried": true,
+      //   "color": "#FFAAA7",
+      //   "height": "188",
+      //   "identity": "Scar on the left side 1cm",
+      //   "expired_date": "2022.01.21 - 2025.01.21",
+      //   "isApprove": false
+      // }
+    // ];
+
+    userDocsDataFilter();
 
   }
 
+  void initField(){
 
-  void initContext({required BuildContext? context}) async {
-    
-    context = context;
+    lsOrgDocs = [];
+    lsCredentailDocs = [];
+    docsModel.data = [];
+    lsDocs = [];
+    assetsMinted = [];
+    docsModel.pending = [];
+    docsModel.approve = [];
+    lsMandotaryProp = [];
+    lsPopularProp = [];
+    lsIssuerProp = [];
 
-    // DocumentProvider provider = Provider.of<DocumentProvider>(context!, listen: false);
-    // print("_docJson");
-    // lsPopularDocs =  [
-    //   CustomButtonCard(
-    //     onPressed: () async {
-    //       provider.title = 'National ID';
-    //       MyBottomSheet().createIDBottomSheet(context!, provider.lsPopularProp!);
-    //     },
-    //     text: 'National ID',
-    //     image: SvgPicture.asset("assets/logo/national-id.svg"),
-    //   ),
-
-    //   CustomButtonCard(
-    //     onPressed: () async {
-    //       provider.title = 'Passport';
-    //       MyBottomSheet().createIDBottomSheet(context!, provider.lsPopularProp!);
-    //     },
-    //     text: 'Passport',
-    //     image: SvgPicture.asset("assets/logo/passport.svg"),
-    //   ),
-
-    //   CustomButtonCard(
-    //     onPressed: () async {
-    //       provider.title = 'Land Title';
-    //       MyBottomSheet().createIDBottomSheet(context!, provider.lsPopularProp!);
-    //     },
-    //     text: 'Land Title',
-    //     image: SvgPicture.asset("assets/logo/land-title.svg"),
-    //   ),
-
-    //   CustomButtonCard(
-    //     onPressed: () async {
-    //       provider.title = 'Vehicle License';
-    //       Navigator.push(
-    //         context!, 
-    //         Transition(
-    //           child: IssuerListForm(
-    //             createID: (){
-    //               MyBottomSheet().createIDBottomSheet(context!, provider.lsPopularProp!);
-    //             },
-    //           ),
-    //           transitionEffect: TransitionEffect.RIGHT_TO_LEFT
-    //         )
-    //       );
-    //     },
-    //     text: 'Vehicle License',
-    //     image: SvgPicture.asset("assets/logo/vehicle-license.svg"),
-    //   ),
-
-    //   CustomButtonCard(
-    //     onPressed: () async {
-    //       provider.title = 'Driver License';
-    //       Navigator.push(
-    //         context!, 
-    //         Transition(
-    //           child: IssuerListForm(
-    //             createID: (){
-    //               MyBottomSheet().createIDBottomSheet(context!, provider.lsPopularProp!);
-    //             },
-    //           ),
-    //           transitionEffect: TransitionEffect.RIGHT_TO_LEFT
-    //         )
-    //       );
-    //     },
-    //     text: 'Driver License',
-    //     image: SvgPicture.asset("assets/logo/driver-license.svg"),
-    //   ),
-    // ];
-
-    // lsIssuer =  [
-    
-    //   CustomButtonCard(
-    //     onPressed: () async {
-    //       provider.title = 'MPTC';
-    //       Navigator.push(
-    //         context!, 
-    //         Transition(
-    //           child: IssuerListForm(
-    //             createID: (){
-    //               MyBottomSheet().createIDBottomSheet(context!, provider.lsPopularProp!);
-    //             },
-    //           ),
-    //           transitionEffect: TransitionEffect.RIGHT_TO_LEFT
-    //         )
-    //       );
-    //     },
-    //     text: 'MPTC',
-    //     image: Image.network("https://asset.cambodia.gov.kh/mptc/media/2020/05/cropped-PTC-HD-LOGO-512px-6.png"),
-    //   ),
-
-    //   CustomButtonCard(
-    //     onPressed: () async {
-    //       provider.title = 'MoEYs';
-    //       Navigator.push(
-    //         context!, 
-    //         Transition(
-    //           child: IssuerListForm(
-    //             createID: (){
-    //               MyBottomSheet().createIDBottomSheet(context!, provider.lsPopularProp!);
-    //             },
-    //           ),
-    //           transitionEffect: TransitionEffect.RIGHT_TO_LEFT
-    //         )
-    //       );
-    //     },
-    //     text: 'MoEYs',
-    //     image: Image.network("https://upload.wikimedia.org/wikipedia/commons/thumb/9/93/MoEYS_%28Cambodia%29.svg/444px-MoEYS_%28Cambodia%29.svg.png?20110624073833")
-    //   ),
-
-    //   CustomButtonCard(
-    //     onPressed: () async {
-    //       provider.title = 'MPWT';
-    //       Navigator.push(
-    //         context!, 
-    //         Transition(
-    //           child: IssuerListForm(
-    //             createID: (){
-    //               MyBottomSheet().createIDBottomSheet(context!, provider.lsPopularProp!);
-    //             },
-    //           ),
-    //           transitionEffect: TransitionEffect.RIGHT_TO_LEFT
-    //         )
-    //       );
-    //     },
-    //     text: 'MPWT',
-    //     image: Image.network("https://upload.wikimedia.org/wikipedia/commons/thumb/6/6c/Ministry_of_Public_Works_and_Transport_%28Cambodia%29_Logo.jpg/640px-Ministry_of_Public_Works_and_Transport_%28Cambodia%29_Logo.jpg")
-    //   ),
-
-    // ];
-
+    popular = {};
+    issuer = {};
   }
 
-  /// Data Document Status Filter
-  void docsFilter(){
-    kycDocs.pending = [];
-    kycDocs.approve = [];
-    kycDocs.data.forEach((element) {
-      if (element['isApprove'] == false) {
-        kycDocs.pending.add(element);
-      } else {
-        kycDocs.approve.add(element);
-      }
-    });
-    
-    kycDocs.selendra.add({
-      "type": "Selendar ID",
-      "id": "1233452423",
-      "name": "Sam Allen",
-      "dob": "09.02.2000",
-      "gender": "Male",
-      "address": "Tik L'lork, Toul Kork, Phnom Penh",
-      "status": "verified",
-      "isVeried": true,
-      "color": "#FFAAA7",
-      "height": "188",
-      "identity": "Scar on the left side 1cm",
-      "expired_date": "2022.01.21 - 2025.01.21",
-      "isApprove": false
+  /// Initialize context to user Provider  At HomePage
+  void set initContext (BuildContext context) {
+    this.context = context;
+    notifyListeners();
+  }
+
+  /// Run First;
+  /// 
+  /// From JSON
+  void initIssuer() async {
+    print("initIssuer");
+    lsDocs = [];
+    await rootBundle.loadString(AppConfig.docJson).then((value) async {
+      // _docJson = 
+      // print(json.decode(value)['docs']);
+      json.decode(value)['docs'].forEach((element) {
+        print(element);
+        // kycDocs.data.add(element);
+        lsDocs!.add(
+          DocumentSchema(
+            type: element['type'],
+            docsList: element['docs_list']
+            // .forEach((data){
+            //   DocumentProperty(
+            //     title: data['title'],
+            //     image: data['image'],
+            //     color: data['color'],
+            //   );
+            // }).toList(),
+          )
+        );
+      });
     });
 
-    // notifyListeners();
+    await initJson();
+
+    orgFilter();
+    
   }
   
   /// Init and filter property of document
@@ -251,21 +157,18 @@ class DocumentProvider extends ChangeNotifier{
   /// Run Second
   Future<void> initJson() async {
 
-    lsMandotaryProp = [];
-    lsPopularProp = [];
-    lsIssuerProp = [];
-
-    popular = {};
-    issuer = {};
+    print("initJson");
 
     final jsonData = await rootBundle.loadString(AppConfig.mandatory);
     mandotary = json.decode(jsonData);
     
+    // Add More Object Of Input Field
     popular = json.decode(jsonData);
     popular!['properties'].addAll({
       'city': {'type': 'string', 'description': "Battambang"}
     });
 
+    // Add More Object Of Input Field
     issuer = json.decode(jsonData);
     issuer!['properties'].addAll({
       'gender': {'type': 'string', 'description': "Male"},
@@ -296,24 +199,22 @@ class DocumentProvider extends ChangeNotifier{
 
     lsDocs![1].docsProperty = lsPopularProp!;
 
-    Map<String, dynamic>.from(issuer!['properties']).forEach((key, value) {
-      lsIssuerProp!.add({
-        'key': key,
-        'value': value,
-        'formController': TextEditingController(),
-        'focusNode': FocusNode(),
-        'type': value['type']
-      });
-    });
+    // Map<String, dynamic>.from(issuer!['properties']).forEach((key, value) {
+    //   lsIssuerProp!.add({
+    //     'key': key,
+    //     'value': value,
+    //     'formController': TextEditingController(),
+    //     'focusNode': FocusNode(),
+    //     'type': value['type']
+    //   });
+    // });
 
-    lsDocs![2].docsProperty = lsIssuerProp!;
-    print("lsDocs![2].docsList ${lsDocs![2].docsList}");
+    lsDocs![2].docsProperty = [];//lsIssuerProp!;
 
     notifyListeners();
   }
 
   Future<void> initSelendraDocs() async {
-
     
     final myJson = await rootBundle.loadString(AppConfig.selendra_id);
     selendra = json.decode(myJson);
@@ -332,34 +233,164 @@ class DocumentProvider extends ChangeNotifier{
     notifyListeners();
   }
 
-  /// Run First;
-  void initDocs() async {
-    print("initDocs");
-    lsDocs = [];
-    await rootBundle.loadString(AppConfig.docJson).then((value) {
-      // _docJson = 
-      // print(json.decode(value)['docs']);
-      json.decode(value)['docs'].forEach((element) {
-        print(element);
-        // kycDocs.data.add(element);
-        lsDocs!.add(
-          DocumentSchema(
-            type: element['type'],
-            docsList: element['docs_list']
-            // .forEach((data){
-            //   DocumentProperty(
-            //     title: data['title'],
-            //     image: data['image'],
-            //     color: data['color'],
-            //   );
-            // }).toList(),
-          )
-        );
-      });
-
-      print("lsDocs $lsDocs");
-      initJson();
-    });
+  /// Data Of User's Document Filter By Status
+  void userDocsDataFilter(){
+    // docsModel.data.forEach((element) {
+    //   if (element['isApprove'] == false) {
+    //     docsModel.pending.add(element);
+    //   } else {
+    //     docsModel.approve.add(element);
+    //   }
+    // });
     
+    // docsModel.selendra.add({
+    //   "type": "Selendar ID",
+    //   "id": "1233452423",
+    //   "name": "Sam Allen",
+    //   "dob": "09.02.2000",
+    //   "gender": "Male",
+    //   "address": "Tik L'lork, Toul Kork, Phnom Penh",
+    //   "status": "verified",
+    //   "isVeried": true,
+    //   "color": "#FFAAA7",
+    //   "height": "188",
+    //   "identity": "Scar on the left side 1cm",
+    //   "expired_date": "2022.01.21 - 2025.01.21",
+    //   "isApprove": false
+    // });
+
+    assetsMinted!.forEach((element) {
+      print("assetsMinted each $element");
+      if (element['isVerified'] == false) {
+        docsModel.pending.add(element);
+      } else {
+        docsModel.approve.add(element);
+      }
+    });
+
+    print("docsModel.pending ${docsModel.pending}");
+    print("docsModel.approve ${docsModel.approve}");
+    notifyListeners();
+  }
+
+  /// -----------------------------From API-----------------------------
+  ///
+  /// Query All Data Of Organization
+  /// 
+  /// This Function Run Inside Home Before Navigate to Document Setup Screen
+  Future<void> queryListOfOrgs() async {
+    
+    try {
+      _res = await _http.get(Uri.parse(Api.allOrgApi));
+      object = json.decode(_res!.body);
+    } catch (e){
+      print("Error queryListOfOrgs $e");
+    }
+    
+  }
+
+  Future<void> queryDocByOwerAddr({required String? ownerAddr}) async {
+    print("queryDocByOwerAddr $ownerAddr");
+    try {
+      _res = await _http.get(Uri.parse(Api.assetOf+"$ownerAddr"));
+      schemaFilter(json.decode(_res!.body));
+    } catch (e){
+      print("Error queryListOfOrgs $e");
+    }
+    
+  }
+  
+  /// Collect only Organization
+  void orgFilter(){
+    // lsDocs![2].docsList = [];
+    // lsDocs![2].lsOrg = [];
+    // for (int i = 0; i < object!['organizations'].length; i++){
+    //   lsOrgDocs!.add(
+    //     OrgModel.fromJson(object!['organizations'][i])
+    //   );
+    //   lsDocs![2].lsOrg!.add(OrgModel.fromJson(object!['organizations'][i]));
+    //   lsDocs![2].docsList!.add(
+    //     lsOrgDocs![i].details
+    //   );
+    // }
+
+    // notifyListeners();
+    
+  }
+
+  /// Collect only Organization
+  void schemaFilter(Map<String, dynamic> data){
+
+    schemaDocs = SchemasModel.fromJson(data['schemas'][0]);
+    
+    // Fill Properties After Fill Schema Data
+    propModeling();
+  }
+
+  /// Collect only Organization
+  void credentialsFilter(Map<String, dynamic> data){
+    
+    for (int i = 0; i < data.length; i++){
+      lsCredentailDocs!.add(
+        CredentialModel.fromJson(data[i])
+      );
+    }
+  }
+
+  /// Modeling Properties for Issuer
+  void propModeling(){
+    lsIssuerProp!.clear();
+
+    schemaDocs!.properties!.entries.forEach((element) {
+      
+      lsIssuerProp!.add({
+        'key': element.key,
+        'value': element.value,
+        'type': element.value['type'],
+        'widget': element.value['type'] == "string" || element.value['type'] == "integer" ? {
+          'formController': TextEditingController(),
+          'focusNode': FocusNode(),
+
+        } : {
+          "image": List.empty(growable: true)
+        }
+      });
+    });
+    notifyListeners();
+  }
+
+  void queryAssetOf() async {
+    print("queryAssetOf");
+    assetsMinted = [];
+    Map<String, dynamic> data = {"credentials": [
+      {
+        "did": 2,
+        "cid": "Qmc3hC7hW76fQeaePezq2vFPiW9eFCCHCoFGcG8Yujkd4r",
+        "owner": "0x3Abb977B7301CA1c196F5795a3fd32A491061a71",
+        "ctype": 2,
+        "state": 0,
+        "parent": 1,
+        "isVerified": true,
+        "details": {
+          "name": "brilliant",
+          "fullName": "Brilliant PHAL",
+          "gender": "Male",
+          "avatar": [
+            "https://gateway.kumandra.org/files/QmSVLefQv53kNVNje2PS3kLo7qQteAGvQcWAPvqz5Ryr9v"
+          ]
+        }
+      }
+    ]};
+    // await GetRequest().querySubmittedDocs(Provider.of<ContractProvider>(context!, listen: false).ethAdd).then((value) async {
+      List<Map<String, dynamic>>.from(await data['credentials']).forEach((element) {
+        assetsMinted!.add(element);
+      });
+    // });
+
+    userDocsDataFilter();
+
+    print("assetsMinted $assetsMinted");
+
+    notifyListeners();
   }
 }

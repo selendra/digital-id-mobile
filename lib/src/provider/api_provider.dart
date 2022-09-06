@@ -403,6 +403,21 @@ class ApiProvider with ChangeNotifier {
     return false;
   }
 
+  Future<bool> mintCredential(String json, int schemaID) async {
+    print("mintCredential");
+    print("json $json");
+    print("schemaID $schemaID");
+    try {
+      final _mnemonic = "dentist body neglect clay stage forget caught bacon moment gown toast kind";
+      final _privateKey = await getPrivateKey(_mnemonic);
+      dynamic res = await _sdk.api.service.webView!.evalJavascript("keyring.mintCredential('$_mnemonic', '$_privateKey', '$json', '$schemaID', 'wss://rpc-testnet.selendra.org')");
+      return res;
+    } catch (e) {
+      if (ApiProvider().isDebug == true) print("Error mintCredential $e");
+    }
+    return false;
+  }
+
   Future<String> getPrivateKey(String mnemonic) async {
     try {
 

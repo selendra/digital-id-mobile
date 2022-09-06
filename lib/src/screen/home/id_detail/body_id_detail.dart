@@ -3,7 +3,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:wallet_apps/index.dart';
 import 'package:wallet_apps/src/components/dialog_c.dart';
 import 'package:wallet_apps/src/components/document_card_c.dart';
-import 'package:wallet_apps/src/screen/home/id_detail/share_id/share_id.dart';
 
 class IdDetailBody extends StatelessWidget {
 

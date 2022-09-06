@@ -819,7 +819,7 @@ class MyBanner extends StatelessWidget{
   /// Color As Hexa
   final String? color;
 
-  MyBanner({this.child, this.color, this.isApprove});
+  MyBanner({this.child, this.color = "#FFFFFF", this.isApprove = false});
 
   Widget build(BuildContext context){
     return Stack(
