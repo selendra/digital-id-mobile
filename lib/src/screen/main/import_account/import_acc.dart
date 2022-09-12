@@ -5,7 +5,6 @@ import 'package:wallet_apps/src/components/dialog_c.dart';
 import 'package:wallet_apps/src/constants/db_key_con.dart';
 import 'package:wallet_apps/src/provider/provider.dart';
 import 'package:polkawallet_sdk/api/apiKeyring.dart';
-import 'package:wallet_apps/src/screen/home/home/home.dart';
 
 class ImportAcc extends StatefulWidget {
   final String? reimport;

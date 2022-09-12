@@ -1,3 +1,4 @@
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:provider/provider.dart';
 import 'package:wallet_apps/app.dart';
 import 'package:wallet_apps/index.dart';
@@ -13,7 +14,10 @@ import 'package:wallet_apps/src/provider/receive_wallet_p.dart';
 import 'package:wallet_apps/src/provider/search_p.dart';
 import 'package:wallet_apps/src/provider/swap_p.dart';
 
-void main() {
+Future<void> main() async {
+  
+  await dotenv.load(fileName: '.env');
+
   WidgetsFlutterBinding.ensureInitialized();
 
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
@@ -74,6 +78,9 @@ void main() {
         ),
         ChangeNotifierProvider<DocumentProvider>(
           create: (context) => DocumentProvider(),
+        ),
+        ChangeNotifierProvider<DigitalIdBSCProvider>(
+          create: (context) => DigitalIdBSCProvider(),
         ),
       ],
       child: App(),

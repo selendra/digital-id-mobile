@@ -498,7 +498,7 @@ class MyIconButton extends StatelessWidget {
               constraints: BoxConstraints.tight(Size(50, 50)),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
-                color: isActive! ? hexaCodeToColor(AppColors.primary).withOpacity(0.15) : Colors.transparent,
+                color: isActive! ? hexaCodeToColor(AppColors.newPrimary).withOpacity(0.20) : Colors.transparent,
               ),
               // height: 70,
               child: Column(
@@ -516,6 +516,7 @@ class MyIconButton extends StatelessWidget {
                     text: title,
                     color: txtColor,
                     fontSize: 13,
+                    fontWeight: isActive! ? FontWeight.bold : FontWeight.normal ,
                   )
                 ],
               ),
@@ -818,7 +819,7 @@ class MyBanner extends StatelessWidget{
   /// Color As Hexa
   final String? color;
 
-  MyBanner({this.child, this.color, this.isApprove});
+  MyBanner({this.child, this.color = "#FFFFFF", this.isApprove = false});
 
   Widget build(BuildContext context){
     return Stack(

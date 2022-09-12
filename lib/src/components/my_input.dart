@@ -102,7 +102,7 @@ class MyInputField extends StatelessWidget {
             prefixStyle: TextStyle(color: hexaCodeToColor(AppColors.textColor), fontSize: 18.0),
             /* Prefix Text */
             filled: true,
-            fillColor: hexaCodeToColor(AppColors.whiteColor),
+            fillColor: hexaCodeToColor(AppColors.darkBgd),
 
             enabledBorder: myTextInputBorder(controller!.text != ""
                 ? isDarkTheme

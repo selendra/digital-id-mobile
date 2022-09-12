@@ -3,7 +3,6 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:wallet_apps/src/screen/home/assets/assets.dart';
 import 'package:wallet_apps/src/screen/home/discover/discover.dart';
-import 'package:wallet_apps/src/screen/home/home/home.dart';
 import 'package:wallet_apps/src/screen/home/swap/swap.dart';
 
 const fontSizePort = 17.0;
@@ -391,9 +390,9 @@ class MyBottomAppBar extends StatelessWidget {
             // ),
             Expanded(
               child: MyIconButton(
-                child: Icon(Iconsax.wallet_check, size: iconSize, color: hexaCodeToColor(index == 0 ? AppColors.primary : AppColors.greyCode)),
+                child: Icon(Iconsax.wallet_check, size: iconSize, color: hexaCodeToColor(index == 0 ? AppColors.newPrimary : AppColors.greyCode)),
                 title: "Wallet",
-                txtColor: index == 0 ? AppColors.primary : AppColors.greyCode,
+                txtColor: index == 0 ? AppColors.newPrimary : AppColors.greyCode,
                 isActive: index == 0 ? true : false,
                 onPressed: () {
                   onIndexChanged!(0);
@@ -404,9 +403,9 @@ class MyBottomAppBar extends StatelessWidget {
 
             Expanded(
               child: MyIconButton(
-                child: Icon(Iconsax.home, size: iconSize, color: hexaCodeToColor(index == 1 ? AppColors.primary : AppColors.greyCode)),
+                child: Icon(Iconsax.home, size: iconSize, color: hexaCodeToColor(index == 1 ? AppColors.newPrimary : AppColors.greyCode)),
                 title: "Docs",
-                txtColor: index == 1 ? AppColors.primary : AppColors.greyCode,
+                txtColor: index == 1 ? AppColors.newPrimary : AppColors.greyCode,
                 isActive: index == 1 ? true : false,
                 onPressed: () {
                   // Navigator.push(context, RouteAnimation(enterPage: HomePage()));
@@ -428,9 +427,9 @@ class MyBottomAppBar extends StatelessWidget {
 
             Expanded(
               child: MyIconButton(
-                child: Icon(Iconsax.setting, size: iconSize, color: hexaCodeToColor(index == 2 ? AppColors.primary : AppColors.greyCode)),
+                child: Icon(Iconsax.setting, size: iconSize, color: hexaCodeToColor(index == 2 ? AppColors.newPrimary : AppColors.greyCode)),
                 title: "Account",
-                txtColor: index == 2 ? AppColors.primary : AppColors.greyCode ,
+                txtColor: index == 2 ? AppColors.newPrimary : AppColors.greyCode ,
                 isActive: index == 2 ? true : false,
                 onPressed: () {
                   onIndexChanged!(2);

@@ -42,14 +42,13 @@ class AppConfig {
   ''';
   static const speedsheetId = '1PAmEFBWmjFV1EueEFXn7V60svNTLc6vN0QfROeDqQHA';
 
-
   static const kmpiAddr = '5GZ9uD6RgN84bpBuic1HWq9AP7k2SSFtK9jCVkrncZsuARQU';
 
   late ApiProvider api;
   late String swapAddr;
 
-  AppConfig(){
-    if (ApiProvider().isMainnet){
+  AppConfig() {
+    if (ApiProvider().isMainnet) {
       swapAddr = '0xa857d61c5802C4e299a5B972DE1ACCaD085cE765';
     } else {
       swapAddr = '0xE5DD12570452057fc85B8cE9820aD676390f865B';
@@ -62,16 +61,15 @@ class AppConfig {
   ///
   /// [4] = Hardhat
   static List<NetworkParams> networkList = [
-    
     NetworkParams(
-      httpUrlTN: 'https://rpc-testnet.selendra.org/',
-      httpUrlMN: 'https://rpc-mainnet.selendra.org/',
+      httpUrlTN: 'https://rpc.testnet.selendra.org/',
+      httpUrlMN: 'https://app.selendra.org/',
       wsUrlTN: 'wss://rpc-testnet.selendra.org',
       wsUrlMN: 'wss://rpc-mainnet.selendra.org',
       ss58: 204,
-      ss58MN: 972
+      ss58MN: 204
     ),
-    
+
     NetworkParams(
       wsUrlMN: 'wss://rpc.polkadot.io',
       wsUrlTN: 'wss://westend-rpc.polkadot.io',
@@ -88,7 +86,7 @@ class AppConfig {
       scanTN: 'https://rinkeby.etherscan.io/tx',
     ),
 
-    //Bscscan 
+    //Bscscan
     NetworkParams(
       httpUrlMN: 'https://bsc-dataseed.binance.org/',
       wsUrlMN: 'wss://bsc-ws-node.nariox.org:443',
@@ -102,8 +100,9 @@ class AppConfig {
     NetworkParams(
       httpUrlMN: 'http://192.168.43.38:8545',
       // wsUrlMN: 'wss://localhost:8545',
-      httpUrlTN: 'https://data-seed-prebsc-2-s1.binance.org:8545/',
-      wsUrlTN: 'wss://bsc-ws-node.nariox.org:443',
+      // httpUrlTN: 'https://data-seed-prebsc-2-s1.binance.org:8545/',
+      // httpUrlTN: 'https://rpc.testnet.selendra.org/',
+      wsUrlTN: 'https://rpc-testnet.selendra.org/', //wss://bsc-ws-node.nariox.org:443',
       scanMn: '',
       scanTN: '',
     ),
@@ -182,7 +181,7 @@ class AppConfig {
   static String popular = "assets/json/popular.json";
   static String issuer = "assets/json/issuer.json";
   static String docJson = "assets/json/documents.json";
-
+  static String docDidJson = "assets/json/document_did.json";
 }
 
 class DBkey {
@@ -191,10 +190,9 @@ class DBkey {
 }
 
 class PresaleConfig {
-
   String mainNet = '0xEbc71fA80a0B6D41c944Ed96289e530D0A92a31F';
   String testNet = '0xeBf7E248689534C2757a20DCfe7ffe0bb04b9e93';
-  
+
   // Presale Support Token
   // MainNet
   Map<String, dynamic> baseMain = {

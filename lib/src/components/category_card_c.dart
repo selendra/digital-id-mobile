@@ -26,7 +26,7 @@ class CategoryCard extends StatelessWidget {
       textColor: index == selectedIndex ? AppColors.whiteColor : AppColors.greyCode,
       width: 25.w,
       textButton: title,
-      buttonColor: index == selectedIndex ? AppColors.primary : AppColors.whiteColorHexa,
+      buttonColor: index == selectedIndex ? AppColors.newPrimary : AppColors.whiteColorHexa,
       action: () {
         onTap(index, isTap: true);
       },

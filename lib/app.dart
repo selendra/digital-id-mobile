@@ -7,7 +7,6 @@ import 'package:wallet_apps/index.dart';
 import 'package:wallet_apps/src/api/api.dart';
 import 'package:wallet_apps/src/constants/db_key_con.dart';
 import 'package:wallet_apps/src/provider/provider.dart';
-import 'package:wallet_apps/src/screen/home/home/home.dart';
 import 'package:web3dart/web3dart.dart';
 import 'src/route/router.dart' as router;
 import 'package:http/http.dart' as _http;
@@ -31,12 +30,13 @@ class AppState extends State<App> {
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       await Provider.of<ContractProvider>(context, listen: false).getEtherAddr();
       await Provider.of<ContractProvider>(context, listen: false).getBtcAddr();
-      await Provider.of<ContractProvider>(context, listen: false).initHardhatClient().then((value) async {
-        // 0x25844414275e6a5fe4b379EFec3FA63C1381DaE0
-        await Provider.of<ContractProvider>(context, listen: false).initHardHat("0x25844414275e6a5fe4b379EFec3FA63C1381DaE0").then((value) async {
-          print("Success ${value!.address}");
-        });
-      });
+      
+      // await Provider.of<ContractProvider>(context, listen: false).initHardhatClient().then((value) async {
+      //   // 0x25844414275e6a5fe4b379EFec3FA63C1381DaE0
+      //   await Provider.of<ContractProvider>(context, listen: false).initDigitalContract(didAddress).then((value) async {
+      //     print("Success ${value!.address}");
+      //   });
+      // });
       await initApi();
 
       clearOldBtcAddr();

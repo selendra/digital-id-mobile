@@ -7,17 +7,15 @@ import 'package:wallet_apps/index.dart';
 import 'package:wallet_apps/src/components/camera_c.dart';
 import 'package:wallet_apps/src/constants/db_key_con.dart';
 import 'package:wallet_apps/src/models/digital_id_m.dart';
-import 'package:wallet_apps/src/models/kyc_content_m.dart';
 import 'package:wallet_apps/src/provider/digital_id_p.dart';
 import 'package:wallet_apps/src/provider/documents_p.dart';
 import 'package:wallet_apps/src/provider/home_p.dart';
-import 'package:wallet_apps/src/screen/home/home/body_home.dart';
 import 'package:wallet_apps/src/screen/home/home_page/body_home.dart';
 import 'package:wallet_apps/src/service/http_request/get_request.dart';
-import 'package:wallet_apps/src/service/http_request/post_request.dart';
 import 'package:wallet_apps/src/service/services_s.dart';
-import 'package:encrypt/encrypt.dart';
-import 'package:encrypt/encrypt.dart' as encrypt;
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+// import 'package:encrypt/encrypt.dart';
+// import 'package:encrypt/encrypt.dart' as encrypt;
 import 'package:http/http.dart' as http;
 
 class HomePage extends StatefulWidget {
@@ -40,6 +38,8 @@ class _HomeState extends State<HomePage> with TickerProviderStateMixin {
   DigitalIDProvider? _digitalIDProvider;
   CTypeModel cTypeModel = CTypeModel();
 
+  DocumentProvider? _docsProvider;
+
   // -------------------
   HomePageModel _model = HomePageModel();
 
@@ -47,11 +47,15 @@ class _HomeState extends State<HomePage> with TickerProviderStateMixin {
   void initState() {
 
     _tabBarController = TabController(length: 2, vsync: this);
+    
+    _model.pageController = PageController(initialPage: 1);
 
-    _model.pageController.addListener(() {
+    _docsProvider = Provider.of<DocumentProvider>(context, listen: false);
+
+    _model.pageController!.addListener(() {
       if(_model.activeIndex != _model.pageController){
         setState(() {
-          _model.activeIndex = _model.pageController.page!.toInt();
+          _model.activeIndex = _model.pageController!.page!.toInt();
         });
       }
     });
@@ -71,13 +75,34 @@ class _HomeState extends State<HomePage> with TickerProviderStateMixin {
     });
     _dashBoardM = Provider.of<HomeProvider>(context, listen: false).homeModel;
     _digitalIDProvider = Provider.of<DigitalIDProvider>(context, listen: false);
+    Provider.of<DocumentProvider>(context, listen: false).initContext = context;
     // StorageServices.removeKey(DbKey.idKey);
     // initBlockchainData();
     initDigitalId();
 
     fetchSelendraID();
+    
+    fetchOrganization();
+    
+    print("ENV ${ dotenv.get('KUMANDRA_API') }");
 
     super.initState();
+  }
+
+  // Query Data with Any address of EVM.
+  void queryAssetOf() {
+    Provider.of<DocumentProvider>(context, listen: false).queryAssetOf();
+  }
+
+  void fetchOrganization() async {
+
+    await _docsProvider!.queryAllOrgs();
+    _docsProvider!.orgFilter();
+    // _docsProvider!.schemaFilter();
+    // _docsProvider!.credentialsFilter();
+
+    // print("_docsProvider ${_docsProvider!.lsOrgDocs}");
+    // print("_docsProvider ${_docsProvider!.lsCredentailDocs}");
   }
 
   void fetchSelendraID() async {
@@ -91,7 +116,7 @@ class _HomeState extends State<HomePage> with TickerProviderStateMixin {
     setState(() {
       _model.activeIndex = index;
     });
-    _model.pageController.jumpToPage(index);
+    _model.pageController!.jumpToPage(index);
     //  else {
 
     //   underContstuctionAnimationDailog(context: context);
@@ -234,15 +259,6 @@ class _HomeState extends State<HomePage> with TickerProviderStateMixin {
     // });
   }
 
-  void prepareEncryption() async {
-    // ApiProvider _apiProvider = Provider.of<ApiProvider>(context, listen: false);
-
-    // EncryptionRSA encryptionRSA = EncryptionRSA();
-
-    // encryptionRSA.encryptRSA(txt);
-    
-  }
-
   queryCType(BigInt orgID) async {
     print("queryCType $orgID");
     await Provider.of<ContractProvider>(context, listen: false).queryDigitalID("_CtypeMetadata", [orgID]).then((value) async {
@@ -262,8 +278,7 @@ class _HomeState extends State<HomePage> with TickerProviderStateMixin {
   }
 
   Future<void> _scanLogin(String code) async {
-
-                    
+  
     final String? barcodeData = code;
 
     final decode = jsonDecode(barcodeData!);
@@ -378,7 +393,8 @@ class _HomeState extends State<HomePage> with TickerProviderStateMixin {
         tabBarController: _tabBarController,
         selectedColor: _selectedColor,
         scanLogin: _scanLogin,
-        deleteAccount: _deleteAccount
+        deleteAccount: _deleteAccount,
+        queryAssetOf: queryAssetOf
         // dashModel: _dashBoardM,
         // onTab: onTab,
         // tabController: _tabController,

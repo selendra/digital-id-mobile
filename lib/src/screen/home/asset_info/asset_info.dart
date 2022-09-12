@@ -8,7 +8,6 @@ import 'package:wallet_apps/src/components/component.dart';
 import 'package:wallet_apps/src/constants/db_key_con.dart';
 import 'package:wallet_apps/src/models/tx_history.dart';
 import 'package:wallet_apps/src/screen/home/asset_info/activity_list.dart';
-import 'package:wallet_apps/src/screen/home/home/home.dart';
 import '../../../../index.dart';
 import 'asset_detail.dart';
 

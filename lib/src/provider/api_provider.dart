@@ -49,7 +49,7 @@ class ApiProvider with ChangeNotifier {
 
   String? _jsCode;
 
-  bool isMainnet = true;
+  bool isMainnet = false;
   bool isDebug = true;
   
   int selNativeIndex = 0;
@@ -387,6 +387,33 @@ class ApiProvider with ChangeNotifier {
       return res;
     } catch (e) {
       if (ApiProvider().isDebug == true) print("Error validateEther $e");
+    }
+    return false;
+  }
+
+  Future<bool> connectToHandler() async {
+    print("connectToHandler");
+    try {
+
+      dynamic res = await _sdk.api.service.webView!.evalJavascript('keyring.handler()');
+      return res;
+    } catch (e) {
+      if (ApiProvider().isDebug == true) print("Error connectToHandler $e");
+    }
+    return false;
+  }
+
+  Future<bool> mintCredential(String json, int schemaID) async {
+    print("mintCredential");
+    print("json $json");
+    print("schemaID $schemaID");
+    try {
+      final _mnemonic = "dentist body neglect clay stage forget caught bacon moment gown toast kind";
+      final _privateKey = await getPrivateKey(_mnemonic);
+      dynamic res = await _sdk.api.service.webView!.evalJavascript("keyring.mintCredential('$_mnemonic', '$_privateKey', '$json', '$schemaID', 'wss://rpc-testnet.selendra.org')");
+      return res;
+    } catch (e) {
+      if (ApiProvider().isDebug == true) print("Error mintCredential $e");
     }
     return false;
   }

@@ -97,7 +97,7 @@ class DiscoverPageBody extends StatelessWidget {
                   GestureDetector(
                     onHorizontalDragUpdate: (details) {
                       if (details.delta.direction > 0) {
-                        homePageModel!.pageController.animateToPage(1, duration: Duration(milliseconds: 300), curve: Curves.ease);
+                        homePageModel!.pageController!.animateToPage(1, duration: Duration(milliseconds: 300), curve: Curves.ease);
                       }
                       else{
                         tabController.animateTo(0);

@@ -41,7 +41,7 @@ class HomePageModel {
 
   GlobalKey<ScaffoldState>? globalKey;
 
-  PageController pageController = PageController(initialPage: 1);
+  PageController? pageController;
   late int activeIndex;
   late int carouActiveIndex;
 

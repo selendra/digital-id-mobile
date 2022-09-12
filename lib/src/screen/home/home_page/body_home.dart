@@ -1,23 +1,10 @@
-import 'dart:developer';
-
-import 'package:iconsax/iconsax.dart';
-import 'package:provider/provider.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:wallet_apps/index.dart';
-import 'package:wallet_apps/src/components/cards/org_card_c.dart';
-import 'package:wallet_apps/src/components/custom_button_c.dart';
 import 'package:wallet_apps/src/components/dialog_c.dart';
 import 'package:wallet_apps/src/components/document_card_c.dart';
-import 'package:wallet_apps/src/components/scroll_speed.dart';
-import 'package:wallet_apps/src/components/shimmer_c.dart';
 import 'package:wallet_apps/src/models/digital_id_m.dart';
-import 'package:wallet_apps/src/models/kyc_content_m.dart';
 import 'package:wallet_apps/src/provider/documents_p.dart';
-import 'package:wallet_apps/src/provider/home_p.dart';
 import 'package:wallet_apps/src/screen/home/assets/assets.dart';
-import 'package:wallet_apps/src/screen/home/createid/create_id.dart';
-import 'package:wallet_apps/src/screen/home/id_detail/id_detail.dart';
-import 'package:wallet_apps/src/screen/home/kyc/setup_kyc.dart';
+import 'package:wallet_apps/src/screen/home/documents/setup_kyc.dart';
 
 class HomeBody extends StatelessWidget {
 
@@ -31,6 +18,7 @@ class HomeBody extends StatelessWidget {
   final Function? scanLogin;
   final Function? getPendingDocs;
   final Function? deleteAccount;
+  final Function? queryAssetOf;
 
   const HomeBody({ 
     Key? key, 
@@ -44,6 +32,7 @@ class HomeBody extends StatelessWidget {
     this.scanLogin,
     this.getPendingDocs,
     this.deleteAccount,
+    this.queryAssetOf,
   }) : super(key: key);
 
   final double tabBarHeight = 55;
@@ -67,6 +56,7 @@ class HomeBody extends StatelessWidget {
             color: hexaCodeToColor(AppColors.secondary),
           ),
           onPressed: () async   {
+            queryAssetOf!();
             // await deleteAccount!();
             // homePageModel!.globalKey!.currentState!.openDrawer();
           },
@@ -74,15 +64,15 @@ class HomeBody extends StatelessWidget {
         actions: <Widget>[
           IconButton(
             icon: Icon(
-              Iconsax.scan_barcode,
-              // homePageModel!.pageController.page == 2 ? Iconsax.scan_barcode : Iconsax.scan,
+              // Iconsax.scan_barcode,
+              homePageModel!.activeIndex == 2 ? Iconsax.scan_barcode : Iconsax.scan,
               color: hexaCodeToColor(AppColors.secondary),
             ),
             onPressed: () async {
 
-              if (homePageModel!.pageController.page == 2 ){
+              if (homePageModel!.pageController!.page == 2 ){
 
-                DialogComponents().dialogQR(context: context, keyQrShare: GlobalKey(), data: {"type": "Selendra ID"});
+                await DialogComponents().dialogQR(context: context, keyQrShare: GlobalKey(), data: {"type": "Selendra ID"});
               } else {
 
                 await TrxOptionMethod().scanQR(
@@ -90,7 +80,6 @@ class HomeBody extends StatelessWidget {
                   [],
                   pushReplacement!,
                 ).then((value) async {
-                  print("TrxOptionMethod value $value");
                   if (value != null){
                     await scanLogin!(value);
                   }
@@ -109,13 +98,13 @@ class HomeBody extends StatelessWidget {
         controller: homePageModel!.pageController,
         onPageChanged: onPageChanged,
         children: [
-      
+
           AssetsPage(homePageControl: homePageModel!.pageController,),
-      
+  
           Consumer<DocumentProvider>(
             builder: (context, provider, widget){
         
-              return provider.kycDocs.data.isNotEmpty ? Column(
+              return provider.assetsMinted!.isNotEmpty ? Column(
                 children: [ 
 
                   Container(
@@ -134,6 +123,7 @@ class HomeBody extends StatelessWidget {
                       ),
                       labelColor: selectedColor,
                       labelStyle: TextStyle(fontWeight: FontWeight.bold),
+                      unselectedLabelStyle: TextStyle(fontWeight: FontWeight.normal),
                       unselectedLabelColor: hexaCodeToColor("#D9D9D9"),
                       tabs: ["Pending", "Approved"].map((e) => Tab(
                         text: e,
@@ -146,29 +136,61 @@ class HomeBody extends StatelessWidget {
                       controller: tabBarController,
                       children: [
 
-                        ListView.builder(
+                        provider.docsModel.pending.isNotEmpty ? ListView.builder(
                           shrinkWrap: true,
-                          itemCount: provider.kycDocs.pending.length,
+                          itemCount: provider.docsModel.pending.length,
                           itemBuilder: (context, index){
-                            return CardDocument(data: provider.kycDocs.pending[index], isDetail: false,);
+                            return CardDocument(data: provider.docsModel.pending[index], isDetail: false,);
                           }
-                        ),
+                        ) : Text("Empty"),
+                        // ListView.builder(
+                        //   shrinkWrap: true,
+                        //   itemCount: provider.assetsMinted!.length,
+                        //   itemBuilder: (context, index){
+                        //     return CardDocument(data: provider.assetsMinted![index], isDetail: false,);
+                        //   }
+                        // ),
 
-                        ListView.builder(
+                        provider.docsModel.approve.isNotEmpty ? ListView.builder(
                           shrinkWrap: true,
-                          itemCount: provider.kycDocs.approve.length,
+                          itemCount: provider.docsModel.approve.length,
                           itemBuilder: (context, index){
-                            return CardDocument(data: provider.kycDocs.approve[index], isDetail: false,);
+                            return CardDocument(data: provider.docsModel.approve[index], isDetail: false,);
                           }
-                        ),
+                        ) : Text("Empty"),
+                        
                       ],
-                    ),
+                    )
                   ),
                 ],
               ) 
               : Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
+
+                  GestureDetector(
+                    child: MyText(
+                      text: "Connect Handler",
+                    ),
+                    onTap: () async {
+                      await deleteAccount!();
+                      // await Provider.of<ApiProvider>(context, listen: false).connectToHandler();
+                    },
+                  ),
+
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width,
+                    height: 50,
+                    child: GestureDetector(
+                      child: MyText(
+                        text: "queryListOfOrgs",
+                      ),
+                      onTap: () async {
+                        // queryAssetOf!();
+                        await Provider.of<DocumentProvider>(context, listen: false).queryAllOrgs();
+                      },
+                    ),
+                  ),
 
                   Image.asset(AppConfig.logoPath+"document.png", width: 178, height: 178,),
                   
@@ -193,11 +215,11 @@ class HomeBody extends StatelessWidget {
                     buttonColor: AppColors.newPrimary,
                     action: () {
                       // MyBottomSheet().createIDBottomSheet(context, Provider.of<DocumentProvider>(context, listen: false).selendraID!);
-                      Provider.of<DocumentProvider>(context, listen: false).title = "Selendra ID";
-                      Navigator.push(
-                        context, 
-                        MaterialPageRoute(builder: (context) => CreateID(docs: Provider.of<DocumentProvider>(context, listen: false).selendraID!))
-                      );
+                      // Provider.of<DocumentProvider>(context, listen: false).title = "Selendra ID";
+                      // Navigator.push(
+                      //   context, 
+                      //   MaterialPageRoute(builder: (context) => CreateDocument(docs: Provider.of<DocumentProvider>(context, listen: false).selendraID!))
+                      // );
                       // Navigator.push(context, MaterialPageRoute(builder: (context) => SetUpKYC()));
                     },
                   ),
@@ -207,7 +229,6 @@ class HomeBody extends StatelessWidget {
           ),
       
           Account()
-      
         ],
       ),
 
@@ -216,7 +237,7 @@ class HomeBody extends StatelessWidget {
       Consumer<DocumentProvider>(
         builder: (context, provider, widget){
           
-          return provider.kycDocs.data.isNotEmpty && homePageModel!.pageController.page.toString() == "1.0" ? FloatingActionButton(
+          return homePageModel!.pageController!.page.toString() == "1.0" ? FloatingActionButton(
             onPressed: () {
               Navigator.push(context, MaterialPageRoute(builder: (context) => SetUpKYC()));
             },

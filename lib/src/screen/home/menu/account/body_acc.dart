@@ -61,7 +61,7 @@ class AccountBody extends StatelessWidget{
                   padding: EdgeInsets.all(paddingSize),
                   child: FlipCard(
                     direction: FlipDirection.HORIZONTAL,
-                    front: CardDocument(data: Provider.of<DocumentProvider>(context).kycDocs.approve[0], isDetail: true, margin: EdgeInsets.zero, colorString: "#073444", textColor: "#FFFFFF"),
+                    front: CardDocument(data: Provider.of<DocumentProvider>(context).docsModel.approve[0], isDetail: true, margin: EdgeInsets.zero, colorString: "#073444", textColor: "#FFFFFF"),
                     back: ClipRRect(
                       borderRadius: BorderRadius.circular(18.0),
                       child: Container(

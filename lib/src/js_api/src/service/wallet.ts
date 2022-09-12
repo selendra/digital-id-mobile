@@ -1,7 +1,5 @@
 import { ethers, Wallet } from 'ethers';
 
-
-
 let url = 'https://bsc-dataseed.binance.org/';
 
 var SwapContractAddress = "0x54419268c31678C31e94dB494C509193d7d2BB5D";
