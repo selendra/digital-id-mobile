@@ -18,7 +18,6 @@ class HomeBody extends StatelessWidget {
   final Function? scanLogin;
   final Function? getPendingDocs;
   final Function? deleteAccount;
-  final Function? queryAssetOf;
 
   const HomeBody({ 
     Key? key, 
@@ -31,8 +30,7 @@ class HomeBody extends StatelessWidget {
     this.selectedColor,
     this.scanLogin,
     this.getPendingDocs,
-    this.deleteAccount,
-    this.queryAssetOf,
+    this.deleteAccount
   }) : super(key: key);
 
   final double tabBarHeight = 55;
@@ -56,7 +54,6 @@ class HomeBody extends StatelessWidget {
             color: hexaCodeToColor(AppColors.secondary),
           ),
           onPressed: () async   {
-            queryAssetOf!();
             // await deleteAccount!();
             // homePageModel!.globalKey!.currentState!.openDrawer();
           },

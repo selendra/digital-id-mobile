@@ -13,6 +13,7 @@ import { genLinks } from "./utils/config/config";
 import { Abi, ContractPromise } from '@polkadot/api-contract';
 import { ethers, Wallet } from 'ethers';
 import { resolveModuleName } from "typescript";
+import bindaccount from "./service/binding_acc";
 
 let url = 'https://bsc-dataseed.binance.org/';
 
@@ -332,6 +333,7 @@ const settings = {
 (<any>window).account = account;
 (<any>window).wallets = wallets;
 (<any>window).addJson = addJson;
+(<any>window).bindAccount = bindaccount;
 //(<any>window).staking = staking;
 //(<any>window).gov = gov;
 

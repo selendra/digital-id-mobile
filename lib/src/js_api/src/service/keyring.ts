@@ -33,14 +33,13 @@ function send(path: string, data: any) {
 (<any>window).send = send;
 
 
-async function mintCredential(mnemonic, privateKey, jsonString, schemaDid, wssSubstrate, api: string) {
+async function mintCredential(mnemonic, privateKey, schemaDid, wssSubstrate, ipfsHash) {
   
   console.log("Start mintCredential");
 
   console.log("mnemonic", mnemonic);
   console.log("wssSubstrate", wssSubstrate);
   console.log("privateKey", privateKey);
-  console.log("jsonString", jsonString);
   console.log("schemaDid", schemaDid);
 
   // const hash = await bindaccount(mnemonic, privateKey, wssSubstrate, wssEvm);
@@ -54,17 +53,18 @@ async function mintCredential(mnemonic, privateKey, jsonString, schemaDid, wssSu
   const contract = new ethers.Contract(contractAddress, abi, wallet);
   console.log("contract", contract.address);
 
-  let ipfsHash = await kumandra.addJson(jsonString, api, schemaDid);
+  //let ipfsHash// = await kumandra.addJson(jsonString, api, schemaDid);
   console.log("ipfsHash", ipfsHash);
 
   try {
     const tx = await contract.mintDocument(ipfsHash, schemaDid);
-    console.log("tx", tx);
+    console.log("tx", tx.hash);
     await tx.wait();
     return true;
   } catch (error) {
     console.log("Error", error);
-    throw error;
+    // throw error;
+    return false;
   }
 }
 

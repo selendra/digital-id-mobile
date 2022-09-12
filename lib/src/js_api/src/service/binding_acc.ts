@@ -8,7 +8,7 @@ import { Wallet } from '@ethersproject/wallet';
 import { ethers } from 'ethers';
 import { EvmRpcProvider } from "@selendra/eth-providers/lib/rpc-provider";
 
-export async function bindaccount(
+export default async function bindaccount(
     substrateMnenonic: string,
     privateKey: string,
     substrateProvider:string,

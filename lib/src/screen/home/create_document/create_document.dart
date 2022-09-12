@@ -4,6 +4,7 @@
 import 'package:image_picker/image_picker.dart';
 import 'package:wallet_apps/index.dart';
 import 'package:wallet_apps/src/api/api.dart';
+import 'package:wallet_apps/src/components/dialog_c.dart';
 import 'package:wallet_apps/src/models/documents/schemas_m.dart';
 import 'package:wallet_apps/src/provider/documents_p.dart';
 import 'package:wallet_apps/src/screen/home/create_document/body_create_body.dart';
@@ -25,34 +26,55 @@ class _CreateDocumentState extends State<CreateDocument> {
   
   Future<void> mintCredential() async {
 
-    Map<String, dynamic> obj = {};
-    
-    Provider.of<DocumentProvider>(context, listen: false).lsIssuerProp!.forEach((element) {
-      if (element['widget'].containsKey('formController')) print("element['widget']['formController'] ${element['widget']['formController'].text}");
-      obj.addAll({
-        "${element['key']}": element['widget'].containsKey('formController') ? element['widget']['formController'].text : element['widget']['image'][0]
-      });
-    });
-    // print(obj);
-    await _docProvider!.addJson(
-      json.encode(obj),
-      Api.ipfsApi,
-      _docProvider!.schemaDocs!.did!
-    );
+    try {
+      Map<String, dynamic> obj = {};
 
-    // await Provider.of<ApiProvider>(context, listen: false).mintCredential(json.encode(obj), await Provider.of<DocumentProvider>(context, listen: false).schemaDocs!.did!);
-    
-    // bool isEmpty = false;
-    // for(int i = 0; i < widget.docs!.length; i++){
-    //   if (widget.docs![i]['formController'].text == ""){
-    //     isEmpty = true;
-    //     break;
-    //   }
-    // }
-
-    // if (isEmpty){
+      dialogLoading(context, content: "Minting document");
       
-    // }
+      Provider.of<DocumentProvider>(context, listen: false).lsIssuerProp!.forEach((element) {
+        // print("element['widget']['image'] ${element['widget']['image']}");
+        print("element['widget'].containsKey('formController') ${element['widget'].containsKey('formController')}");
+        print("element['widget']['formController'] ${element['widget']}");
+        if (element['widget'].containsKey('formController')) 
+        obj.addAll({
+          "${element['key']}": element['widget'].containsKey('formController') ? element['widget']['formController'].text : element['widget']['image'][0]
+        });
+      });
+      print("obj obj $obj");
+      // await _docProvider!.addJson(
+      //   json.encode(obj),
+      //   Api.ipfsApi,
+      //   _docProvider!.schemaDocs!.did!
+      // );
+
+      await Provider.of<ApiProvider>(context, listen: false).mintCredential(context, json.encode(obj), await Provider.of<DocumentProvider>(context, listen: false).schemaDocs!.did!).then((value) async {
+        
+        // Remove DialogLoading
+        Navigator.pop(context);
+        if (value == true){
+          await DialogComponents().dialogCustom(context: context, contents: "Document is minted", titles: "Successfuly");
+        } else {
+          await DialogComponents().dialogCustom(context: context, contents: "Something went wrong", titles: "Oops");
+        }
+      });
+      
+      // bool isEmpty = false;
+      // for(int i = 0; i < widget.docs!.length; i++){
+      //   if (widget.docs![i]['formController'].text == ""){
+      //     isEmpty = true;
+      //     break;
+      //   }
+      // }
+
+      // if (isEmpty){
+        
+      // }
+    } catch (e) {
+
+      // Remove DialogLoading
+      Navigator.pop(context);
+      await DialogComponents().dialogCustom(context: context, contents: "Something went wrong", titles: "Oops");
+    }
   }
   
   void queryPropByOwer() async {
@@ -75,7 +97,9 @@ class _CreateDocumentState extends State<CreateDocument> {
 
       XFile? file = await ImagePicker().pickImage(source: ImageSource.gallery);
       print("file ${file!.path}");
-      Provider.of<DocumentProvider>(context, listen: false).lsIssuerProp![index]['widget']['image'].add(file.path);
+      print("_docProvider!.lsIssuerProp![index]['widget'] ${_docProvider!.lsIssuerProp![index]['widget']['image']}");
+      // await _docProvider!.addJson(json, url, schemaID)
+      _docProvider!.lsIssuerProp![index]['widget']['image'].add(file.path);
 
       setState(() { });
     } catch (e){

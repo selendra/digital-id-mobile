@@ -1,6 +1,7 @@
 import 'dart:math';
 import 'package:flutter_aes_ecb_pkcs5/flutter_aes_ecb_pkcs5.dart';
 import 'package:defichaindart/defichaindart.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 // import 'package:defichaindart/defichaindart.dart';
 import 'package:polkawallet_sdk/api/types/networkParams.dart';
 import 'package:polkawallet_sdk/polkawallet_sdk.dart';
@@ -16,6 +17,7 @@ import 'package:http/http.dart' as http;
 import 'package:polkawallet_sdk/storage/types/keyPairData.dart';
 import 'package:polkawallet_sdk/api/apiKeyring.dart';
 import 'package:polkawallet_sdk/utils/localStorage.dart';
+import 'package:wallet_apps/src/provider/documents_p.dart';
 import 'package:wallet_apps/src/provider/receive_wallet_p.dart';
 import 'package:wallet_apps/src/service/apiKeyring.dart';
 import 'package:bip39/bip39.dart' as bip39;
@@ -66,6 +68,12 @@ class ApiProvider with ChangeNotifier {
 
   bool get isConnected => _isConnected;
   AccountM get getAccount => accountM;
+  
+  dynamic res;
+
+  // Private
+  String? _pk;
+  String? _mn;
 
   void setAccount(AccountM acc){
     accountM = acc;
@@ -403,14 +411,25 @@ class ApiProvider with ChangeNotifier {
     return false;
   }
 
-  Future<bool> mintCredential(String json, int schemaID) async {
+  Future<bool> mintCredential(BuildContext context, String json, int schemaDID) async {
     print("mintCredential");
     print("json $json");
-    print("schemaID $schemaID");
+    print("schemaDID $schemaDID");
     try {
       final _mnemonic = "dentist body neglect clay stage forget caught bacon moment gown toast kind";
       final _privateKey = await getPrivateKey(_mnemonic);
-      dynamic res = await _sdk.api.service.webView!.evalJavascript("keyring.mintCredential('$_mnemonic', '$_privateKey', '$json', '$schemaID', 'wss://rpc-testnet.selendra.org')");
+      print("_privateKey $_privateKey");
+      print("DotEnv().get('KUMANDRA_API') ${dotenv.get('KUMANDRA_API')}");
+
+      // Upload Json To IPFS
+      await Provider.of<DocumentProvider>(context, listen: false).addJson(json, dotenv.get('KUMANDRA_API'), schemaDID).then((value) async {
+
+        print("value $value");
+
+        res = await _sdk.api.service.webView!.evalJavascript("keyring.mintCredential('$_mnemonic', '$_privateKey', '$schemaDID', 'wss://rpc-testnet.selendra.org', '$value')");
+        print("res $res");
+      });
+
       return res;
     } catch (e) {
       if (ApiProvider().isDebug == true) print("Error mintCredential $e");
@@ -771,4 +790,17 @@ class ApiProvider with ChangeNotifier {
   //   }
   //   return null;
   // }
+
+
+  /// Selendra Web3 Interaction
+  /// 
+  Future<void> bindAccount(String schemaDID) async {
+
+    _pk = await getPrivateKey(_mn!);
+
+    res = await _sdk.webView!.evalJavascript("keyring.mintCredential('$_mn', '$_pk', '$json', '$schemaDID', 'wss://rpc-testnet.selendra.org')");
+
+    
+    
+  }
 }

@@ -11,7 +11,6 @@ import 'package:wallet_apps/src/provider/digital_id_p.dart';
 import 'package:wallet_apps/src/provider/documents_p.dart';
 import 'package:wallet_apps/src/provider/home_p.dart';
 import 'package:wallet_apps/src/screen/home/home_page/body_home.dart';
-import 'package:wallet_apps/src/service/http_request/get_request.dart';
 import 'package:wallet_apps/src/service/services_s.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 // import 'package:encrypt/encrypt.dart';
@@ -35,7 +34,7 @@ class _HomeState extends State<HomePage> with TickerProviderStateMixin {
   DashBoardModel _dashBoardM = DashBoardModel();
   TabController? _tabController;
   final GlobalKey<ScaffoldState> globalKey = GlobalKey<ScaffoldState>();
-  DigitalIDProvider? _digitalIDProvider;
+  
   CTypeModel cTypeModel = CTypeModel();
 
   DocumentProvider? _docsProvider;
@@ -50,7 +49,6 @@ class _HomeState extends State<HomePage> with TickerProviderStateMixin {
     
     _model.pageController = PageController(initialPage: 1);
 
-    _docsProvider = Provider.of<DocumentProvider>(context, listen: false);
 
     _model.pageController!.addListener(() {
       if(_model.activeIndex != _model.pageController){
@@ -74,7 +72,6 @@ class _HomeState extends State<HomePage> with TickerProviderStateMixin {
       onTab(_tabController!.index);
     });
     _dashBoardM = Provider.of<HomeProvider>(context, listen: false).homeModel;
-    _digitalIDProvider = Provider.of<DigitalIDProvider>(context, listen: false);
     Provider.of<DocumentProvider>(context, listen: false).initContext = context;
     // StorageServices.removeKey(DbKey.idKey);
     // initBlockchainData();
@@ -87,11 +84,6 @@ class _HomeState extends State<HomePage> with TickerProviderStateMixin {
     print("ENV ${ dotenv.get('KUMANDRA_API') }");
 
     super.initState();
-  }
-
-  // Query Data with Any address of EVM.
-  void queryAssetOf() {
-    Provider.of<DocumentProvider>(context, listen: false).queryAssetOf();
   }
 
   void fetchOrganization() async {
@@ -393,8 +385,7 @@ class _HomeState extends State<HomePage> with TickerProviderStateMixin {
         tabBarController: _tabBarController,
         selectedColor: _selectedColor,
         scanLogin: _scanLogin,
-        deleteAccount: _deleteAccount,
-        queryAssetOf: queryAssetOf
+        deleteAccount: _deleteAccount
         // dashModel: _dashBoardM,
         // onTab: onTab,
         // tabController: _tabController,

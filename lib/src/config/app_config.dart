@@ -182,6 +182,10 @@ class AppConfig {
   static String issuer = "assets/json/issuer.json";
   static String docJson = "assets/json/documents.json";
   static String docDidJson = "assets/json/document_did.json";
+
+  /// .ENV Kumandra
+  static String kmdApi = "KUMANDRA_API";
+  static String kmdDocsApi = "KUMANDRA_DOCS_API";
 }
 
 class DBkey {

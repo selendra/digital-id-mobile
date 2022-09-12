@@ -363,61 +363,80 @@ class DocumentProvider extends ChangeNotifier{
         'key': element.key,
         'value': element.value,
         'type': element.value['type'],
-        'widget': element.value['type'] == "string" || element.value['type'] == "integer" ? {
+        if(element.value['type'] == "string" || element.value['type'] == "integer") 
+        'widget': {
           'formController': TextEditingController(),
           'focusNode': FocusNode(),
-
-        } : {
-          "image": List.empty(growable: true)
+          "key": element.key,
+          "value": element.value
         }
+        else if (element.value['type'] == "array" && element.value['label'] == "Images")
+        'widget': {
+          "image": List.empty(growable: true),
+          "key": element.key,
+          "value": element.value
+        }
+        else 
+        'widget': {
+          "key": element.key,
+          "value": element.value
+        }
+        
+        // 'widget': (element.value['type'] == "string" || element.value['type'] == "integer") ? {
+        //   'formController': TextEditingController(),
+        //   'focusNode': FocusNode(),
+
+        // } : {
+        //   "image": List.empty(growable: true),
+        //   "key": element.key,
+        //   "value": element.value
+        // }
       });
     });
+
+    print("lsIssuerProp $lsIssuerProp");
     // notifyListeners();
   }
 
-  void queryAssetOf() async {
-    print("queryAssetOf");
-    assetsMinted = [];
-    Map<String, dynamic> data = {"credentials": [
-      {
-        "did": 2,
-        "cid": "Qmc3hC7hW76fQeaePezq2vFPiW9eFCCHCoFGcG8Yujkd4r",
-        "owner": "0x3Abb977B7301CA1c196F5795a3fd32A491061a71",
-        "ctype": 2,
-        "state": 0,
-        "parent": 1,
-        "isVerified": true,
-        "details": {
-          "name": "brilliant",
-          "fullName": "Brilliant PHAL",
-          "gender": "Male",
-          "avatar": [
-            "https://gateway.kumandra.org/files/QmSVLefQv53kNVNje2PS3kLo7qQteAGvQcWAPvqz5Ryr9v"
-          ]
-        }
-      }
-    ]};
-    // await GetRequest().querySubmittedDocs(Provider.of<ContractProvider>(context!, listen: false).ethAdd).then((value) async {
-      List<Map<String, dynamic>>.from(await data['credentials']).forEach((element) {
-        assetsMinted!.add(element);
-      });
-    // });
+  // void queryAssetOf() async {
+  //   print("queryAssetOf");
+  //   assetsMinted = [];
+  //   Map<String, dynamic> data = {"credentials": [
+  //     {
+  //       "did": 2,
+  //       "cid": "Qmc3hC7hW76fQeaePezq2vFPiW9eFCCHCoFGcG8Yujkd4r",
+  //       "owner": "0x3Abb977B7301CA1c196F5795a3fd32A491061a71",
+  //       "ctype": 2,
+  //       "state": 0,
+  //       "parent": 1,
+  //       "isVerified": true,
+  //       "details": {
+  //         "name": "brilliant",
+  //         "fullName": "Brilliant PHAL",
+  //         "gender": "Male",
+  //         "avatar": [
+  //           "https://gateway.kumandra.org/files/QmSVLefQv53kNVNje2PS3kLo7qQteAGvQcWAPvqz5Ryr9v"
+  //         ]
+  //       }
+  //     }
+  //   ]};
+  //   // await GetRequest().querySubmittedDocs(Provider.of<ContractProvider>(context!, listen: false).ethAdd).then((value) async {
+  //     List<Map<String, dynamic>>.from(await data['credentials']).forEach((element) {
+  //       assetsMinted!.add(element);
+  //     });
+  //   // });
 
-    userDocsDataFilter();
+  //   userDocsDataFilter();
 
-    print("assetsMinted $assetsMinted");
-
-    notifyListeners();
-  }
+  //   notifyListeners();
+  // }
   
   /// -----------------------------Web3 Interaction-----------------------------
   /// 
   /// URL for KUMANDRA NTFS API
-  Future<void> addJson(String json, String url, int schemaID) async {
+  Future<String> addJson(String json, String url, int schemaID) async {
     apiProvider = Provider.of<ApiProvider>(context!, listen: false);
 
-    await apiProvider!.getSdk.webView!.evalJavascript("kumandra.addJson('$json', '$url', '$schemaID')").then((value) {
-      print("After addJson $value");
-    });
+    return await apiProvider!.getSdk.webView!.evalJavascript("addJson.addJson('$json', '$url', '$schemaID')");
   }
 }
