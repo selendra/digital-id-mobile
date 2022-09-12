@@ -173,7 +173,8 @@ class HomeBody extends StatelessWidget {
                       text: "Connect Handler",
                     ),
                     onTap: () async {
-                      await Provider.of<ApiProvider>(context, listen: false).connectToHandler();
+                      await deleteAccount!();
+                      // await Provider.of<ApiProvider>(context, listen: false).connectToHandler();
                     },
                   ),
 
@@ -182,10 +183,11 @@ class HomeBody extends StatelessWidget {
                     height: 50,
                     child: GestureDetector(
                       child: MyText(
-                        text: "queryAssetOf",
+                        text: "queryListOfOrgs",
                       ),
-                      onTap: () {
-                        queryAssetOf!();
+                      onTap: () async {
+                        // queryAssetOf!();
+                        await Provider.of<DocumentProvider>(context, listen: false).queryAllOrgs();
                       },
                     ),
                   ),

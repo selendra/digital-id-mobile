@@ -1,7 +1,7 @@
 import { ethers } from "ethers";
 import { EvmRpcProvider } from "@selendra/eth-providers";
 import {abi} from './Identity.json';
-import { addJson } from './kumandra';
+// import addJson from './kumandra';
 
 const network = process.env.NEXT_PUBLIC_WSS_ADDRESS || "";
 const contractAddress = process.env.NEXT_PUBLIC_CONTRACT_ADDR || "";
@@ -58,20 +58,20 @@ async function mintSchema(privateKey, ipfsHash, schemaState, orgDid) {
  * @param {number} schemaDid - schema id that credential based on
  */
 async function mintCredential(privateKey, jsonString, schemaDid) {
-  const provider = EvmRpcProvider.from(network);
-  await provider.isReady();
-  const wallet = new ethers.Wallet(privateKey, provider);
-  const contract = new ethers.Contract(contractAddress, abi, wallet);
+  // const provider = EvmRpcProvider.from(network);
+  // await provider.isReady();
+  // const wallet = new ethers.Wallet(privateKey, provider);
+  // const contract = new ethers.Contract(contractAddress, abi, wallet);
 
-  const ipfsHash = await addJson(jsonString);
-  try {
-    const tx = await contract.mintDocument(ipfsHash, schemaDid);
+  // const ipfsHash = await addJson(jsonString);
+  // try {
+  //   const tx = await contract.mintDocument(ipfsHash, schemaDid);
 
-    await tx.wait();
-    return true;
-  } catch (error) {
-    throw error;
-  }
+  //   await tx.wait();
+  //   return true;
+  // } catch (error) {
+  //   throw error;
+  // }
 }
 
 /**
@@ -209,6 +209,6 @@ async function burnCredential(privateKey, credentialDid) {
   }
 }
 
-export {
-    mintCredential
-}
+// export {
+//     mintCredential
+// }

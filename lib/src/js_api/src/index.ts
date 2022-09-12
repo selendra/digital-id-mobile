@@ -4,6 +4,7 @@ import { subscribeMessage, getNetworkConst, getNetworkProperties } from "./servi
 import keyring from "./service/keyring";
 import account from "./service/account";
 import wallets from "./service/wallet";
+import addJson from "./service/selendra/kumandra";
 import metadata from "./metadata.json";
 import ametadata from "./meta/metadata.json";
 //import staking from "./service/staking";
@@ -33,6 +34,7 @@ function send(path: string, data: any) {
  * @param {string} nodeEndpoint
  */
 async function connect(nodes: string[]) {
+  console.log("connecting");
   return new Promise(async (resolve, reject) => {
     const wsProvider = new WsProvider(nodes);
     try {
@@ -329,7 +331,7 @@ const settings = {
 (<any>window).keyring = keyring;
 (<any>window).account = account;
 (<any>window).wallets = wallets;
-// (<any>window).mobile = mobile;
+(<any>window).addJson = addJson;
 //(<any>window).staking = staking;
 //(<any>window).gov = gov;
 

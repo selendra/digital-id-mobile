@@ -1,7 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:wallet_apps/index.dart';
 import 'package:wallet_apps/src/models/documents/org_m.dart';
-import 'package:wallet_apps/src/provider/documents_p.dart';
 
 class SchemasModel extends OrgModel {
 
@@ -16,7 +13,7 @@ class SchemasModel extends OrgModel {
   /// Schema Data
   Map<String, dynamic>? properties;
 
-  /// Json That Modeling of Schema
+  /// Json That Modeling Details From Issuer 
   SchemasModel.fromJson(Map<String, dynamic> data) : super.fromJson(data) {
     
     print("From Schema $data");
@@ -27,5 +24,6 @@ class SchemasModel extends OrgModel {
     ownerId = data['details']['ownerId'];
     images = List<String>.from(data['details']['images']);
     properties = data['details']['properties'];
+
   }
 }

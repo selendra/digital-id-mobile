@@ -96,13 +96,13 @@ class _HomeState extends State<HomePage> with TickerProviderStateMixin {
 
   void fetchOrganization() async {
 
-    await _docsProvider!.queryListOfOrgs();
+    await _docsProvider!.queryAllOrgs();
     _docsProvider!.orgFilter();
     // _docsProvider!.schemaFilter();
     // _docsProvider!.credentialsFilter();
 
-    print("_docsProvider ${_docsProvider!.lsOrgDocs}");
-    print("_docsProvider ${_docsProvider!.lsCredentailDocs}");
+    // print("_docsProvider ${_docsProvider!.lsOrgDocs}");
+    // print("_docsProvider ${_docsProvider!.lsCredentailDocs}");
   }
 
   void fetchSelendraID() async {

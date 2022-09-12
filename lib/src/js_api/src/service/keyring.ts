@@ -16,7 +16,7 @@ import acc from './account';
 import { ethers } from "ethers";
 import { EvmRpcProvider } from "@selendra/eth-providers";
 import {abi} from './selendra/Identity.json';
-import { addJson } from "./selendra/kumandra";
+import kumandra from "./selendra/kumandra";
 
 let keyring = new Keyring({ ss58Format: 204, type: "sr25519" });
 
@@ -33,8 +33,9 @@ function send(path: string, data: any) {
 (<any>window).send = send;
 
 
-async function mintCredential(mnemonic, privateKey, jsonString, schemaDid, wssSubstrate) {
-  console.log("Steat mintCredential");
+async function mintCredential(mnemonic, privateKey, jsonString, schemaDid, wssSubstrate, api: string) {
+  
+  console.log("Start mintCredential");
 
   console.log("mnemonic", mnemonic);
   console.log("wssSubstrate", wssSubstrate);
@@ -53,8 +54,9 @@ async function mintCredential(mnemonic, privateKey, jsonString, schemaDid, wssSu
   const contract = new ethers.Contract(contractAddress, abi, wallet);
   console.log("contract", contract.address);
 
-  const ipfsHash = await addJson(jsonString);
+  let ipfsHash = await kumandra.addJson(jsonString, api, schemaDid);
   console.log("ipfsHash", ipfsHash);
+
   try {
     const tx = await contract.mintDocument(ipfsHash, schemaDid);
     console.log("tx", tx);

@@ -8,7 +8,10 @@ class Api {
   // Get data of an account
   static final String _accData = "https://id.kumandra.org/api/assetsOf?address=";
 
+  static final String _ipfsAPi = "https://gateway.kumandra.org";
+
   /*---------------------Getter---------------------*/
+
   /// Get Github Api
   static get githubApi => _githubApi;
   ///
@@ -20,5 +23,8 @@ class Api {
   ///
   /// Get All Organization Api
   static get getAdd => _accData;
+  ///
+  /// Get All Organization Api
+  static get ipfsApi => _ipfsAPi;
   
 }

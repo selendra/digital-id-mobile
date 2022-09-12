@@ -11,6 +11,8 @@ import 'package:wallet_apps/src/service/http_request/get_request.dart';
 class DocumentProvider extends ChangeNotifier{
 
   _http.Response? _res;
+
+  /// Object Contain All Organization
   Map<String, dynamic>? object;
 
   String? title;
@@ -35,13 +37,15 @@ class DocumentProvider extends ChangeNotifier{
 
   BuildContext? context;
 
+  ApiProvider? apiProvider;
+
   DocumentProvider(){
 
     // Initialize All Field
     initField();
     
     // Call Query Method
-    queryListOfOrgs();
+    queryAllOrgs();
 
     // docsModel.data = [
       // {
@@ -115,7 +119,6 @@ class DocumentProvider extends ChangeNotifier{
   /// Initialize context to user Provider  At HomePage
   void set initContext (BuildContext context) {
     this.context = context;
-    notifyListeners();
   }
 
   /// Run First;
@@ -273,16 +276,23 @@ class DocumentProvider extends ChangeNotifier{
     notifyListeners();
   }
 
+  void notifyChanged(){
+    notifyListeners();
+  }
+
   /// -----------------------------From API-----------------------------
   ///
   /// Query All Data Of Organization
   /// 
   /// This Function Run Inside Home Before Navigate to Document Setup Screen
-  Future<void> queryListOfOrgs() async {
-    
+  Future<void> queryAllOrgs() async {
+    print("queryListOfOrgs");
     try {
-      _res = await _http.get(Uri.parse(Api.allOrgApi));
-      object = json.decode(_res!.body);
+      // _res = await _http.get(Uri.parse(Api.allOrgApi));
+      // object = json.decode(_res!.body);
+      object = await json.decode(await rootBundle.loadString(AppConfig.docDidJson));
+      print("object $object");
+      
     } catch (e){
       print("Error queryListOfOrgs $e");
     }
@@ -292,8 +302,10 @@ class DocumentProvider extends ChangeNotifier{
   Future<void> queryDocByOwerAddr({required String? ownerAddr}) async {
     print("queryDocByOwerAddr $ownerAddr");
     try {
-      _res = await _http.get(Uri.parse(Api.assetOf+"$ownerAddr"));
-      schemaFilter(json.decode(_res!.body));
+      // _res = await _http.get(Uri.parse(Api.assetOf+"$ownerAddr"));
+      // schemaFilter(json.decode(_res!.body));
+
+      schemaFilter(object!);
     } catch (e){
       print("Error queryListOfOrgs $e");
     }
@@ -302,20 +314,24 @@ class DocumentProvider extends ChangeNotifier{
   
   /// Collect only Organization
   void orgFilter(){
-    // lsDocs![2].docsList = [];
-    // lsDocs![2].lsOrg = [];
-    // for (int i = 0; i < object!['organizations'].length; i++){
-    //   lsOrgDocs!.add(
-    //     OrgModel.fromJson(object!['organizations'][i])
-    //   );
-    //   lsDocs![2].lsOrg!.add(OrgModel.fromJson(object!['organizations'][i]));
-    //   lsDocs![2].docsList!.add(
-    //     lsOrgDocs![i].details
-    //   );
-    // }
+    print("orgFilter");
+    if (lsDocs!.isNotEmpty){
 
-    // notifyListeners();
-    
+      lsDocs![2].docsList = [];
+      lsDocs![2].lsOrg = [];
+      for (int i = 0; i < object!['organizations'].length; i++){
+
+        // Fill Organzation
+        lsOrgDocs!.add(
+          OrgModel.fromJson(object!['organizations'][i])
+        );
+        lsDocs![2].lsOrg!.add(OrgModel.fromJson(object!['organizations'][i]));
+        lsDocs![2].docsList!.add(
+          lsOrgDocs![i].details
+        );
+      }
+    }
+
   }
 
   /// Collect only Organization
@@ -337,9 +353,9 @@ class DocumentProvider extends ChangeNotifier{
     }
   }
 
-  /// Modeling Properties for Issuer
+  /// Modeling Properties for Issuer Or Organization
   void propModeling(){
-    lsIssuerProp!.clear();
+    lsIssuerProp = [];
 
     schemaDocs!.properties!.entries.forEach((element) {
       
@@ -356,7 +372,7 @@ class DocumentProvider extends ChangeNotifier{
         }
       });
     });
-    notifyListeners();
+    // notifyListeners();
   }
 
   void queryAssetOf() async {
@@ -392,5 +408,16 @@ class DocumentProvider extends ChangeNotifier{
     print("assetsMinted $assetsMinted");
 
     notifyListeners();
+  }
+  
+  /// -----------------------------Web3 Interaction-----------------------------
+  /// 
+  /// URL for KUMANDRA NTFS API
+  Future<void> addJson(String json, String url, int schemaID) async {
+    apiProvider = Provider.of<ApiProvider>(context!, listen: false);
+
+    await apiProvider!.getSdk.webView!.evalJavascript("kumandra.addJson('$json', '$url', '$schemaID')").then((value) {
+      print("After addJson $value");
+    });
   }
 }

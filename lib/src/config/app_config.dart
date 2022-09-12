@@ -181,6 +181,7 @@ class AppConfig {
   static String popular = "assets/json/popular.json";
   static String issuer = "assets/json/issuer.json";
   static String docJson = "assets/json/documents.json";
+  static String docDidJson = "assets/json/document_did.json";
 }
 
 class DBkey {
