@@ -16,7 +16,7 @@ class AppServices {
   
   static int myNumCount = 0;
 
-  static Future noInternetConnection(GlobalKey<ScaffoldState> globalKey) async {
+  static Future noInternetConnection(BuildContext context, GlobalKey<ScaffoldState> globalKey) async {
     try {
       final Connectivity _connectivity = Connectivity();
 
@@ -24,15 +24,14 @@ class AppServices {
 
       _connectivity.onConnectivityChanged.listen((ConnectivityResult result) {
         if (result == ConnectivityResult.none) {
-          openSnackBar(globalKey, AppString.contentConnection);
+          openSnackBar(context, globalKey, AppString.contentConnection);
         } else {
-          // ignore: deprecated_member_use
-          globalKey.currentState!.removeCurrentSnackBar();
+          ScaffoldMessenger.of(context).removeCurrentSnackBar();
         }
       });
 
       if (myResult == ConnectivityResult.none) {
-        openSnackBar(globalKey, AppString.contentConnection);
+        openSnackBar(context, globalKey, AppString.contentConnection);
       }
     } catch (e) {}
   }
@@ -56,9 +55,10 @@ class AppServices {
     } catch (e) {}
   }
 
-  static void openSnackBar(GlobalKey<ScaffoldState> globalKey, String content) {
-    // ignore: deprecated_member_use
-    globalKey.currentState!.showSnackBar(snackBarBody(content, globalKey));
+  static void openSnackBar(BuildContext context, GlobalKey<ScaffoldState> globalKey, String content) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      snackBarBody(content, context),
+    );
   }
 
   // ignore: avoid_void_async

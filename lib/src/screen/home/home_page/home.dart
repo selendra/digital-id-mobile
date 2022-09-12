@@ -78,11 +78,12 @@ class _HomeState extends State<HomePage> with TickerProviderStateMixin {
     Provider.of<DocumentProvider>(context, listen: false).initContext = context;
     // StorageServices.removeKey(DbKey.idKey);
     // initBlockchainData();
-    initDigitalId();
 
     fetchSelendraID();
     
     fetchOrganization();
+
+    queryAssetOf();
     
     print("ENV ${ dotenv.get('KUMANDRA_API') }");
 
@@ -191,44 +192,6 @@ class _HomeState extends State<HomePage> with TickerProviderStateMixin {
       }
       print("Provider.of<HomeProvider>(context, listen: false).successSubmitToBlockchain ${Provider.of<HomeProvider>(context, listen: false).successSubmitToBlockchain}");
     });
-  }
-
-  /// For Check Identity Setup (National ID, Student)
-  initDigitalId() async {
-    print("initDigitalId");
-    
-    // await Provider.of<ContractProvider>(context, listen: false).orgsList();  
-    // print("initDigitalId");
-    // await Provider.of<DigitalIDProvider>(context, listen: false).fetchID().then((value) {
-    //   print("value");
-    // });
-
-    // await StorageServices.fetchData(DbKey.sensitive).then((value) async {
-    //   print("sensitive $value");
-    //   if (value != null){
-
-    //     Map<String, dynamic> data = await json.decode(Encryption().decryptAES(value));
-    //     print("data ${data}");
-
-    //     _dashBoardM.name = data['name'] == "" || data['name'] == null ? "" : data['name'];
-    //     _dashBoardM.email = data['email'] == "" || data['email'] == null ? "" : data['email'];
-    //     _dashBoardM.dob = data['dob'] == "" || data['dob'] == null ? "" : data['dob'];
-    //     _dashBoardM.nationality = data['nationality'] == "" || data['nationality'] == null ? "" : data['nationality'];
-    //     _dashBoardM.phoneNum = data['phoneNum'] == "" || data['phoneNum'] == null ? "" : data['phoneNum'];
-    //     _dashBoardM.country = data['country'] == "" || data['country'] == null ? "" : data['country'];
-
-    //     _dashBoardM.nameController.text = data['name'] == "" || data['name'] == null ? "" : data['name'];
-    //     _dashBoardM.emailController.text = data['email'] == "" || data['email'] == null ? "" : data['email'];
-    //     _dashBoardM.dobController.text = data['dob'] == "" || data['dob'] == null ? "" : data['dob'];
-    //     _dashBoardM.nationalityController.text = data['nationality'] == "" || data['nationality'] == null ? "" : data['nationality'];
-    //     _dashBoardM.phoneNumController.text = data['phoneNum'] == "" || data['phoneNum'] == null ? "" : data['phoneNum'];
-    //     _dashBoardM.countryController.text = data['country'] == "" || data['country'] == null ? "" : data['country'];
-
-    //     _digitalIDProvider!.isAbleSubmitToBlockchain(context: context);
-    //   }
-      
-    // });
-    // setState(() { });
   }
 
   void submitEdit() async {

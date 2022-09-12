@@ -31,19 +31,19 @@ class KeyStoreJson extends StatelessWidget{
       body: Column(
         children: [
           Card(
-            color: Colors.white.withOpacity(0.06),
+            color: Colors.white,
             margin: EdgeInsets.all(paddingSize),
             child: Padding(
               padding: EdgeInsets.all(paddingSize),
               child: MyText(
                 text: keystore.toString(),
-                color2: Colors.white
+                color2: Colors.black
               )
             ),
           ),
 
           MyGradientButton(
-            edgeMargin: const EdgeInsets.only(top: 16, left: 20, right: 20, bottom: 16),
+            edgeMargin: const EdgeInsets.all(paddingSize),
             textButton: "Copy",
             begin: Alignment.bottomLeft,
             end: Alignment.topRight,

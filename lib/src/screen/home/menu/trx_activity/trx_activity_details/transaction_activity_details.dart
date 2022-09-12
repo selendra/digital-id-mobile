@@ -23,7 +23,7 @@ class MyActivityDetailsState extends State<TransactionActivityDetails> {
 
   @override
   void initState() {
-    AppServices.noInternetConnection(_globalKey);
+    AppServices.noInternetConnection(context, _globalKey);
     super.initState();
   }
 

@@ -142,7 +142,7 @@ class HomeBody extends StatelessWidget {
                           itemBuilder: (context, index){
                             return CardDocument(data: provider.docsModel.pending[index], isDetail: false,);
                           }
-                        ) : Text("Empty"),
+                        ) : Center(child: Image.asset(AppConfig.logoPath+"document.png", width: 178, height: 178)),
                         // ListView.builder(
                         //   shrinkWrap: true,
                         //   itemCount: provider.assetsMinted!.length,
@@ -157,7 +157,7 @@ class HomeBody extends StatelessWidget {
                           itemBuilder: (context, index){
                             return CardDocument(data: provider.docsModel.approve[index], isDetail: false,);
                           }
-                        ) : Text("Empty"),
+                        ) : Center(child: Image.asset(AppConfig.logoPath+"document.png", width: 178, height: 178)),
                         
                       ],
                     )

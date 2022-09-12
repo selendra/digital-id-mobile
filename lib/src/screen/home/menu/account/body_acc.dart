@@ -55,54 +55,54 @@ class AccountBody extends StatelessWidget{
             height: MediaQuery.of(context).size.height,
             child: Column(
               children: [
-        
+
                 // CardDocument(data: Provider.of<DocumentProvider>(context).kycDocs.approve[0], isDetail: false,),
-                Padding(
-                  padding: EdgeInsets.all(paddingSize),
-                  child: FlipCard(
-                    direction: FlipDirection.HORIZONTAL,
-                    front: CardDocument(data: Provider.of<DocumentProvider>(context).docsModel.approve[0], isDetail: true, margin: EdgeInsets.zero, colorString: "#073444", textColor: "#FFFFFF"),
-                    back: ClipRRect(
-                      borderRadius: BorderRadius.circular(18.0),
-                      child: Container(
-                        height: 25.h,
-                        color: hexaCodeToColor("#073444"),
-                        child: Column(
-        
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Image.asset("assets/SelendraQr-1.png", height: 10.h,),
-                
-                            Column(
-                              children: [
-                                MyText(
-                                  text: provider.accountM.name ?? '',
-                                  color: AppColors.whiteColor,
-                                  fontSize: 20,
-                                ),
-            
-                                Padding(
-                                  padding: const EdgeInsets.all(paddingSize),
-                                  child:WidgetShimmer(
-                                    txt: provider.accountM.address, 
-                                    child: MyText(
-                                      right: 5,
-                                      text: provider.accountM.address,
-                                      color: AppColors.whiteColor,
-                                      fontSize: 16,
-                                    )
-                                  ),
-                                )
-            
-                              ],
-                            )
-                          ],
-                        ),
-                      )
-                    )
-                  ),
-                ),
-        
+                // Padding(
+                //   padding: EdgeInsets.all(paddingSize),
+                //   child: FlipCard(
+                //     direction: FlipDirection.HORIZONTAL,
+                //     front: CardDocument(data: Provider.of<DocumentProvider>(context).docsModel.approve[0], isDetail: true, margin: EdgeInsets.zero, colorString: "#073444", textColor: "#FFFFFF"),
+                //     back: ClipRRect(
+                //       borderRadius: BorderRadius.circular(18.0),
+                //       child: Container(
+                //         height: 25.h,
+                //         color: hexaCodeToColor("#073444"),
+                //         child: Column(
+                //
+                //           mainAxisAlignment: MainAxisAlignment.center,
+                //           children: [
+                //             Image.asset("assets/SelendraQr-1.png", height: 10.h,),
+                //
+                //             Column(
+                //               children: [
+                //                 MyText(
+                //                   text: provider.accountM.name ?? '',
+                //                   color: AppColors.whiteColor,
+                //                   fontSize: 20,
+                //                 ),
+                //
+                //                 Padding(
+                //                   padding: const EdgeInsets.all(paddingSize),
+                //                   child:WidgetShimmer(
+                //                     txt: provider.accountM.address,
+                //                     child: MyText(
+                //                       right: 5,
+                //                       text: provider.accountM.address,
+                //                       color: AppColors.whiteColor,
+                //                       fontSize: 16,
+                //                     )
+                //                   ),
+                //                 )
+                //
+                //               ],
+                //             )
+                //           ],
+                //         ),
+                //       )
+                //     )
+                //   ),
+                // ),
+                //
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 16.0),
                   child: Container(
@@ -118,7 +118,6 @@ class AccountBody extends StatelessWidget{
                       children: [
                         ListTileComponent(
                           action: (){
-                            // underContstuctionAnimationDailog(context: context);
                             AccountC().showEditName(
                               context,
                               accountModel!.editNameKey,
@@ -130,7 +129,7 @@ class AccountBody extends StatelessWidget{
                           },
                           text: 'Edit Wallet Name',
                         ),
-                        
+
                         ListTileComponent(
                           action: (){
                             // underContstuctionAnimationDailog(context: context);
@@ -144,7 +143,7 @@ class AccountBody extends StatelessWidget{
                             //   submitBackUpKey!,
                             // );
                             Navigator.push(
-                              context, 
+                              context,
                               Transition(
                                 child: BackUpKeyBody(),
                                 transitionEffect: TransitionEffect.RIGHT_TO_LEFT
@@ -153,9 +152,9 @@ class AccountBody extends StatelessWidget{
                           },
                           text: 'Backup Key',
                         ),
-                        
+
                         // const SizedBox(height: 20),
-                        
+
                         ListTileComponent(
                           action: ()  async {
                             // underContstuctionAnimationDailog(context: context);
@@ -171,20 +170,20 @@ class AccountBody extends StatelessWidget{
                             //   onSubmitChangePin!,
                             //   submitChangePin!,
                             // );
-        
-                            final res = await Navigator.push(
-                              context, 
+
+                            await Navigator.push(
+                              context,
                               Transition(
                                 child: ChangePin(),
                                 transitionEffect: TransitionEffect.RIGHT_TO_LEFT
                               )
                             );
-        
+
                             // await Provider.of<ApiProvider>(context, listen: false).
                           },
                           text: 'Change Pin',
                         ),
-        
+
                         const SizedBox(height: 20),
                         GestureDetector(
                           onTap: () async {

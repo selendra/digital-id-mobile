@@ -143,6 +143,7 @@ dependencies:
   random_avatar:
   camera:
   flutter_dotenv: ^5.0.2
+  dropdown_button2: ^1.7.2
   
 dependency_overrides:
   encrypt:

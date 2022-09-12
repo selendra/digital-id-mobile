@@ -30,7 +30,7 @@ class MyUserInfoState extends State<MyUserInfo> {
 
   @override
   void initState() {
-    AppServices.noInternetConnection(_userInfoM.globalKey);
+    AppServices.noInternetConnection(context, _userInfoM.globalKey);
     /* If Registering Account */
     // if (widget.passwords != null) getToken();
     super.initState();

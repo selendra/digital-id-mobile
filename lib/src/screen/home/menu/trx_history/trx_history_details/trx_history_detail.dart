@@ -25,7 +25,7 @@ class TrxHistoryDetailsState extends State<TrxHistoryDetails> {
 
   @override
   void initState() {
-    AppServices.noInternetConnection(_globalKey);
+    AppServices.noInternetConnection(context, _globalKey);
     super.initState();
   }
 

@@ -379,14 +379,18 @@ class ApiProvider with ChangeNotifier {
     }
     return res;
   }
-  
+
   Future<bool> validateEther(String address) async {
     try {
 
       dynamic res = await _sdk.api.service.webView!.evalJavascript('wallets.validateEtherAddr("$address")');
       return res;
     } catch (e) {
-      if (ApiProvider().isDebug == true) print("Error validateEther $e");
+      if (ApiProvider().isDebug == true) {
+        if (kDebugMode) {
+          print("Error validateEther $e");
+        }
+      }
     }
     return false;
   }
@@ -435,7 +439,11 @@ class ApiProvider with ChangeNotifier {
       final res = await _sdk.api.service.webView!.evalJavascript("keyring.validateAddress('$address')");
       return res;
     } catch (e) {
-      if (ApiProvider().isDebug == true) print("Error validateAddress $e");
+      if (ApiProvider().isDebug == true) {
+        if (kDebugMode) {
+          print("Error validateAddress $e");
+        }
+      }
     }
     return false;
   }
@@ -611,15 +619,18 @@ class ApiProvider with ChangeNotifier {
     try {
 
       accountM.address = await _sdk.webView!.evalJavascript('$funcName.getSELAddr()');
-
-      print("getCurrentAccount ${accountM.address}");
       accountM.name = _keyring.current.name;
+      accountM.pubKey = _keyring.current.pubKey;
 
-      Provider.of<ReceiveWalletProvider>( context!, listen: false).getAccount(this);
-      
+      Provider.of<ReceiveWalletProvider>( context!, listen: false).getAccount(accountM);
+
       contractProvider!.setSELNativeAddr(accountM.address!);
     } catch (e){
-      if (ApiProvider().isDebug == true) print("Error getCurrentAccount $e");
+      if (ApiProvider().isDebug == true) {
+        if (kDebugMode) {
+          print("Error getCurrentAccount $e");
+        }
+      }
     }
 
     notifyListeners();
@@ -631,11 +642,15 @@ class ApiProvider with ChangeNotifier {
       accountM.address = await _sdk.webView!.evalJavascript('keyring.checkPassword()');
       accountM.name = _keyring.current.name;
 
-      Provider.of<ReceiveWalletProvider>( context!, listen: false).getAccount(this);
-      
+      Provider.of<ReceiveWalletProvider>( context!, listen: false).getAccount(accountM);
+
       contractProvider!.setSELNativeAddr(accountM.address!);
     } catch (e){
-      if (ApiProvider().isDebug == true) print("Error getCurrentAccount $e");
+      if (ApiProvider().isDebug == true) {
+        if (kDebugMode) {
+          print("Error getCurrentAccount $e");
+        }
+      }
     }
 
     notifyListeners();

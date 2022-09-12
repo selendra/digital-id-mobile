@@ -35,7 +35,7 @@ class ImportUserInfoState extends State<ImportUserInfo> {
   @override
   void initState() {
     _menuModel = MenuModel();
-    AppServices.noInternetConnection(_userInfoM.globalKey);
+    AppServices.noInternetConnection(context, _userInfoM.globalKey);
     super.initState();
   }
 

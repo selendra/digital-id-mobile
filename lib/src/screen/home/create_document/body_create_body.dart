@@ -66,16 +66,20 @@ class CreateIDBody extends StatelessWidget {
                   await pickImage!(i);
                 },
                 child: CircleAvatar(
-                  child: Container(
-                    width: 20.w,
-                    height: 20.w,
-                    child: Center(
-                      child: List.from(provider.lsIssuerProp![i]['widget']['image']).isEmpty ? Text("e") : Image.file(File(provider.lsIssuerProp![i]['widget']['image'][0]))
-                    ),
+                  radius: 50,
+                  child: Center(
+                    child: ClipRRect(
+                      child: List.from(
+                          provider.lsIssuerProp![i]['widget']['image']).isEmpty
+                          ? Text("e")
+                          : Image.file(File(provider.lsIssuerProp![i]['widget']['image'][0])
+                      )
+                    )
                   ),
                 ),
               ),
-              
+
+              SizedBox(height: 5.h),
               Expanded(
                 child: ListView.builder(
                   itemCount: provider.lsIssuerProp!.length,

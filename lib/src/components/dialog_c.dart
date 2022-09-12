@@ -14,12 +14,12 @@ class DialogComponents {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(15)
           ),
-          backgroundColor: hexaCodeToColor(AppColors.darkBgd),
+          backgroundColor: hexaCodeToColor(AppColors.whiteColor),
           title: MyText(
             fontSize: 20,
             text: "Mnemonic",
             fontWeight: FontWeight.bold,
-            color: isDarkTheme == false ? AppColors.darkCard : AppColors.whiteHexaColor,
+            color: AppColors.darkCard,
           ),
           content: Column(
             mainAxisSize: MainAxisSize.min,
@@ -28,16 +28,13 @@ class DialogComponents {
               MyText(
                 textAlign: TextAlign.left,
                 text: AppString.screenshotNote,
-                color: isDarkTheme == false ? AppColors.darkCard : AppColors.whiteHexaColor,
+                color: AppColors.darkCard,
                 bottom: paddingSize,
               ),
 
               Card(
                 margin: EdgeInsets.zero,
                 shape: RoundedRectangleBorder(
-                  // side: BorderSide(
-                  //   width: 1
-                  // ),
                   borderRadius: BorderRadius.circular(10),
                 ),
                 color: isDarkTheme! 
@@ -47,7 +44,7 @@ class DialogComponents {
                   text: contents,
                   textAlign: TextAlign.left,
                   fontSize: 18,
-                  color: AppColors.secondarytext,
+                  color: AppColors.newPrimary,
                   fontWeight: FontWeight.bold,
                   pLeft: 16,
                   right: 16,
@@ -56,38 +53,36 @@ class DialogComponents {
                 ),
               ),
 
-              Padding(
-                padding: EdgeInsets.symmetric(vertical: 20),
-                child: Consumer<ReceiveWalletProvider>(
-                  builder: (context, provider, widget){
-                    return GestureDetector(
-                      onTap: (){
-                  
-                        Clipboard.setData(
-                          ClipboardData(text: contents),
-                        );
-                        /* Copy Text */
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            content: Text('Seeds is copied'),
-                          ),
-                        );
-                      },
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(Icons.copy, color: hexaCodeToColor(AppColors.lowWhite), size: 15.sp,),
-                          
-                          SizedBox(width: 2.w,),
-                          MyText(
-                            text: "Copy address",
-                            color: AppColors.lowWhite,
-                          )
-                        ],
-                      ),
-                    );
-                  }
-                ),
+              SizedBox(height: paddingSize),
+              Consumer<ReceiveWalletProvider>(
+                builder: (context, provider, widget){
+                  return GestureDetector(
+                    onTap: (){
+
+                      Clipboard.setData(
+                        ClipboardData(text: contents),
+                      );
+                      /* Copy Text */
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text('Seeds is copied'),
+                        ),
+                      );
+                    },
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(Icons.copy, color: hexaCodeToColor(AppColors.darkCard), size: 15.sp,),
+
+                        SizedBox(width: 2.w,),
+                        MyText(
+                          text: "Copy address",
+                          color: AppColors.darkCard,
+                        )
+                      ],
+                    ),
+                  );
+                }
               )
 
             ],

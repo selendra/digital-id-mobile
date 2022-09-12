@@ -151,12 +151,9 @@ class About extends StatelessWidget {
                               const ClipboardData(text: 'info@bitriel.com'),
                             ).then(
                               (value) => {
-                                // ignore: deprecated_member_use
-                                _scaffoldKey.currentState!.showSnackBar(
-                                  const SnackBar(
-                                    content: Text('Copied to Clipboard'),
-                                  ),
-                                )
+                                ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                                  content: Text('Copied to Clipboard'),
+                                )),
                               },
                             );
                           },

@@ -238,6 +238,7 @@ class DocumentProvider extends ChangeNotifier{
 
   /// Data Of User's Document Filter By Status
   void userDocsDataFilter(){
+    print("userDocsDataFilter");
     // docsModel.data.forEach((element) {
     //   if (element['isApprove'] == false) {
     //     docsModel.pending.add(element);
@@ -378,32 +379,33 @@ class DocumentProvider extends ChangeNotifier{
   void queryAssetOf() async {
     print("queryAssetOf");
     assetsMinted = [];
-    Map<String, dynamic> data = {"credentials": [
-      {
-        "did": 2,
-        "cid": "Qmc3hC7hW76fQeaePezq2vFPiW9eFCCHCoFGcG8Yujkd4r",
-        "owner": "0x3Abb977B7301CA1c196F5795a3fd32A491061a71",
-        "ctype": 2,
-        "state": 0,
-        "parent": 1,
-        "isVerified": true,
-        "details": {
-          "name": "brilliant",
-          "fullName": "Brilliant PHAL",
-          "gender": "Male",
-          "avatar": [
-            "https://gateway.kumandra.org/files/QmSVLefQv53kNVNje2PS3kLo7qQteAGvQcWAPvqz5Ryr9v"
-          ]
-        }
-      }
-    ]};
-    // await GetRequest().querySubmittedDocs(Provider.of<ContractProvider>(context!, listen: false).ethAdd).then((value) async {
-      List<Map<String, dynamic>>.from(await data['credentials']).forEach((element) {
-        assetsMinted!.add(element);
-      });
-    // });
+    // Map<String, dynamic> data;
+    // = {"credentials": [
+    //   {
+    //     "did": 2,
+    //     "cid": "Qmc3hC7hW76fQeaePezq2vFPiW9eFCCHCoFGcG8Yujkd4r",
+    //     "owner": "0x3Abb977B7301CA1c196F5795a3fd32A491061a71",
+    //     "ctype": 2,
+    //     "state": 0,
+    //     "parent": 1,
+    //     "isVerified": true,
+    //     "details": {
+    //       "name": "brilliant",
+    //       "fullName": "Brilliant PHAL",
+    //       "gender": "Male",
+    //       "avatar": [
+    //         "https://gateway.kumandra.org/files/QmSVLefQv53kNVNje2PS3kLo7qQteAGvQcWAPvqz5Ryr9v"
+    //       ]
+    //     }
+    //   }
+    // ]};
+    await GetRequest().querySubmittedDocs("0x63744c6d3fd88534485dd81ac5a83cf92a72f831").then((value) async {
+      // await List<Map<String, dynamic>>.from(await json.decode(value.body)).forEach((element) {
+      //   assetsMinted!.add(element);
+      // });
 
-    userDocsDataFilter();
+      userDocsDataFilter();
+    });
 
     print("assetsMinted $assetsMinted");
 

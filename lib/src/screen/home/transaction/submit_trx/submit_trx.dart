@@ -58,7 +58,7 @@ class SubmitTrxState extends State<SubmitTrx> {
       _scanPayM.assetValue = 0;
     }
 
-    AppServices.noInternetConnection(_scanPayM.globalKey);
+    AppServices.noInternetConnection(context, _scanPayM.globalKey);
 
     _scanPayM.controlReceiverAddress.text = widget._walletKey!;
     _scanPayM.portfolio = widget._listPortfolio!;

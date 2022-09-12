@@ -65,7 +65,7 @@ class _FingerPrintState extends State<FingerPrint> {
       // Close Dialog
       Navigator.pop(context);
       await Future.delayed(const Duration(milliseconds: 300), () {});
-      AppServices.openSnackBar(globalkey!, e.message);
+      AppServices.openSnackBar(context, globalkey!, e.message);
     } catch (e) {
 
       // Close Dialog
