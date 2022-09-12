@@ -1,0 +1,54 @@
+{
+    "docs": [
+        {
+            "type": "Mandatory",
+            "docs_list": [
+                {
+                    "name": "National ID",
+                    "logo": "assets/logo/national-id.svg",
+                    "color": "#FF5733",
+                    "description": "Interoperable Nominated Proof-of-Stake network for developing and running Substrate-based and EVM compatible blockchain applications.",
+                    "website": ""
+                }
+            ]
+        },
+        {
+            "type": "Popular",
+            "docs_list": [
+                {
+                    "name": "Passport",
+                    "logo": "assets/logo/passport.svg",
+                    "color": "#FFAC33",
+                    "description": "Interoperable Nominated Proof-of-Stake network for developing and running Substrate-based and EVM compatible blockchain applications.",
+                    "website": ""
+                },
+                {
+                    "name": "Land Title",
+                    "logo": "assets/logo/land-title.svg",
+                    "color": "#C7FF33",
+                    "description": "Interoperable Nominated Proof-of-Stake network for developing and running Substrate-based and EVM compatible blockchain applications.",
+                    "website": ""
+                },
+                {
+                    "name": "Vehicle License",
+                    "logo": "assets/logo/vehicle-license.svg",
+                    "color": "#49FF33",
+                    "description": "Interoperable Nominated Proof-of-Stake network for developing and running Substrate-based and EVM compatible blockchain applications.",
+                    "website": ""
+                },
+                {
+                    "name": "Driver License",
+                    "logo": "assets/logo/driver-license.svg",
+                    "color": "#33FFC1",
+                    "description": "Interoperable Nominated Proof-of-Stake network for developing and running Substrate-based and EVM compatible blockchain applications.",
+                    "website": ""
+                }
+            ]
+        },
+        {
+            "type": "Issuer",
+            "docs_list": [
+            ]
+        }
+    ]
+}

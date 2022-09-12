@@ -1,0 +1,730 @@
+[{
+        "anonymous": false,
+        "inputs": [{
+                "indexed": true,
+                "internalType": "bytes32",
+                "name": "role",
+                "type": "bytes32"
+            },
+            {
+                "indexed": true,
+                "internalType": "bytes32",
+                "name": "previousAdminRole",
+                "type": "bytes32"
+            },
+            {
+                "indexed": true,
+                "internalType": "bytes32",
+                "name": "newAdminRole",
+                "type": "bytes32"
+            }
+        ],
+        "name": "RoleAdminChanged",
+        "type": "event"
+    },
+    {
+        "anonymous": false,
+        "inputs": [{
+                "indexed": true,
+                "internalType": "bytes32",
+                "name": "role",
+                "type": "bytes32"
+            },
+            {
+                "indexed": true,
+                "internalType": "address",
+                "name": "account",
+                "type": "address"
+            },
+            {
+                "indexed": true,
+                "internalType": "address",
+                "name": "sender",
+                "type": "address"
+            }
+        ],
+        "name": "RoleGranted",
+        "type": "event"
+    },
+    {
+        "anonymous": false,
+        "inputs": [{
+                "indexed": true,
+                "internalType": "bytes32",
+                "name": "role",
+                "type": "bytes32"
+            },
+            {
+                "indexed": true,
+                "internalType": "address",
+                "name": "account",
+                "type": "address"
+            },
+            {
+                "indexed": true,
+                "internalType": "address",
+                "name": "sender",
+                "type": "address"
+            }
+        ],
+        "name": "RoleRevoked",
+        "type": "event"
+    },
+    {
+        "anonymous": false,
+        "inputs": [{
+                "indexed": false,
+                "internalType": "address",
+                "name": "to",
+                "type": "address"
+            },
+            {
+                "indexed": false,
+                "internalType": "uint256",
+                "name": "credentialid",
+                "type": "uint256"
+            }
+        ],
+        "name": "TransferCredential",
+        "type": "event"
+    },
+    {
+        "anonymous": false,
+        "inputs": [{
+                "indexed": false,
+                "internalType": "address",
+                "name": "from",
+                "type": "address"
+            },
+            {
+                "indexed": false,
+                "internalType": "address",
+                "name": "to",
+                "type": "address"
+            },
+            {
+                "indexed": false,
+                "internalType": "uint256",
+                "name": "orgId",
+                "type": "uint256"
+            },
+            {
+                "indexed": false,
+                "internalType": "string",
+                "name": "message",
+                "type": "string"
+            }
+        ],
+        "name": "TransferOrganazation",
+        "type": "event"
+    },
+    {
+        "inputs": [],
+        "name": "DEFAULT_ADMIN_ROLE",
+        "outputs": [{
+            "internalType": "bytes32",
+            "name": "",
+            "type": "bytes32"
+        }],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [],
+        "name": "VERYFYIER_ROLE",
+        "outputs": [{
+            "internalType": "bytes32",
+            "name": "",
+            "type": "bytes32"
+        }],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [{
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+        }],
+        "name": "_CtypeMetadata",
+        "outputs": [{
+                "internalType": "uint256",
+                "name": "orgId",
+                "type": "uint256"
+            },
+            {
+                "internalType": "uint256",
+                "name": "CTypeId",
+                "type": "uint256"
+            },
+            {
+                "internalType": "address",
+                "name": "issuer",
+                "type": "address"
+            },
+            {
+                "internalType": "string",
+                "name": "propertiesURI",
+                "type": "string"
+            },
+            {
+                "internalType": "string",
+                "name": "propertiesHash",
+                "type": "string"
+            },
+            {
+                "internalType": "bool",
+                "name": "transferable",
+                "type": "bool"
+            },
+            {
+                "internalType": "bool",
+                "name": "revokable",
+                "type": "bool"
+            },
+            {
+                "internalType": "bool",
+                "name": "expirable",
+                "type": "bool"
+            },
+            {
+                "internalType": "uint256",
+                "name": "lifespan",
+                "type": "uint256"
+            },
+            {
+                "internalType": "enum CType.credentialTypeStatus",
+                "name": "status",
+                "type": "uint8"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [{
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+        }],
+        "name": "_credentiallMetadata",
+        "outputs": [{
+                "internalType": "uint256",
+                "name": "credentialid",
+                "type": "uint256"
+            },
+            {
+                "internalType": "uint256",
+                "name": "ctypeId",
+                "type": "uint256"
+            },
+            {
+                "internalType": "address",
+                "name": "owner",
+                "type": "address"
+            },
+            {
+                "internalType": "string",
+                "name": "name",
+                "type": "string"
+            },
+            {
+                "internalType": "string",
+                "name": "propertyURI",
+                "type": "string"
+            },
+            {
+                "internalType": "string",
+                "name": "propertyHash",
+                "type": "string"
+            },
+            {
+                "internalType": "uint256",
+                "name": "createdAt",
+                "type": "uint256"
+            },
+            {
+                "internalType": "enum Credentia.credentialStatus",
+                "name": "status",
+                "type": "uint8"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [{
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+        }],
+        "name": "_organizationMetadata",
+        "outputs": [{
+                "internalType": "uint256",
+                "name": "id",
+                "type": "uint256"
+            },
+            {
+                "internalType": "string",
+                "name": "name",
+                "type": "string"
+            },
+            {
+                "internalType": "string",
+                "name": "desc",
+                "type": "string"
+            },
+            {
+                "internalType": "string",
+                "name": "uri",
+                "type": "string"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [{
+                "internalType": "uint256",
+                "name": "organizationId",
+                "type": "uint256"
+            },
+            {
+                "internalType": "string",
+                "name": "propertiesURI",
+                "type": "string"
+            },
+            {
+                "internalType": "string",
+                "name": "propertiesHash",
+                "type": "string"
+            },
+            {
+                "internalType": "bool",
+                "name": "transferable",
+                "type": "bool"
+            },
+            {
+                "internalType": "bool",
+                "name": "revokable",
+                "type": "bool"
+            },
+            {
+                "internalType": "bool",
+                "name": "expirable",
+                "type": "bool"
+            },
+            {
+                "internalType": "uint256",
+                "name": "lifespan",
+                "type": "uint256"
+            }
+        ],
+        "name": "createCtype",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [{
+                "internalType": "string",
+                "name": "name",
+                "type": "string"
+            },
+            {
+                "internalType": "string",
+                "name": "desc",
+                "type": "string"
+            },
+            {
+                "internalType": "string",
+                "name": "uri",
+                "type": "string"
+            }
+        ],
+        "name": "createOrg",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [{
+            "internalType": "address",
+            "name": "owner",
+            "type": "address"
+        }],
+        "name": "credentialsList",
+        "outputs": [{
+            "internalType": "uint256[]",
+            "name": "",
+            "type": "uint256[]"
+        }],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [{
+            "internalType": "uint256",
+            "name": "orgId",
+            "type": "uint256"
+        }],
+        "name": "ctypeLists",
+        "outputs": [{
+            "internalType": "uint256[]",
+            "name": "",
+            "type": "uint256[]"
+        }],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [{
+            "internalType": "uint256",
+            "name": "orgId",
+            "type": "uint256"
+        }],
+        "name": "ctypeOf",
+        "outputs": [{
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+        }],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [{
+                "internalType": "uint256",
+                "name": "organizationId",
+                "type": "uint256"
+            },
+            {
+                "internalType": "uint256",
+                "name": "ctypeId",
+                "type": "uint256"
+            }
+        ],
+        "name": "deleteCtype",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [{
+            "internalType": "uint256",
+            "name": "organizationId",
+            "type": "uint256"
+        }],
+        "name": "deleteOrg",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [{
+                "internalType": "bytes32",
+                "name": "role",
+                "type": "bytes32"
+            },
+            {
+                "internalType": "uint256",
+                "name": "organizationId",
+                "type": "uint256"
+            }
+        ],
+        "name": "getRoleAdmin",
+        "outputs": [{
+            "internalType": "bytes32",
+            "name": "",
+            "type": "bytes32"
+        }],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [{
+                "internalType": "bytes32",
+                "name": "role",
+                "type": "bytes32"
+            },
+            {
+                "internalType": "uint256",
+                "name": "index",
+                "type": "uint256"
+            },
+            {
+                "internalType": "uint256",
+                "name": "organizationId",
+                "type": "uint256"
+            }
+        ],
+        "name": "getRoleMember",
+        "outputs": [{
+            "internalType": "address",
+            "name": "",
+            "type": "address"
+        }],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [{
+                "internalType": "bytes32",
+                "name": "role",
+                "type": "bytes32"
+            },
+            {
+                "internalType": "uint256",
+                "name": "organizationId",
+                "type": "uint256"
+            }
+        ],
+        "name": "getRoleMemberCount",
+        "outputs": [{
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+        }],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [{
+                "internalType": "bytes32",
+                "name": "role",
+                "type": "bytes32"
+            },
+            {
+                "internalType": "address",
+                "name": "account",
+                "type": "address"
+            },
+            {
+                "internalType": "uint256",
+                "name": "organizationId",
+                "type": "uint256"
+            }
+        ],
+        "name": "grantRole",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [{
+                "internalType": "bytes32",
+                "name": "role",
+                "type": "bytes32"
+            },
+            {
+                "internalType": "address",
+                "name": "account",
+                "type": "address"
+            },
+            {
+                "internalType": "uint256",
+                "name": "organizationId",
+                "type": "uint256"
+            }
+        ],
+        "name": "hasRole",
+        "outputs": [{
+            "internalType": "bool",
+            "name": "",
+            "type": "bool"
+        }],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [{
+                "internalType": "uint256",
+                "name": "ctypeId",
+                "type": "uint256"
+            },
+            {
+                "internalType": "address",
+                "name": "to",
+                "type": "address"
+            },
+            {
+                "internalType": "string",
+                "name": "name",
+                "type": "string"
+            },
+            {
+                "internalType": "string",
+                "name": "propertyURI",
+                "type": "string"
+            },
+            {
+                "internalType": "string",
+                "name": "propertyHash",
+                "type": "string"
+            }
+        ],
+        "name": "issueCredential",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [],
+        "name": "organizationLists",
+        "outputs": [{
+            "internalType": "uint256[]",
+            "name": "",
+            "type": "uint256[]"
+        }],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [{
+            "internalType": "address",
+            "name": "owner",
+            "type": "address"
+        }],
+        "name": "organizationListsByUser",
+        "outputs": [{
+            "internalType": "uint256[]",
+            "name": "",
+            "type": "uint256[]"
+        }],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [{
+            "internalType": "address",
+            "name": "owner",
+            "type": "address"
+        }],
+        "name": "organizationOf",
+        "outputs": [{
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+        }],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [{
+            "internalType": "uint256",
+            "name": "organizationId",
+            "type": "uint256"
+        }],
+        "name": "ownerOf",
+        "outputs": [{
+            "internalType": "address",
+            "name": "",
+            "type": "address"
+        }],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [{
+            "internalType": "uint256",
+            "name": "credentialid",
+            "type": "uint256"
+        }],
+        "name": "ownerOfCredential",
+        "outputs": [{
+            "internalType": "address",
+            "name": "",
+            "type": "address"
+        }],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [{
+                "internalType": "bytes32",
+                "name": "role",
+                "type": "bytes32"
+            },
+            {
+                "internalType": "address",
+                "name": "account",
+                "type": "address"
+            },
+            {
+                "internalType": "uint256",
+                "name": "organizationId",
+                "type": "uint256"
+            }
+        ],
+        "name": "revokeRole",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [{
+                "internalType": "uint256",
+                "name": "credentialid",
+                "type": "uint256"
+            },
+            {
+                "internalType": "bool",
+                "name": "revoke",
+                "type": "bool"
+            }
+        ],
+        "name": "toggleRevokeCredential",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [{
+                "internalType": "uint256",
+                "name": "credentialid",
+                "type": "uint256"
+            },
+            {
+                "internalType": "address",
+                "name": "to",
+                "type": "address"
+            }
+        ],
+        "name": "transfer",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [{
+                "internalType": "address",
+                "name": "to",
+                "type": "address"
+            },
+            {
+                "internalType": "uint256",
+                "name": "organizationId",
+                "type": "uint256"
+            }
+        ],
+        "name": "transferOrg",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [{
+            "internalType": "uint256",
+            "name": "ctypeId",
+            "type": "uint256"
+        }],
+        "name": "usersByCTypes",
+        "outputs": [{
+            "internalType": "uint256[]",
+            "name": "",
+            "type": "uint256[]"
+        }],
+        "stateMutability": "view",
+        "type": "function"
+    }
+]

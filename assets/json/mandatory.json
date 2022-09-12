@@ -16,6 +16,26 @@
             "description": "Age in years which must be equal to or greater than zero.",
             "type": "integer",
             "minimum": 0
+        },
+        "type": {
+            "type": "string",
+            "description": "National ID"
+        },
+        "id": {
+            "type": "string",
+            "description": "Your selendra ID"
+        },
+        "dob": {
+            "type": "string",
+            "description": "Your birthday"
+        },
+        "gender": {
+            "type": "string",
+            "description": "Your gender"
+        },
+        "address": {
+            "type": "string",
+            "description": "Your address"
         }
     }
 }

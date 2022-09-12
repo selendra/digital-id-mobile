@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.14)
-project(digital_id LANGUAGES CXX)
+project(bitriel LANGUAGES CXX)
 
-set(BINARY_NAME "digital_id")
+set(BINARY_NAME "bitriel")
 
 cmake_policy(SET CMP0063 NEW)
 
