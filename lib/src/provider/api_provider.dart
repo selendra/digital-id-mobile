@@ -49,7 +49,7 @@ class ApiProvider with ChangeNotifier {
 
   String? _jsCode;
 
-  bool isMainnet = true;
+  bool isMainnet = false;
   bool isDebug = true;
   
   int selNativeIndex = 0;
@@ -379,14 +379,45 @@ class ApiProvider with ChangeNotifier {
     }
     return res;
   }
-  
+
   Future<bool> validateEther(String address) async {
     try {
 
       dynamic res = await _sdk.api.service.webView!.evalJavascript('wallets.validateEtherAddr("$address")');
       return res;
     } catch (e) {
-      if (ApiProvider().isDebug == true) print("Error validateEther $e");
+      if (ApiProvider().isDebug == true) {
+        if (kDebugMode) {
+          print("Error validateEther $e");
+        }
+      }
+    }
+    return false;
+  }
+
+  Future<bool> connectToHandler() async {
+    print("connectToHandler");
+    try {
+
+      dynamic res = await _sdk.api.service.webView!.evalJavascript('keyring.handler()');
+      return res;
+    } catch (e) {
+      if (ApiProvider().isDebug == true) print("Error connectToHandler $e");
+    }
+    return false;
+  }
+
+  Future<bool> mintCredential(String json, int schemaID) async {
+    print("mintCredential");
+    print("json $json");
+    print("schemaID $schemaID");
+    try {
+      final _mnemonic = "dentist body neglect clay stage forget caught bacon moment gown toast kind";
+      final _privateKey = await getPrivateKey(_mnemonic);
+      dynamic res = await _sdk.api.service.webView!.evalJavascript("keyring.mintCredential('$_mnemonic', '$_privateKey', '$json', '$schemaID', 'wss://rpc-testnet.selendra.org')");
+      return res;
+    } catch (e) {
+      if (ApiProvider().isDebug == true) print("Error mintCredential $e");
     }
     return false;
   }
@@ -408,7 +439,11 @@ class ApiProvider with ChangeNotifier {
       final res = await _sdk.api.service.webView!.evalJavascript("keyring.validateAddress('$address')");
       return res;
     } catch (e) {
-      if (ApiProvider().isDebug == true) print("Error validateAddress $e");
+      if (ApiProvider().isDebug == true) {
+        if (kDebugMode) {
+          print("Error validateAddress $e");
+        }
+      }
     }
     return false;
   }
@@ -584,15 +619,18 @@ class ApiProvider with ChangeNotifier {
     try {
 
       accountM.address = await _sdk.webView!.evalJavascript('$funcName.getSELAddr()');
-
-      print("getCurrentAccount ${accountM.address}");
       accountM.name = _keyring.current.name;
+      accountM.pubKey = _keyring.current.pubKey;
 
-      Provider.of<ReceiveWalletProvider>( context!, listen: false).getAccount(this);
-      
+      Provider.of<ReceiveWalletProvider>( context!, listen: false).getAccount(accountM);
+
       contractProvider!.setSELNativeAddr(accountM.address!);
     } catch (e){
-      if (ApiProvider().isDebug == true) print("Error getCurrentAccount $e");
+      if (ApiProvider().isDebug == true) {
+        if (kDebugMode) {
+          print("Error getCurrentAccount $e");
+        }
+      }
     }
 
     notifyListeners();
@@ -604,11 +642,15 @@ class ApiProvider with ChangeNotifier {
       accountM.address = await _sdk.webView!.evalJavascript('keyring.checkPassword()');
       accountM.name = _keyring.current.name;
 
-      Provider.of<ReceiveWalletProvider>( context!, listen: false).getAccount(this);
-      
+      Provider.of<ReceiveWalletProvider>( context!, listen: false).getAccount(accountM);
+
       contractProvider!.setSELNativeAddr(accountM.address!);
     } catch (e){
-      if (ApiProvider().isDebug == true) print("Error getCurrentAccount $e");
+      if (ApiProvider().isDebug == true) {
+        if (kDebugMode) {
+          print("Error getCurrentAccount $e");
+        }
+      }
     }
 
     notifyListeners();

@@ -46,7 +46,7 @@ class Component {
           ),
           actions: <Widget>[
             // ignore: deprecated_member_use
-            FlatButton(
+            TextButton(
               onPressed: method,
               child: const Text('Setting'),
             ),
@@ -173,18 +173,16 @@ class MyFlatButton extends StatelessWidget {
             )
         ]
       ),
-      // ignore: deprecated_member_use
-      child: FlatButton(
-        hoverColor: Colors.transparent,
-        highlightColor: Colors.transparent,
-        splashColor: Colors.transparent,
+      child: TextButton(
+        style: TextButton.styleFrom(
+          shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(8.0)),
+          ),
+          backgroundColor: isTransparent! ? Colors.transparent : hexaCodeToColor(buttonColor!),
+        ),
         onPressed: action == null ? null : (){
           action!();
         },
-        color: isTransparent! ? Colors.transparent : hexaCodeToColor(buttonColor!),
-        disabledColor: isDarkTheme ? Colors.grey.shade700 : Colors.grey.shade400,
-        focusColor: hexaCodeToColor(AppColors.secondary),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(size18)),
         child: MyText(
           text: textButton!,
           color: textColor!,
@@ -217,7 +215,7 @@ class MyGradientButton extends StatelessWidget {
   const MyGradientButton({
     this.child,
     this.textButton,
-    this.lsColor = const [ "#F27649", "#F28907" ],
+    this.lsColor = const [ AppColors.newPrimary, AppColors.newPrimary ],
     this.buttonColor = AppColors.secondary,
     this.textColor = AppColors.whiteColorHexa,
     this.fontWeight = FontWeight.bold,
@@ -498,7 +496,7 @@ class MyIconButton extends StatelessWidget {
               constraints: BoxConstraints.tight(Size(50, 50)),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
-                color: isActive! ? hexaCodeToColor(AppColors.primary).withOpacity(0.15) : Colors.transparent,
+                color: isActive! ? hexaCodeToColor(AppColors.newPrimary).withOpacity(0.20) : Colors.transparent,
               ),
               // height: 70,
               child: Column(
@@ -516,6 +514,7 @@ class MyIconButton extends StatelessWidget {
                     text: title,
                     color: txtColor,
                     fontSize: 13,
+                    fontWeight: isActive! ? FontWeight.bold : FontWeight.normal ,
                   )
                 ],
               ),
@@ -818,7 +817,7 @@ class MyBanner extends StatelessWidget{
   /// Color As Hexa
   final String? color;
 
-  MyBanner({this.child, this.color, this.isApprove});
+  MyBanner({this.child, this.color = "#FFFFFF", this.isApprove = false});
 
   Widget build(BuildContext context){
     return Stack(

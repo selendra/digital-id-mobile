@@ -1,9 +1,13 @@
+import 'package:wallet_apps/src/models/documents/org_m.dart';
+
 class DocumentSchema {
 
   String? type;
   List? docsList;
   List<dynamic>? docsProperty;
-  DocumentSchema({this.type, this.docsList, this.docsProperty});
+  List<OrgModel>? lsOrg;
+  
+  DocumentSchema({this.type, this.docsList, this.docsProperty, this.lsOrg});
 }
 
 class DocumentProperty{

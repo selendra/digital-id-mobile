@@ -1,6 +1,7 @@
 
 
 import 'package:qr_code_scanner/qr_code_scanner.dart';
+// import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:wallet_apps/index.dart';
 
 class QrScanner extends StatefulWidget {
@@ -24,10 +25,10 @@ class QrScannerState extends State<QrScanner> {
   @override
   void reassemble() {
     super.reassemble();
-    if (Platform.isAndroid) {
-      controller!.pauseCamera();
-    }
-    controller!.resumeCamera();
+    // if (Platform.isAndroid) {
+    //   controller!.pauseCamera();
+    // }
+    // controller!.resumeCamera();
   }
 
   @override
@@ -106,7 +107,6 @@ class QrScannerState extends State<QrScanner> {
 
   @override
   void dispose() {
-    controller?.dispose();
     super.dispose();
   }
 }
@@ -118,7 +118,6 @@ class QrScannerState extends State<QrScanner> {
 // import 'package:mobile_scanner/mobile_scanner.dart';
 // import 'package:provider/provider.dart';
 // import 'package:wallet_apps/index.dart';
-// import 'package:qr_code_scanner/qr_code_scanner.dart';
 // import 'package:wallet_apps/src/components/appbar_c.dart';
 // import 'package:wallet_apps/src/utils/hole_blur.dart';
 // import 'package:web3dart/web3dart.dart';
@@ -141,6 +140,8 @@ class QrScannerState extends State<QrScanner> {
 //   final GlobalKey qrKey = GlobalKey();
 
 //   String? barcode;
+
+//   dynamic decode;
 
 //   static const String privateKey = 'a2fd51b96dc55aeb14b30d55a6b3121c7b9c599500c1beb92a389c3377adc86e';
 //   static const String rpcUrl = 'http://localhost:7545';
@@ -216,57 +217,57 @@ class QrScannerState extends State<QrScanner> {
                 
 //                         Navigator.pop(context, barcodeData);
                 
-                        // if(decode["id"] == null) {
-                        //   showDialog(
-                        //     context: context,
-                        //     builder: (context) => AlertDialog(
-                        //       title: Text("Error"),
-                        //       content: Text("Invalid QR Code"),
-                        //       actions: [
-                        //         FlatButton(
-                        //           child: Text("OK"),
-                        //           onPressed: () async{
-                        //             // await client.signTransaction(
-                        //             //   credentials, 
-                        //             //   transaction
-                        //             // )
-                        //             // await client.signTransaction(
-                        //             //   credentials,
-                        //             //   Transaction(
-                        //             //     to: EthereumAddress.fromHex('0xC914Bb2ba888e3367bcecEb5C2d99DF7C7423706'),
-                        //             //     gasPrice: EtherAmount.inWei(BigInt.one),
-                        //             //     maxGas: 100000,
-                        //             //     value: EtherAmount.fromUnitAndValue(EtherUnit.ether, 1),
-                        //             //   ),
-                        //             // );
+//                         if(decode["id"] == null) {
+//                           showDialog(
+//                             context: context,
+//                             builder: (context) => AlertDialog(
+//                               title: Text("Error"),
+//                               content: Text("Invalid QR Code"),
+//                               actions: [
+//                                 ElevatedButton(
+//                                   child: Text("OK"),
+//                                   onPressed: () async{
+//                                     // await client.signTransaction(
+//                                     //   credentials, 
+//                                     //   transaction
+//                                     // )
+//                                     // await client.signTransaction(
+//                                     //   credentials,
+//                                     //   Transaction(
+//                                     //     to: EthereumAddress.fromHex('0xC914Bb2ba888e3367bcecEb5C2d99DF7C7423706'),
+//                                     //     gasPrice: EtherAmount.inWei(BigInt.one),
+//                                     //     maxGas: 100000,
+//                                     //     value: EtherAmount.fromUnitAndValue(EtherUnit.ether, 1),
+//                                     //   ),
+//                                     // );
                 
-                        //             await client.dispose();
+//                                     await client.dispose();
                 
-                        //             Navigator.pop(context);
-                        //           },
-                        //         )
-                        //       ],
-                        //     ),
-                        //   );
-                        // } 
-                        // else{
-                        //   showDialog(
-                        //     context: context,
-                        //     builder: (context) => AlertDialog(
-                        //       title: Text("Error"),
-                        //       content: Text("Valid QR Code"),
-                        //       actions: [
-                        //         FlatButton(
-                        //           child: Text("OK"),
-                        //           onPressed: () {
+//                                     Navigator.pop(context);
+//                                   },
+//                                 )
+//                               ],
+//                             ),
+//                           );
+//                         } 
+//                         else{
+//                           showDialog(
+//                             context: context,
+//                             builder: (context) => AlertDialog(
+//                               title: Text("Error"),
+//                               content: Text("Valid QR Code"),
+//                               actions: [
+//                                 FlatButton(
+//                                   child: Text("OK"),
+//                                   onPressed: () {
                 
-                        //             Navigator.pop(context);
-                        //           },
-                        //         )
-                        //       ],
-                        //     ),
-                        //   );
-                        // }
+//                                     Navigator.pop(context);
+//                                   },
+//                                 )
+//                               ],
+//                             ),
+//                           );
+//                         }
 //                       });
 //                     },
 //                   ),

@@ -21,7 +21,7 @@ class WelcomeState extends State<Welcome> {
   @override
   void initState() {
     // inAppUpdate();
-    AppServices.noInternetConnection(globalKey);
+    AppServices.noInternetConnection(context, globalKey);
     super.initState();
   }
   

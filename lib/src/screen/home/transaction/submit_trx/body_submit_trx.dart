@@ -1,9 +1,6 @@
-import 'package:provider/provider.dart';
 import 'package:wallet_apps/index.dart';
-import 'package:wallet_apps/src/components/appbar_c.dart';
-import 'package:wallet_apps/src/components/reuse_dropdown.dart';
-import 'package:wallet_apps/src/provider/provider.dart';
 import 'package:wallet_apps/src/service/contract.dart';
+import '../../receive_wallet/appbar_wallet.dart';
 
 class SubmitTrxBody extends StatelessWidget {
   final bool? enableInput;
@@ -39,48 +36,48 @@ class SubmitTrxBody extends StatelessWidget {
   Widget build(BuildContext context) {
     final List<MyInputField> listInput = [
       MyInputField(
-        suffixIcon: GestureDetector(
-          onTap: () async {
-            scanQR!();
-          },
-          child: Container(
-            padding: const EdgeInsets.only(right: 16.0),
-            child: SvgPicture.asset(
-              AppConfig.iconsPath+'qr_code.svg',
-              width: 4.w,
-              height: 4.h,
-              color: Colors.white,
+          suffixIcon: GestureDetector(
+            onTap: () async {
+              scanQR!();
+            },
+            child: Container(
+              padding: const EdgeInsets.only(right: 16.0),
+              child: SvgPicture.asset(
+                AppConfig.iconsPath+'qr_code.svg',
+                width: 4.w,
+                height: 4.h,
+                color: Colors.white,
+              ),
             ),
           ),
-        ),
-        pBottom: 16,
-        hintText: "Receiver address",
-        textInputFormatter: [
-          LengthLimitingTextInputFormatter(TextField.noMaxLength),
-        ],
-        controller: scanPayM!.controlReceiverAddress,
-        focusNode: scanPayM!.nodeReceiverAddress,
-        validateField: (value) => value == null ? 'Please fill in receiver address' : null,
-        onChanged: onChanged,
-        onSubmit: () {}
+          pBottom: 16,
+          hintText: "Receiver address",
+          textInputFormatter: [
+            LengthLimitingTextInputFormatter(TextField.noMaxLength),
+          ],
+          controller: scanPayM!.controlReceiverAddress,
+          focusNode: scanPayM!.nodeReceiverAddress,
+          validateField: (value) => value == null ? 'Please fill in receiver address' : null,
+          onChanged: onChanged,
+          onSubmit: () {}
       ),
       MyInputField(
-        pBottom: 16,
-        hintText: "Amount",
-        textInputFormatter: [
-          LengthLimitingTextInputFormatter(
-            TextField.noMaxLength,
-          ),
-          FilteringTextInputFormatter(RegExp(r"^\d+\.?\d{0,8}"), allow: true)
-        ],
-        inputType: Platform.isAndroid ? TextInputType.number : TextInputType.text,
-        controller: scanPayM!.controlAmount,
-        focusNode: scanPayM!.nodeAmount,
-        validateField: validateField,
-        onChanged: onChanged,
-        onSubmit: () async {
-          await validateSubmit!();
-        }
+          pBottom: 16,
+          hintText: "Amount",
+          textInputFormatter: [
+            LengthLimitingTextInputFormatter(
+              TextField.noMaxLength,
+            ),
+            FilteringTextInputFormatter(RegExp(r"^\d+\.?\d{0,8}"), allow: true)
+          ],
+          inputType: Platform.isAndroid ? TextInputType.number : TextInputType.text,
+          controller: scanPayM!.controlAmount,
+          focusNode: scanPayM!.nodeAmount,
+          validateField: validateField,
+          onChanged: onChanged,
+          onSubmit: () async {
+            await validateSubmit!();
+          }
       ),
     ];
 
@@ -98,16 +95,17 @@ class SubmitTrxBody extends StatelessWidget {
         ),
         Expanded(
           child: Center(
-            child: BodyScaffold(
-              child: Form(
-                key: scanPayM!.formStateKey,
+            child: Form(
+              key: scanPayM!.formStateKey,
+              child: Container(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    
+
                     MyText(
+                      width: MediaQuery.of(context).size.width/1.5,
                       text: "${scanPayM!.balance!} ${Provider.of<ContractProvider>(context).sortListContract[scanPayM!.assetValue].symbol}",
-                      color: AppColors.primaryColor,
+                      color: AppColors.newPrimary,
                       fontWeight: FontWeight.bold,
                       fontSize: 25,
                     ),
@@ -115,30 +113,30 @@ class SubmitTrxBody extends StatelessWidget {
                     SizedBox(height: 1.h,),
 
                     MyText(
-                      text: "available balance",
-                      color: AppColors.lowWhite,
+                      text: "Available balance",
+                      color: AppColors.blackColor,
                     ),
 
                     SizedBox(height: 10.h,),
 
                     listInput[0],
-                    
+
                     /* Type of payment */
                     Container(
                       margin: const EdgeInsets.only(
-                        bottom: 16,
+                        // bottom: 16,
                         left: paddingSize,
                         right: paddingSize,
                       ),
 
                       child: Container(
                         padding: const EdgeInsets.fromLTRB(
-                          paddingSize, 0, paddingSize, 0
-                        ), 
+                            paddingSize, 0, paddingSize, 0
+                        ),
                         decoration: BoxDecoration(
                           color: isDarkTheme
-                            ? Colors.white.withOpacity(0.06)
-                            : hexaCodeToColor(AppColors.whiteHexaColor),
+                              ? Colors.white.withOpacity(0.06)
+                              : hexaCodeToColor(AppColors.whiteHexaColor),
                           borderRadius: BorderRadius.circular(size5),
                         ),
                         child: Row(
@@ -148,31 +146,60 @@ class SubmitTrxBody extends StatelessWidget {
                                 text: 'Asset',
                                 textAlign: TextAlign.left,
                                 color: isDarkTheme
-                                  ? AppColors.darkSecondaryText
-                                  : AppColors.textColor,
+                                    ? AppColors.darkSecondaryText
+                                    : AppColors.textColor,
                               ),
                             ),
-                            ReuseDropDown(
-                              icon: Icon(Iconsax.arrow_down_1, color: Colors.white, size: 20.5.sp),
-                              initialValue: scanPayM!.assetValue.toString(),
-                              onChanged: onChangeDropDown,
-                              itemsList: ContractService.getConSymbol(context, contract.sortListContract),
-                              style: TextStyle(
-                                color: isDarkTheme
-                                  ? Colors.white
-                                  : hexaCodeToColor(AppColors.blackColor),
-                                fontSize: 15.sp,
-                                fontWeight: FontWeight.w600
+                            Flexible(
+                              child:  QrViewTitle(
+                                isValue: true,
+                                // assetInfo: provider.assetInfo,
+                                listContract: ContractService.getConSymbol(context, contract.sortListContract),
+                                initialValue: scanPayM!.assetValue.toString(),
+                                onChanged: onChanged,
                               ),
-                            ),
+                            )
+                            // ReuseDropDown(
+                            //   icon: Icon(Iconsax.arrow_down_1, color: Colors.white, size: 20.5.sp),
+                            //   initialValue: scanPayM!.assetValue.toString(),
+                            //   onChanged: onChangeDropDown,
+                            //   itemsList: ContractService.getConSymbol(context, contract.sortListContract),
+                            //   style: TextStyle(
+                            //     color: isDarkTheme
+                            //       ? Colors.white
+                            //       : hexaCodeToColor(AppColors.blackColor),
+                            //     fontSize: 15.sp,
+                            //     fontWeight: FontWeight.w600
+                            //   ),
+                            // ),
                           ],
                         ),
                       ),
 
                     ),
+                    Container(
+                      margin: EdgeInsets.only(
+                        top: 10.sp,
+                        bottom: 15.sp,
+                        left: paddingSize,
+                        right: paddingSize,
+                      ),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Icon(Iconsax.warning_2, color: hexaCodeToColor(AppColors.warningColor), size: 18.5.sp),
+                          SizedBox(width: 1.w,),
+                          MyText(
+                            top: 5,
+                            text: "Select the right network, or assets may be lost.",
+                            color: AppColors.blackColor,
+                          ),
+                        ],
+                      ),
+                    ),
 
                     listInput[1],
-                    
+
                     //listInput[2],
                     MyGradientButton(
                       edgeMargin: EdgeInsets.all(paddingSize),
@@ -181,6 +208,7 @@ class SubmitTrxBody extends StatelessWidget {
                       end: Alignment.topRight,
                       action: scanPayM!.enable ? validateSubmit : null,
                     ),
+
                   ],
                 ),
               ),

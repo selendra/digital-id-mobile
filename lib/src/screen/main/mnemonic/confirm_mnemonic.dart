@@ -57,7 +57,7 @@ class _ConfirmMnemonicState extends State<ConfirmMnemonic> {
                   bottom: 4,
                 ),
                 // ignore: deprecated_member_use
-                child: FlatButton(
+                child: TextButton(
                   onPressed: () {
                     setState(() {
                       _wordsLeft.remove(i);

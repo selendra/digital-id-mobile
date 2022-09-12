@@ -70,7 +70,6 @@ dependencies:
   ######## Permission Package ########
   # Camera
   qr_flutter: ^4.0.0
-  qr_code_scanner: ^1.0.0
 
   # Chart
   fl_chart: ^0.46.0
@@ -133,7 +132,7 @@ dependencies:
   # Device Preview
   device_preview: ^1.1.0
   flutter_native_splash: ^2.2.3
-  mobile_scanner: ^2.0.0
+  # mobile_scanner:
   # Download
   # path_provider:
   # downloads_path_provider_28:
@@ -143,6 +142,8 @@ dependencies:
   socket_io_client: 2.0.0-beta.4-nullsafety.0
   random_avatar:
   camera:
+  flutter_dotenv: ^5.0.2
+  dropdown_button2: ^1.7.2
   
 dependency_overrides:
   encrypt:
@@ -150,7 +151,7 @@ dependency_overrides:
     #   url: https://github.com/polkawallet-io/ui.git
     #   ref: 485a9cde97f2446d74a1aeb6d8d63e33683461a5
     
-  polkawallet_sdk:
+  polkawallet_sdk: 0.4.8
   flutter_svg:
   bip32_defichain:
   charts_flutter:
@@ -159,6 +160,7 @@ dependency_overrides:
        path: charts_flutter
 
   permission_handler: ^10.0.0
+  qr_code_scanner: 1.0.0
   # get_storage:
   # flutter_aes_ecb_pkcs5:
 
@@ -227,6 +229,7 @@ flutter:
     - assets/animation/
     - lib/src/js_api/
     - lib/src/js_api/dist/main.js
+    - .env
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.io/assets-and-images/#resolution-aware.

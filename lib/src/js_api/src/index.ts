@@ -3,13 +3,14 @@ import { WsProvider, ApiPromise } from "@polkadot/api";
 import { subscribeMessage, getNetworkConst, getNetworkProperties } from "./service/setting";
 import keyring from "./service/keyring";
 import account from "./service/account";
-//import staking from "./service/staking";
-//import gov from "./service/gov";
 import wallets from "./service/wallet";
-import { genLinks } from "./utils/config/config";
-import { Abi, ContractPromise } from '@polkadot/api-contract';
+import addJson from "./service/selendra/kumandra";
 import metadata from "./metadata.json";
 import ametadata from "./meta/metadata.json";
+//import staking from "./service/staking";
+//import gov from "./service/gov";
+import { genLinks } from "./utils/config/config";
+import { Abi, ContractPromise } from '@polkadot/api-contract';
 import { ethers, Wallet } from 'ethers';
 import { resolveModuleName } from "typescript";
 
@@ -33,6 +34,7 @@ function send(path: string, data: any) {
  * @param {string} nodeEndpoint
  */
 async function connect(nodes: string[]) {
+  console.log("connecting");
   return new Promise(async (resolve, reject) => {
     const wsProvider = new WsProvider(nodes);
     try {
@@ -65,7 +67,6 @@ async function connectBsc() {
 
   return new Promise(async (resolve, reject) => {
     let provider = new ethers.providers.JsonRpcProvider(url);
-
     let res = await provider.getGasPrice();
 
     let etherString = ethers.utils.formatEther(res);
@@ -330,6 +331,7 @@ const settings = {
 (<any>window).keyring = keyring;
 (<any>window).account = account;
 (<any>window).wallets = wallets;
+(<any>window).addJson = addJson;
 //(<any>window).staking = staking;
 //(<any>window).gov = gov;
 

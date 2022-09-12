@@ -13,8 +13,12 @@ import { ITuple } from "@polkadot/types/types";
 import { DispatchError } from "@polkadot/types/interfaces";
 import { ContractPromise } from "@polkadot/api-contract";
 import acc from './account';
+import { ethers } from "ethers";
+import { EvmRpcProvider } from "@selendra/eth-providers";
+import {abi} from './selendra/Identity.json';
+import kumandra from "./selendra/kumandra";
 
-let keyring = new Keyring({ ss58Format: acc.isMainnet ? acc.mainnet : acc.testNet, type: "sr25519" });
+let keyring = new Keyring({ ss58Format: 204, type: "sr25519" });
 
 var selAddr;
 
@@ -27,6 +31,42 @@ function send(path: string, data: any) {
 }
 
 (<any>window).send = send;
+
+
+async function mintCredential(mnemonic, privateKey, jsonString, schemaDid, wssSubstrate, api: string) {
+  
+  console.log("Start mintCredential");
+
+  console.log("mnemonic", mnemonic);
+  console.log("wssSubstrate", wssSubstrate);
+  console.log("privateKey", privateKey);
+  console.log("jsonString", jsonString);
+  console.log("schemaDid", schemaDid);
+
+  // const hash = await bindaccount(mnemonic, privateKey, wssSubstrate, wssEvm);
+  // console.log("Hash bindaccount ",hash);
+
+  const provider = EvmRpcProvider.from(network);
+  await provider.isReady();
+  console.log("await provider.isReady()", await provider.isReady());
+  const wallet = new ethers.Wallet(privateKey, provider);
+  console.log("wallet", wallet.address);
+  const contract = new ethers.Contract(contractAddress, abi, wallet);
+  console.log("contract", contract.address);
+
+  let ipfsHash = await kumandra.addJson(jsonString, api, schemaDid);
+  console.log("ipfsHash", ipfsHash);
+
+  try {
+    const tx = await contract.mintDocument(ipfsHash, schemaDid);
+    console.log("tx", tx);
+    await tx.wait();
+    return true;
+  } catch (error) {
+    console.log("Error", error);
+    throw error;
+  }
+}
 
 /**
  * Generate a set of new mnemonic.
@@ -56,11 +96,10 @@ async function validateAddress(address: string) {
             : decodeAddress(address)
         );
         
-        console.log("Address is valid");
         resolve(true);
       } catch (error) {
         // send("log", error);
-        console.log("error "+error);
+        //console.log("error "+error);
 
         resolve(false);
       }
@@ -150,7 +189,7 @@ async function initKeys(accounts: KeyringPair$Json[], ss58Formats: number[]) {
     ss58Formats.forEach((ss58) => {
       const pubKey = u8aToHex(keyPair.publicKey);
       (<any>res)[ss58][pubKey] = keyring.encodeAddress(keyPair.publicKey, ss58);
-      if (ss58 == (acc.isMainnet ? acc.mainnet : acc.testNet)){
+      if (ss58 == 204){
         selAddr = keyring.encodeAddress(keyPair.publicKey, ss58);
       }
     });
@@ -159,7 +198,6 @@ async function initKeys(accounts: KeyringPair$Json[], ss58Formats: number[]) {
 }
 
 async function getSELAddr() {
-  console.log("From Keyring getSELAddr acc.isMainnet ? acc.mainnet : acc.testNet" + acc.isMainnet ? acc.mainnet : acc.testNet);
   return selAddr;
 }
 
@@ -204,7 +242,7 @@ function _extractEvents(api: ApiPromise, result: SubmittableResult) {
         if (dispatchError.isModule) {
           try {
             const mod = dispatchError.asModule;
-            const err = api.registry.findMetaError(new Uint8Array([mod.index.toNumber(), mod.error.toNumber()]));
+            // const err = api.registry.findMetaError(new Uint8Array([mod.index.toNumber(), mod.error.toNumber()]));
 
             // message = `${err.section}.${err.name}`;
           } catch (error) {
@@ -580,6 +618,37 @@ async function verifySignature(message: string, signature: string, address: stri
   return signatureVerify(message, signature, address);
 }
 
+const network = "wss://rpc-testnet.selendra.org";
+const contractAddress = "0xaA3cE26BC4742a03a8cD4c1Ba152c1687263481E";
+// const ipfs = process.env.NEXT_PUBLIC_IPFS_ADDRESS || "";
+
+// const ipfs_address = (cid) => ${ipfs}/files/${cid};
+
+async function handler() {
+  const provider = EvmRpcProvider.from(network);
+  console.log("provider", provider);
+  await provider.isReady();
+  console.log("isReady");
+  console.log("abi", abi);
+  const contract = new ethers.Contract(contractAddress, abi, provider);
+  console.log("contract", contract.address);
+
+  const _lastID = await contract.lastID();
+  console.log("_lastID", _lastID);
+  const lastID = ethers.BigNumber.from(_lastID).toNumber();
+  console.log("lastID", lastID);
+  const dids = [];
+  console.log("dids", dids);
+
+  for (let i = 0; i < lastID; i++) {
+    dids.push(i);
+  }
+
+  console.log(dids);
+
+  // res.status(200).json(data);
+}
+
 export default {
   initKeys,
   gen,
@@ -601,6 +670,8 @@ export default {
   signAsync,
   makeTx,
   addSignatureAndSend,
+  handler,
+  mintCredential
   //signTxAsExtension,
   //signBytesAsExtension,
   //verifySignature,

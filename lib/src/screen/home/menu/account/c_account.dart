@@ -96,8 +96,8 @@ class AccountC {
           padding: const EdgeInsets.symmetric(vertical: paddingSize,),
           height: MediaQuery.of(context).size.height / 2,
           color: isDarkTheme
-            ? Color(AppUtils.convertHexaColor(AppColors.darkBgd))
-            : Color(AppUtils.convertHexaColor(AppColors.lowWhite)),
+              ? Color(AppUtils.convertHexaColor(AppColors.darkBgd))
+              : Color(AppUtils.convertHexaColor(AppColors.lowWhite)),
           child: Form(
             child: SingleChildScrollView(
               child: Column(
@@ -108,7 +108,7 @@ class AccountC {
                     controller: _editController,
                     onSubmit: () async {
                       await changeName!();
-                    }, 
+                    },
                     focusNode: _newNode,
                   ),
 
@@ -123,7 +123,7 @@ class AccountC {
                       await changeName!();
                     },
                   ),
-                  
+
                 ],
               ),
             ),

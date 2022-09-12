@@ -26,7 +26,7 @@ class AddAssetState extends State<AddAsset> {
   GlobalKey<ScaffoldState> globalKey = GlobalKey<ScaffoldState>();
 
   FlareControls flareController = FlareControls();
-  
+
   String _tokenSymbol = '';
   int? initialValue;
 
@@ -40,7 +40,7 @@ class AddAssetState extends State<AddAsset> {
     _modelAsset.result = {};
     _modelAsset.match = false;
     initialValue = widget.network!;
-    AppServices.noInternetConnection(globalKey);
+    AppServices.noInternetConnection(context, globalKey);
 
     super.initState();
   }
@@ -92,38 +92,38 @@ class AddAssetState extends State<AddAsset> {
   }
 
   Future<void> addAsset() async {
-    bool isMatch = false;
-    
+
+    FocusScope.of(context).unfocus();
+
     try {
 
       dialogLoading(context);
 
-      final lsContract = await Provider.of<ContractProvider>(context, listen: false).sortListContract;
-      lsContract.forEach((element) async {
+      final lsContract = Provider.of<ContractProvider>(context, listen: false).sortListContract;
+      for (var element in lsContract) {
         if (_modelAsset.controllerAssetCode.text == (ApiProvider().isMainnet ? element.contract : element.contractTest)){
-          isMatch = true;
+          _modelAsset.added = true;
         }
-      });
+      }
 
-      print("isMatch $isMatch");
-
-      if (isMatch){
-
+      if (_modelAsset.added){
+        _modelAsset.added = false;
+        if(!mounted) return;
         Navigator.pop(context);
-        
+
         await showDialog(
           context: context,
           builder: (context) {
             return AlertDialog(
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
-              title: Align(
+              title: const Align(
                 child: Text('Oops'),
               ),
-              content: Padding(
-                padding: const EdgeInsets.only(top: 15.0, bottom: 15.0),
+              content: const Padding(
+                padding: EdgeInsets.only(top: 15.0, bottom: 15.0),
                 child: Text(
-                "This contract address already in your list",
-                textAlign: TextAlign.center
+                    "This contract address already in your list",
+                    textAlign: TextAlign.center
                 ),
               ),
               actions: <Widget>[
@@ -136,7 +136,8 @@ class AddAssetState extends State<AddAsset> {
           },
         );
       } else {
-        
+
+        if(!mounted) return;
         await Provider.of<ContractProvider>(context, listen: false).addToken(
           _tokenSymbol,
           context,
@@ -144,9 +145,11 @@ class AddAssetState extends State<AddAsset> {
           contractAddr: _modelAsset.controllerAssetCode.text,
         );
 
+        if(!mounted) return;
         await Provider.of<ContractProvider>(context, listen: false).sortAsset();
 
         /* --------------After Fetch Contract Balance Need To Save To Storage Again-------------- */
+        if(!mounted) return;
         await StorageServices.storeAssetData(context);
         await enableAnimation();
       }
@@ -158,7 +161,7 @@ class AddAssetState extends State<AddAsset> {
 
       DialogComponents().dialogCustom(
         context: context,
-        titles: "Opps",
+        titles: "Oops",
         contents: e.toString(),
       );
     }
@@ -166,113 +169,63 @@ class AddAssetState extends State<AddAsset> {
 
   Future<void> submitAsset() async {
     try {
-    
+
       setState(() {
+        _tokenSymbol = "";
         _modelAsset.loading = true;
       });
 
       // Validate For ERC-20 || BEP-20
       final resEther = await Provider.of<ApiProvider>(context, listen: false).validateEther(_modelAsset.controllerAssetCode.text);//validateEtherAddress(_modelAsset.controllerAssetCode.text);
-
       // Validate For Substrate Address
       final res = await Provider.of<ApiProvider>(context, listen: false).validateAddress(_modelAsset.controllerAssetCode.text);
-      
       if (res || resEther) {
 
-        if (res) {
+        // if (res) {
 
-          if (_modelAsset.controllerAssetCode.text == AppConfig.kmpiAddr) {
-            setState(() {
-              _modelAsset.match = true;
-              _modelAsset.loading = false;
-            });
-          }
+        // if (_modelAsset.controllerAssetCode.text == AppConfig.kmpiAddr) {
+        //   setState(() {
+        //     _modelAsset.match = true;
+        //     _modelAsset.loading = false;
+        //   });
+        // }
+        // } else {
+
+        // Check And Add Address ERC-20 || BEP-20
+        if (initialValue == 1) { // 1 = Ethereum
+
+          await searchEtherContract();
         } else {
-
-          // Check And Add Address ERC-20 || BEP-20
-          if (initialValue == 'Ethereum') {
-
-            await searchEtherContract();
-          } else {
-            print("bsc");
-            final res = await Provider.of<ContractProvider>(context, listen: false).query(_modelAsset.controllerAssetCode.text, 'symbol', []);
-            _tokenSymbol = res[0].toString();
-          }
-
-          print("Finish query");
-          setState(() {
-            
-            _modelAsset.loading = false;
-          });
+          final res = await Provider.of<ContractProvider>(context, listen: false).query(_modelAsset.controllerAssetCode.text, 'symbol', []);
+          print("res $res");
+          _tokenSymbol = res[0].toString();
         }
+
+        setState(() {
+
+          _modelAsset.loading = false;
+        });
+        // }
       } else {
         DialogComponents().dialogCustom(
           context: context,
           titles: "Opps",
           contents: "Invalid token contract address!",
         );
-        
-        // await showDialog(
-        //   context: context,
-        //   builder: (context) {
-        //     return AlertDialog(
-        //       shape: RoundedRectangleBorder( borderRadius: BorderRadius.circular(10.0)),
-        //       title: Align(
-        //         child: Text('Opps'),
-        //       ),
-        //       content: Padding(
-        //         padding: const EdgeInsets.only(top: 15.0, bottom: 15.0),
-        //         child: Text('Invalid token contract address!'),
-        //       ),
-        //       actions: <Widget>[
-        //         TextButton(
-        //           onPressed: () => Navigator.pop(context),
-        //           child: const Text('Close'),
-        //         ),
-        //       ]
-        //     );
-        //   },
-        // );
-        //await dialog('Invalid token contract address!', 'Opps');
+
         setState(() {
           _modelAsset.loading = false;
         });
       }
     } catch (e) {
-      setState(() {
-      
-        _modelAsset.loading = false;
-      });
+      setState(() {_modelAsset.loading = false;});
 
       DialogComponents().dialogCustom(
         context: context,
         titles: "Opps",
         contents: "$e",
       );
-      // await showDialog(
-      //   context: context,
-      //   builder: (context) {
-      //     return AlertDialog(
-      //       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
-      //       title: Align(
-      //         child: Text('Oops'),
-      //       ),
-      //       content: Padding(
-      //         padding: const EdgeInsets.only(top: 15.0, bottom: 15.0),
-      //         child: Text(
-      //         "$e",
-      //         textAlign: TextAlign.center
-      //         ),
-      //       ),
-      //       actions: <Widget>[
-      //         TextButton(
-      //           onPressed: () => Navigator.pop(context),
-      //           child: const Text('Close'),
-      //         ),
-      //       ],
-      //     );
-      //   },
-      // );
+
       if (ApiProvider().isDebug == true) print("Error submitAsset $e");
     }
   }
@@ -346,7 +299,7 @@ class AddAssetState extends State<AddAsset> {
       key: globalKey,
       body: Stack(
         children: [
-          
+
           AddAssetBody(
             assetM: _modelAsset,
             initialValue: initialValue.toString(),

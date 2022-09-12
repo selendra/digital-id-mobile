@@ -1,10 +1,12 @@
-import 'package:http/http.dart' as http;
+import 'package:http/http.dart' as _http;
 import 'package:wallet_apps/index.dart';
+import 'package:wallet_apps/src/api/api.dart';
 
 class GetRequest{
+  _http.Response? _res;
 
   Future<void> getUnApproveDocs(String signature) async {
-    final response = await http.get(
+    final response = await _http.get(
       Uri.parse('https://attestation.koompi.org/claims/user'),
       headers: {
         "accept": "application/json",
@@ -22,7 +24,7 @@ class GetRequest{
   }
 
   Future<void> getPropertyURI(String signature) async {
-    final response = await http.get(
+    final response = await _http.get(
       Uri.parse('https://gateway.kumandra.org/api/add'),
     );
     
@@ -34,5 +36,20 @@ class GetRequest{
       print("getPropertyURI: No Data Found");
     }
 
+  }
+
+
+  Future<_http.Response> querySubmittedDocs(String addr) async {
+    try {
+
+      print("querySubmittedDocs");
+      print("addr $addr");
+      _res = await _http.get(Uri.parse(Api.assetOf + addr));
+      print("_res!.body ${_res!.body}");
+
+    } catch (e) {
+      print("Error querySubmittedDocs $e");
+    }
+    return _res!;
   }
 }

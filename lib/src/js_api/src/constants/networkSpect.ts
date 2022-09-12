@@ -264,5 +264,6 @@ export const defaultNetworkKey = SubstrateNetworkKeys.KUSAMA;
 //   assert(network && network.genesisHash[0], `Unable to find genesisHash for ${name}`);
 //   return network.genesisHash[0];
 // }
+
 // export const KUSAMA_GENESIS = getGenesis("kusama");
 // export const POLKADOT_GENESIS = getGenesis("polkadot");

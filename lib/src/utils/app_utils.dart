@@ -8,6 +8,7 @@ import 'package:web3dart/web3dart.dart';
 
 // ignore: avoid_classes_with_only_static_members
 class AppUtils {
+
   static final globalKey = GlobalKey<NavigatorState>();
 
   static Future<DeployedContract> contractfromAssets(String path, String contractAddr) async {
@@ -118,6 +119,7 @@ class AppUtils {
 
     return [rd1, rd2, rd3];
   }
-}
 
-class ContractParser {}
+  static List<MapEntry<String, dynamic>> mapToList(Map<String, dynamic> data) => (Map<String, dynamic>.from(data)).entries.toList();
+
+}
