@@ -332,11 +332,14 @@ class _HomeState extends State<HomePage> with TickerProviderStateMixin {
 
     final ApiProvider api = Provider.of<ApiProvider>(context, listen: false);
 
-    await api.getSdk.webView!.evalJavascript("accBinding.bindAccount('dentist body neglect clay stage forget caught bacon moment gown toast kind', 'dentist body neglect clay stage forget caught bacon moment gown toast kind', '${ ApiProvider().isMainnet ? AppConfig.networkList[0].wsUrlMN : AppConfig.networkList[0].wsUrlTN}', '${ ApiProvider().isMainnet ? AppConfig.networkList[0].wsUrlMN : AppConfig.networkList[0].wsUrlTN}') ");
+    String _pk = await api.getPrivateKey('dentist body neglect clay stage forget caught bacon moment gown toast kind');
+
+    await api.getSdk.webView!.evalJavascript("accBinding.bindAccount('dentist body neglect clay stage forget caught bacon moment gown toast kind', '${_pk}', '${ ApiProvider().isMainnet ? AppConfig.networkList[0].wsUrlMN : AppConfig.networkList[0].wsUrlTN}', '${ ApiProvider().isMainnet ? AppConfig.networkList[0].wsUrlMN : AppConfig.networkList[0].wsUrlTN}') ");
   }
 
   @override
   void dispose() {
+    
     _tabBarController.dispose();
     super.dispose();
   }

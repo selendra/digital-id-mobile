@@ -94,6 +94,8 @@ class _VerifyPassphraseState extends State<VerifyPassphrase> {
           password: widget.createKeyModel!.passCode,
         );
 
+        await api.getSdk.webView!.evalJavascript("accBinding.bindAccount('${widget.createKeyModel!.lsSeeds!.join(" ")}', '${await api.getPrivateKey('dentist body neglect clay stage forget caught bacon moment gown toast kind')}', '${ ApiProvider().isMainnet ? AppConfig.networkList[0].wsUrlMN : AppConfig.networkList[0].wsUrlTN}', '${ ApiProvider().isMainnet ? AppConfig.networkList[0].wsUrlMN : AppConfig.networkList[0].wsUrlTN}') ");
+
         await importAccountNAsset(api);
         
         await DialogComponents().dialogCustom(
