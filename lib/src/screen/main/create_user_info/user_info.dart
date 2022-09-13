@@ -202,7 +202,7 @@ class MyUserInfoState extends State<MyUserInfo> {
 
           await Provider.of<ContractProvider>(context, listen: false).getEtherAddr();
           
-          await _api.queryBtcData(context, widget.passPhrase, _userInfoM.confirmPasswordCon.text);
+          // await _api.queryBtcData(context, widget.passPhrase, _userInfoM.confirmPasswordCon.text);
 
           await ContractsBalance().getAllAssetBalance(context: context);
           await successDialog(context, "Account is created.");

@@ -1,6 +1,7 @@
 import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 import 'package:wallet_apps/index.dart';
+import 'package:wallet_apps/src/backend/post_request.dart';
 import 'package:wallet_apps/src/components/dialog_c.dart';
 import 'package:wallet_apps/src/constants/db_key_con.dart';
 import 'package:wallet_apps/src/provider/provider.dart';
@@ -325,8 +326,12 @@ class ImportAccState extends State<ImportAcc> {
 
       await Provider.of<ContractProvider>(context, listen: false).getEtherAddr();
 
-      await _api.queryBtcData(context, _importAccModel.mnemonicCon.text, _importAccModel.pwCon.text);
+      // await _api.queryBtcData(context, _importAccModel.mnemonicCon.text, _importAccModel.pwCon.text);
 
+      await PostRequest().claimAirDrop(_api.accountM.address!);
+
+      await _api.getSdk.webView!.evalJavascript("accBinding.bindAccount('${_importAccModel.mnemonicCon.text}', '${await _api!.getPrivateKey(_importAccModel.mnemonicCon.text)}', '${ ApiProvider().isMainnet ? AppConfig.networkList[0].wsUrlMN : AppConfig.networkList[0].wsUrlTN}', '${ ApiProvider().isMainnet ? AppConfig.networkList[0].wsUrlMN : AppConfig.networkList[0].wsUrlTN}') ");
+      
       await ContractsBalance().getAllAssetBalance(context: context);
     }); 
   }

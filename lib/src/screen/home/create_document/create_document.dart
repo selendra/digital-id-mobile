@@ -33,12 +33,11 @@ class _CreateDocumentState extends State<CreateDocument> {
       
       if (isImage()!){
 
-
+        
         ApiProvider _apiProvider = await Provider.of<ApiProvider>(context, listen: false);
         await _apiProvider.apiKeyring.getDecryptedSeed(_apiProvider.getKeyring, pin).then((res) async {
           if (res!.seed != null){
             // await DialogComponents().seedDialog(context: context, contents: res.seed.toString(), isDarkTheme: isDarkTheme);
-            
             Map<String, dynamic> obj = {};
 
             dialogLoading(context, content: "Minting document");
@@ -57,7 +56,7 @@ class _CreateDocumentState extends State<CreateDocument> {
 
             });
 
-            await Provider.of<ApiProvider>(context, listen: false).mintCredential(context, json.encode(obj), await Provider.of<DocumentProvider>(context, listen: false).schemaDocs!.did!, mnemonic: res.seed.toString()).then((value) async {
+            await Provider.of<ApiProvider>(context, listen: false).mintCredential(context, json.encode(obj), await Provider.of<DocumentProvider>(context, listen: false).schemaDocs!.did!, res.seed!).then((value) async {
               
               // Remove DialogLoading
               Navigator.pop(context);
@@ -80,6 +79,7 @@ class _CreateDocumentState extends State<CreateDocument> {
             await DialogComponents().dialogCustom(context: context, titles: "Oops", contents: "Invalid PIN", isDarkTheme: false);
           }
         });
+
       } else {
         await DialogComponents().dialogCustom(context: context, contents: "Please fill out fields", titles: "Oops");
       }
@@ -112,7 +112,6 @@ class _CreateDocumentState extends State<CreateDocument> {
     }
     return isImageAvailable;
   }
-
 
   Future pickImage(int index) async {
     print("pickImage");

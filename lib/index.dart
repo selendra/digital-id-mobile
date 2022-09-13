@@ -191,4 +191,4 @@ export 'src/screen/home/asset_info/att_activity.dart';
 const double paddingSize = 15.0;
 const double btnHeight = 60.0;
 
-final String didContract = "0x60d64f735993537db897ffC17d13697fD65b16dE";
+final String didContract = "0x0dAeb04d16fCF00e1258ff29cfF960B8d709cA26";

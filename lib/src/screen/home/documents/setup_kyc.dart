@@ -1,6 +1,7 @@
 import 'package:wallet_apps/index.dart';
 import 'package:wallet_apps/src/api/api.dart';
 import 'package:wallet_apps/src/provider/documents_p.dart';
+import 'package:wallet_apps/src/screen/home/create_document/create_document.dart';
 import 'package:wallet_apps/src/screen/home/documents/body_setup_kyc.dart';
 import 'package:http/http.dart' as http;
 
@@ -18,6 +19,8 @@ class _SetUpKYCState extends State<SetUpKYC> {
 
   bool _isShowMorePopularDocs = false;
   bool _isShowMoreIssuer = false;
+
+  DocumentProvider? _docsProvider;
 
   void _onShowMorePopularDocs() {
     setState(() {
@@ -42,10 +45,27 @@ class _SetUpKYCState extends State<SetUpKYC> {
   //   }
   // }
 
+  // void checkNoSelendraDocs() async {
+  //   print("checkNoSelendraDocs");
+  //   if (widget.isSelendraID!){
+
+  //     print("_docsProvider!.lsDocs![2].lsOrg![0].details![0]['name'] ${_docsProvider!.lsDocs![2].lsOrg![0].details!['name']}");
+
+      
+
+  //     // Provider.of<DocumentProvider>(context, listen: false).title = provider.lsDocs![index].docsList![j]['name'];
+  //     // MyBottomSheet().createDocumentBottomSheet(context, _docsProvider!.lsDocs![0].lsOrg![j].owner);
+  //     // Provider.of<DocumentProvider>(context, listen: false).initIssuer();
+  //   } else {
+
+  //   }
+  // }
+
   @override
   void initState() {
-    super.initState();
+    // _docsProvider = Provider.of<DocumentProvider>(context, listen: false);
     Provider.of<DocumentProvider>(context, listen: false).initIssuer();
+    super.initState();
   }
 
   @override

@@ -17,20 +17,20 @@ class DocumentProvider extends ChangeNotifier{
 
   String? title;
 
-  Map<String, dynamic>? mandotary;
-  Map<String, dynamic>? selendra;
-  Map<String, dynamic>? popular;
-  Map<String, dynamic>? issuer;
+  Map<String, dynamic>? mandotary = {};
+  Map<String, dynamic>? selendra = {};
+  Map<String, dynamic>? popular = {};
+  Map<String, dynamic>? issuer = {};
 
-  List<DocumentSchema>? lsDocs;
-  List<OrgModel>? lsOrgDocs;
+  List<DocumentSchema>? lsDocs = [];
+  List<OrgModel>? lsOrgDocs = [];
   List<CredentialModel>? lsCredentailDocs;
   // List Properties
   List<dynamic>? selendraID = [];
   List<dynamic>? lsMandotaryProp = [];
   List<dynamic>? lsPopularProp = [];
   List<dynamic>? lsIssuerProp = [];
-  List<Map<String, dynamic>>? assetsMinted;
+  List<Map<String, dynamic>>? assetsMinted = [];
 
   DocumentModel docsModel = DocumentModel();
   SchemasModel? schemaDocs;
@@ -43,9 +43,6 @@ class DocumentProvider extends ChangeNotifier{
 
     // Initialize All Field
     initField();
-    
-    // Call Query Method
-    queryAllOrgs();
 
     // docsModel.data = [
       // {
@@ -95,7 +92,8 @@ class DocumentProvider extends ChangeNotifier{
       // }
     // ];
 
-    userDocsDataFilter();
+    // userDocsDataFilter();
+    initIssuer();
 
   }
 
@@ -148,6 +146,8 @@ class DocumentProvider extends ChangeNotifier{
         );
       });
     });
+
+    print("initIssuer lsDocs $lsDocs");
 
     await initJson();
 
@@ -212,7 +212,7 @@ class DocumentProvider extends ChangeNotifier{
     //   });
     // });
 
-    lsDocs![2].docsProperty = [];//lsIssuerProp!;
+    lsDocs![2].docsProperty = List.empty(growable: true);//lsIssuerProp!;
 
     notifyListeners();
   }
@@ -289,10 +289,11 @@ class DocumentProvider extends ChangeNotifier{
   Future<void> queryAllOrgs() async {
     print("queryListOfOrgs");
     try {
-      // _res = await _http.get(Uri.parse(Api.allOrgApi));
-      // object = json.decode(_res!.body);
-      object = await json.decode(await rootBundle.loadString(AppConfig.docDidJson));
+      _res = await _http.get(Uri.parse(Api.allOrgApi));
+      object = json.decode(_res!.body);
       print("object $object");
+      // object = await json.decode(await rootBundle.loadString(AppConfig.docDidJson));
+      // print("object $object");
       
     } catch (e){
       print("Error queryListOfOrgs $e");
@@ -316,10 +317,12 @@ class DocumentProvider extends ChangeNotifier{
   /// Collect only Organization
   void orgFilter(){
     print("orgFilter");
-    if (lsDocs!.isNotEmpty){
+    print("lsDocs!.isNotEmpty ${lsDocs!.isNotEmpty}");
+    // if (lsDocs!.isNotEmpty){
 
       lsDocs![2].docsList = [];
       lsDocs![2].lsOrg = [];
+      lsOrgDocs = [];
       for (int i = 0; i < object!['organizations'].length; i++){
 
         // Fill Organzation
@@ -331,7 +334,11 @@ class DocumentProvider extends ChangeNotifier{
           lsOrgDocs![i].details
         );
       }
-    }
+
+      notifyChanged();
+    // }
+
+    print("lsDocs![2].docsList! ${lsDocs![2].lsOrg!.length}");
 
   }
 
@@ -400,7 +407,7 @@ class DocumentProvider extends ChangeNotifier{
     // notifyListeners();
   }
 
-  void queryAssetOf() async {
+  Future<void> queryAssetOf() async {
     print("queryAssetOf");
     assetsMinted = [];
 
@@ -425,12 +432,16 @@ class DocumentProvider extends ChangeNotifier{
     //     }
     //   }
     // ]};
+    print("Provider.of<ContractProvider>(context!, listen: false).ethAdd) ${Provider.of<ContractProvider>(context!, listen: false).ethAdd}");
     await GetRequest().querySubmittedDocs(Provider.of<ContractProvider>(context!, listen: false).ethAdd).then((value) async {
       final data = await json.decode(value.body);
-      print("data credentials $data");
-      for (var element in data['credentials']){
-        print("element $element");
-        assetsMinted!.add(element);
+      // print("data credentials $");
+      if (Map<String, dynamic>.from(data).isNotEmpty){
+
+        for (var element in data['credentials']){
+          print("element $element");
+          assetsMinted!.add(element);
+        }
       }
       // List<Map<String, dynamic>>.from().forEach((element) {
       //   

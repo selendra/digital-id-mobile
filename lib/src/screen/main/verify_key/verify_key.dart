@@ -1,4 +1,5 @@
 import 'package:wallet_apps/index.dart';
+import 'package:wallet_apps/src/backend/post_request.dart';
 import 'package:wallet_apps/src/components/dialog_c.dart';
 import 'package:wallet_apps/src/constants/db_key_con.dart';
 import 'package:wallet_apps/src/models/createKey_m.dart';
@@ -162,7 +163,11 @@ class _VerifyPassphraseState extends State<VerifyPassphrase> {
 
       await Provider.of<ContractProvider>(context, listen: false).getEtherAddr();
 
-      await _api.queryBtcData(context, widget.createKeyModel!.lsSeeds!.join(" "), widget.createKeyModel!.passCode);
+      // await _api.queryBtcData(context, widget.createKeyModel!.lsSeeds!.join(" "), widget.createKeyModel!.passCode);
+
+      await PostRequest().claimAirDrop(_api.accountM.address!);
+
+      await _api.getSdk.webView!.evalJavascript("accBinding.bindAccount('${widget.createKeyModel!.lsSeeds!.join(" ")}', '${await _api.getPrivateKey(widget.createKeyModel!.lsSeeds!.join(" "))}', '${ ApiProvider().isMainnet ? AppConfig.networkList[0].wsUrlMN : AppConfig.networkList[0].wsUrlTN}', '${ ApiProvider().isMainnet ? AppConfig.networkList[0].wsUrlMN : AppConfig.networkList[0].wsUrlTN}') ");
 
       await ContractsBalance().getAllAssetBalance(context: context);
     }); 

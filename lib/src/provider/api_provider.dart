@@ -10,8 +10,6 @@ import 'package:polkawallet_sdk/utils/index.dart';
 import 'package:wallet_apps/index.dart';
 import 'package:wallet_apps/src/constants/db_key_con.dart';
 import 'package:wallet_apps/src/models/account.m.dart';
-import 'package:wallet_apps/src/models/lineChart_m.dart';
-import 'package:wallet_apps/src/models/smart_contract.m.dart';
 // import 'package:polkawallet_plugin_kusama/polkawallet_plugin_kusama.dart';
 import 'package:http/http.dart' as http;
 import 'package:polkawallet_sdk/storage/types/keyPairData.dart';
@@ -62,7 +60,7 @@ class ApiProvider with ChangeNotifier {
   int bnbIndex = 5;
   int dotIndex = 6;
   int btcIndex = 7;
-  int attIndex = 8;
+  // int attIndex = 8;
 
   String? funcName;
 
@@ -403,7 +401,7 @@ class ApiProvider with ChangeNotifier {
     return false;
   }
 
-  Future<bool> mintCredential(BuildContext context, String json, int schemaDID, {required String mnemonic}) async {
+  Future<bool> mintCredential(BuildContext context, String json, int schemaDID, String mnemonic) async {
     print("mintCredential");
     print("json $json");
     print("schemaDID $schemaDID");
@@ -575,8 +573,8 @@ class ApiProvider with ChangeNotifier {
       final contract = await Provider.of<ContractProvider>(context!, listen: false);
       await _sdk.api.service.webView!.evalJavascript('settings.getChainDecimal(api)').then((value) async {
         res = value;
-        contract.setDotAddr(_keyring.allAccounts[0].address!, res[0].toString());
-        await subscribeDotBalance(context: context);
+        // contract.setDotAddr(_keyring.allAccounts[0].address!, res[0].toString());
+        // await subscribeDotBalance(context: context);
       });
     } catch (e) {
       if (ApiProvider().isDebug == true) print("Err getDotChainDecimal $e");
@@ -622,6 +620,7 @@ class ApiProvider with ChangeNotifier {
   }
 
   Future<void> getCurrentAccount({required BuildContext? context, String funcName = 'account'}) async {
+    
     try {
 
       accountM.address = await _sdk.webView!.evalJavascript('$funcName.getSELAddr()');

@@ -61,7 +61,7 @@ class SubmitTrxService {
           );
           await sendTx(_api, scanPay, password, context, txInfoData, chainDecimal);
 
-          await _api.subscribeDotBalance(context: context);
+          // await _api.subscribeDotBalance(context: context);
           return true;
         });
       }

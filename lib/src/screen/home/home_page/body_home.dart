@@ -4,6 +4,7 @@ import 'package:wallet_apps/src/components/document_card_c.dart';
 import 'package:wallet_apps/src/models/digital_id_m.dart';
 import 'package:wallet_apps/src/provider/documents_p.dart';
 import 'package:wallet_apps/src/screen/home/assets/assets.dart';
+import 'package:wallet_apps/src/screen/home/create_document/create_document.dart';
 import 'package:wallet_apps/src/screen/home/documents/setup_kyc.dart';
 
 class HomeBody extends StatelessWidget {
@@ -93,143 +94,173 @@ class HomeBody extends StatelessWidget {
         index: homePageModel!.activeIndex,
         onIndexChanged: onPageChanged,
       ),
-      body: PageView(
-        // physics: CustomPageViewScrollPhysics(),
-        controller: homePageModel!.pageController,
-        onPageChanged: onPageChanged,
-        children: [
-
-          AssetsPage(homePageControl: homePageModel!.pageController,),
-  
-          Consumer<DocumentProvider>(
-            builder: (context, provider, widget){
+      body: RefreshIndicator(
+        onRefresh: () async {
+          await Provider.of<DocumentProvider>(context, listen: false).queryAssetOf();
+        },
+        child: PageView(
+          // physics: CustomPageViewScrollPhysics(),
+          controller: homePageModel!.pageController,
+          onPageChanged: onPageChanged,
+          children: [
+      
+            AssetsPage(homePageControl: homePageModel!.pageController,),
         
-              return provider.assetsMinted!.isNotEmpty ? Column(
-                children: [ 
-
-                  Container(
-                    height: kToolbarHeight - 8.0,
-                    padding: EdgeInsets.all(5),
-                    margin: EdgeInsets.only(left: paddingSize, right: paddingSize, bottom: paddingSize, top: paddingSize),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(20.0),
-                    ),
-                    child: TabBar(
-                      controller: tabBarController,
-                      indicator: BoxDecoration(
+            Consumer<DocumentProvider>(
+              builder: (context, provider, widget){
+          
+                return provider.assetsMinted!.isNotEmpty ? Column(
+                  children: [ 
+      
+                    Container(
+                      height: kToolbarHeight - 8.0,
+                      padding: EdgeInsets.all(5),
+                      margin: EdgeInsets.only(left: paddingSize, right: paddingSize, bottom: paddingSize, top: paddingSize),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
                         borderRadius: BorderRadius.circular(20.0),
-                        color: selectedColor!.withOpacity(0.2),
                       ),
-                      labelColor: selectedColor,
-                      labelStyle: TextStyle(fontWeight: FontWeight.bold),
-                      unselectedLabelStyle: TextStyle(fontWeight: FontWeight.normal),
-                      unselectedLabelColor: hexaCodeToColor("#D9D9D9"),
-                      tabs: ["Pending", "Approved"].map((e) => Tab(
-                        text: e,
-                      )).toList(),
-                    ),
-                  ),
-
-                  Expanded(
-                    child: TabBarView(
-                      controller: tabBarController,
-                      children: [
-
-                        provider.docsModel.pending.isNotEmpty ? ListView.builder(
-                          shrinkWrap: true,
-                          itemCount: provider.docsModel.pending.length,
-                          itemBuilder: (context, index){
-                            return CardDocument(data: provider.docsModel.pending[index], isDetail: false,);
-                          }
-                        ) : Center(child: Image.asset(AppConfig.logoPath+"document.png", width: 178, height: 178)),
-                        // ListView.builder(
-                        //   shrinkWrap: true,
-                        //   itemCount: provider.assetsMinted!.length,
-                        //   itemBuilder: (context, index){
-                        //     return CardDocument(data: provider.assetsMinted![index], isDetail: false,);
-                        //   }
-                        // ),
-
-                        provider.docsModel.approve.isNotEmpty ? ListView.builder(
-                          shrinkWrap: true,
-                          itemCount: provider.docsModel.approve.length,
-                          itemBuilder: (context, index){
-                            return CardDocument(data: provider.docsModel.approve[index], isDetail: false,);
-                          }
-                        ) : Center(child: Image.asset(AppConfig.logoPath+"document.png", width: 178, height: 178)),
-                        
-                      ],
-                    )
-                  ),
-                ],
-              ) 
-              : Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-
-                  GestureDetector(
-                    child: MyText(
-                      text: "Connect Handler",
-                    ),
-                    onTap: () async {
-                      await deleteAccount!();
-                      // await Provider.of<ApiProvider>(context, listen: false).connectToHandler();
-                    },
-                  ),
-
-                  SizedBox(
-                    width: MediaQuery.of(context).size.width,
-                    height: 50,
-                    child: GestureDetector(
-                      child: MyText(
-                        text: "queryListOfOrgs",
+                      child: TabBar(
+                        controller: tabBarController,
+                        indicator: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20.0),
+                          color: selectedColor!.withOpacity(0.2),
+                        ),
+                        labelColor: selectedColor,
+                        labelStyle: TextStyle(fontWeight: FontWeight.bold),
+                        unselectedLabelStyle: TextStyle(fontWeight: FontWeight.normal),
+                        unselectedLabelColor: hexaCodeToColor("#D9D9D9"),
+                        tabs: ["Pending", "Approved"].map((e) => Tab(
+                          text: e,
+                        )).toList(),
                       ),
-                      onTap: () async {
-                        // queryAssetOf!();
-                        await Provider.of<DocumentProvider>(context, listen: false).queryAllOrgs();
+                    ),
+      
+                    Expanded(
+                      child: TabBarView(
+                        controller: tabBarController,
+                        children: [
+      
+                          provider.docsModel.pending.isNotEmpty ? ListView.builder(
+                            shrinkWrap: true,
+                            itemCount: provider.docsModel.pending.length,
+                            itemBuilder: (context, index){
+                              return CardDocument(data: provider.docsModel.pending[index], isDetail: false,);
+                            }
+                          ) 
+                          : 
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Image.asset(AppConfig.logoPath+"document.png", width: 178, height: 178),
+                              MyText(text: "No Documents", fontSize: 18,)
+                            ],
+                          ),
+                          // ListView.builder(
+                          //   shrinkWrap: true,
+                          //   itemCount: provider.assetsMinted!.length,
+                          //   itemBuilder: (context, index){
+                          //     return CardDocument(data: provider.assetsMinted![index], isDetail: false,);
+                          //   }
+                          // ),
+      
+                          provider.docsModel.approve.isNotEmpty ? ListView.builder(
+                            shrinkWrap: true,
+                            itemCount: provider.docsModel.approve.length,
+                            itemBuilder: (context, index){
+                              return CardDocument(data: provider.docsModel.approve[index], isDetail: false,);
+                            }
+                          )
+                          : 
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Image.asset(AppConfig.logoPath+"document.png", width: 178, height: 178),
+                              MyText(text: "No Documents", fontSize: 18,)
+                            ],
+                          ),
+                          
+                        ],
+                      )
+                    ),
+                  ],
+                ) 
+                : Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+      
+                    // GestureDetector(
+                    //   child: MyText(
+                    //     text: "Connect Handler",
+                    //   ),
+                    //   onTap: () async {
+                    //     await deleteAccount!();
+                    //     // await Provider.of<ApiProvider>(context, listen: false).connectToHandler();
+                    //   },
+                    // ),
+      
+                    // SizedBox(
+                    //   width: MediaQuery.of(context).size.width,
+                    //   height: 50,
+                    //   child: GestureDetector(
+                    //     child: MyText(
+                    //       text: "queryListOfOrgs",
+                    //     ),
+                    //     onTap: () async {
+                    //       // queryAssetOf!();
+                    //       await Provider.of<DocumentProvider>(context, listen: false).queryAllOrgs();
+                    //     },
+                    //   ),
+                    // ),
+      
+                    Image.asset(AppConfig.logoPath+"document.png", width: 178, height: 178,),
+                    
+                    MyText(
+                      top: 20.sp,
+                      text: "Empty list",
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18,
+                    ),
+      
+                    MyText(
+                      top: 15.sp,
+                      text: "No document has found",
+                      bottom: 30.sp,
+                    ),
+      
+                    MyFlatButton(
+                      height: 33.sp,
+                      edgeMargin: EdgeInsets.symmetric(horizontal: paddingSize),
+                      textButton: "Setup Selendra ID",
+                      // textColor: AppColors.whiteColor,
+                      buttonColor: AppColors.newPrimary,
+                      action: () {
+                        provider.title = provider.lsDocs![2].lsOrg![0].details!['name'];
+
+                        Navigator.push(
+                          context, 
+                          MaterialPageRoute(builder: (context) => CreateDocument(ownerId: provider.lsDocs![2].lsOrg![0].owner))
+                        );
+                        // Navigator.push(context, MaterialPageRoute(builder: (context) => SetUpKYC(isSelendraID: true,)));
+                        // MyBottomSheet().createIDBottomSheet(context, Provider.of<DocumentProvider>(context, listen: false).selendraID!);
+                        // Provider.of<DocumentProvider>(context, listen: false).title = "Selendra ID";
+                        // Navigator.push(
+                        //   context, 
+                        //   MaterialPageRoute(builder: (context) => CreateDocument(docs: Provider.of<DocumentProvider>(context, listen: false).selendraID!))
+                        // );
+                        // Navigator.push(context, MaterialPageRoute(builder: (context) => SetUpKYC()));
                       },
                     ),
-                  ),
-
-                  Image.asset(AppConfig.logoPath+"document.png", width: 178, height: 178,),
-                  
-                  MyText(
-                    top: 20.sp,
-                    text: "Empty list",
-                    fontWeight: FontWeight.bold,
-                    fontSize: 18,
-                  ),
-
-                  MyText(
-                    top: 15.sp,
-                    text: "No document has found",
-                    bottom: 30.sp,
-                  ),
-
-                  MyFlatButton(
-                    height: 33.sp,
-                    edgeMargin: EdgeInsets.symmetric(horizontal: paddingSize),
-                    textButton: "Setup Selendra ID",
-                    // textColor: AppColors.whiteColor,
-                    buttonColor: AppColors.newPrimary,
-                    action: () {
-                      // MyBottomSheet().createIDBottomSheet(context, Provider.of<DocumentProvider>(context, listen: false).selendraID!);
-                      // Provider.of<DocumentProvider>(context, listen: false).title = "Selendra ID";
-                      // Navigator.push(
-                      //   context, 
-                      //   MaterialPageRoute(builder: (context) => CreateDocument(docs: Provider.of<DocumentProvider>(context, listen: false).selendraID!))
-                      // );
-                      // Navigator.push(context, MaterialPageRoute(builder: (context) => SetUpKYC()));
-                    },
-                  ),
-                ],
-              );
-            }
-          ),
-      
-          Account()
-        ],
+                  ],
+                );
+              }
+            ),
+        
+            Account()
+          ],
+        ),
       ),
 
       floatingActionButton: 
@@ -237,7 +268,8 @@ class HomeBody extends StatelessWidget {
       Consumer<DocumentProvider>(
         builder: (context, provider, widget){
           
-          return homePageModel!.pageController!.page.toString() == "1.0" ? FloatingActionButton(
+          // homePageModel!.pageController!.page.toString() == "1.0"
+          return (provider.docsModel.pending.isNotEmpty || provider.docsModel.approve.isNotEmpty) ? FloatingActionButton(
             onPressed: () {
               Navigator.push(context, MaterialPageRoute(builder: (context) => SetUpKYC()));
             },

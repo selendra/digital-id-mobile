@@ -29,7 +29,7 @@ class AppState extends State<App> {
 
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       await Provider.of<ContractProvider>(context, listen: false).getEtherAddr();
-      await Provider.of<ContractProvider>(context, listen: false).getBtcAddr();
+      // await Provider.of<ContractProvider>(context, listen: false).getBtcAddr();
       
       // await Provider.of<ContractProvider>(context, listen: false).initHardhatClient().then((value) async {
       //   // 0x25844414275e6a5fe4b379EFec3FA63C1381DaE0
