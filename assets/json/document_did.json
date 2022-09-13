@@ -2,47 +2,33 @@
 	"organizations": [
 		{
 			"did": 0,
-			"cid": "QmchfE4hcspodu6Chgpkjick6kmUHgp6rhm4CGfJRdVHVo",
-			"owner": "0x3Abb977B7301CA1c196F5795a3fd32A491061a71",
+			"cid": "QmbBcV5pE3MGE7ZagxHFYvb3E2dymTwdazfTMdXExAvoqB",
+			"owner": "0x2E57b1AD12CEc57FE1C5E54D20D6f662C4743124",
 			"ctype": 0,
 			"state": 4,
 			"parent": 0,
 			"details": {
-				"name": "SELENDRA PTE",
+				"name": "SELENDRA PTE. LTD",
 				"description": "Interoperable Nominated Proof-of-Stake network for developing and running Substrate-based and EVM compatible blockchain applications.",
 				"website": "https://selendra.org",
 				"logo": "https://gateway.kumandra.org/files/QmREP3f2JhmHtwb9JXHgsa3yfQfSZ5a7gaLKzqjwX5Ztzv"
-			}
-		},
-		{
-			"did": 3,
-			"cid": "QmYchEfZ44SXnCL7gM3keCSrdDBTG2swP8So2RKDVUcgeu",
-			"owner": "0xC6a9FD4f0Fe82f4E06d6C006aeBA69D77F764020",
-			"ctype": 0,
-			"state": 4,
-			"parent": 0,
-			"details": {
-				"name": "Qalima",
-				"description": "Discover, Collect, and sell extraordinary NFTs",
-				"website": "https://qalima.io",
-				"logo": "https://gateway.kumandra.org/files/QmZgKRq6bizVxrCdWAB9DJnhXY7vzfttw5KV6x4CnBySyX"
 			}
 		}
 	],
 	"schemas": [
 		{
 			"did": 1,
-			"cid": "QmUvfWQigcUAB3X3Wrk71w6ebpbCu8Zh93meUqsinyMp8v",
-			"owner": "0x3Abb977B7301CA1c196F5795a3fd32A491061a71",
+			"cid": "QmVwNZ8TGnyr9EiU7d2jRUoJdqWs6fRJzkFZM1KB1rq5GZ",
+			"owner": "0x2E57b1AD12CEc57FE1C5E54D20D6f662C4743124",
 			"ctype": 1,
 			"state": 0,
 			"parent": 0,
 			"details": {
-				"$id": "https://did.kumandra.org/selendrapte/digitalidentity.schema.json",
+				"$id": "https://did.kumandra.org/selendrapte.ltd/digitalid.schema.json",
 				"$schema": "https://json-schema.org/draft/2020-12/schema",
-				"title": "Digital Identity",
-				"description": "SELENDRA Digital Identity for binding to other digital identities and digital assets.",
-				"ownerId": "0x3Abb977B7301CA1c196F5795a3fd32A491061a71",
+				"title": "Digital ID",
+				"description": "Selendra digital identity for binding to other digital identities and digital assets.",
+				"ownerId": "0x2E57b1AD12CEc57FE1C5E54D20D6f662C4743124",
 				"images": [
 					"https://gateway.kumandra.org/files/QmeEM9D9Gr4aTs6q8vdb4joJXz49dxApmBxp7j991xk8Q5"
 				],
@@ -52,7 +38,7 @@
 						"description": "On chain identity",
 						"label": "Text"
 					},
-					"fullName": {
+					"full_name": {
 						"type": "string",
 						"description": "Public name",
 						"label": "Text"
@@ -62,70 +48,15 @@
 						"description": "Male, Female, LGBT",
 						"label": "Text"
 					},
+					"email": {
+						"type": "string",
+						"description": "Web2 email provider",
+						"label": "Text"
+					},
 					"avatar": {
 						"type": "array",
 						"description": "Profile picture",
 						"label": "Images"
-					}
-				}
-			}
-		},
-		{
-			"did": 4,
-			"cid": "QmbSWcshq98tA9qDa1cYMnWhWL7u2a8jW6L8ArhHFBpGzS",
-			"owner": "0xC6a9FD4f0Fe82f4E06d6C006aeBA69D77F764020",
-			"ctype": 1,
-			"state": 0,
-			"parent": 3,
-			"details": {
-				"$id": "https://did.kumandra.org/qalima/storeprofile.schema.json",
-				"$schema": "https://json-schema.org/draft/2020-12/schema",
-				"title": "Store Profile",
-				"description": "Discover, Collect, and sell extraordinary NFTs",
-				"ownerId": "0xC6a9FD4f0Fe82f4E06d6C006aeBA69D77F764020",
-				"images": [
-					"https://gateway.kumandra.org/files/QmZgKRq6bizVxrCdWAB9DJnhXY7vzfttw5KV6x4CnBySyX"
-				],
-				"properties": {
-					"banner": {
-						"type": "array",
-						"description": "banner",
-						"label": "Images"
-					},
-					"avatar": {
-						"type": "array",
-						"description": "avatar",
-						"label": "Images"
-					},
-					"name": {
-						"type": "string",
-						"description": "name",
-						"label": "Text"
-					},
-					"bio": {
-						"type": "string",
-						"description": "bio",
-						"label": "Text"
-					},
-					"created_at": {
-						"type": "number",
-						"description": "created_at",
-						"label": "Number"
-					},
-					"twitter": {
-						"type": "string",
-						"description": "twitter",
-						"label": "Text"
-					},
-					"facebook": {
-						"type": "string",
-						"description": "facebook",
-						"label": "Text"
-					},
-					"telegram": {
-						"type": "string",
-						"description": "telegram",
-						"label": "Text"
 					}
 				}
 			}
@@ -134,40 +65,110 @@
 	"credentials": [
 		{
 			"did": 2,
-			"cid": "Qmc3hC7hW76fQeaePezq2vFPiW9eFCCHCoFGcG8Yujkd4r",
-			"owner": "0x3Abb977B7301CA1c196F5795a3fd32A491061a71",
+			"cid": "QmW8tY3oSuQVRnLAULCYqEtME29UP3gxHRYXPgkcy1JrbB",
+			"owner": "0x2E57b1AD12CEc57FE1C5E54D20D6f662C4743124",
 			"ctype": 2,
 			"state": 0,
 			"parent": 1,
+			"isVerified": true,
 			"details": {
 				"name": "brilliant",
-				"fullName": "Brilliant PHAL",
+				"full_name": "BRILLIANT PHAL",
 				"gender": "Male",
+				"email": "brilliant@koompi.org",
 				"avatar": [
 					"https://gateway.kumandra.org/files/QmSVLefQv53kNVNje2PS3kLo7qQteAGvQcWAPvqz5Ryr9v"
 				]
 			}
 		},
 		{
-			"did": 5,
-			"cid": "QmSLEryePubShMb4qY24TFaRAAq9ENxCFbacpbCNcD2RTn",
-			"owner": "0xC6a9FD4f0Fe82f4E06d6C006aeBA69D77F764020",
+			"did": 3,
+			"cid": "QmQqQtCh2dX928RAkyTtCrLaTBsbktZhS37KH11iGgW47V",
+			"owner": "0xf56eFe09aFd3b39306D5C71b209ddE099A5Dc6df",
 			"ctype": 2,
 			"state": 0,
-			"parent": 4,
+			"parent": 1,
+			"isVerified": true,
 			"details": {
-				"banner": [
-					"https://gateway.kumandra.org/files/QmbLYQ2LcXBHMjfjrEZ5pXgcmYLuiTGWjbwpWaC1ikZNgp"
-				],
+				"name": "Daveat",
+				"full_name": "Daveat Corn",
+				"gender": "Male",
+				"email": "condaveat@gmail.com",
 				"avatar": [
-					"https://gateway.kumandra.org/files/QmXnEEk5CBRQ5WTajZiRPHKcp8REp6KwZMDc3wWZevCUtN"
-				],
-				"name": "Weteka",
-				"bio": "Virtual platform for students, teachers, and professionals to share their knowledge with other students. View or create lessons for free, as well as set up your own school with ease.",
-				"created_at": 1661847193810,
-				"twitter": "https://twitter.com",
-				"facebook": "https://facebook.com",
-				"telegram": "https://telegram.com"
+					"https://gateway.kumandra.org/files/QmehFYrnhXbm3eZwJiB5qVcgJh29wFLRCuKNFofbEp3vnM"
+				]
+			}
+		},
+		{
+			"did": 4,
+			"cid": "QmRXX6uowz9QPcQ3VGkuf2p9xoBetEoGxVcRpMrvxJhYiE",
+			"owner": "0x313eDE5CF67b95dc85CB361C4B4d22BA38AE52Ac",
+			"ctype": 2,
+			"state": 0,
+			"parent": 1,
+			"isVerified": true,
+			"details": {
+				"name": "happy",
+				"full_name": "PHAL Happy",
+				"gender": "Male",
+				"email": "happy@koompi.org",
+				"avatar": [
+					"https://gateway.kumandra.org/files/QmYyXBNUKsamRUtrACtpXrcWkanD9WxSkgryJHrgaXNhoe"
+				]
+			}
+		},
+		{
+			"did": 5,
+			"cid": "QmZkydChpdFLZaJnW15Q9NtKmQVZZkVcNwoj9dLc2M3ZVm",
+			"owner": "0x586C1d37aF121d1fDdf19cd6fB78650CA6a97899",
+			"ctype": 2,
+			"state": 0,
+			"parent": 1,
+			"isVerified": true,
+			"details": {
+				"name": "Rithy Thul",
+				"full_name": "Rithy Thul",
+				"gender": "M",
+				"email": "oulgjfmf@duck.com",
+				"avatar": [
+					"https://gateway.kumandra.org/files/QmZPxSaUQWWkuDnvV4Sw7CYsmt58KDNyBK7VVgXQhAte5J"
+				]
+			}
+		},
+		{
+			"did": 6,
+			"cid": "QmQZCM3SELorPABx1aMVtbVN73zqmx8JoSeJFYsYsWdAm8",
+			"owner": "0xEF37c1E51f0550DF424fdc4Af1821b2c746aA7be",
+			"ctype": 2,
+			"state": 0,
+			"parent": 1,
+			"isVerified": true,
+			"details": {
+				"name": "dveat",
+				"full_name": "daveat corn",
+				"gender": "Male",
+				"email": "conda eatngjf",
+				"avatar": [
+					"https://gateway.kumandra.org/files/QmX41b7drKhM59r79fm8m5GhenbWquK8nRAR5JznR1SNKf"
+				]
+			}
+		},
+		{
+			"did": 7,
+			"cid": "QmUrDPc4dXwon1nYwxSoNPQN29yiEYSugUoJzR9VgTtP4c",
+			"owner": "0x0b8B136468c0B02c63fa1caaA4De72a7B947B954",
+			"ctype": 2,
+			"state": 0,
+			"parent": 1,
+			"isVerified": true,
+			"details": {
+				"name": "Daveat ",
+				"full_name": "Daveat Vorn",
+				"gender": "Male",
+				"email": "condaveat@gmail.com",
+				"avatar": [
+					"https://gateway.kumandra.org/files/QmX41b7drKhM59r79fm8m5GhenbWquK8nRAR5JznR1SNKf"
+				]
 			}
 		}
 	]

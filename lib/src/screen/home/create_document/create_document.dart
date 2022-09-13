@@ -115,7 +115,6 @@ class _CreateDocumentState extends State<CreateDocument> {
     return isImageAvailable;
   }
 
-
   Future pickImage(int index) async {
     print("pickImage");
     try {

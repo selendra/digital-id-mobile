@@ -76,20 +76,20 @@ class _HomeState extends State<HomePage> with TickerProviderStateMixin {
     _tabController!.addListener(() {
       onTab(_tabController!.index);
     });
+
     _dashBoardM = Provider.of<HomeProvider>(context, listen: false).homeModel;
-    Provider.of<DocumentProvider>(context, listen: false).initContext = context;
-    Provider.of<DocumentProvider>(context, listen: false).initField();
+    _docsProvider = Provider.of<DocumentProvider>(context, listen: false);
     _api = Provider.of<ApiProvider>(context, listen: false);
 
-    _docsProvider = Provider.of<DocumentProvider>(context, listen: false);
+    _docsProvider!.initContext = context;
+    _docsProvider!.initField();
+
     // StorageServices.removeKey(DbKey.idKey);
     // initBlockchainData();
 
-    fetchSelendraID();
+    // fetchSelendraID();
     
     fetchOrganization();
-
-    _docsProvider!.queryAssetOf();
 
     super.initState();
   }
@@ -97,7 +97,10 @@ class _HomeState extends State<HomePage> with TickerProviderStateMixin {
   void fetchOrganization() async {
 
     await _docsProvider!.queryAllOrgs();
+    
     _docsProvider!.orgFilter();
+
+    _docsProvider!.queryAssetOf();
     // _docsProvider!.schemaFilter();
     // _docsProvider!.credentialsFilter();
 
@@ -253,44 +256,55 @@ class _HomeState extends State<HomePage> with TickerProviderStateMixin {
 
         if (value != null) {
 
-          final Map<dynamic, dynamic> decode = decoder.convert(code);
+          final _mnemonic = await _api!.apiKeyring.getDecryptedSeed(_api!.getKeyring, value);
 
-          if(decode["id"] == null) {
-            showDialog(
-              context: context,
-              builder: (context) => AlertDialog(
-                title: Text("Error"),
-                content: Text("Invalid ID Not Found"),
-                actions: [
-                  MyFlatButton(
-                    textButton: "Ok",
-                    buttonColor: AppColors.newPrimary,
-                    action: () {
-                      Navigator.pop(context);
-                    },
-                  )
-                ],
-              ),
-            );
-          } 
-          else{
-            List<int> convert = decode['id'].toString().codeUnits;
-            Uint8List uint8list = Uint8List.fromList(convert);
-            String _credentials = await _signId(decode['id'], value!);
-            
-            // String signedDataHex = EthSigUtil.signMessage(
-            //   privateKey: _credentials,
-            //   message: uint8list,
-            // );
+          if (_mnemonic!.seed != null){
 
-            // Sign Message
-            final message = await _api!.getSdk.webView!.evalJavascript("accBinding.signMessage('${decode['id']}', '$_credentials')");
-            
-            await PostRequest().scanLogin( decode['id'], message, decode['link'], Provider.of<ContractProvider>(context, listen: false).ethAdd );
-            
-            await DialogComponents().dialogCustom(context: context, contents: "Successfully login");
+            final Map<dynamic, dynamic> decode = decoder.convert(code);
 
+            if(decode["id"] == null) {
+              showDialog(
+                context: context,
+                builder: (context) => AlertDialog(
+                  title: Text("Error"),
+                  content: Text("Invalid ID Not Found"),
+                  actions: [
+                    MyFlatButton(
+                      textButton: "Ok",
+                      buttonColor: AppColors.newPrimary,
+                      action: () {
+                        Navigator.pop(context);
+                      },
+                    )
+                  ],
+                ),
+              );
+            } 
+            else{
+              List<int> convert = decode['id'].toString().codeUnits;
+              Uint8List uint8list = Uint8List.fromList(convert);
+              String _credentials = await _signId(decode['id'], _mnemonic.seed!);
+              
+              // String signedDataHex = EthSigUtil.signMessage(
+              //   privateKey: _credentials,
+              //   message: uint8list,
+              // );
+
+              // Sign Message
+              final message = await _api!.getSdk.webView!.evalJavascript("accBinding.signMessage('${decode['id']}', '$_credentials')");
+              
+              await PostRequest().scanLogin( decode['id'], message, decode['link'], Provider.of<ContractProvider>(context, listen: false).ethAdd );
+              
+              // Close Dialog Loading
+              Navigator.pop(context);
+
+              await DialogComponents().dialogCustom(context: context, contents: "Successfully login");
+
+            }
           }
+        } else {
+          
+          await DialogComponents().dialogCustom(context: context, contents: "Incorrect pin", titles: "Oops");
         }
       });
 
@@ -298,11 +312,9 @@ class _HomeState extends State<HomePage> with TickerProviderStateMixin {
 
   }
 
-  Future<String> _signId(dynamic id, String pin) async {
-    print("_signId");
-    final _mnemonic = await _api!.apiKeyring.getDecryptedSeed(_api!.getKeyring, pin);
-    print("mnemonic $_mnemonic");
-    return await Provider.of<ApiProvider>(context, listen: false).getPrivateKey(_mnemonic!.seed!);
+  Future<String> _signId(dynamic id, String mnemonic) async {
+    print("_signId $id");
+    return await Provider.of<ApiProvider>(context, listen: false).getPrivateKey(mnemonic);
 
   }
 
