@@ -121,15 +121,8 @@ class CreateIDBody extends StatelessWidget {
                       await Navigator.push(context, MaterialPageRoute(builder: (context) => Passcode(label: PassCodeLabel.fromMint))).then((value) async {
                         print("formBackUp $value");
                         // await disableScreenShot!();
-                        ApiProvider _apiProvider = await Provider.of<ApiProvider>(context, listen: false);
-                        await _apiProvider.apiKeyring.getDecryptedSeed(_apiProvider.getKeyring, value).then((res) async {
-                          if (res!.seed != null){
-                            // await DialogComponents().seedDialog(context: context, contents: res.seed.toString(), isDarkTheme: isDarkTheme);
-                            await mintCredential!();
-                          } else {
-                            await DialogComponents().dialogCustom(context: context, titles: "Oops", contents: "Invalid PIN", isDarkTheme: false);
-                          }
-                        });
+
+                        if (value != null) await mintCredential!(value);
                       });
                       
                       // Navigator.push(context, Transition(child: FrontSide(), transitionEffect: TransitionEffect.RIGHT_TO_LEFT));

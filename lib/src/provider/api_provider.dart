@@ -403,13 +403,12 @@ class ApiProvider with ChangeNotifier {
     return false;
   }
 
-  Future<bool> mintCredential(BuildContext context, String json, int schemaDID) async {
+  Future<bool> mintCredential(BuildContext context, String json, int schemaDID, {required String mnemonic}) async {
     print("mintCredential");
     print("json $json");
     print("schemaDID $schemaDID");
     try {
-      final _mnemonic = "dentist body neglect clay stage forget caught bacon moment gown toast kind";
-      final _privateKey = await getPrivateKey(_mnemonic);
+      final _privateKey = await getPrivateKey(mnemonic);
       print("_privateKey $_privateKey");
       print("DotEnv().get('KUMANDRA_API') ${dotenv.get('KUMANDRA_API')}");
 
@@ -418,7 +417,7 @@ class ApiProvider with ChangeNotifier {
 
         print("value $value");
 
-        res = await _sdk.api.service.webView!.evalJavascript("keyring.mintCredential('$_mnemonic', '$_privateKey', '$schemaDID', '${isMainnet ? AppConfig.networkList[0].wsUrlMN : AppConfig.networkList[0].wsUrlTN}', '$value', '$didContract')");
+        res = await _sdk.api.service.webView!.evalJavascript("keyring.mintCredential('$mnemonic', '$_privateKey', '$schemaDID', '${isMainnet ? AppConfig.networkList[0].wsUrlMN : AppConfig.networkList[0].wsUrlTN}', '$value', '$didContract')");
         print("res $res");
       });
 
