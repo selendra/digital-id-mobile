@@ -91,7 +91,7 @@ class _FingerPrintState extends State<FingerPrint> {
               actions: <Widget>[
                 MyFlatButton(
                   edgeMargin: const EdgeInsets.all(20),
-                  textButton: "Complete",
+                  textButton: "Close",
                   buttonColor: AppColors.newPrimary,
                   action: () async {  
                     Navigator.pop(context);

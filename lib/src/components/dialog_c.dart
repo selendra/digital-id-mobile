@@ -93,7 +93,11 @@ class DialogComponents {
                 // await FlutterScreenshotSwitcher.enableScreenshots();
                 Navigator.pop(context);
               },
-              child: MyText(text: 'Close'),
+              child: MyText(
+                text: 'Close', 
+                color: AppColors.newPrimary,
+                fontWeight: FontWeight.bold,
+              ),
             )
           ],
         );
@@ -148,7 +152,7 @@ class DialogComponents {
                 },
                 child: MyText(
                   text: "Close",
-                  color: AppColors.lowWhite
+                  color: AppColors.newPrimary
                 ),
               )
             ],

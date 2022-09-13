@@ -245,7 +245,7 @@ Future<void> successDialog(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10.0),
         ),
-        backgroundColor: hexaCodeToColor(AppColors.darkBgd),
+        backgroundColor: hexaCodeToColor(AppColors.whiteColor),
         content: Container(
           // height: MediaQuery.of(context).size.height / 2.6,
           width: MediaQuery.of(context).size.width * 0.7,
@@ -258,12 +258,12 @@ Future<void> successDialog(
                   text: 'SUCCESS!',
                   fontSize: 20,
                   top: 10,
-                  color: AppColors.lowWhite,
+                  color: AppColors.blackColor,
                   fontWeight: FontWeight.bold,
                 ),
                 MyText(
                   top: 8.0,
-                  color: AppColors.lowWhite,
+                  color: AppColors.blackColor,
                   text: 'You have successfully ' + operationText,
                 ),
                 SizedBox(
@@ -275,8 +275,8 @@ Future<void> successDialog(
                   begin: Alignment.bottomLeft,
                   end: Alignment.topRight,
                   action: (){
-                    Navigator.pop(context);
-                    Navigator.pushAndRemoveUntil(context, Transition(child: route!), ModalRoute.withName('/'));
+                    // Navigator.pop(context);
+                    Navigator.pushAndRemoveUntil(context, Transition(child: HomePage()), ModalRoute.withName('/'));
                   }
                 )
 
@@ -387,7 +387,7 @@ Future dialogEvent(
                         child: Text(
                           'Cancel',
                           style: TextStyle(
-                            color: hexaCodeToColor(AppColors.textColor),
+                            color: hexaCodeToColor(AppColors.newPrimary,),
                             fontWeight: FontWeight.bold,
                           ),
                         ),

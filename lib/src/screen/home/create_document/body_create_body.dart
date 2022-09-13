@@ -66,7 +66,7 @@ class CreateIDBody extends StatelessWidget {
                       
                   for (int i = 0; i < provider.lsIssuerProp!.length; i++)
                   if ( provider.lsIssuerProp![i]['widget'].containsKey("image") )
-                  InkWell(
+                  List.from(provider.lsIssuerProp![i]['widget']['image']).isEmpty ? InkWell(
                     onTap: () async {
                       await pickImage!(i);
                       // print(provider.lsIssuerProp![i]['widget']);
@@ -80,10 +80,10 @@ class CreateIDBody extends StatelessWidget {
                       width: MediaQuery.of(context).size.width,
                       height: 20.w,
                       child: Center(
-                        child: List.from(provider.lsIssuerProp![i]['widget']['image']).isEmpty ? Text("${provider.lsIssuerProp![i]['widget']['value']['description']}") : Image.file(File(provider.lsIssuerProp![i]['widget']['image'][0]))
+                        child: Text("${provider.lsIssuerProp![i]['widget']['value']['description']}"),
                       ),
                     ),
-                  ),
+                  ) : Container(height: 25.h, width: 25.w ,child: Image.file(File(provider.lsIssuerProp![i]['widget']['image'][0]))),
                   
                   ListView.builder(
                     itemCount: provider.lsIssuerProp!.length,
