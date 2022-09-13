@@ -106,7 +106,11 @@ class FillPinState extends State<FillPin> {
               onTap: () {
                 Navigator.pop(context);
               },
-              child: MyText(text: "Close", color: AppColors.whiteHexaColor),
+              child: MyText(
+                text: "Close", 
+                color: AppColors.newPrimary,
+                fontWeight: FontWeight.bold,
+              ),
             ),
           )
         ],

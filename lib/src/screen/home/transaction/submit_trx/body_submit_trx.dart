@@ -46,7 +46,7 @@ class SubmitTrxBody extends StatelessWidget {
                 AppConfig.iconsPath+'qr_code.svg',
                 width: 4.w,
                 height: 4.h,
-                color: Colors.white,
+                color: Colors.black,
               ),
             ),
           ),

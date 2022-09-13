@@ -678,29 +678,26 @@ Future<void> customDialog(BuildContext context, String title, String contents, {
       return BackdropFilter(
         filter: ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
         child: AlertDialog(
-          backgroundColor: hexaCodeToColor(AppColors.bluebgColor),
+          backgroundColor: hexaCodeToColor(AppColors.whiteColor),
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
           title: Align(
             child: MyText(
               text: title,
               fontWeight: FontWeight.w600,
-              color: AppColors.whiteColorHexa,
+              color: AppColors.blackColor,
               fontSize: 18, 
             ),
           ),
-          content: Padding(
-            padding: const EdgeInsets.only(top: 15.0,),
-            child: MyText(
-              text: contents, 
-              color: AppColors.whiteColorHexa,
-              textAlign: TextAlign.center
-            ),
+          content: MyText(
+            text: contents, 
+            color2: AppColors.black38,
+            textAlign: TextAlign.center
           ),
           actions: <Widget>[
             btn2 ?? Container(),
             TextButton(
               onPressed: () => Navigator.pop(context),
-              child: MyText(text: 'Close', color: AppColors.whiteColorHexa),
+              child: MyText(text: 'Cancel', color: AppColors.blackColor),
             ),
           ],
         ),
