@@ -1,5 +1,6 @@
 import 'package:provider/provider.dart';
 import 'package:wallet_apps/index.dart';
+import 'package:wallet_apps/src/components/dialog_c.dart';
 import 'package:wallet_apps/src/models/documents/schemas_m.dart';
 import 'package:wallet_apps/src/provider/documents_p.dart';
 import 'package:wallet_apps/src/screen/home/digital_id/front_side/front_side.dart';
@@ -117,7 +118,20 @@ class CreateIDBody extends StatelessWidget {
                     textButton: "Submit Document",
                     buttonColor: AppColors.newPrimary, 
                     action: () async {
-                      await mintCredential!();
+                      await Navigator.push(context, MaterialPageRoute(builder: (context) => Passcode(label: PassCodeLabel.fromMint))).then((value) async {
+                        print("formBackUp $value");
+                        // await disableScreenShot!();
+                        ApiProvider _apiProvider = await Provider.of<ApiProvider>(context, listen: false);
+                        await _apiProvider.apiKeyring.getDecryptedSeed(_apiProvider.getKeyring, value).then((res) async {
+                          if (res!.seed != null){
+                            // await DialogComponents().seedDialog(context: context, contents: res.seed.toString(), isDarkTheme: isDarkTheme);
+                            await mintCredential!();
+                          } else {
+                            await DialogComponents().dialogCustom(context: context, titles: "Oops", contents: "Invalid PIN", isDarkTheme: false);
+                          }
+                        });
+                      });
+                      
                       // Navigator.push(context, Transition(child: FrontSide(), transitionEffect: TransitionEffect.RIGHT_TO_LEFT));
                       // await submitAsset!();
                     }
