@@ -96,13 +96,14 @@ class _AccountState extends State<Account> {
   }
 
   Future<void> getBackupKey(String pass) async {
-    
+
     Navigator.pop(context);
     final _api = await Provider.of<ApiProvider>(context, listen: false);
     try {
       // final pairs = await KeyringPrivateStore([0, 42])// (_api.getKeyring.keyPairs[0].pubKey, pass);
       final pairs = await KeyringPrivateStore([_api.isMainnet ? AppConfig.networkList[0].ss58MN! : AppConfig.networkList[0].ss58!]).getDecryptedSeed(_api.getKeyring.keyPairs[0].pubKey, pass);
       if (pairs!['seed'] != null) {
+        print("pairs['seed'] ${pairs['seed']}");
         await customDialog(context, 'Backup Key', pairs['seed'].toString());
       } else {
         await customDialog(context, 'Backup Key', 'Incorrect Pin');
@@ -149,13 +150,10 @@ class _AccountState extends State<Account> {
       ),
     ).then(
       (value) => {
-        // ignore: deprecated_member_use
-        Scaffold.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Copied to Clipboard'),
-            duration: Duration(seconds: 3),
-          ),
-        ),
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content: Text('Copied to Clipboard'),
+          duration: Duration(seconds: 3),
+        )),
       },
     );
   }

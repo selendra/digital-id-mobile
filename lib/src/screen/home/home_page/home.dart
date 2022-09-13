@@ -49,7 +49,6 @@ class _HomeState extends State<HomePage> with TickerProviderStateMixin {
     
     _model.pageController = PageController(initialPage: 1);
 
-
     _model.pageController!.addListener(() {
       if(_model.activeIndex != _model.pageController){
         setState(() {
@@ -73,15 +72,16 @@ class _HomeState extends State<HomePage> with TickerProviderStateMixin {
     });
     _dashBoardM = Provider.of<HomeProvider>(context, listen: false).homeModel;
     Provider.of<DocumentProvider>(context, listen: false).initContext = context;
+
+    _docsProvider = Provider.of<DocumentProvider>(context, listen: false);
     // StorageServices.removeKey(DbKey.idKey);
     // initBlockchainData();
-    initDigitalId();
 
     fetchSelendraID();
     
     fetchOrganization();
-    
-    print("ENV ${ dotenv.get('KUMANDRA_API') }");
+
+    _docsProvider!.queryAssetOf();
 
     super.initState();
   }
@@ -185,44 +185,6 @@ class _HomeState extends State<HomePage> with TickerProviderStateMixin {
     });
   }
 
-  /// For Check Identity Setup (National ID, Student)
-  initDigitalId() async {
-    print("initDigitalId");
-    
-    // await Provider.of<ContractProvider>(context, listen: false).orgsList();  
-    // print("initDigitalId");
-    // await Provider.of<DigitalIDProvider>(context, listen: false).fetchID().then((value) {
-    //   print("value");
-    // });
-
-    // await StorageServices.fetchData(DbKey.sensitive).then((value) async {
-    //   print("sensitive $value");
-    //   if (value != null){
-
-    //     Map<String, dynamic> data = await json.decode(Encryption().decryptAES(value));
-    //     print("data ${data}");
-
-    //     _dashBoardM.name = data['name'] == "" || data['name'] == null ? "" : data['name'];
-    //     _dashBoardM.email = data['email'] == "" || data['email'] == null ? "" : data['email'];
-    //     _dashBoardM.dob = data['dob'] == "" || data['dob'] == null ? "" : data['dob'];
-    //     _dashBoardM.nationality = data['nationality'] == "" || data['nationality'] == null ? "" : data['nationality'];
-    //     _dashBoardM.phoneNum = data['phoneNum'] == "" || data['phoneNum'] == null ? "" : data['phoneNum'];
-    //     _dashBoardM.country = data['country'] == "" || data['country'] == null ? "" : data['country'];
-
-    //     _dashBoardM.nameController.text = data['name'] == "" || data['name'] == null ? "" : data['name'];
-    //     _dashBoardM.emailController.text = data['email'] == "" || data['email'] == null ? "" : data['email'];
-    //     _dashBoardM.dobController.text = data['dob'] == "" || data['dob'] == null ? "" : data['dob'];
-    //     _dashBoardM.nationalityController.text = data['nationality'] == "" || data['nationality'] == null ? "" : data['nationality'];
-    //     _dashBoardM.phoneNumController.text = data['phoneNum'] == "" || data['phoneNum'] == null ? "" : data['phoneNum'];
-    //     _dashBoardM.countryController.text = data['country'] == "" || data['country'] == null ? "" : data['country'];
-
-    //     _digitalIDProvider!.isAbleSubmitToBlockchain(context: context);
-    //   }
-      
-    // });
-    // setState(() { });
-  }
-
   void submitEdit() async {
     
     _dashBoardM.name = _dashBoardM.nameController.text;
@@ -251,23 +213,23 @@ class _HomeState extends State<HomePage> with TickerProviderStateMixin {
     // });
   }
 
-  queryCType(BigInt orgID) async {
-    print("queryCType $orgID");
-    await Provider.of<ContractProvider>(context, listen: false).queryDigitalID("_CtypeMetadata", [orgID]).then((value) async {
-      List.from(value).forEach((data){
-        print("_CtypeMetadata ${data}}");
-      });
-      cTypeModel = CTypeModel().fromQuery(List.from(value));
+  // queryCType(BigInt orgID) async {
+  //   print("queryCType $orgID");
+  //   await Provider.of<ContractProvider>(context, listen: false).queryDigitalID("_CtypeMetadata", [orgID]).then((value) async {
+  //     List.from(value).forEach((data){
+  //       print("_CtypeMetadata ${data}}");
+  //     });
+  //     cTypeModel = CTypeModel().fromQuery(List.from(value));
       
-      await http.get(Uri.parse(cTypeModel.propertiesURI!)).then((res) async {
-        print("propertiesURI res ${res.body}");
-        dynamic data = await json.decode(res.body);
-        print("data ${data['properties']}");
-        cTypeModel.cTypeProperties = CTypeModel().cTypePropertiesFilter(data);
-        // print("cTypeModel.cTypeProperties ${cTypeModel.cTypeProperties!['properties']}");
-      });
-    });
-  }
+  //     await http.get(Uri.parse(cTypeModel.propertiesURI!)).then((res) async {
+  //       print("propertiesURI res ${res.body}");
+  //       dynamic data = await json.decode(res.body);
+  //       print("data ${data['properties']}");
+  //       cTypeModel.cTypeProperties = CTypeModel().cTypePropertiesFilter(data);
+  //       // print("cTypeModel.cTypeProperties ${cTypeModel.cTypeProperties!['properties']}");
+  //     });
+  //   });
+  // }
 
   Future<void> _scanLogin(String code) async {
   
@@ -366,6 +328,13 @@ class _HomeState extends State<HomePage> with TickerProviderStateMixin {
     }
   }
 
+  void bindAcc() async {
+
+    final ApiProvider api = Provider.of<ApiProvider>(context, listen: false);
+
+    await api.getSdk.webView!.evalJavascript("accBinding.bindAccount('dentist body neglect clay stage forget caught bacon moment gown toast kind', 'dentist body neglect clay stage forget caught bacon moment gown toast kind', '${ ApiProvider().isMainnet ? AppConfig.networkList[0].wsUrlMN : AppConfig.networkList[0].wsUrlTN}', '${ ApiProvider().isMainnet ? AppConfig.networkList[0].wsUrlMN : AppConfig.networkList[0].wsUrlTN}') ");
+  }
+
   @override
   void dispose() {
     _tabBarController.dispose();
@@ -380,12 +349,13 @@ class _HomeState extends State<HomePage> with TickerProviderStateMixin {
         homePageModel: _model,
         onPageChanged: onPageChanged,
         pushReplacement: pushReplacement,
-        queryCType: queryCType,
+        // queryCType: queryCType,
         cTypeModel: cTypeModel,
         tabBarController: _tabBarController,
         selectedColor: _selectedColor,
         scanLogin: _scanLogin,
-        deleteAccount: _deleteAccount
+        deleteAccount: _deleteAccount,
+        bindAcc: bindAcc
         // dashModel: _dashBoardM,
         // onTab: onTab,
         // tabController: _tabController,

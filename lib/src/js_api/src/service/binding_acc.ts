@@ -8,12 +8,18 @@ import { Wallet } from '@ethersproject/wallet';
 import { ethers } from 'ethers';
 import { EvmRpcProvider } from "@selendra/eth-providers/lib/rpc-provider";
 
-export default async function bindaccount(
+async function bindAccount(
     substrateMnenonic: string,
     privateKey: string,
     substrateProvider:string,
     evmProverider: string
   ){
+
+    console.log("substrateMnenonic", substrateMnenonic);
+    console.log("privateKey", privateKey);
+    console.log("substrateProvider", substrateProvider);
+    console.log("evmProverider", evmProverider);
+
     const provider = new WsProvider(substrateProvider);
     const api = new ApiPromise(options({ provider }));
     await api.isReadyOrError;
@@ -64,4 +70,8 @@ function create_signature(
     });
 
     return signature
+}
+
+export default {
+  bindAccount
 }

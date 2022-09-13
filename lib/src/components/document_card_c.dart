@@ -32,8 +32,14 @@ class CardDocument extends StatelessWidget{
     
           GestureDetector(
             onTap: isDetail == true ? null : () async {
-              print("data ${data!['isVerified']}");
-              Navigator.push(context, Transition(child: IdDetail(data: data), transitionEffect: TransitionEffect.RIGHT_TO_LEFT));
+              print("AppUtils.mapToList(data!['details']).length ${AppUtils.mapToList(data!['details']).length}");
+              for(int i = 0; i < AppUtils.mapToList(data!['details']).length; i++){
+                if (AppUtils.mapToList(data!['details'])[i].key.toString() == "avatar"){
+                  print(AppUtils.mapToList(data!['details'])[i].value);
+                }
+              }
+              // print("data ${AppUtils.mapToList(data!['details'])}");
+              // Navigator.push(context, Transition(child: IdDetail(data: data), transitionEffect: TransitionEffect.RIGHT_TO_LEFT));
             },
             child: ClipRect(
               child: MyBanner(

@@ -298,7 +298,7 @@ class PasscodeState extends State<Passcode> {
       }
     } on SocketException catch (e) {
       await Future.delayed(const Duration(milliseconds: 300), () {});
-      AppServices.openSnackBar(globalkey!, e.message);
+      AppServices.openSnackBar(context, globalkey!, e.message);
     } catch (e) {
       await showDialog(
         context: context,

@@ -333,7 +333,7 @@ const settings = {
 (<any>window).account = account;
 (<any>window).wallets = wallets;
 (<any>window).addJson = addJson;
-(<any>window).bindAccount = bindaccount;
+(<any>window).accBinding = bindaccount;
 //(<any>window).staking = staking;
 //(<any>window).gov = gov;
 

@@ -294,7 +294,7 @@ class MyBottomSheet {
                       child: Row(
                         children: [
                           CircleAvatar(
-                            backgroundColor: hexaCodeToColor(AppColors.primary),
+                            backgroundColor: hexaCodeToColor(AppColors.newPrimary),
                             radius: 20,
                             child: Icon(Iconsax.add_circle, color: hexaCodeToColor(AppColors.whiteColor))
                           ),

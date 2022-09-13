@@ -100,7 +100,7 @@ class DigitalIDProvider extends ChangeNotifier {
 
 class DigitalIdBSCProvider extends ChangeNotifier {
   
-  final String _contract = didAddress;
+  final String _contract = didContract;
 
   DeployedContract? _deployedContract;
 

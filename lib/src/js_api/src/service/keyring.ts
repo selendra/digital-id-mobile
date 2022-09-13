@@ -33,7 +33,7 @@ function send(path: string, data: any) {
 (<any>window).send = send;
 
 
-async function mintCredential(mnemonic, privateKey, schemaDid, wssSubstrate, ipfsHash) {
+async function mintCredential(mnemonic, privateKey, schemaDid, wssSubstrate, ipfsHash, didContract) {
   
   console.log("Start mintCredential");
 
@@ -45,12 +45,12 @@ async function mintCredential(mnemonic, privateKey, schemaDid, wssSubstrate, ipf
   // const hash = await bindaccount(mnemonic, privateKey, wssSubstrate, wssEvm);
   // console.log("Hash bindaccount ",hash);
 
-  const provider = EvmRpcProvider.from(network);
+  const provider = EvmRpcProvider.from(wssSubstrate);
   await provider.isReady();
   console.log("await provider.isReady()", await provider.isReady());
   const wallet = new ethers.Wallet(privateKey, provider);
   console.log("wallet", wallet.address);
-  const contract = new ethers.Contract(contractAddress, abi, wallet);
+  const contract = new ethers.Contract(didContract, abi, wallet);
   console.log("contract", contract.address);
 
   //let ipfsHash// = await kumandra.addJson(jsonString, api, schemaDid);
@@ -618,36 +618,35 @@ async function verifySignature(message: string, signature: string, address: stri
   return signatureVerify(message, signature, address);
 }
 
-const network = "wss://rpc-testnet.selendra.org";
-const contractAddress = "0xaA3cE26BC4742a03a8cD4c1Ba152c1687263481E";
+// const contractAddress = "0xaA3cE26BC4742a03a8cD4c1Ba152c1687263481E";
 // const ipfs = process.env.NEXT_PUBLIC_IPFS_ADDRESS || "";
 
 // const ipfs_address = (cid) => ${ipfs}/files/${cid};
 
-async function handler() {
-  const provider = EvmRpcProvider.from(network);
-  console.log("provider", provider);
-  await provider.isReady();
-  console.log("isReady");
-  console.log("abi", abi);
-  const contract = new ethers.Contract(contractAddress, abi, provider);
-  console.log("contract", contract.address);
+// async function handler() {
+//   const provider = EvmRpcProvider.from(network);
+//   console.log("provider", provider);
+//   await provider.isReady();
+//   console.log("isReady");
+//   console.log("abi", abi);
+//   const contract = new ethers.Contract(contractAddress, abi, provider);
+//   console.log("contract", contract.address);
 
-  const _lastID = await contract.lastID();
-  console.log("_lastID", _lastID);
-  const lastID = ethers.BigNumber.from(_lastID).toNumber();
-  console.log("lastID", lastID);
-  const dids = [];
-  console.log("dids", dids);
+//   const _lastID = await contract.lastID();
+//   console.log("_lastID", _lastID);
+//   const lastID = ethers.BigNumber.from(_lastID).toNumber();
+//   console.log("lastID", lastID);
+//   const dids = [];
+//   console.log("dids", dids);
 
-  for (let i = 0; i < lastID; i++) {
-    dids.push(i);
-  }
+//   for (let i = 0; i < lastID; i++) {
+//     dids.push(i);
+//   }
 
-  console.log(dids);
+//   console.log(dids);
 
-  // res.status(200).json(data);
-}
+//   // res.status(200).json(data);
+// }
 
 export default {
   initKeys,
@@ -670,7 +669,6 @@ export default {
   signAsync,
   makeTx,
   addSignatureAndSend,
-  handler,
   mintCredential
   //signTxAsExtension,
   //signBytesAsExtension,

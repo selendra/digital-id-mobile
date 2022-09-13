@@ -604,7 +604,7 @@ class ContractProvider with ChangeNotifier {
     print("getContentOf");
     try {
       
-      final contract = await AppUtils.contractfromAssets(AppConfig.abiPath+"Identity.json", didAddress);
+      final contract = await AppUtils.contractfromAssets(AppConfig.abiPath+"Identity.json", didContract);
         //final contract = await initEtherContract(contractAddress);
 
       final function = contract.function("getContentOf");
@@ -632,7 +632,7 @@ class ContractProvider with ChangeNotifier {
     print("queryOrgById");
     print("param $param");
     try {
-      final contract = await AppUtils.contractfromAssets(AppConfig.abiPath+"Identity.json", didAddress);
+      final contract = await AppUtils.contractfromAssets(AppConfig.abiPath+"Identity.json", didContract);
 
       final function = contract.function(functionName);
       final res = await _hardHatClient!.call(

@@ -44,8 +44,9 @@ class GetRequest{
 
       print("querySubmittedDocs");
       print("addr $addr");
-      _res = await _http.get(Uri.parse(Api.assetOf + '0x63744c6d3fd88534485dd81ac5a83cf92a72f831'));
-      print(_res!.body);
+      _res = await _http.get(Uri.parse(Api.assetOf + addr));
+      print("_res!.body ${_res!.body}");
+
     } catch (e) {
       print("Error querySubmittedDocs $e");
     }

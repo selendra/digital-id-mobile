@@ -42,8 +42,7 @@ class _ContactBookBodyState extends State<ContactBookBody> {
             child: Align(
               alignment: Alignment.centerRight,
               // ignore: deprecated_member_use
-              child: FlatButton(
-                padding: const EdgeInsets.only(right: 16),
+              child: TextButton(
                 onPressed: () async {
                   dynamic response;
                   PhoneContact result;

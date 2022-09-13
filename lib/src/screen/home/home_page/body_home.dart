@@ -12,12 +12,13 @@ class HomeBody extends StatelessWidget {
   final bool? pushReplacement;
   final CTypeModel? cTypeModel;
   final Function(int index)? onPageChanged;
-  final Function? queryCType;
+  // final Function? queryCType;
   final TabController? tabBarController;
   final Color? selectedColor;
   final Function? scanLogin;
   final Function? getPendingDocs;
   final Function? deleteAccount;
+  final Function? bindAcc;
 
   const HomeBody({ 
     Key? key, 
@@ -25,12 +26,13 @@ class HomeBody extends StatelessWidget {
     this.onPageChanged,
     this.pushReplacement,
     this.cTypeModel,
-    this.queryCType,
+    // this.queryCType,
     this.tabBarController,
     this.selectedColor,
     this.scanLogin,
     this.getPendingDocs,
-    this.deleteAccount
+    this.deleteAccount,
+    this.bindAcc
   }) : super(key: key);
 
   final double tabBarHeight = 55;
@@ -54,6 +56,7 @@ class HomeBody extends StatelessWidget {
             color: hexaCodeToColor(AppColors.secondary),
           ),
           onPressed: () async   {
+            await bindAcc!();
             // await deleteAccount!();
             // homePageModel!.globalKey!.currentState!.openDrawer();
           },
@@ -139,7 +142,7 @@ class HomeBody extends StatelessWidget {
                           itemBuilder: (context, index){
                             return CardDocument(data: provider.docsModel.pending[index], isDetail: false,);
                           }
-                        ) : Text("Empty"),
+                        ) : Center(child: Image.asset(AppConfig.logoPath+"document.png", width: 178, height: 178)),
                         // ListView.builder(
                         //   shrinkWrap: true,
                         //   itemCount: provider.assetsMinted!.length,
@@ -154,7 +157,7 @@ class HomeBody extends StatelessWidget {
                           itemBuilder: (context, index){
                             return CardDocument(data: provider.docsModel.approve[index], isDetail: false,);
                           }
-                        ) : Text("Empty"),
+                        ) : Center(child: Image.asset(AppConfig.logoPath+"document.png", width: 178, height: 178)),
                         
                       ],
                     )

@@ -143,6 +143,8 @@ dependencies:
   random_avatar:
   camera:
   flutter_dotenv: ^5.0.2
+  dropdown_button2: 1.7.2
+  http_parser: ^4.0.1
   
 dependency_overrides:
   encrypt:
@@ -160,6 +162,7 @@ dependency_overrides:
 
   permission_handler: ^10.0.0
   qr_code_scanner: 1.0.0
+  flutter_image_compress:
   # get_storage:
   # flutter_aes_ecb_pkcs5:
 

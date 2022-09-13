@@ -75,11 +75,11 @@ class MyInputField extends StatelessWidget {
             // ignore: prefer_if_null_operators
             inputAction == null ? TextInputAction.next : inputAction,
           style: TextStyle(
-            color: Colors.white,
-            fontSize: 15.sp
+            color: Colors.black,
+            fontSize: 16.sp
           ),
           validator: (String? value){
-            validateField!(value);
+            return validateField!(value);
           },
           maxLines: maxLine,
           decoration: InputDecoration(
@@ -102,7 +102,7 @@ class MyInputField extends StatelessWidget {
             prefixStyle: TextStyle(color: hexaCodeToColor(AppColors.textColor), fontSize: 18.0),
             /* Prefix Text */
             filled: true,
-            fillColor: hexaCodeToColor(AppColors.darkBgd),
+            fillColor: hexaCodeToColor(AppColors.whiteColor),
 
             enabledBorder: myTextInputBorder(controller!.text != ""
                 ? isDarkTheme

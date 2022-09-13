@@ -387,26 +387,18 @@ class ApiProvider with ChangeNotifier {
     }
     return res;
   }
-  
+
   Future<bool> validateEther(String address) async {
     try {
 
       dynamic res = await _sdk.api.service.webView!.evalJavascript('wallets.validateEtherAddr("$address")');
       return res;
     } catch (e) {
-      if (ApiProvider().isDebug == true) print("Error validateEther $e");
-    }
-    return false;
-  }
-
-  Future<bool> connectToHandler() async {
-    print("connectToHandler");
-    try {
-
-      dynamic res = await _sdk.api.service.webView!.evalJavascript('keyring.handler()');
-      return res;
-    } catch (e) {
-      if (ApiProvider().isDebug == true) print("Error connectToHandler $e");
+      if (ApiProvider().isDebug == true) {
+        if (kDebugMode) {
+          print("Error validateEther $e");
+        }
+      }
     }
     return false;
   }
@@ -426,7 +418,7 @@ class ApiProvider with ChangeNotifier {
 
         print("value $value");
 
-        res = await _sdk.api.service.webView!.evalJavascript("keyring.mintCredential('$_mnemonic', '$_privateKey', '$schemaDID', 'wss://rpc-testnet.selendra.org', '$value')");
+        res = await _sdk.api.service.webView!.evalJavascript("keyring.mintCredential('$_mnemonic', '$_privateKey', '$schemaDID', '${isMainnet ? AppConfig.networkList[0].wsUrlMN : AppConfig.networkList[0].wsUrlTN}', '$value', '$didContract')");
         print("res $res");
       });
 
@@ -454,7 +446,11 @@ class ApiProvider with ChangeNotifier {
       final res = await _sdk.api.service.webView!.evalJavascript("keyring.validateAddress('$address')");
       return res;
     } catch (e) {
-      if (ApiProvider().isDebug == true) print("Error validateAddress $e");
+      if (ApiProvider().isDebug == true) {
+        if (kDebugMode) {
+          print("Error validateAddress $e");
+        }
+      }
     }
     return false;
   }
@@ -630,15 +626,18 @@ class ApiProvider with ChangeNotifier {
     try {
 
       accountM.address = await _sdk.webView!.evalJavascript('$funcName.getSELAddr()');
-
-      print("getCurrentAccount ${accountM.address}");
       accountM.name = _keyring.current.name;
+      accountM.pubKey = _keyring.current.pubKey;
 
-      Provider.of<ReceiveWalletProvider>( context!, listen: false).getAccount(this);
-      
+      Provider.of<ReceiveWalletProvider>( context!, listen: false).getAccount(accountM);
+
       contractProvider!.setSELNativeAddr(accountM.address!);
     } catch (e){
-      if (ApiProvider().isDebug == true) print("Error getCurrentAccount $e");
+      if (ApiProvider().isDebug == true) {
+        if (kDebugMode) {
+          print("Error getCurrentAccount $e");
+        }
+      }
     }
 
     notifyListeners();
@@ -650,11 +649,15 @@ class ApiProvider with ChangeNotifier {
       accountM.address = await _sdk.webView!.evalJavascript('keyring.checkPassword()');
       accountM.name = _keyring.current.name;
 
-      Provider.of<ReceiveWalletProvider>( context!, listen: false).getAccount(this);
-      
+      Provider.of<ReceiveWalletProvider>( context!, listen: false).getAccount(accountM);
+
       contractProvider!.setSELNativeAddr(accountM.address!);
     } catch (e){
-      if (ApiProvider().isDebug == true) print("Error getCurrentAccount $e");
+      if (ApiProvider().isDebug == true) {
+        if (kDebugMode) {
+          print("Error getCurrentAccount $e");
+        }
+      }
     }
 
     notifyListeners();
@@ -798,7 +801,7 @@ class ApiProvider with ChangeNotifier {
 
     _pk = await getPrivateKey(_mn!);
 
-    res = await _sdk.webView!.evalJavascript("keyring.mintCredential('$_mn', '$_pk', '$json', '$schemaDID', 'wss://rpc-testnet.selendra.org')");
+    res = await _sdk.webView!.evalJavascript("keyring.mintCredential('$_mn', '$_pk', '$json', '$schemaDID', '${isMainnet ? AppConfig.networkList[0].wsUrlMN : AppConfig.networkList[0].wsUrlTN}')");
 
     
     

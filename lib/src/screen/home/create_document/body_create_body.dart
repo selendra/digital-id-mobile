@@ -114,10 +114,10 @@ class CreateIDBody extends StatelessWidget {
                       
                   MyFlatButton(
                     edgeMargin: EdgeInsets.all(paddingSize),
-                    textButton: "Upload KYC",
+                    textButton: "Submit Document",
                     buttonColor: AppColors.newPrimary, 
                     action: () async {
-                      mintCredential!();
+                      await mintCredential!();
                       // Navigator.push(context, Transition(child: FrontSide(), transitionEffect: TransitionEffect.RIGHT_TO_LEFT));
                       // await submitAsset!();
                     }
