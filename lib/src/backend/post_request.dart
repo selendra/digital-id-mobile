@@ -6,6 +6,8 @@ import 'package:http_parser/http_parser.dart';
 
 class PostRequest {
 
+  _http.Response? _res;
+
   // Upload Fil Image To Get Url Image
   Future<String> upLoadImage(File _image) async {
 
@@ -45,5 +47,44 @@ class PostRequest {
       // print(e);
     }
     return imageUrl!;
+  }
+
+  Future<_http.Response> claimAirDrop(String selAddr) async { 
+    _res = await _http.post(
+      Uri.parse("https://api-faucet.selendra.org/api/claim/testnet"),
+      body: json.encode({
+        "address": "$selAddr"
+      }),
+      headers: {"Content-Type": "application/json; charset=utf-8"}
+    );
+
+    print("_res ${_res!.body}");
+
+    return _res!;
+  }
+
+  Future<_http.Response> scanLogin(String id, String hashSign, String api, String evmAddr) async { 
+    print("scanLogin");
+    print("id $id");
+    print("hashSign $hashSign");
+    print("api $api");
+    print("evmAddr $evmAddr");
+    // String str = api.replaceAll("https", "http");
+    _res = await _http.post(
+      Uri.parse(api),
+      body: json.encode({
+        "id": "$id",
+        "signature": "Web3 $hashSign",
+        "publicKey": "$evmAddr"
+      }),
+      headers: {
+        "Content-Type": "application/json; charset=utf-8"
+      }
+    );
+
+    print("_res ${_res!.statusCode}");
+    print("_res ${_res!.body}");
+
+    return _res!;
   }
 }

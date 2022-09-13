@@ -4,7 +4,9 @@ import 'package:carousel_slider/carousel_options.dart';
 import 'package:eth_sig_util/eth_sig_util.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:wallet_apps/index.dart';
+import 'package:wallet_apps/src/backend/post_request.dart';
 import 'package:wallet_apps/src/components/camera_c.dart';
+import 'package:wallet_apps/src/components/dialog_c.dart';
 import 'package:wallet_apps/src/constants/db_key_con.dart';
 import 'package:wallet_apps/src/models/digital_id_m.dart';
 import 'package:wallet_apps/src/provider/digital_id_p.dart';
@@ -39,6 +41,10 @@ class _HomeState extends State<HomePage> with TickerProviderStateMixin {
 
   DocumentProvider? _docsProvider;
 
+  final JsonDecoder decoder = JsonDecoder();
+
+  ApiProvider? _api;
+
   // -------------------
   HomePageModel _model = HomePageModel();
 
@@ -72,6 +78,8 @@ class _HomeState extends State<HomePage> with TickerProviderStateMixin {
     });
     _dashBoardM = Provider.of<HomeProvider>(context, listen: false).homeModel;
     Provider.of<DocumentProvider>(context, listen: false).initContext = context;
+    Provider.of<DocumentProvider>(context, listen: false).initField();
+    _api = Provider.of<ApiProvider>(context, listen: false);
 
     _docsProvider = Provider.of<DocumentProvider>(context, listen: false);
     // StorageServices.removeKey(DbKey.idKey);
@@ -231,64 +239,70 @@ class _HomeState extends State<HomePage> with TickerProviderStateMixin {
   //   });
   // }
 
-  Future<void> _scanLogin(String code) async {
-  
-    final String? barcodeData = code;
+  Future<void> _scanLogin(dynamic code) async {
 
-    final decode = jsonDecode(barcodeData!);
-    print("_scanLogin decode $decode");
-    if(decode["id"] == null) {
-      showDialog(
-        context: context,
-        builder: (context) => AlertDialog(
-          title: Text("Error"),
-          content: Text("Invalid QR Code"),
-          actions: [
-            MyFlatButton(
-              textButton: "Ok",
-              buttonColor: AppColors.newPrimary,
-              action: () {
-                Navigator.pop(context);
-              },
-            )
-          ],
-        ),
-      );
-    } 
-    else{
-      showDialog(
-        context: context,
-        builder: (context) => AlertDialog(
-          title: Text("Message"),
-          content: Text("Valid QR Code"),
-          actions: [
-            MyFlatButton(
-              textButton: "Ok",
-              buttonColor: AppColors.newPrimary,
-              action: () async {
+    // dynamic decode = jsonDecode(code);
 
-                List<int> convert = decode['id'].toString().codeUnits;
-                Uint8List uint8list = Uint8List.fromList(convert);
-                String _credentials = await _signId(decode['id']);
-                print("_credentials $_credentials");
-                String signedDataHex = EthSigUtil.signMessage(
-                  privateKey: _credentials,
-                  message: uint8list
-                );
-                print("signedDataHex $signedDataHex");
-                Navigator.pop(context);
-              },
-            )
-          ],
-        ),
-      );
+    if (code != null){
+
+      await Navigator.push(context, MaterialPageRoute(builder: (context) => Passcode(label: PassCodeLabel.fromMint))).then((value) async {
+        print("formBackUp $value");
+        // await disableScreenShot!();
+
+        dialogLoading(context, content: "Logging in");
+
+        if (value != null) {
+
+          final Map<dynamic, dynamic> decode = decoder.convert(code);
+
+          if(decode["id"] == null) {
+            showDialog(
+              context: context,
+              builder: (context) => AlertDialog(
+                title: Text("Error"),
+                content: Text("Invalid ID Not Found"),
+                actions: [
+                  MyFlatButton(
+                    textButton: "Ok",
+                    buttonColor: AppColors.newPrimary,
+                    action: () {
+                      Navigator.pop(context);
+                    },
+                  )
+                ],
+              ),
+            );
+          } 
+          else{
+            List<int> convert = decode['id'].toString().codeUnits;
+            Uint8List uint8list = Uint8List.fromList(convert);
+            String _credentials = await _signId(decode['id'], value!);
+            
+            // String signedDataHex = EthSigUtil.signMessage(
+            //   privateKey: _credentials,
+            //   message: uint8list,
+            // );
+
+            // Sign Message
+            final message = await _api!.getSdk.webView!.evalJavascript("accBinding.signMessage('${decode['id']}', '$_credentials')");
+            
+            await PostRequest().scanLogin( decode['id'], message, decode['link'], Provider.of<ContractProvider>(context, listen: false).ethAdd );
+            
+            await DialogComponents().dialogCustom(context: context, contents: "Successfully login");
+
+          }
+        }
+      });
+
     }
 
   }
 
-  Future<String> _signId(String id) async {
-
-    return await Provider.of<ApiProvider>(context, listen: false).getPrivateKey("august midnight obvious fragile pretty begin useless collect elder ability enhance series");
+  Future<String> _signId(dynamic id, String pin) async {
+    print("_signId");
+    final _mnemonic = await _api!.apiKeyring.getDecryptedSeed(_api!.getKeyring, pin);
+    print("mnemonic $_mnemonic");
+    return await Provider.of<ApiProvider>(context, listen: false).getPrivateKey(_mnemonic!.seed!);
 
   }
 
@@ -330,11 +344,12 @@ class _HomeState extends State<HomePage> with TickerProviderStateMixin {
 
   void bindAcc() async {
 
-    final ApiProvider api = Provider.of<ApiProvider>(context, listen: false);
+    // await PostRequest().claimAirDrop("seZe6HkLx3FXay1zMeMm1q1DXsYavmZNacV3wKon63uUPeAaS");
+    // final ApiProvider api = Provider.of<ApiProvider>(context, listen: false);
 
-    String _pk = await api.getPrivateKey('dentist body neglect clay stage forget caught bacon moment gown toast kind');
+    // String _pk = await api.getPrivateKey('dentist body neglect clay stage forget caught bacon moment gown toast kind');
 
-    await api.getSdk.webView!.evalJavascript("accBinding.bindAccount('dentist body neglect clay stage forget caught bacon moment gown toast kind', '${_pk}', '${ ApiProvider().isMainnet ? AppConfig.networkList[0].wsUrlMN : AppConfig.networkList[0].wsUrlTN}', '${ ApiProvider().isMainnet ? AppConfig.networkList[0].wsUrlMN : AppConfig.networkList[0].wsUrlTN}') ");
+    // await api.getSdk.webView!.evalJavascript("accBinding.bindAccount('dentist body neglect clay stage forget caught bacon moment gown toast kind', '${_pk}', '${ ApiProvider().isMainnet ? AppConfig.networkList[0].wsUrlMN : AppConfig.networkList[0].wsUrlTN}', '${ ApiProvider().isMainnet ? AppConfig.networkList[0].wsUrlMN : AppConfig.networkList[0].wsUrlTN}') ");
   }
 
   @override

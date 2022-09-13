@@ -289,10 +289,10 @@ class DocumentProvider extends ChangeNotifier{
   Future<void> queryAllOrgs() async {
     print("queryListOfOrgs");
     try {
-      // _res = await _http.get(Uri.parse(Api.allOrgApi));
-      // object = json.decode(_res!.body);
-      object = await json.decode(await rootBundle.loadString(AppConfig.docDidJson));
-      print("object $object");
+      _res = await _http.get(Uri.parse(Api.allOrgApi));
+      object = json.decode(_res!.body);
+      // object = await json.decode(await rootBundle.loadString(AppConfig.docDidJson));
+      // print("object $object");
       
     } catch (e){
       print("Error queryListOfOrgs $e");
@@ -400,7 +400,7 @@ class DocumentProvider extends ChangeNotifier{
     // notifyListeners();
   }
 
-  void queryAssetOf() async {
+  Future<void> queryAssetOf() async {
     print("queryAssetOf");
     assetsMinted = [];
 

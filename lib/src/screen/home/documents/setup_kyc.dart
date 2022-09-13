@@ -19,6 +19,8 @@ class _SetUpKYCState extends State<SetUpKYC> {
   bool _isShowMorePopularDocs = false;
   bool _isShowMoreIssuer = false;
 
+  DocumentProvider? _docsProvider;
+
   void _onShowMorePopularDocs() {
     setState(() {
       _isShowMorePopularDocs = !_isShowMorePopularDocs;
@@ -42,10 +44,25 @@ class _SetUpKYCState extends State<SetUpKYC> {
   //   }
   // }
 
+  // void checkNoSelendraDocs() async {
+  //   _docsProvider = Provider.of<DocumentProvider>(context, listen: false);
+  //   if (widget.isSelendraID!){
+  //     // [0].lsOrg!
+  //     print("_docsProvider!.lsDocs![0].lsOrg! ${_docsProvider!.lsDocs!}");
+
+  //     // _docsProvider!.title = _docsProvider!.lsDocs![0].docsList![j]
+
+  //     // Provider.of<DocumentProvider>(context, listen: false).title = provider.lsDocs![index].docsList![j]['name'];
+  //     // MyBottomSheet().createDocumentBottomSheet(context, _docsProvider!.lsDocs![0].lsOrg![j].owner);
+  //     // Provider.of<DocumentProvider>(context, listen: false).initIssuer();
+  //   }
+  // }
+
   @override
   void initState() {
-    super.initState();
+    // checkNoSelendraDocs();
     Provider.of<DocumentProvider>(context, listen: false).initIssuer();
+    super.initState();
   }
 
   @override

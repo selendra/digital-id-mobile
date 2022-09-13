@@ -919,7 +919,7 @@ class ContractProvider with ChangeNotifier {
       listContract[apiProvider.btcIndex].address = await StorageServices().readSecure(DbKey.bech32);
       notifyListeners();
     } catch (e) {
-      if (ApiProvider().isDebug) print("Error getEtherAddr $e");
+      if (ApiProvider().isDebug) print("Error getBtcAddr $e");
     }
   }
 

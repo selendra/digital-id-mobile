@@ -64,11 +64,13 @@ class _AccountState extends State<Account> {
     dialogLoading(context);
 
     final _api = await Provider.of<ApiProvider>(context, listen: false);
+
+    print("_accountModel._api.getKeyring.current! ${_api.getKeyring.current}");
     
     try {
       await _api.apiKeyring.deleteAccount(
         _api.getKeyring,
-        _accountModel.currentAcc!,
+        _api.getKeyring.current,
       );
 
       final mode = await StorageServices.fetchData(DbKey.themeMode);

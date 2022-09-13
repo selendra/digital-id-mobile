@@ -27,54 +27,61 @@ class _CreateDocumentState extends State<CreateDocument> {
 
   bool? isImageAvailable = false;
   
-  Future<void> mintCredential() async {
+  Future<void> mintCredential(String pin) async {
 
     try {
       
       if (isImage()!){
 
-        Map<String, dynamic> obj = {};
-
-        dialogLoading(context, content: "Minting document");
         
-        Provider.of<DocumentProvider>(context, listen: false).lsIssuerProp!.forEach((element) {
-          // print("element['widget']['image'] ${element['widget']['image']}");
-          print("element['widget'].containsKey('formController') ${element['widget'].containsKey('formController')}");
-          print("element['widget']['formController'] ${element['widget']}");
-          print("element['widget']['image_hash'] ${element['widget']['image_hash']}");
-          if (element['widget'].containsKey('formController')) 
-          obj.addAll({
-            "${element['key']}": element['widget']['formController'].text
-          });
+        ApiProvider _apiProvider = await Provider.of<ApiProvider>(context, listen: false);
+        await _apiProvider.apiKeyring.getDecryptedSeed(_apiProvider.getKeyring, pin).then((res) async {
+          if (res!.seed != null){
+            // await DialogComponents().seedDialog(context: context, contents: res.seed.toString(), isDarkTheme: isDarkTheme);
 
-          else if (element['widget'].containsKey('image_hash'))
-          obj.addAll({
-            "${element['key']}": ["${dotenv.get(AppConfig.kmdFileApi)}/${element['widget']['image_hash'][0]}"]
-          });
+            Map<String, dynamic> obj = {};
 
-        });
+            dialogLoading(context, content: "Minting document");
+            
+            Provider.of<DocumentProvider>(context, listen: false).lsIssuerProp!.forEach((element) {
+              
+              if (element['widget'].containsKey('formController')) 
+              obj.addAll({
+                "${element['key']}": element['widget']['formController'].text
+              });
 
-        print("My obj $obj");
+              else if (element['widget'].containsKey('image_hash'))
+              obj.addAll({
+                "${element['key']}": ["${dotenv.get(AppConfig.kmdFileApi)}/${element['widget']['image_hash'][0]}"]
+              });
 
-        await Provider.of<ApiProvider>(context, listen: false).mintCredential(context, json.encode(obj), await Provider.of<DocumentProvider>(context, listen: false).schemaDocs!.did!).then((value) async {
-          
-          // Remove DialogLoading
-          Navigator.pop(context);
-          if (value == true){
-            await DialogComponents().dialogCustom(context: context, contents: "Document is minted", titles: "Successfuly", btn2: TextButton(
-              onPressed: (){
-                Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => HomePage()), (route) => false);
-              }, 
-              child: MyText(
-                text: "Home",
-                  fontWeight: FontWeight.w700,
-                )
-              )
-            );
+            });
+
+            await Provider.of<ApiProvider>(context, listen: false).mintCredential(context, json.encode(obj), await Provider.of<DocumentProvider>(context, listen: false).schemaDocs!.did!, res.seed!).then((value) async {
+              
+              // Remove DialogLoading
+              Navigator.pop(context);
+              if (value == true){
+                await DialogComponents().dialogCustom(context: context, contents: "Document is minted", titles: "Successfuly", btn2: TextButton(
+                  onPressed: (){
+                    Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => HomePage()), (route) => false);
+                  }, 
+                  child: MyText(
+                    text: "Home",
+                      fontWeight: FontWeight.w700,
+                    )
+                  )
+                );
+              } else {
+                await DialogComponents().dialogCustom(context: context, contents: "Something went wrong", titles: "Oops");
+              }
+            });
+
           } else {
-            await DialogComponents().dialogCustom(context: context, contents: "Something went wrong", titles: "Oops");
+            await DialogComponents().dialogCustom(context: context, titles: "Oops", contents: "Invalid PIN", isDarkTheme: false);
           }
         });
+
       } else {
         await DialogComponents().dialogCustom(context: context, contents: "Please fill out fields", titles: "Oops");
       }

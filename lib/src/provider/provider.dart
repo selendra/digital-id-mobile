@@ -28,7 +28,6 @@ class ContractsBalance extends ChangeNotifier {
         // await contractProvider.bnbWallet();
         // print("bnbWallet");
         // await contractProvider.kgoTokenWallet();
-        print("kgoTokenWallet");
         // if (apiProvider.isMainnet) await contractProvider.getBep20Balance(contractIndex: 8);
 
         // if(apiProvider.isMainnet == false) await Attendance().getAttBalance(context: context); // Disable For Mainnet
@@ -88,8 +87,8 @@ class ContractsBalance extends ChangeNotifier {
 
       print("Start query web3 contract");
 
-      conProvider.ethWallet();
-      conProvider.bnbWallet();
+      // conProvider.ethWallet();
+      // conProvider.bnbWallet();
 
       for (int i = 0; i < conProvider.listContract.length; i++){
         if ((api.isMainnet ? conProvider.listContract[i].contract : conProvider.listContract[i].contractTest) != ""){

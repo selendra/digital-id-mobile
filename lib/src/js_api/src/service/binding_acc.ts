@@ -86,6 +86,18 @@ function create_signature(
     return signature
 }
 
+export async function signMessage(message: string, privateKey: string) {
+  console.log("signMessage");
+  console.log("message", message);
+  console.log("privateKey", privateKey);
+  const wallet = new Wallet(privateKey);
+
+  return await wallet.signMessage(message);
+  
+}
+ 
+
 export default {
-  bindAccount
+  bindAccount,
+  signMessage
 }

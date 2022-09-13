@@ -95,17 +95,19 @@ class MarketProvider with ChangeNotifier {
               jsonResponse[0]['current_price'].toString(),
               jsonResponse[0]['price_change_percentage_24h'].toStringAsFixed(2).toString(),
             );
-          } else if (i == 3) {
-            await api.setDotMarket(
-              res!,
-              lineChartData!,
-              jsonResponse[0]['current_price'].toString(),
-              jsonResponse[0]['price_change_percentage_24h']
-                  .toStringAsFixed(2)
-                  .toString(),
-              context: context
-            );
-          } else if (i == 4) {
+          }
+          //  else if (i == 3) {
+          //   await api.setDotMarket(
+          //     res!,
+          //     lineChartData!,
+          //     jsonResponse[0]['current_price'].toString(),
+          //     jsonResponse[0]['price_change_percentage_24h']
+          //         .toStringAsFixed(2)
+          //         .toString(),
+          //     context: context
+          //   );
+          // } 
+          else if (i == 4) {
             await api.setBtcMarket(
               res!,
               lineChartData!,
