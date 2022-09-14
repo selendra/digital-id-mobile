@@ -4,6 +4,7 @@ import 'package:wallet_apps/src/components/document_card_c.dart';
 import 'package:wallet_apps/src/models/digital_id_m.dart';
 import 'package:wallet_apps/src/provider/documents_p.dart';
 import 'package:wallet_apps/src/screen/home/assets/assets.dart';
+import 'package:wallet_apps/src/screen/home/create_document/create_document.dart';
 import 'package:wallet_apps/src/screen/home/documents/setup_kyc.dart';
 
 class HomeBody extends StatelessWidget {
@@ -256,40 +257,48 @@ class HomeBody extends StatelessWidget {
                     bottom: 30.sp,
                   ),
       
-                  MyFlatButton(
-                    height: 33.sp,
-                    edgeMargin: EdgeInsets.symmetric(horizontal: paddingSize),
-                    textButton: "Setup Selendra ID",
-                    // textColor: AppColors.whiteColor,
-                    buttonColor: AppColors.newPrimary,
-                    action: () {
-
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => SetUpKYC(isSelendraID: true,)));
-                      // MyBottomSheet().createIDBottomSheet(context, Provider.of<DocumentProvider>(context, listen: false).selendraID!);
-                      // Provider.of<DocumentProvider>(context, listen: false).title = "Selendra ID";
-                      // Navigator.push(
-                      //   context, 
-                      //   MaterialPageRoute(builder: (context) => CreateDocument(docs: Provider.of<DocumentProvider>(context, listen: false).selendraID!))
-                      // );
-                      // Navigator.push(context, MaterialPageRoute(builder: (context) => SetUpKYC()));
-                    },
-                  ),
-                ],
-              );
-            }
-          ),
+                    MyText(
+                      top: 15.sp,
+                      text: "No document has found",
+                      bottom: 30.sp,
+                    ),
       
-          Account()
-        ],
-      ),
+                    MyFlatButton(
+                      height: 33.sp,
+                      edgeMargin: EdgeInsets.symmetric(horizontal: paddingSize),
+                      textButton: "Setup Selendra ID",
+                      // textColor: AppColors.whiteColor,
+                      buttonColor: AppColors.newPrimary,
+                      action: () {
+                        provider.title = provider.lsDocs![2].lsOrg![0].details!['name'];
 
-      floatingActionButton: 
-      //  
-      Consumer<DocumentProvider>(
+                        Navigator.push(
+                          context, 
+                          MaterialPageRoute(builder: (context) => CreateDocument(ownerId: provider.lsDocs![2].lsOrg![0].owner))
+                        );
+                        // Navigator.push(context, MaterialPageRoute(builder: (context) => SetUpKYC(isSelendraID: true,)));
+                        // MyBottomSheet().createIDBottomSheet(context, Provider.of<DocumentProvider>(context, listen: false).selendraID!);
+                        // Provider.of<DocumentProvider>(context, listen: false).title = "Selendra ID";
+                        // Navigator.push(
+                        //   context, 
+                        //   MaterialPageRoute(builder: (context) => CreateDocument(docs: Provider.of<DocumentProvider>(context, listen: false).selendraID!))
+                        // );
+                        // Navigator.push(context, MaterialPageRoute(builder: (context) => SetUpKYC()));
+                      },
+                    ),
+                  ],
+                );
+              }
+            ),
+        
+            Account()
+          ],
+        ),
+      floatingActionButton: Consumer<DocumentProvider>(
         builder: (context, provider, widget){
-          // (provider.docsModel.pending.isNotEmpty || provider.docsModel.approve.isNotEmpty)
-          // 
-          return homePageModel!.pageController!.page.toString() == "1.0" ? FloatingActionButton(
+          
+          // homePageModel!.pageController!.page.toString() == "1.0"
+          return (provider.docsModel.pending.isNotEmpty || provider.docsModel.approve.isNotEmpty) ? FloatingActionButton(
             onPressed: () {
               Navigator.push(context, MaterialPageRoute(builder: (context) => SetUpKYC()));
             },
