@@ -42,8 +42,6 @@ class DocumentProvider extends ChangeNotifier{
   DocumentProvider(){
 
     // Initialize All Field
-    initField();
-
     // docsModel.data = [
       // {
       //   "type": "National ID",
@@ -318,7 +316,8 @@ class DocumentProvider extends ChangeNotifier{
   void orgFilter(){
     print("orgFilter");
     print("lsDocs!.isNotEmpty ${lsDocs!.isNotEmpty}");
-    // if (lsDocs!.isNotEmpty){
+    print("obj obj $object");
+    if (lsDocs!.isNotEmpty && object != null){
 
       lsDocs![2].docsList = [];
       lsDocs![2].lsOrg = [];
@@ -336,9 +335,9 @@ class DocumentProvider extends ChangeNotifier{
       }
 
       notifyChanged();
-    // }
+    }
 
-    print("lsDocs![2].docsList! ${lsDocs![2].lsOrg!.length}");
+    // print("lsDocs![2].docsList! ${lsDocs![2].lsOrg!.length}");
 
   }
 

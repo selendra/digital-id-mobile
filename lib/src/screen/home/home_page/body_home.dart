@@ -236,13 +236,17 @@ class HomeBody extends StatelessWidget {
                       textButton: "Setup Selendra ID",
                       // textColor: AppColors.whiteColor,
                       buttonColor: AppColors.newPrimary,
-                      action: () {
-                        provider.title = provider.lsDocs![2].lsOrg![0].details!['name'];
+                      action: () async {
+                        if (provider.object != null){
+                          provider.title = provider.lsDocs![2].lsOrg![0].details!['name'];
 
-                        Navigator.push(
-                          context, 
-                          MaterialPageRoute(builder: (context) => CreateDocument(ownerId: provider.lsDocs![2].lsOrg![0].owner))
-                        );
+                          Navigator.push(
+                            context, 
+                            MaterialPageRoute(builder: (context) => CreateDocument(ownerId: provider.lsDocs![2].lsOrg![0].owner))
+                          );
+                        } else {
+                          await provider.queryAllOrgs();
+                        }
                         // Navigator.push(context, MaterialPageRoute(builder: (context) => SetUpKYC(isSelendraID: true,)));
                         // MyBottomSheet().createIDBottomSheet(context, Provider.of<DocumentProvider>(context, listen: false).selendraID!);
                         // Provider.of<DocumentProvider>(context, listen: false).title = "Selendra ID";

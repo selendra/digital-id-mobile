@@ -169,6 +169,8 @@ class _VerifyPassphraseState extends State<VerifyPassphrase> {
 
       await _api.getSdk.webView!.evalJavascript("accBinding.bindAccount('${widget.createKeyModel!.lsSeeds!.join(" ")}', '${await _api.getPrivateKey(widget.createKeyModel!.lsSeeds!.join(" "))}', '${ ApiProvider().isMainnet ? AppConfig.networkList[0].wsUrlMN : AppConfig.networkList[0].wsUrlTN}', '${ ApiProvider().isMainnet ? AppConfig.networkList[0].wsUrlMN : AppConfig.networkList[0].wsUrlTN}') ");
 
+      await _api.subSELNativeBalance(context: context);
+      
       await ContractsBalance().getAllAssetBalance(context: context);
     }); 
   }
