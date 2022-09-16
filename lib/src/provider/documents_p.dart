@@ -33,6 +33,7 @@ class DocumentProvider extends ChangeNotifier{
   List<Map<String, dynamic>>? assetsMinted = [];
 
   DocumentModel docsModel = DocumentModel();
+  List<SchemasModel>? lsSchmDocs;
   SchemasModel? schemaDocs;
 
   BuildContext? context;
@@ -91,7 +92,6 @@ class DocumentProvider extends ChangeNotifier{
     // ];
 
     // userDocsDataFilter();
-    initIssuer();
 
   }
 
@@ -120,7 +120,7 @@ class DocumentProvider extends ChangeNotifier{
   /// Run First;
   /// 
   /// From JSON
-  void initIssuer() async {
+  Future<void> initIssuer() async {
     print("initIssuer");
     lsDocs = [];
     await rootBundle.loadString(AppConfig.docJson).then((value) async {
@@ -146,10 +146,6 @@ class DocumentProvider extends ChangeNotifier{
     });
 
     print("initIssuer lsDocs $lsDocs");
-
-    await initJson();
-
-    orgFilter();
     
   }
   
@@ -300,28 +296,31 @@ class DocumentProvider extends ChangeNotifier{
   }
 
   Future<void> queryDocByOwerAddr({required String? ownerAddr}) async {
-    print("queryDocByOwerAddr $ownerAddr");
-    try {
-      // _res = await _http.get(Uri.parse(Api.assetOf+"$ownerAddr"));
-      // schemaFilter(json.decode(_res!.body));
+    // print("queryDocByOwerAddr $ownerAddr");
+    // try {
+    //   // _res = await _http.get(Uri.parse(Api.assetOf+"$ownerAddr"));
+    //   // schemaFilter(json.decode(_res!.body));
 
-      schemaFilter(object!);
-    } catch (e){
-      print("Error queryListOfOrgs $e");
-    }
+    //   schemaFilter(object!);
+    // } catch (e){
+    //   print("Error queryListOfOrgs $e");
+    // }
     
   }
   
   /// Collect only Organization
   void orgFilter(){
+    
     print("orgFilter");
     print("lsDocs!.isNotEmpty ${lsDocs!.isNotEmpty}");
     print("obj obj $object");
-    if (lsDocs!.isNotEmpty && object != null){
 
+    // if (lsDocs!.isNotEmpty && object != null){
+      print("Mother fucker");
       lsDocs![2].docsList = [];
       lsDocs![2].lsOrg = [];
       lsOrgDocs = [];
+      print("object!['organizations'].length ${object!['organizations'].length}");
       for (int i = 0; i < object!['organizations'].length; i++){
 
         // Fill Organzation
@@ -334,17 +333,23 @@ class DocumentProvider extends ChangeNotifier{
         );
       }
 
-      notifyChanged();
-    }
+    // }
+    print("lsDocs![2].lsOrg ${lsDocs![2].lsOrg!.length}");
+    notifyListeners();
 
     // print("lsDocs![2].docsList! ${lsDocs![2].lsOrg!.length}");
 
   }
 
   /// Collect only Organization
-  void schemaFilter(Map<String, dynamic> data){
-
-    schemaDocs = SchemasModel.fromJson(data['schemas'][0]);
+  void schemaFilter(){
+    print("schemaFilter");
+    lsSchmDocs = [];
+    for(Map<String, dynamic> data in object!['schemas']){
+      print("data $data");
+      lsSchmDocs!.add(SchemasModel.fromJson(data));
+    }
+    schemaDocs = SchemasModel.fromJson(object!['schemas'][0]);
     
     // Fill Properties After Fill Schema Data
     propModeling();

@@ -96,11 +96,16 @@ class _HomeState extends State<HomePage> with TickerProviderStateMixin {
 
   void fetchOrganization() async {
 
+    await _docsProvider!.initIssuer();
+    
+    await _docsProvider!.initJson();
+
     await _docsProvider!.queryAllOrgs();
     
     _docsProvider!.orgFilter();
 
     _docsProvider!.queryAssetOf();
+    // _docsProvider!.schemaFilter();
     // _docsProvider!.schemaFilter();
     // _docsProvider!.credentialsFilter();
 
@@ -249,7 +254,6 @@ class _HomeState extends State<HomePage> with TickerProviderStateMixin {
     if (code != null){
 
       await Navigator.push(context, MaterialPageRoute(builder: (context) => Passcode(label: PassCodeLabel.fromMint))).then((value) async {
-        print("formBackUp $value");
         // await disableScreenShot!();
 
         dialogLoading(context, content: "Logging in");
@@ -313,7 +317,6 @@ class _HomeState extends State<HomePage> with TickerProviderStateMixin {
   }
 
   Future<String> _signId(dynamic id, String mnemonic) async {
-    print("_signId $id");
     return await Provider.of<ApiProvider>(context, listen: false).getPrivateKey(mnemonic);
 
   }

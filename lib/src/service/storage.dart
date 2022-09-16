@@ -212,7 +212,7 @@ class StorageServices {
       _preferences = await SharedPreferences.getInstance();
 
       _decode = _preferences!.getString(_path);
-
+  print("_decode $_decode");
       if (_decode != null){
 
         final res = SmartContractModel.decode(_decode!);

@@ -1,4 +1,5 @@
 import 'package:polkawallet_sdk/storage/keyring.dart';
+import 'package:wallet_apps/src/components/dialog_c.dart';
 import 'package:wallet_apps/src/constants/db_key_con.dart';
 import 'package:wallet_apps/src/models/account.m.dart';
 import 'package:wallet_apps/src/screen/home/menu/account/body_acc.dart';
@@ -13,6 +14,10 @@ class Account extends StatefulWidget {
 class _AccountState extends State<Account> {
 
   AccountM _accountModel = AccountM();
+
+  ApiProvider? _apiProvider;
+
+  bool? isBindAcc = false;
 
   String onChanged(String value) {
     _accountModel.backupKey.currentState!.validate();
@@ -199,9 +204,67 @@ class _AccountState extends State<Account> {
     // _accountModel.oldNode.requestFocus();
   }
 
+  checkBindAcc() async {
+    print("checkBindAcc");
+    await StorageServices.fetchData(DbKey.bindAcc).then((value) {
+      print("value ${value.toString()}");
+      if (value != null){
+        print(value['error'].toString() == "Account already exit, please use new evm account");
+        if ( (value['error'].toString() == "Account already exit, please use new evm account") || value.containsKey("hash")){
+
+          isBindAcc = true;
+        }
+      }
+    });
+    setState(() {
+      
+    });
+  }
+
+  Future<void> bindAcc() async {
+    await Navigator.push(context, MaterialPageRoute(builder: (context) => Passcode(label: PassCodeLabel.fromMint))).then((value) async {
+      print("formBackUp $value");
+      
+      dialogLoading(context, content: "Binding account");
+
+      if (value != null){
+        await _apiProvider!.apiKeyring.getDecryptedSeed(_apiProvider!.getKeyring, value).then((seeds) async {
+          print("seed ${seeds!.seed}");
+          final pk = await _apiProvider!.getPrivateKey(seeds.seed!);
+          print("pk $pk");
+          await _apiProvider!.getSdk.webView!.evalJavascript("accBinding.bindAccount('${seeds.seed!}', '$pk', '${ ApiProvider().isMainnet ? AppConfig.networkList[0].wsUrlMN : AppConfig.networkList[0].wsUrlTN}', '${ ApiProvider().isMainnet ? AppConfig.networkList[0].wsUrlMN : AppConfig.networkList[0].wsUrlTN}' )").then((result) async {
+            print("result['status'] == false ${result['status'] == false}");
+            
+            // Close Dialog
+            Navigator.pop(context);
+
+            if (result['status'] == false){
+              if (result['error'].toString() != "Account already exit, please use new evm account"){
+                await DialogComponents().dialogCustom(context: context, contents: "Account bind failed", titles: "Oops");
+              }
+            } else {
+              await StorageServices.storeData(result, DbKey.bindAcc);
+            }
+          });
+        });
+      } else {
+
+        // Close Dialog
+        Navigator.pop(context);
+      }
+    });
+
+    setState(() {
+      
+    });
+  }
+
   @override
   void initState() {
-
+    isBindAcc = false;
+    _apiProvider = Provider.of<ApiProvider>(context, listen: false);
+    checkBindAcc();
+    
     // _accountModel.currentAcc = Provider.of<ApiProvider>(context, listen: false).getKeyring.keyPairs[0];
     // _accountModel.editNameController.text = Provider.of<ApiProvider>(context, listen: false).accountM.name!;
     super.initState();
@@ -220,7 +283,9 @@ class _AccountState extends State<Account> {
       submitChangePin: _changePin,
       submitBackUpKey: submitBackUpKey,
       changeName: _changeName,
-      deleteAccout: deleteAccout
+      deleteAccout: deleteAccout,
+      isBindAcc: isBindAcc,
+      bindAcc: bindAcc
     );
   }
 }

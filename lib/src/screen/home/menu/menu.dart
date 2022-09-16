@@ -29,7 +29,7 @@ class MenuState extends State<Menu> {
   void initState() {
     _menuModel.globalKey = GlobalKey<ScaffoldState>();
 
-    Provider.of<WalletConnectComponent>(context, listen: false).setBuildContext = context;
+    // Provider.of<WalletConnectComponent>(context, listen: false).setBuildContext = context;
 
     readBio();
     checkAvailableBio();

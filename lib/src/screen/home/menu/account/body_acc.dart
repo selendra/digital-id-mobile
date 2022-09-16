@@ -4,8 +4,10 @@ import 'package:wallet_apps/index.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:wallet_apps/src/components/acc_c.dart';
 import 'package:wallet_apps/src/components/appbar_c.dart';
+import 'package:wallet_apps/src/components/dialog_c.dart';
 import 'package:wallet_apps/src/components/document_card_c.dart';
 import 'package:wallet_apps/src/components/shimmer_c.dart';
+import 'package:wallet_apps/src/constants/db_key_con.dart';
 import 'package:wallet_apps/src/models/account.m.dart';
 import 'package:wallet_apps/src/provider/documents_p.dart';
 import 'package:wallet_apps/src/screen/home/menu/account/c_account.dart';
@@ -14,6 +16,7 @@ import 'package:wallet_apps/src/screen/home/menu/changePin/changePin.dart';
 
 class AccountBody extends StatelessWidget{
 
+  final bool? isBindAcc;
   final AccountM? accountModel;
   final Function? onSubmitName;
   final Function? onChangeName;
@@ -25,8 +28,10 @@ class AccountBody extends StatelessWidget{
   final Function? submitBackUpKey;
   final Function? changeName;
   final Function? deleteAccout;
+  final Function? bindAcc;
 
   AccountBody({
+    this.isBindAcc,
     this.accountModel, 
     this.onSubmitName,
     this.onChangeName,
@@ -37,7 +42,8 @@ class AccountBody extends StatelessWidget{
     this.submitChangePin, 
     this.submitBackUpKey, 
     this.changeName, 
-    this.deleteAccout
+    this.deleteAccout,
+    this.bindAcc
   });
 
   Widget build(BuildContext context){
@@ -128,6 +134,14 @@ class AccountBody extends StatelessWidget{
                             );
                           },
                           text: 'Edit Wallet Name',
+                        ),
+
+                        if (isBindAcc == false) ListTileComponent(
+                          action: () async {
+
+                            await bindAcc!();
+                          },
+                          text: 'Bind account',
                         ),
 
                         ListTileComponent(

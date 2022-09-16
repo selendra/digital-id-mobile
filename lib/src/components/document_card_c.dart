@@ -83,33 +83,39 @@ class CardDocument extends StatelessWidget{
 
                               SizedBox(width: 2.w,),
                         
-                              Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                        
-                                  for (int i = 0; i < Map<String, dynamic>.from(data!['details']).length; i++)
-                                  if (AppUtils.mapToList(data!['details'])[i].key.toString() != "avatar") Column(
-                                    children: [
-                                      SizedBox(height: 5,),
-                                        Row(
-                                          children: [
-                                            MyText(
-                                              fontSize: 15,
-                                              text: '${AppUtils.mapToList(data!['details'])[i].key.toString().toUpperCase()}:  ',
-                                              fontWeight: FontWeight.bold,
-                                              color: textColor ?? AppColors.newText,
-                                            ),
-                                            MyText(
-                                              fontSize: 15,
-                                              text: AppUtils.mapToList(data!['details'])[i].value.toString(),
-                                              color: textColor ?? AppColors.newText,
-                                            ),
-                                          ],
-                                        )
-                                    ],
-                                  ),
-                                ],
+                              Expanded(
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                                      
+                                    for (int i = 0; i < Map<String, dynamic>.from(data!['details']).length; i++)
+                                    if (AppUtils.mapToList(data!['details'])[i].key.toString() != "avatar") Column(
+                                      children: [
+                                        SizedBox(height: 5,),
+                                          Row(
+                                            children: [
+                                              MyText(
+                                                fontSize: 15,
+                                                text: '${AppUtils.mapToList(data!['details'])[i].key.toString().toUpperCase()}:  ',
+                                                fontWeight: FontWeight.bold,
+                                                color: textColor ?? AppColors.newText,
+                                                overflow: TextOverflow.ellipsis,
+                                              ),
+                                              MyText(
+                                                width: 70,
+                                                fontSize: 15,
+                                                text: AppUtils.mapToList(data!['details'])[i].value.toString(),
+                                                color: textColor ?? AppColors.newText,
+                                                textAlign: TextAlign.left,
+                                                overflow: TextOverflow.ellipsis,
+                                              ),
+                                            ],
+                                          )
+                                      ],
+                                    ),
+                                  ],
+                                ),
                               )
                             ],
                           ),

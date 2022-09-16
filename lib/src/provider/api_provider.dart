@@ -494,6 +494,7 @@ class ApiProvider with ChangeNotifier {
           
           res = value;
           contract.listContract[selNativeIndex].chainDecimal = res[0].toString();
+          
           print("contract.listContract[selNativeIndex].chainDecimal ${contract.listContract[selNativeIndex].chainDecimal}");
           await subSELNativeBalance(context: context);
 

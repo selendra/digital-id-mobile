@@ -29,4 +29,5 @@ class DbKey{
   static String idKey = "idKey";
   static String blochchainData = "blochchainData";
   static String sensitive = "sensitive";
+  static String bindAcc = "bind_account_key";
 }

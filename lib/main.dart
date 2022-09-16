@@ -64,9 +64,9 @@ Future<void> main() async {
         ChangeNotifierProvider<ReceiveWalletProvider>(
           create: (context) => ReceiveWalletProvider(),
         ),
-        ChangeNotifierProvider<WalletConnectComponent>(
-          create: (context) => WalletConnectComponent(),
-        ),
+        // ChangeNotifierProvider<WalletConnectComponent>(
+        //   create: (context) => WalletConnectComponent(),
+        // ),
         ChangeNotifierProvider<ContractsBalance>(
           create: (context) => ContractsBalance(),
         ),
