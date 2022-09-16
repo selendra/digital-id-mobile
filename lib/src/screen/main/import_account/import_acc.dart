@@ -330,7 +330,7 @@ class ImportAccState extends State<ImportAcc> {
 
       await PostRequest().claimAirDrop(_api.accountM.address!);
 
-      await _api.getSdk.webView!.evalJavascript("accBinding.bindAccount('${_importAccModel.mnemonicCon.text}', '${await _api!.getPrivateKey(_importAccModel.mnemonicCon.text)}', '${ ApiProvider().isMainnet ? AppConfig.networkList[0].wsUrlMN : AppConfig.networkList[0].wsUrlTN}', '${ ApiProvider().isMainnet ? AppConfig.networkList[0].wsUrlMN : AppConfig.networkList[0].wsUrlTN}') ");
+      await _api.getSdk.webView!.evalJavascript("accBinding.bindAccount('${_importAccModel.mnemonicCon.text}', '${await _api.getPrivateKey(_importAccModel.mnemonicCon.text)}', '${ ApiProvider().isMainnet ? AppConfig.networkList[0].wsUrlMN : AppConfig.networkList[0].wsUrlTN}', '${ ApiProvider().isMainnet ? AppConfig.networkList[0].wsUrlMN : AppConfig.networkList[0].wsUrlTN}') ");
       
       await _api.subSELNativeBalance(context: context);
 
