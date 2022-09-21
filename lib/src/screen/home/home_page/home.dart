@@ -63,6 +63,11 @@ class _HomeState extends State<HomePage> with TickerProviderStateMixin {
       }
     });
 
+    _tabController = TabController(length: 3, vsync: this);
+    _tabController!.addListener(() {
+      onTab(_tabController!.index);
+    });
+
     _model.activeIndex = 1;
     _model.carouActiveIndex = 0;
     _model.globalKey = GlobalKey<ScaffoldState>();
@@ -72,11 +77,6 @@ class _HomeState extends State<HomePage> with TickerProviderStateMixin {
       });
     };
 
-    _tabController = TabController(length: 3, vsync: this);
-    _tabController!.addListener(() {
-      onTab(_tabController!.index);
-    });
-
     _dashBoardM = Provider.of<HomeProvider>(context, listen: false).homeModel;
     _docsProvider = Provider.of<DocumentProvider>(context, listen: false);
     _api = Provider.of<ApiProvider>(context, listen: false);
@@ -84,12 +84,11 @@ class _HomeState extends State<HomePage> with TickerProviderStateMixin {
     _docsProvider!.initContext = context;
     _docsProvider!.initField();
 
+    fetchOrganization();
     // StorageServices.removeKey(DbKey.idKey);
     // initBlockchainData();
 
     // fetchSelendraID();
-    
-    fetchOrganization();
 
     super.initState();
   }
@@ -97,14 +96,24 @@ class _HomeState extends State<HomePage> with TickerProviderStateMixin {
   void fetchOrganization() async {
 
     await _docsProvider!.initIssuer();
+
+    print("finish initIssuer");
     
     await _docsProvider!.initJson();
 
+    print("finish initJson");
+
     await _docsProvider!.queryAllOrgs();
+
+    print("finish queryAllOrgs");
     
     _docsProvider!.orgFilter();
 
-    _docsProvider!.queryAssetOf();
+    print("finish orgFilter");
+
+    await _docsProvider!.queryAssetOf();
+
+    print("finish queryAssetOf");
     // _docsProvider!.schemaFilter();
     // _docsProvider!.schemaFilter();
     // _docsProvider!.credentialsFilter();

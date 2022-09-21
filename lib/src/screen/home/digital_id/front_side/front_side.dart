@@ -2,7 +2,6 @@
 
 import 'package:wallet_apps/index.dart';
 import 'package:wallet_apps/src/provider/digital_id_p.dart';
-import 'package:wallet_apps/src/screen/home/digital_id/front_side/body_front_side.dart';
 
 class FrontSide extends StatefulWidget {
 

@@ -124,28 +124,15 @@ class DocumentProvider extends ChangeNotifier{
     print("initIssuer");
     lsDocs = [];
     await rootBundle.loadString(AppConfig.docJson).then((value) async {
-      // _docJson = 
-      // print(json.decode(value)['docs']);
       json.decode(value)['docs'].forEach((element) {
-        print(element);
-        // kycDocs.data.add(element);
         lsDocs!.add(
           DocumentSchema(
             type: element['type'],
             docsList: element['docs_list']
-            // .forEach((data){
-            //   DocumentProperty(
-            //     title: data['title'],
-            //     image: data['image'],
-            //     color: data['color'],
-            //   );
-            // }).toList(),
           )
         );
       });
     });
-
-    print("initIssuer lsDocs $lsDocs");
     
   }
   
@@ -196,16 +183,6 @@ class DocumentProvider extends ChangeNotifier{
 
     lsDocs![1].docsProperty = lsPopularProp!;
 
-    // Map<String, dynamic>.from(issuer!['properties']).forEach((key, value) {
-    //   lsIssuerProp!.add({
-    //     'key': key,
-    //     'value': value,
-    //     'formController': TextEditingController(),
-    //     'focusNode': FocusNode(),
-    //     'type': value['type']
-    //   });
-    // });
-
     lsDocs![2].docsProperty = List.empty(growable: true);//lsIssuerProp!;
 
     notifyListeners();
@@ -233,32 +210,8 @@ class DocumentProvider extends ChangeNotifier{
   /// Data Of User's Document Filter By Status
   void userDocsDataFilter(){
     print("userDocsDataFilter");
-    // docsModel.data.forEach((element) {
-    //   if (element['isApprove'] == false) {
-    //     docsModel.pending.add(element);
-    //   } else {
-    //     docsModel.approve.add(element);
-    //   }
-    // });
-    
-    // docsModel.selendra.add({
-    //   "type": "Selendar ID",
-    //   "id": "1233452423",
-    //   "name": "Sam Allen",
-    //   "dob": "09.02.2000",
-    //   "gender": "Male",
-    //   "address": "Tik L'lork, Toul Kork, Phnom Penh",
-    //   "status": "verified",
-    //   "isVeried": true,
-    //   "color": "#FFAAA7",
-    //   "height": "188",
-    //   "identity": "Scar on the left side 1cm",
-    //   "expired_date": "2022.01.21 - 2025.01.21",
-    //   "isApprove": false
-    // });
 
     assetsMinted!.forEach((element) {
-      print("assetsMinted each $element");
       if (element['isVerified'] == false) {
         docsModel.pending.add(element);
       } else {
@@ -266,9 +219,7 @@ class DocumentProvider extends ChangeNotifier{
       }
     });
 
-    print("docsModel.pending ${docsModel.pending}");
-    print("docsModel.approve ${docsModel.approve}");
-    notifyListeners();
+    notifyChanged();
   }
 
   void notifyChanged(){
@@ -312,15 +263,11 @@ class DocumentProvider extends ChangeNotifier{
   void orgFilter(){
     
     print("orgFilter");
-    print("lsDocs!.isNotEmpty ${lsDocs!.isNotEmpty}");
-    print("obj obj $object");
 
     // if (lsDocs!.isNotEmpty && object != null){
-      print("Mother fucker");
       lsDocs![2].docsList = [];
       lsDocs![2].lsOrg = [];
       lsOrgDocs = [];
-      print("object!['organizations'].length ${object!['organizations'].length}");
       for (int i = 0; i < object!['organizations'].length; i++){
 
         // Fill Organzation
@@ -334,7 +281,6 @@ class DocumentProvider extends ChangeNotifier{
       }
 
     // }
-    print("lsDocs![2].lsOrg ${lsDocs![2].lsOrg!.length}");
     notifyListeners();
 
     // print("lsDocs![2].docsList! ${lsDocs![2].lsOrg!.length}");
@@ -342,13 +288,15 @@ class DocumentProvider extends ChangeNotifier{
   }
 
   /// Collect only Organization
-  void schemaFilter(){
+  void schemaFilter(String did){
     print("schemaFilter");
     lsSchmDocs = [];
     for(Map<String, dynamic> data in object!['schemas']){
-      print("data $data");
-      lsSchmDocs!.add(SchemasModel.fromJson(data));
+      if (data['details']['ownerId'] == did) {
+        lsSchmDocs!.add(SchemasModel.fromJson(data));
+      }
     }
+
     schemaDocs = SchemasModel.fromJson(object!['schemas'][0]);
     
     // Fill Properties After Fill Schema Data
@@ -406,8 +354,6 @@ class DocumentProvider extends ChangeNotifier{
         // }
       });
     });
-
-    print("lsIssuerProp $lsIssuerProp");
     // notifyListeners();
   }
 
@@ -417,44 +363,21 @@ class DocumentProvider extends ChangeNotifier{
 
     docsModel.pending.clear();
     docsModel.approve.clear();
-    // Map<String, dynamic> data = {"credentials": [
-    //   {
-    //     "did": 2,
-    //     "cid": "Qmc3hC7hW76fQeaePezq2vFPiW9eFCCHCoFGcG8Yujkd4r",
-    //     "owner": "0x3Abb977B7301CA1c196F5795a3fd32A491061a71",
-    //     "ctype": 2,
-    //     "state": 0,
-    //     "parent": 1,
-    //     "isVerified": true,
-    //     "details": {
-    //       "name": "brilliant",
-    //       "fullName": "Brilliant PHAL",
-    //       "gender": "Male",
-    //       "avatar": [
-    //         "https://gateway.kumandra.org/files/QmSVLefQv53kNVNje2PS3kLo7qQteAGvQcWAPvqz5Ryr9v"
-    //       ]
-    //     }
-    //   }
-    // ]};
+    
     print("Provider.of<ContractProvider>(context!, listen: false).ethAdd) ${Provider.of<ContractProvider>(context!, listen: false).ethAdd}");
     await GetRequest().querySubmittedDocs(Provider.of<ContractProvider>(context!, listen: false).ethAdd).then((value) async {
       final data = await json.decode(value.body);
-      // print("data credentials $");
+      print("data $data");
       if (Map<String, dynamic>.from(data).isNotEmpty){
 
         for (var element in data['credentials']){
-          print("element $element");
           assetsMinted!.add(element);
         }
       }
-      // List<Map<String, dynamic>>.from().forEach((element) {
-      //   
-      // });
+      
     });
 
     userDocsDataFilter();
-
-    notifyListeners();
   }
   
   /// -----------------------------Web3 Interaction-----------------------------

@@ -1,6 +1,4 @@
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:wallet_apps/src/screen/home/digital_id/success/body_success.dart';
+import 'package:wallet_apps/index.dart';
 
 class SuccessSubmit extends StatefulWidget {
   const SuccessSubmit({Key? key}) : super(key: key);

@@ -58,8 +58,6 @@ class PostRequest {
       headers: {"Content-Type": "application/json; charset=utf-8"}
     );
 
-    print("_res ${_res!.body}");
-
     return _res!;
   }
 
@@ -81,9 +79,6 @@ class PostRequest {
         "Content-Type": "application/json; charset=utf-8"
       }
     );
-
-    print("_res ${_res!.statusCode}");
-    print("_res ${_res!.body}");
 
     return _res!;
   }

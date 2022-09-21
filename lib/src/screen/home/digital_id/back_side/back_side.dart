@@ -1,6 +1,5 @@
 import 'package:wallet_apps/index.dart';
 import 'package:wallet_apps/src/provider/digital_id_p.dart';
-import 'package:wallet_apps/src/screen/home/digital_id/back_side/body_back_side.dart';
 
 class BackSide extends StatefulWidget {
 

@@ -209,7 +209,6 @@ class _AccountState extends State<Account> {
     await StorageServices.fetchData(DbKey.bindAcc).then((value) {
       print("value ${value.toString()}");
       if (value != null){
-        print(value['error'].toString() == "Account already exit, please use new evm account");
         if ( (value['error'].toString() == "Account already exit, please use new evm account") || value.containsKey("hash")){
 
           isBindAcc = true;

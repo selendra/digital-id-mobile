@@ -165,15 +165,12 @@ class MySplashScreenState extends State<MySplashScreen> with SingleTickerProvide
   }
 
   void readTheme() async {
-
-    print("readTheme");
     
     // Remove below link when we want light mode
     // await StorageServices.storeData('dark', DbKey.themeMode);
 
     await StorageServices.removeKey(DbKey.themeMode);
     await Provider.of<ThemeProvider>(context, listen: false).changeMode();
-    print("Provider.of<ThemeProvider>(context, listen: false).isDark ${Provider.of<ThemeProvider>(context, listen: false).isDark}");
     // final res = await StorageServices.fetchData(DbKey.themeMode);
 
     // if (res != null) {

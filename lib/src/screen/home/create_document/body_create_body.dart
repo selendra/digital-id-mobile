@@ -1,25 +1,29 @@
 import 'package:provider/provider.dart';
 import 'package:wallet_apps/index.dart';
 import 'package:wallet_apps/src/components/dialog_c.dart';
+import 'package:wallet_apps/src/components/dropdown_custom_c.dart';
 import 'package:wallet_apps/src/models/documents/schemas_m.dart';
 import 'package:wallet_apps/src/provider/documents_p.dart';
-import 'package:wallet_apps/src/screen/home/digital_id/front_side/front_side.dart';
+import 'package:wallet_apps/src/screen/home/receive_wallet/appbar_wallet.dart';
 import 'package:wallet_apps/src/utils/string_extension.dart';
 
 class CreateIDBody extends StatelessWidget {
 
   // final List<dynamic>? provider.lsIssuerProp;
-
+  final int? initValue;
   final Function? resetField;
 
   final Function? pickImage;
+  final Function(int?)? onChanged;
   final Function? mintCredential;
 
   const CreateIDBody({
     Key? key, 
     // this.provider.lsIssuerProp,
+    this.initValue,
     this.resetField,
     this.pickImage,
+    this.onChanged,
     this.mintCredential
   }) : super(key: key);
 
@@ -44,6 +48,29 @@ class CreateIDBody extends StatelessWidget {
             );
           }
         ),
+        actions: [
+          Container(
+            height: 50,
+            width: 100,
+            child: Consumer<DocumentProvider>(
+              builder: (context, provider, child) {
+                return DropDown(
+                  isValue: true,
+                  // assetInfo: provider.assetInfo,
+                  listContract: SchemasModel.dropDownValue(provider.lsSchmDocs!),
+                  initialValue: initValue.toString(),
+                  onChanged: (String? value){
+                    print("value $value");
+                    onChanged!(int.parse(value!));
+                  },
+                );
+                // Container(
+                //   child: Text(provider.lsSchmDocs![1].details!['title'], style: TextStyle(color: Colors.red),),
+                // );
+              },
+            ),
+          )
+        ],
       ),
       body: Consumer<DocumentProvider>(
         builder: (context, provider, widget) {

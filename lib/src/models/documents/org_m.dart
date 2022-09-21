@@ -8,16 +8,10 @@ class OrgModel {
   int? parent; 
   Map<String, dynamic>? details;
 
+  OrgModel(){}
+
   /// Json That Modeling of Organization
   OrgModel.fromJson(Map<String, dynamic> data){
-
-    print("data['did'] ${data['did'].runtimeType}");
-    print("data['cid'] ${data['cid'].runtimeType}");
-    print("data['owner'] ${data['owner'].runtimeType}");
-    print("data['ctype'] ${data['ctype'].runtimeType}");
-    print("data['state'] ${data['state'].runtimeType}");
-    print("data['parent'] ${data['parent'].runtimeType}");
-    print("data['details'] ${data['details'].runtimeType}");
     
     did = data['did'];
     cid = data['cid'];
@@ -26,7 +20,20 @@ class OrgModel {
     state = data['state'];
     parent = data['parent'];
     details = data['details'];
-
-    print("end filter");
   }
+
+  /// OrgModel Data To Json
+  Map<String, dynamic> toJson(OrgModel org){
+    return {
+      "did": org.did,
+      "cid": org.cid,
+      "owner": org.owner,
+      "ctype": org.ctype,
+      "state": org.state,
+      "parent": org.parent,
+      "details": org.details
+    };
+  }
+
+  OrgModel get getOrg => this;
 }

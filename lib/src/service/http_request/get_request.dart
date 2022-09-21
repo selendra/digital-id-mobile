@@ -40,16 +40,14 @@ class GetRequest{
 
 
   Future<_http.Response> querySubmittedDocs(String addr) async {
+    print("querySubmittedDocs $addr");
     try {
 
-      print("querySubmittedDocs");
-      print("addr $addr");
       _res = await _http.get(Uri.parse(Api.assetOf + addr));
-      print("_res!.body ${_res!.body}");
-
+      print("_res ${_res!.statusCode}");
     } catch (e) {
       print("Error querySubmittedDocs $e");
     }
-    return _res!;
+    return await _res!;
   }
 }

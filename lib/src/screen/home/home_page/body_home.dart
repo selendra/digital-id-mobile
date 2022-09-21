@@ -5,7 +5,6 @@ import 'package:wallet_apps/src/models/digital_id_m.dart';
 import 'package:wallet_apps/src/provider/documents_p.dart';
 import 'package:wallet_apps/src/screen/home/assets/assets.dart';
 import 'package:wallet_apps/src/screen/home/create_document/create_document.dart';
-import 'package:wallet_apps/src/screen/home/documents/setup_kyc.dart';
 
 class HomeBody extends StatelessWidget {
 
