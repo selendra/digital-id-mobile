@@ -3,7 +3,7 @@ import 'package:wallet_apps/src/components/dialog_c.dart';
 import 'package:wallet_apps/src/components/walletConnect_c.dart';
 import 'package:wallet_apps/src/screen/home/assets/assets.dart';
 import 'package:wallet_apps/src/screen/home/menu/wallet_connect/wallet_connect.dart';
-import 'package:wallet_connect/wc_session_store.dart';
+// import 'package:wallet_connect/wc_session_store.dart';
 import 'package:wallet_apps/src/constants/db_key_con.dart';
 
 class MenuBody extends StatelessWidget {
@@ -66,27 +66,27 @@ class MenuBody extends StatelessWidget {
           index: 1,
           subIndex: 2,
           onTap: () async {
-            WalletConnectComponent _wConnectC = Provider.of<WalletConnectComponent>(context, listen: false);
-            _wConnectC.setBuildContext = context;
-            await StorageServices.fetchData('session').then((value) async {
-              if (value == null){
+            // WalletConnectComponent _wConnectC = Provider.of<WalletConnectComponent>(context, listen: false);
+            // _wConnectC.setBuildContext = context;
+            // await StorageServices.fetchData('session').then((value) async {
+            //   if (value == null){
 
-                String? value = await Navigator.push(context, MaterialPageRoute(builder: (context) => QrScanner()));
+            //     String? value = await Navigator.push(context, MaterialPageRoute(builder: (context) => QrScanner()));
                 
-                if (value != null){
+            //     if (value != null){
                   
-                  _wConnectC.qrScanHandler(value);
-                }
-              } else {
-                _wConnectC.sessionStore = WCSessionStore.fromJson(value);
-                try {
+            //       _wConnectC.qrScanHandler(value);
+            //     }
+            //   } else {
+            //     _wConnectC.sessionStore = WCSessionStore.fromJson(value);
+            //     try {
 
-                  _wConnectC.wcClient.connectFromSessionStore(_wConnectC.sessionStore!);
-                } catch (e){
-                  if (ApiProvider().isDebug == true) print("error _wConnectC.wcClient $e");
-                }
-              }
-            });
+            //       _wConnectC.wcClient.connectFromSessionStore(_wConnectC.sessionStore!);
+            //     } catch (e){
+            //       if (ApiProvider().isDebug == true) print("error _wConnectC.wcClient $e");
+            //     }
+            //   }
+            // });
             // underContstuctionAnimationDailog(context: context);
           },
         ),

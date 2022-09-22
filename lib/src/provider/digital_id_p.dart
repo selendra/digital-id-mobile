@@ -30,7 +30,6 @@ class DigitalIDProvider extends ChangeNotifier {
     await StorageServices.fetchData(DbKey.idKey).then((value) {
       if (value != null) {
         identifierModel = DigitalIDModel().fromDb(value);
-        print("value ${value}");
         print(identifierModel!.lsIDCard);
       }
     });
@@ -40,18 +39,6 @@ class DigitalIDProvider extends ChangeNotifier {
   bool isAbleSubmitToBlockchain({required BuildContext? context}) {
     try {
       HomeProvider _api = Provider.of(context!, listen: false);
-      print(
-          "identifierModel!.backImage ${identifierModel!.backImage ?? 'fuck'}");
-      print("identifierModel!.frontImage ${identifierModel!.frontImage}");
-      print("identifierModel!.selfieImage ${identifierModel!.selfieImage}");
-      print("_api.homeModel.email ${_api.homeModel.email}");
-      print("_api.homeModel.country ${_api.homeModel.country}");
-      print("_api.homeModel.dob ${_api.homeModel.dob}");
-      print("_api.homeModel.name ${_api.homeModel.name}");
-      print("_api.homeModel.nationality ${_api.homeModel.nationality}");
-      print("_api.homeModel.phoneNum ${_api.homeModel.phoneNum}");
-      // print("_api.homeModel.cover ${_api.homeModel.cover}");
-      print("_api.homeModel.profile ${_api.homeModel.profile}");
       if (identifierModel!.backImage != "" &&
           identifierModel!.frontImage != "" &&
           identifierModel!.selfieImage != "" &&
@@ -66,7 +53,6 @@ class DigitalIDProvider extends ChangeNotifier {
         _dataToBlockchain = toJson(_api.homeModel);
 
         Provider.of<HomeProvider>(context, listen: false).readyToSubmit = true;
-        print("finish finish");
         notifyListeners();
         return true;
       }
@@ -121,22 +107,18 @@ class DigitalIdBSCProvider extends ChangeNotifier {
   }
 
   Future<void> organizationLists() async {
-    print("getLastID");
     await _contractProvider!.bscClient.call(
       contract: _deployedContract!,
       // function: ContractFunction('lastID', []),
       function: ContractFunction('organizationLists', []),
       params: []
-    ).then((value) {
-      print("value $value");
-    });
+    );
   }
 
   Future<void> mintOrg() async {
 
     try{
 
-      print("mintOrg");
       final function = _deployedContract!.function('createOrg');
       await _contractProvider!.bscClient.call(
         contract: _deployedContract!,
@@ -146,62 +128,10 @@ class DigitalIdBSCProvider extends ChangeNotifier {
           "Selendra blockchain",
           "https://selendra.org/"
         ]
-      ).then((value) {
-        print("value $value");
-      });
+      );
     } catch (e) {
       print("Error mintOrg $e");
     }
   }
 }
-
-// class DigitalIdBSCProvider extends ChangeNotifier {
-//   final String _contract = didAddress;
-
-//   DeployedContract? _deployedContract;
-
-//   ContractProvider? _contractProvider;
-
-//   String? _abi;
-
-//   /// Initialize Digital ID contract
-//   void initContract(BuildContext context) async {
-
-//     _contractProvider = Provider.of<ContractProvider>(context, listen: false);
-//     String abiCode = await rootBundle.loadString(AppConfig.abiPath + 'Identity.json');
-
-//     _deployedContract = DeployedContract(
-//       ContractAbi.fromJson(abiCode, 'Identity'),
-//       EthereumAddress.fromHex(_contract)
-//     );
-//   }
-
-//   Future<void> getLastID() async {
-//     print("getLastID");
-
-//     final function = _deployedContract!.function('lastID');
-//     await _contractProvider!.bscClient.call(
-//       contract: _deployedContract!,
-//       function: function,
-//       params: []
-//     ).then((value) {
-//       print("Hey");
-//       print("value $value");
-//     });
-//   }
-
-//   Future<void> mintOrg() async {
-//     print("mintOrg");
-//     final function = _deployedContract!.function('mintOrganization');
-//     await _contractProvider!.bscClient.call(
-//       contract: _deployedContract!,
-//       function: function,
-//       params: [
-//         "selendra org"
-//       ]
-//     ).then((value) {
-//       print("value $value");
-//     });
-//   }
-// }
 

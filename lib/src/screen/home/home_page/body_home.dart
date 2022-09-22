@@ -5,7 +5,6 @@ import 'package:wallet_apps/src/models/digital_id_m.dart';
 import 'package:wallet_apps/src/provider/documents_p.dart';
 import 'package:wallet_apps/src/screen/home/assets/assets.dart';
 import 'package:wallet_apps/src/screen/home/create_document/create_document.dart';
-import 'package:wallet_apps/src/screen/home/documents/setup_kyc.dart';
 
 class HomeBody extends StatelessWidget {
 
@@ -257,12 +256,6 @@ class HomeBody extends StatelessWidget {
                     bottom: 30.sp,
                   ),
       
-                    MyText(
-                      top: 15.sp,
-                      text: "No document has found",
-                      bottom: 30.sp,
-                    ),
-      
                     MyFlatButton(
                       height: 33.sp,
                       edgeMargin: EdgeInsets.symmetric(horizontal: paddingSize),
@@ -270,6 +263,7 @@ class HomeBody extends StatelessWidget {
                       // textColor: AppColors.whiteColor,
                       buttonColor: AppColors.newPrimary,
                       action: () async {
+                        print("Setup Selendra IDprovider.object ${provider.object}");
                         if (provider.object != null){
                           provider.title = provider.lsDocs![2].lsOrg![0].details!['name'];
 

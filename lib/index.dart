@@ -28,10 +28,13 @@ export 'package:iconsax/iconsax.dart';
 export 'package:flutter_svg/flutter_svg.dart';
 export 'package:transition/transition.dart';
 export 'package:responsive_sizer/responsive_sizer.dart';
-//Local Auth
+export 'package:dropdown_button2/dropdown_button2.dart';
+export 'package:json_schema2/json_schema2.dart';
+
+// Local Auth
 export 'package:local_auth_android/local_auth_android.dart';
 
-//Component
+// Component
 export 'package:wallet_apps/src/components/animation.dart';
 export 'package:wallet_apps/src/components/bottom_sheet.dart';
 /* Component File */
@@ -187,6 +190,18 @@ export 'src/screen/home/asset_info/asset_history.dart';
 export 'src/screen/home/asset_info/asset_info.dart';
 export 'src/screen/home/asset_info/asset_info_c.dart';
 export 'src/screen/home/asset_info/att_activity.dart';
+
+export 'package:wallet_apps/src/screen/home/digital_id/front_side/front_side.dart';
+export 'package:wallet_apps/src/screen/home/digital_id/success/body_success.dart';
+export 'package:wallet_apps/src/screen/home/digital_id/selfie/body_selfie.dart';
+export 'package:wallet_apps/src/screen/home/digital_id/success/success.dart';
+export 'package:wallet_apps/src/screen/home/digital_id/back_side/back_side.dart';
+export 'package:wallet_apps/src/screen/home/digital_id/front_side/body_front_side.dart';
+export 'package:wallet_apps/src/screen/home/digital_id/selfie/selfie.dart';
+export 'package:wallet_apps/src/screen/home/digital_id/back_side/body_back_side.dart';
+
+export 'package:wallet_apps/src/screen/home/ls_documents/body_setup_kyc.dart';
+export 'package:wallet_apps/src/screen/home/ls_documents/setup_kyc.dart';
 
 const double paddingSize = 15.0;
 const double btnHeight = 60.0;

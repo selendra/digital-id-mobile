@@ -263,3 +263,63 @@ class CustDropdownMenuItem<T> extends StatelessWidget {
     return child;
   }
 }
+
+class DropDown extends StatelessWidget {
+
+  final bool? isValue;
+  final String? initialValue;
+  final Function(String?)? onChanged;
+  final List<Map<String, dynamic>>? listContract;
+
+  DropDown({this.isValue, this.initialValue, this.onChanged, required this.listContract});
+
+  @override
+  Widget build(BuildContext context) {
+
+    final isDarkTheme = Provider.of<ThemeProvider>(context).isDark;
+
+    return Consumer<WalletProvider>(
+      builder: (context, value, child) {
+        return DropdownButtonHideUnderline(
+          child: DropdownButton2(
+            value: isValue == true ? initialValue : null,
+            isExpanded: true,
+            dropdownElevation: 16,
+            dropdownPadding: EdgeInsets.zero,
+            dropdownDecoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(18),
+              border: Border.all(color: hexaCodeToColor(AppColors.primary), width: 1)
+            ),
+            itemHeight: 50,
+            itemPadding: EdgeInsets.zero,
+            icon: Icon(Icons.arrow_drop_down, color: hexaCodeToColor(AppColors.secondary),),
+            items: listContract!.map<DropdownMenuItem<String>>((Map<String, dynamic> value) {
+              return DropdownMenuItem<String>(
+                  value: value['value'].toString(),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+
+                      Expanded(
+                        child: Container(
+                          alignment: Alignment.center,
+                          child: MyText(text: value['display_value'], color2: Colors.black, overflow: TextOverflow.ellipsis,),
+                        ),
+                      ),
+                      Divider(
+                        color: hexaCodeToColor(AppColors.primary),
+                        height: 1,
+                      )
+                    ],
+                  )
+              );
+            }).toList(),
+            // value: initialValue,
+            onChanged: onChanged,
+          ),
+        );
+        
+      },
+    );
+  }
+}

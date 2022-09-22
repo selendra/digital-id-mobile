@@ -407,8 +407,6 @@ class ApiProvider with ChangeNotifier {
     print("schemaDID $schemaDID");
     try {
       final _privateKey = await getPrivateKey(mnemonic);
-      print("_privateKey $_privateKey");
-      print("DotEnv().get('KUMANDRA_API') ${dotenv.get('KUMANDRA_API')}");
 
       // Upload Json To IPFS
       await Provider.of<DocumentProvider>(context, listen: false).addJson(json, dotenv.get('KUMANDRA_API'), schemaDID).then((value) async {
@@ -416,7 +414,6 @@ class ApiProvider with ChangeNotifier {
         print("value $value");
 
         res = await _sdk.api.service.webView!.evalJavascript("keyring.mintCredential('$mnemonic', '$_privateKey', '$schemaDID', '${isMainnet ? AppConfig.networkList[0].wsUrlMN : AppConfig.networkList[0].wsUrlTN}', '$value', '$didContract')");
-        print("res $res");
       });
 
       return res;
@@ -453,7 +450,6 @@ class ApiProvider with ChangeNotifier {
   }
 
   Future<NetworkParams?> connectSELNode({@required BuildContext? context, String? funcName = 'keyring'}) async {
-    print("connectSELNode");
     try {
 
       NetworkParams node = NetworkParams();
@@ -483,7 +479,6 @@ class ApiProvider with ChangeNotifier {
   /// 
   /// Inside This Chain Decimal Also Call Get Balance
   Future<void> getSelNativeChainDecimal({@required BuildContext? context, String? funcName = 'keyring'}) async {
-    print("getSelNativeChainDecimal");
     try {
       dynamic res;
       
@@ -494,7 +489,7 @@ class ApiProvider with ChangeNotifier {
           
           res = value;
           contract.listContract[selNativeIndex].chainDecimal = res[0].toString();
-          print("contract.listContract[selNativeIndex].chainDecimal ${contract.listContract[selNativeIndex].chainDecimal}");
+          
           await subSELNativeBalance(context: context);
 
           notifyListeners();
@@ -509,12 +504,10 @@ class ApiProvider with ChangeNotifier {
     
     // Get SEL native Address From Account 
     await _sdk.webView!.evalJavascript('account.getSELAddr()').then((value) async {
-      print("$funcName.getSELAddr() $value");
       if (value != null){
         contractProvider!.listContract[selNativeIndex].address = value;
       } else {
         await _sdk.webView!.evalJavascript('keyring.getSELAddr()').then((value) async {
-          print("keyring.getSELAddr() $value");
           contractProvider!.listContract[selNativeIndex].address = value;
         });
       }
@@ -522,7 +515,6 @@ class ApiProvider with ChangeNotifier {
   }
 
   Future<void> subSELNativeBalance({@required BuildContext? context}) async {
-    print("subSELNativeBalance");
     try {
 
       final contract = Provider.of<ContractProvider>(context!, listen: false);

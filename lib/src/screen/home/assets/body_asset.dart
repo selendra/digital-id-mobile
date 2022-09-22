@@ -282,7 +282,6 @@ class AssetsPageBody extends StatelessWidget {
   Widget _selendraNetworkList(BuildContext context, List<SmartContractModel> lsAsset, {int? networkIndex}){
     return GestureDetector(
       onHorizontalDragEnd: (details) {
-        print("onHorizontalChanged ${details.primaryVelocity!.toDouble()}");
         onHorizontalChanged!(details);
       },
       child: Padding(

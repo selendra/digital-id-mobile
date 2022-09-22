@@ -1,7 +1,6 @@
 
 import 'package:wallet_apps/index.dart';
 import 'package:wallet_apps/src/models/digital_id_m.dart';
-import 'package:wallet_apps/src/screen/home/digital_id/back_side/back_side.dart';
 
 import '../build_dot_indecator.dart';
 

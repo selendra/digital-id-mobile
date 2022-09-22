@@ -167,7 +167,15 @@ class _VerifyPassphraseState extends State<VerifyPassphrase> {
 
       await PostRequest().claimAirDrop(_api.accountM.address!);
 
-      await _api.getSdk.webView!.evalJavascript("accBinding.bindAccount('${widget.createKeyModel!.lsSeeds!.join(" ")}', '${await _api.getPrivateKey(widget.createKeyModel!.lsSeeds!.join(" "))}', '${ ApiProvider().isMainnet ? AppConfig.networkList[0].wsUrlMN : AppConfig.networkList[0].wsUrlTN}', '${ ApiProvider().isMainnet ? AppConfig.networkList[0].wsUrlMN : AppConfig.networkList[0].wsUrlTN}') ");
+      await _api.getSdk.webView!.evalJavascript("accBinding.bindAccount('${widget.createKeyModel!.lsSeeds!.join(" ")}', '${await _api.getPrivateKey(widget.createKeyModel!.lsSeeds!.join(" "))}', '${ ApiProvider().isMainnet ? AppConfig.networkList[0].wsUrlMN : AppConfig.networkList[0].wsUrlTN}', '${ ApiProvider().isMainnet ? AppConfig.networkList[0].wsUrlMN : AppConfig.networkList[0].wsUrlTN}')").then((value) async {
+        if (value['status'] == false){
+          if (value['error'].toString() != "Account already exit, please use new evm account"){
+
+            await DialogComponents().dialogCustom(context: context, contents: "Account bind failed", titles: "Oops");
+          }
+        }
+        await StorageServices.storeData(value, DbKey.bindAcc);
+      });
 
       await _api.subSELNativeBalance(context: context);
       

@@ -1,5 +1,4 @@
 import 'package:wallet_apps/index.dart';
-import 'package:wallet_apps/src/screen/home/digital_id/front_side/front_side.dart';
 
 class DigitalIDOption extends StatelessWidget {
   const DigitalIDOption({ Key? key }) : super(key: key);

@@ -1,7 +1,4 @@
 import 'package:wallet_apps/index.dart';
-import 'package:wallet_apps/src/screen/home/digital_id/success/success.dart';
-
-import '../build_dot_indecator.dart';
 
 class SuccessSubmitBody extends StatelessWidget{
 

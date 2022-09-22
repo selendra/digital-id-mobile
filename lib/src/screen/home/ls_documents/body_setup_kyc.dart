@@ -92,7 +92,12 @@ class SetUpKYCBody extends StatelessWidget {
   Widget docsCardComponent(BuildContext context, Map<String, dynamic> doc, String? ownerId) {
     return GestureDetector(
       onTap: () async{
+
+        // Initial Title AppBar
         Provider.of<DocumentProvider>(context, listen: false).title = doc['name'];
+
+        Provider.of<DocumentProvider>(context, listen: false).schemaFilter(ownerId!);
+
         MyBottomSheet().createDocumentBottomSheet(context, ownerId);//.createIDBottomSheet(context, docsProperty);
       },
       child: Padding(

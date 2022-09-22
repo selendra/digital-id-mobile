@@ -49,7 +49,6 @@ class _AssetsPageState extends State<AssetsPage> with SingleTickerProviderStateM
   }
 
   void _onTapCategories(int index, {bool? isTap}){
-    print("index: $index");
     setState(() {
       _model.categoryIndex = index;
       // if (isTap != null) widget.homePageModel!.pageController.jumpToPage(index);

@@ -1,9 +1,5 @@
-import 'dart:io';
-
-
 import 'package:wallet_apps/index.dart';
 import 'package:wallet_apps/src/models/digital_id_m.dart';
-import 'package:wallet_apps/src/screen/home/digital_id/success/success.dart';
 
 import '../build_dot_indecator.dart';
 

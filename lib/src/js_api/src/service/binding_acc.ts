@@ -45,7 +45,7 @@ async function bindAccount(
       console.log("balance", balance);
       
       if (balance > 0){
-        throw new Error('Account already exit, please use new evm account');
+        throw new Error("Account already exit, please use new evm account");
       };
       
       const signature = create_signature(privateKey, genesisHash, chainId, substrateWallet.address);
@@ -56,12 +56,12 @@ async function bindAccount(
         .claimAccount(evmAddress, signature)
         .signAndSend(substrateWallet);
       console.log("hash", hash);
-      return hash;
+      return {"status": true, "hash": hash};
     } catch (e){
 
-      console.log("Error", e);
+      console.log("Error", e.message);
       // throw error;
-      return false;
+      return {"status": false, "error": e.message};
     }
 }
 

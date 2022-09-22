@@ -63,6 +63,11 @@ class _HomeState extends State<HomePage> with TickerProviderStateMixin {
       }
     });
 
+    _tabController = TabController(length: 3, vsync: this);
+    _tabController!.addListener(() {
+      onTab(_tabController!.index);
+    });
+
     _model.activeIndex = 1;
     _model.carouActiveIndex = 0;
     _model.globalKey = GlobalKey<ScaffoldState>();
@@ -72,11 +77,6 @@ class _HomeState extends State<HomePage> with TickerProviderStateMixin {
       });
     };
 
-    _tabController = TabController(length: 3, vsync: this);
-    _tabController!.addListener(() {
-      onTab(_tabController!.index);
-    });
-
     _dashBoardM = Provider.of<HomeProvider>(context, listen: false).homeModel;
     _docsProvider = Provider.of<DocumentProvider>(context, listen: false);
     _api = Provider.of<ApiProvider>(context, listen: false);
@@ -84,23 +84,35 @@ class _HomeState extends State<HomePage> with TickerProviderStateMixin {
     _docsProvider!.initContext = context;
     _docsProvider!.initField();
 
-    // StorageServices.removeKey(DbKey.idKey);
-    // initBlockchainData();
-
-    // fetchSelendraID();
-    
     fetchOrganization();
+    
+    jsonValidator();
 
     super.initState();
   }
 
   void fetchOrganization() async {
 
+    await _docsProvider!.initIssuer();
+
+    print("finish initIssuer");
+    
+    await _docsProvider!.initJson();
+
+    print("finish initJson");
+
     await _docsProvider!.queryAllOrgs();
+
+    print("finish queryAllOrgs");
     
     _docsProvider!.orgFilter();
 
-    _docsProvider!.queryAssetOf();
+    print("finish orgFilter");
+
+    await _docsProvider!.queryAssetOf();
+
+    print("finish queryAssetOf");
+    // _docsProvider!.schemaFilter();
     // _docsProvider!.schemaFilter();
     // _docsProvider!.credentialsFilter();
 
@@ -214,33 +226,7 @@ class _HomeState extends State<HomePage> with TickerProviderStateMixin {
     print(_dashBoardM.dob);
     print(_dashBoardM.isEditing);
 
-    // Provider.of<DigitalIDProvider>(context, listen: false).isAbleSubmitToBlockchain(context: context);
-    // _digitalIDProvider!.setBlockChainData = _digitalIDProvider!.toJson(_dashBoardM);
-    // Encrypted _encrypted = Encryption().encryptAES(json.encode(_digitalIDProvider!.toJson(_dashBoardM)));
-    // await StorageServices.storeData(_encrypted.bytes, DbKey.sensitive);
-
-    // setState(() {
-    //   _dashBoardM.isEditing = false;
-    // });
   }
-
-  // queryCType(BigInt orgID) async {
-  //   print("queryCType $orgID");
-  //   await Provider.of<ContractProvider>(context, listen: false).queryDigitalID("_CtypeMetadata", [orgID]).then((value) async {
-  //     List.from(value).forEach((data){
-  //       print("_CtypeMetadata ${data}}");
-  //     });
-  //     cTypeModel = CTypeModel().fromQuery(List.from(value));
-      
-  //     await http.get(Uri.parse(cTypeModel.propertiesURI!)).then((res) async {
-  //       print("propertiesURI res ${res.body}");
-  //       dynamic data = await json.decode(res.body);
-  //       print("data ${data['properties']}");
-  //       cTypeModel.cTypeProperties = CTypeModel().cTypePropertiesFilter(data);
-  //       // print("cTypeModel.cTypeProperties ${cTypeModel.cTypeProperties!['properties']}");
-  //     });
-  //   });
-  // }
 
   Future<void> _scanLogin(dynamic code) async {
 
@@ -249,7 +235,6 @@ class _HomeState extends State<HomePage> with TickerProviderStateMixin {
     if (code != null){
 
       await Navigator.push(context, MaterialPageRoute(builder: (context) => Passcode(label: PassCodeLabel.fromMint))).then((value) async {
-        print("formBackUp $value");
         // await disableScreenShot!();
 
         dialogLoading(context, content: "Logging in");
@@ -285,11 +270,6 @@ class _HomeState extends State<HomePage> with TickerProviderStateMixin {
               Uint8List uint8list = Uint8List.fromList(convert);
               String _credentials = await _signId(decode['id'], _mnemonic.seed!);
               
-              // String signedDataHex = EthSigUtil.signMessage(
-              //   privateKey: _credentials,
-              //   message: uint8list,
-              // );
-
               // Sign Message
               final message = await _api!.getSdk.webView!.evalJavascript("accBinding.signMessage('${decode['id']}', '$_credentials')");
               
@@ -313,7 +293,6 @@ class _HomeState extends State<HomePage> with TickerProviderStateMixin {
   }
 
   Future<String> _signId(dynamic id, String mnemonic) async {
-    print("_signId $id");
     return await Provider.of<ApiProvider>(context, listen: false).getPrivateKey(mnemonic);
 
   }
@@ -362,6 +341,29 @@ class _HomeState extends State<HomePage> with TickerProviderStateMixin {
     // String _pk = await api.getPrivateKey('dentist body neglect clay stage forget caught bacon moment gown toast kind');
 
     // await api.getSdk.webView!.evalJavascript("accBinding.bindAccount('dentist body neglect clay stage forget caught bacon moment gown toast kind', '${_pk}', '${ ApiProvider().isMainnet ? AppConfig.networkList[0].wsUrlMN : AppConfig.networkList[0].wsUrlTN}', '${ ApiProvider().isMainnet ? AppConfig.networkList[0].wsUrlMN : AppConfig.networkList[0].wsUrlTN}') ");
+  }
+
+  void jsonValidator() async {
+    print("jsonValidator");
+    final workivaLocations = [
+      {
+        'name': 'Ames',
+        'latitude': 41.9956731,
+        'longitude': -93.6403663,
+      },
+      {
+        'name': 'Scottsdale',
+        'latitude': 33.4634707,
+        'longitude': -111.9266617,
+      }
+    ];
+
+    final schema = await JsonSchema.createSchemaAsync({
+      'type': 'array',
+      'items': {r'$ref': 'https://json-schema.org/draft/2020-12/schema'}
+    });
+
+    print(schema.validate(workivaLocations));
   }
 
   @override
