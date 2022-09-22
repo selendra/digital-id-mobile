@@ -29,10 +29,12 @@ export 'package:flutter_svg/flutter_svg.dart';
 export 'package:transition/transition.dart';
 export 'package:responsive_sizer/responsive_sizer.dart';
 export 'package:dropdown_button2/dropdown_button2.dart';
-//Local Auth
+export 'package:json_schema2/json_schema2.dart';
+
+// Local Auth
 export 'package:local_auth_android/local_auth_android.dart';
 
-//Component
+// Component
 export 'package:wallet_apps/src/components/animation.dart';
 export 'package:wallet_apps/src/components/bottom_sheet.dart';
 /* Component File */

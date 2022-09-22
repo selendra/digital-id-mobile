@@ -1,10 +1,7 @@
-import 'package:provider/provider.dart';
 import 'package:wallet_apps/index.dart';
-import 'package:wallet_apps/src/components/dialog_c.dart';
 import 'package:wallet_apps/src/components/dropdown_custom_c.dart';
 import 'package:wallet_apps/src/models/documents/schemas_m.dart';
 import 'package:wallet_apps/src/provider/documents_p.dart';
-import 'package:wallet_apps/src/screen/home/receive_wallet/appbar_wallet.dart';
 import 'package:wallet_apps/src/utils/string_extension.dart';
 
 class CreateIDBody extends StatelessWidget {

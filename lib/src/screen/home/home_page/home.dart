@@ -85,10 +85,8 @@ class _HomeState extends State<HomePage> with TickerProviderStateMixin {
     _docsProvider!.initField();
 
     fetchOrganization();
-    // StorageServices.removeKey(DbKey.idKey);
-    // initBlockchainData();
-
-    // fetchSelendraID();
+    
+    jsonValidator();
 
     super.initState();
   }
@@ -228,33 +226,7 @@ class _HomeState extends State<HomePage> with TickerProviderStateMixin {
     print(_dashBoardM.dob);
     print(_dashBoardM.isEditing);
 
-    // Provider.of<DigitalIDProvider>(context, listen: false).isAbleSubmitToBlockchain(context: context);
-    // _digitalIDProvider!.setBlockChainData = _digitalIDProvider!.toJson(_dashBoardM);
-    // Encrypted _encrypted = Encryption().encryptAES(json.encode(_digitalIDProvider!.toJson(_dashBoardM)));
-    // await StorageServices.storeData(_encrypted.bytes, DbKey.sensitive);
-
-    // setState(() {
-    //   _dashBoardM.isEditing = false;
-    // });
   }
-
-  // queryCType(BigInt orgID) async {
-  //   print("queryCType $orgID");
-  //   await Provider.of<ContractProvider>(context, listen: false).queryDigitalID("_CtypeMetadata", [orgID]).then((value) async {
-  //     List.from(value).forEach((data){
-  //       print("_CtypeMetadata ${data}}");
-  //     });
-  //     cTypeModel = CTypeModel().fromQuery(List.from(value));
-      
-  //     await http.get(Uri.parse(cTypeModel.propertiesURI!)).then((res) async {
-  //       print("propertiesURI res ${res.body}");
-  //       dynamic data = await json.decode(res.body);
-  //       print("data ${data['properties']}");
-  //       cTypeModel.cTypeProperties = CTypeModel().cTypePropertiesFilter(data);
-  //       // print("cTypeModel.cTypeProperties ${cTypeModel.cTypeProperties!['properties']}");
-  //     });
-  //   });
-  // }
 
   Future<void> _scanLogin(dynamic code) async {
 
@@ -298,11 +270,6 @@ class _HomeState extends State<HomePage> with TickerProviderStateMixin {
               Uint8List uint8list = Uint8List.fromList(convert);
               String _credentials = await _signId(decode['id'], _mnemonic.seed!);
               
-              // String signedDataHex = EthSigUtil.signMessage(
-              //   privateKey: _credentials,
-              //   message: uint8list,
-              // );
-
               // Sign Message
               final message = await _api!.getSdk.webView!.evalJavascript("accBinding.signMessage('${decode['id']}', '$_credentials')");
               
@@ -374,6 +341,29 @@ class _HomeState extends State<HomePage> with TickerProviderStateMixin {
     // String _pk = await api.getPrivateKey('dentist body neglect clay stage forget caught bacon moment gown toast kind');
 
     // await api.getSdk.webView!.evalJavascript("accBinding.bindAccount('dentist body neglect clay stage forget caught bacon moment gown toast kind', '${_pk}', '${ ApiProvider().isMainnet ? AppConfig.networkList[0].wsUrlMN : AppConfig.networkList[0].wsUrlTN}', '${ ApiProvider().isMainnet ? AppConfig.networkList[0].wsUrlMN : AppConfig.networkList[0].wsUrlTN}') ");
+  }
+
+  void jsonValidator() async {
+    print("jsonValidator");
+    final workivaLocations = [
+      {
+        'name': 'Ames',
+        'latitude': 41.9956731,
+        'longitude': -93.6403663,
+      },
+      {
+        'name': 'Scottsdale',
+        'latitude': 33.4634707,
+        'longitude': -111.9266617,
+      }
+    ];
+
+    final schema = await JsonSchema.createSchemaAsync({
+      'type': 'array',
+      'items': {r'$ref': 'https://json-schema.org/draft/2020-12/schema'}
+    });
+
+    print(schema.validate(workivaLocations));
   }
 
   @override
