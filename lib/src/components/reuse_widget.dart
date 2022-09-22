@@ -643,7 +643,7 @@ Widget progress({String? content}) {
 
 dialogLoading(BuildContext context, {String? content}) {
   return showDialog(
-    barrierDismissible: true,
+    barrierDismissible: false,
     context: context,
     builder: (context) {
       return BackdropFilter(

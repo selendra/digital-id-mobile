@@ -122,10 +122,10 @@ class CreateIDBody extends StatelessWidget {
                     
                           // Text(provider.lsIssuerProp![index]['formController'].text),
                           if (provider.lsIssuerProp![index]['widget'].containsKey('formController')) MyInputField(
-                            inputType: provider.lsIssuerProp![index]['type'] == 'integer' ? TextInputType.number : TextInputType.text,
+                            inputType: (provider.lsIssuerProp![index]['type'] == 'integer' || provider.lsIssuerProp![index]['type'] == 'number') ? TextInputType.number : TextInputType.text,
                             focusNode: provider.lsIssuerProp![index]['widget']['focusNode'],
                             controller: provider.lsIssuerProp![index]['widget']['formController'],
-                            hintText: camelToSentence(provider.lsIssuerProp![index]['key']),
+                            hintText: (provider.lsIssuerProp![index]['type'] == 'number') ? 'Ex: 19990312' : camelToSentence(provider.lsIssuerProp![index]['key']),
                             enableInput: provider.lsIssuerProp![index]['editable'],
                             onChanged: (String value){
                               

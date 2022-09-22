@@ -193,6 +193,7 @@ class AppConfig {
 class DBkey {
   static String supportedToken = "supportedToken";
   static String listSel = "listSel";
+  static String datas = "datas";
 }
 
 class PresaleConfig {

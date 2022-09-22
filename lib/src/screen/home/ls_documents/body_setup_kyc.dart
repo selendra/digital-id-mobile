@@ -1,4 +1,5 @@
 import 'package:wallet_apps/index.dart';
+import 'package:wallet_apps/src/components/random_border_color.dart';
 import 'package:wallet_apps/src/provider/documents_p.dart';
 
 class SetUpKYCBody extends StatelessWidget {
@@ -73,7 +74,7 @@ class SetUpKYCBody extends StatelessWidget {
                           physics: const NeverScrollableScrollPhysics(),
                           itemCount: provider.lsDocs![index].docsList!.length,
                           itemBuilder: (context, j){
-                            return docsCardComponent(context, provider.lsDocs![index].docsList![j], provider.lsDocs![index].lsOrg != null ? provider.lsDocs![index].lsOrg![j].owner : '');
+                            return docsCardComponent(context, provider.lsDocs![index].docsList![j], provider.lsDocs![index].lsOrg != null ? provider.lsDocs![index].lsOrg![j].owner : '', j);
                           }
                         ),
                       ],
@@ -89,7 +90,7 @@ class SetUpKYCBody extends StatelessWidget {
     );
   }
 
-  Widget docsCardComponent(BuildContext context, Map<String, dynamic> doc, String? ownerId) {
+  Widget docsCardComponent(BuildContext context, Map<String, dynamic> doc, String? ownerId, int j) {
     return GestureDetector(
       onTap: () async{
 
@@ -103,14 +104,7 @@ class SetUpKYCBody extends StatelessWidget {
       child: Padding(
         padding: EdgeInsets.only(left: paddingSize, right: paddingSize, bottom: paddingSize),
         child: Center(
-          child: Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(20),
-              // color: hexaCodeToColor(AppColors.blue),
-              color: hexaCodeToColor(doc['color'] ?? '#FFFFFF')//Colors.primaries[_random.nextInt(Colors.primaries.length)][_random.nextInt(9) * 100],
-            ),
-            padding: EdgeInsets.only(top: 1, bottom: 5, left: 1, right: 1,),
-            // Data Inside Card
+          child: RandomColorBorder(
             child: Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(20),

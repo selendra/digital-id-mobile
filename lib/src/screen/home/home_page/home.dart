@@ -101,6 +101,31 @@ class _HomeState extends State<HomePage> with TickerProviderStateMixin {
 
     print("finish initJson");
 
+    await StorageServices.fetchData(DbKey.lsDocs).then((data) async {
+
+      print("data $data");
+      if (data != null){
+        print("data['credentials'] ${data['credentials']}");
+        for (var element in data['credentials']){
+          print("element $element");
+          _docsProvider!.assetsMinted!.add(element);
+        }
+
+        await StorageServices.fetchData(DBkey.datas).then((value) {
+          if (value != null){
+
+            _docsProvider!.object = value;
+
+            _docsProvider!.orgFilter();
+
+            _docsProvider!.userDocsDataFilter();
+          }
+        });
+      } 
+    });
+
+    setState(() {});
+
     await _docsProvider!.queryAllOrgs();
 
     print("finish queryAllOrgs");
@@ -230,66 +255,78 @@ class _HomeState extends State<HomePage> with TickerProviderStateMixin {
 
   Future<void> _scanLogin(dynamic code) async {
 
-    // dynamic decode = jsonDecode(code);
+    try {
+      dynamic decode = jsonDecode(code);
 
-    if (code != null){
+      if (decode != null && (decode.containsKey("id") && decode.containsKey("url") && decode.containsKey("link") )){
 
-      await Navigator.push(context, MaterialPageRoute(builder: (context) => Passcode(label: PassCodeLabel.fromMint))).then((value) async {
-        // await disableScreenShot!();
+        await Navigator.push(context, MaterialPageRoute(builder: (context) => Passcode(label: PassCodeLabel.fromMint))).then((value) async {
+          // await disableScreenShot!();
 
-        dialogLoading(context, content: "Logging in");
+          dialogLoading(context, content: "Logging in");
+          print("value $value");
+          if (value != null) {
 
-        if (value != null) {
+            final _mnemonic = await _api!.apiKeyring.getDecryptedSeed(_api!.getKeyring, value);
 
-          final _mnemonic = await _api!.apiKeyring.getDecryptedSeed(_api!.getKeyring, value);
+            if (_mnemonic!.seed != null){
 
-          if (_mnemonic!.seed != null){
+              final Map<dynamic, dynamic> decode = decoder.convert(code);
 
-            final Map<dynamic, dynamic> decode = decoder.convert(code);
-
-            if(decode["id"] == null) {
-              showDialog(
-                context: context,
-                builder: (context) => AlertDialog(
-                  title: Text("Error"),
-                  content: Text("Invalid ID Not Found"),
-                  actions: [
-                    MyFlatButton(
-                      textButton: "Ok",
-                      buttonColor: AppColors.newPrimary,
-                      action: () {
-                        Navigator.pop(context);
-                      },
-                    )
-                  ],
-                ),
-              );
-            } 
-            else{
-              List<int> convert = decode['id'].toString().codeUnits;
-              Uint8List uint8list = Uint8List.fromList(convert);
-              String _credentials = await _signId(decode['id'], _mnemonic.seed!);
+              if(decode["id"] == null) {
               
-              // Sign Message
-              final message = await _api!.getSdk.webView!.evalJavascript("accBinding.signMessage('${decode['id']}', '$_credentials')");
-              
-              await PostRequest().scanLogin( decode['id'], message, decode['link'], Provider.of<ContractProvider>(context, listen: false).ethAdd );
-              
-              // Close Dialog Loading
+                // Close Loading
+                Navigator.pop(context);
+                
+                showDialog(
+                  context: context,
+                  builder: (context) => AlertDialog(
+                    title: Text("Error"),
+                    content: Text("Invalid ID Not Found"),
+                    actions: [
+                      MyFlatButton(
+                        textButton: "Ok",
+                        buttonColor: AppColors.newPrimary,
+                        action: () {
+                          Navigator.pop(context);
+                        },
+                      )
+                    ],
+                  ),
+                );
+              } 
+              else{
+                List<int> convert = decode['id'].toString().codeUnits;
+                Uint8List uint8list = Uint8List.fromList(convert);
+                String _credentials = await _signId(decode['id'], _mnemonic.seed!);
+                
+                // Sign Message
+                final message = await _api!.getSdk.webView!.evalJavascript("accBinding.signMessage('${decode['id']}', '$_credentials')");
+                
+                await PostRequest().scanLogin( decode['id'], message, decode['link'], Provider.of<ContractProvider>(context, listen: false).ethAdd );
+                
+                // Close Dialog Loading
+                Navigator.pop(context);
+
+                await DialogComponents().dialogCustom(context: context, contents: "Successfully login");
+
+              }
+            } else {
+
+              // Close Loading
               Navigator.pop(context);
-
-              await DialogComponents().dialogCustom(context: context, contents: "Successfully login");
-
+              await DialogComponents().dialogCustom(context: context, contents: "Incorrect pin", titles: "Oops");
             }
           }
-        } else {
           
-          await DialogComponents().dialogCustom(context: context, contents: "Incorrect pin", titles: "Oops");
-        }
-      });
+        });
 
+      }
+
+    } catch (e) {
+      
+      await DialogComponents().dialogCustom(context: context, contents: "Invalid qr code", titles: "Oops");
     }
-
   }
 
   Future<String> _signId(dynamic id, String mnemonic) async {
@@ -358,12 +395,12 @@ class _HomeState extends State<HomePage> with TickerProviderStateMixin {
       }
     ];
 
-    final schema = await JsonSchema.createSchemaAsync({
-      'type': 'array',
-      'items': {r'$ref': 'https://json-schema.org/draft/2020-12/schema'}
-    });
+    // final schema = await JsonSchema.createSchemaAsync({
+    //   'type': 'array',
+    //   'items': {r'$ref': 'https://json-schema.org/draft/2020-12/schema'}
+    // });
 
-    print(schema.validate(workivaLocations));
+    // print(schema.validate(workivaLocations));
   }
 
   @override

@@ -166,15 +166,9 @@ class HomeBody extends StatelessWidget {
                             ),
                           ),
                         ),
-                        // ListView.builder(
-                        //   shrinkWrap: true,
-                        //   itemCount: provider.assetsMinted!.length,
-                        //   itemBuilder: (context, index){
-                        //     return CardDocument(data: provider.assetsMinted![index], isDetail: false,);
-                        //   }
-                        // ),
       
                         RefreshIndicator(
+                          triggerMode: RefreshIndicatorTriggerMode.anywhere,
                           onRefresh: () async {
                             await Provider.of<DocumentProvider>(context, listen: false).queryAssetOf();
                           },

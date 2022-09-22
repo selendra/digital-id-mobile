@@ -33,7 +33,8 @@ class _AssetsPageState extends State<AssetsPage> with SingleTickerProviderStateM
 
   @override
   void initState() {
-    _model.tabController = TabController(initialIndex: 0, length: 4, vsync: this);
+    _model.tabController = TabController(initialIndex: 1, length: 4, vsync: this);
+    _model.categoryIndex = 1;
     /// If Do transaction We need to refetch All Asset's Data.
     if (widget.isTrx == true){
       Provider.of<ContractsBalance>(context, listen: false).refetchContractBalance(context: context);

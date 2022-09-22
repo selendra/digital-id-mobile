@@ -30,4 +30,5 @@ class DbKey{
   static String blochchainData = "blochchainData";
   static String sensitive = "sensitive";
   static String bindAcc = "bind_account_key";
+  static String lsDocs = "lsDocs";
 }

@@ -1,5 +1,6 @@
 import 'package:wallet_apps/index.dart';
 import 'package:wallet_apps/src/api/api.dart';
+import 'package:wallet_apps/src/constants/db_key_con.dart';
 import 'package:wallet_apps/src/models/documents/credential_m.dart';
 import 'package:wallet_apps/src/models/documents/document_m.dart';
 import 'package:wallet_apps/src/models/document_schema.dart';
@@ -141,47 +142,49 @@ class DocumentProvider extends ChangeNotifier{
   /// Run Second
   Future<void> initJson() async {
 
-    print("initJson");
+    // print("initJson");
 
-    final jsonData = await rootBundle.loadString(AppConfig.mandatory);
-    mandotary = json.decode(jsonData);
+    // final jsonData = await rootBundle.loadString(AppConfig.mandatory);
+    // mandotary = json.decode(jsonData);
     
-    // Add More Object Of Input Field
-    popular = json.decode(jsonData);
-    popular!['properties'].addAll({
-      'city': {'type': 'string', 'description': "Battambang"}
-    });
+    // // Add More Object Of Input Field
+    // popular = json.decode(jsonData);
+    // popular!['properties'].addAll({
+    //   'city': {'type': 'string', 'description': "Battambang"}
+    // });
 
-    // Add More Object Of Input Field
-    issuer = json.decode(jsonData);
-    issuer!['properties'].addAll({
-      'gender': {'type': 'string', 'description': "Male"},
-      'city': {'type': 'string', 'description': "Phnom Penh"},
-    });
+    // // Add More Object Of Input Field
+    // issuer = json.decode(jsonData);
+    // issuer!['properties'].addAll({
+    //   'gender': {'type': 'string', 'description': "Male"},
+    //   'city': {'type': 'string', 'description': "Phnom Penh"},
+    // });
 
-    Map<String, dynamic>.from(mandotary!['properties']).forEach((key, value) {
-      lsMandotaryProp!.add({
-        'key': key,
-        'value': value,
-        'formController': TextEditingController(),
-        'focusNode': FocusNode(),
-        'type': value['type']
-      });
-    });
+    // Map<String, dynamic>.from(mandotary!['properties']).forEach((key, value) {
+    //   lsMandotaryProp!.add({
+    //     'key': key,
+    //     'value': value,
+    //     'formController': TextEditingController(),
+    //     'focusNode': FocusNode(),
+    //     'type': value['type']
+    //   });
+    // });
 
-    lsDocs![0].docsProperty = lsMandotaryProp!;
+    // lsDocs![0].docsProperty = lsMandotaryProp!;
     
-    Map<String, dynamic>.from(popular!['properties']).forEach((key, value) {
-      lsPopularProp!.add({
-        'key': key,
-        'value': value,
-        'formController': TextEditingController(),
-        'focusNode': FocusNode(),
-        'type': value['type']
-      });
-    });
+    // Map<String, dynamic>.from(popular!['properties']).forEach((key, value) {
+    //   lsPopularProp!.add({
+    //     'key': key,
+    //     'value': value,
+    //     'formController': TextEditingController(),
+    //     'focusNode': FocusNode(),
+    //     'type': value['type']
+    //   });
+    // });
 
-    lsDocs![1].docsProperty = lsPopularProp!;
+    lsDocs![0].docsProperty = List.empty(growable: true);
+
+    lsDocs![1].docsProperty = List.empty(growable: true);//lsPopularProp!;
 
     lsDocs![2].docsProperty = List.empty(growable: true);//lsIssuerProp!;
 
@@ -209,8 +212,9 @@ class DocumentProvider extends ChangeNotifier{
 
   /// Data Of User's Document Filter By Status
   void userDocsDataFilter(){
-    print("userDocsDataFilter");
 
+    docsModel.pending.clear();
+    docsModel.approve.clear();
     assetsMinted!.forEach((element) {
       if (element['isVerified'] == false) {
         docsModel.pending.add(element);
@@ -236,6 +240,8 @@ class DocumentProvider extends ChangeNotifier{
     try {
       _res = await _http.get(Uri.parse(Api.allOrgApi));
       object = json.decode(_res!.body);
+
+      await StorageServices.storeData(object, DBkey.datas);
       print("object $object");
       // object = await json.decode(await rootBundle.loadString(AppConfig.docDidJson));
       // print("object $object");
@@ -265,8 +271,8 @@ class DocumentProvider extends ChangeNotifier{
     print("orgFilter");
 
     // if (lsDocs!.isNotEmpty && object != null){
-      lsDocs![2].docsList = [];
-      lsDocs![2].lsOrg = [];
+      lsDocs![0].docsList = [];
+      lsDocs![0].lsOrg = [];
       lsOrgDocs = [];
       for (int i = 0; i < object!['organizations'].length; i++){
 
@@ -274,8 +280,8 @@ class DocumentProvider extends ChangeNotifier{
         lsOrgDocs!.add(
           OrgModel.fromJson(object!['organizations'][i])
         );
-        lsDocs![2].lsOrg!.add(OrgModel.fromJson(object!['organizations'][i]));
-        lsDocs![2].docsList!.add(
+        lsDocs![0].lsOrg!.add(OrgModel.fromJson(object!['organizations'][i]));
+        lsDocs![0].docsList!.add(
           lsOrgDocs![i].details
         );
       }
@@ -323,7 +329,7 @@ class DocumentProvider extends ChangeNotifier{
         'key': element.key,
         'value': element.value,
         'type': element.value['type'],
-        if(element.value['type'] == "string" || element.value['type'] == "integer") 
+        if(element.value['type'] == "string" || element.value['type'] == "integer" || element.value['type'] == "number") 
         'widget': {
           'formController': TextEditingController(),
           'focusNode': FocusNode(),
@@ -359,16 +365,13 @@ class DocumentProvider extends ChangeNotifier{
 
   Future<void> queryAssetOf() async {
     print("queryAssetOf");
-    assetsMinted = [];
-
-    docsModel.pending.clear();
-    docsModel.approve.clear();
     
-    print("Provider.of<ContractProvider>(context!, listen: false).ethAdd) ${Provider.of<ContractProvider>(context!, listen: false).ethAdd}");
+    assetsMinted = [];
     await GetRequest().querySubmittedDocs(Provider.of<ContractProvider>(context!, listen: false).ethAdd).then((value) async {
       final data = await json.decode(value.body);
-      print("data $data");
       if (Map<String, dynamic>.from(data).isNotEmpty){
+        
+        StorageServices.storeData(await json.decode(value.body), DbKey.lsDocs);
 
         for (var element in data['credentials']){
           assetsMinted!.add(element);
