@@ -8,7 +8,6 @@ class CreateIDBody extends StatelessWidget {
 
   // final List<dynamic>? provider.lsIssuerProp;
   final int? initValue;
-  final Function? resetField;
 
   final Function? pickImage;
   final Function(int?)? onChanged;
@@ -18,7 +17,6 @@ class CreateIDBody extends StatelessWidget {
     Key? key, 
     // this.provider.lsIssuerProp,
     this.initValue,
-    this.resetField,
     this.pickImage,
     this.onChanged,
     this.mintCredential
@@ -164,48 +162,5 @@ class CreateIDBody extends StatelessWidget {
       ),
     );
   }
-
-  // Widget _textfieldTemplate () {
-  //   return Column(
-  //     children: [
-  //       MyInputField(
-  //         controller: nationalIDController,
-  //         hintText: "National ID",
-  //         onSubmit: () {
-
-  //         },
-  //       ),
-
-  //       const SizedBox(height: paddingSize),
-
-  //       MyInputField(
-  //         controller: nationalIDController,
-  //         hintText: "Given Name",
-  //         onSubmit: () {
-
-  //         },
-  //       ),
-
-  //       const SizedBox(height: paddingSize),
-
-  //       MyInputField(
-  //         controller: familyNameControler,
-  //         hintText: "Family Name",
-  //         onSubmit: () {
-
-  //         },
-  //       ),
-
-  //       const SizedBox(height: paddingSize),
-  //       MyInputField(
-  //         controller: placeOfBirthController,
-  //         hintText: "Place Of Birth",
-  //         onSubmit: () {
-
-  //         },
-  //       ),
-  //     ],
-  //   );
-  // }
 
 }

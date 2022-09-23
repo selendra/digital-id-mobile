@@ -5,8 +5,9 @@ import 'dart:math' as math;
 
 class CardDocument extends StatelessWidget{
 
-  /// 
   final Map<String, dynamic>? data;
+
+  final String? url;
 
   final bool? isDetail;
 
@@ -20,6 +21,7 @@ class CardDocument extends StatelessWidget{
 
   CardDocument({
     required this.data, 
+    this.url,
     required this.isDetail, 
     this.margin = const EdgeInsets.symmetric(horizontal: paddingSize), 
     this.colorString, this.textColor,
@@ -35,13 +37,13 @@ class CardDocument extends StatelessWidget{
           GestureDetector(
             onTap: isDetail == true ? null : () async {
               print("AppUtils.mapToList(data!['details']).length ${AppUtils.mapToList(data!['details']).length}");
-              for(int i = 0; i < AppUtils.mapToList(data!['details']).length; i++){
-                if (AppUtils.mapToList(data!['details'])[i].key.toString() == "avatar"){
-                  print(AppUtils.mapToList(data!['details'])[i].value);
-                }
-              }
+              // for(int i = 0; i < AppUtils.mapToList(data!['details']).length; i++){
+              //   if (AppUtils.mapToList(data!['details'])[i].key.toString() == "avatar"){
+              //     print(AppUtils.mapToList(data!['details'])[i].value);
+              //   }
+              // }
               // print("data ${AppUtils.mapToList(data!['details'])}");
-              // Navigator.push(context, Transition(child: IdDetail(data: data), transitionEffect: TransitionEffect.RIGHT_TO_LEFT));
+              Navigator.push(context, Transition(child: IdDetail(data: data, url: url), transitionEffect: TransitionEffect.RIGHT_TO_LEFT));
             },
             child: ClipRect(
               child: MyBanner(
@@ -78,8 +80,17 @@ class CardDocument extends StatelessWidget{
                         height: 25.h,
                         margin: EdgeInsets.only(left: paddingSize, right: paddingSize, bottom: paddingSize),
                         child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
+                            
+                            if (data!.containsKey('parent_data')) MyText(
+                              top: paddingSize,
+                              // bottom: paddingSize,
+                              text: data!['parent_data']['details']['title'], 
+                              color2: Colors.black,
+                              fontSize: 19,
+                              fontWeight: FontWeight.bold
+                            ),
                         
                             Expanded(
                               child: Padding(
@@ -88,29 +99,28 @@ class CardDocument extends StatelessWidget{
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                                           
-                                    for (int i = 0; i < Map<String, dynamic>.from(data!['details']).length; i++)
-                                    if (AppUtils.mapToList(data!['details'])[i].key.toString() == "avatar")
+                                    // for (int i = 0; i < Map<String, dynamic>.from(data!['details']).length; i++)
+                                    // if (AppUtils.mapToList(data!['details'])[i].key.toString() == "avatar")
+
+                                    if (url != null)
                                     Container(
-                                      height: 25.h,
+                                      height: 25.w,
                                       width: 25.w,
                                       child: CircleAvatar(
-                                        backgroundImage: NetworkImage("${AppUtils.mapToList(data!['details'])[i].value[0]}"),
+                                        backgroundImage: NetworkImage(url!),
+                                      ),
+                                    ) else 
+                                    Container(
+                                      height: 25.w,
+                                      width: 25.w,
+                                      // color: Colors.red,
+                                      child: ClipRRect(
+                                        borderRadius: BorderRadius.circular(100),
+                                        child: Container(
+                                          color: Colors.grey,
+                                        ) ,
                                       ),
                                     ),
-                                    // Container(
-                                    //   width: 33.w,
-                                    //   height: 21.h  ,
-                                    //   decoration: BoxDecoration(
-                                    //     border: Border.all(
-                                    //       color: Colors.white,
-                                    //     ),
-                                    //     borderRadius: BorderRadius.circular(18),
-                                    //   ),
-                                    //   child: ClipRRect(
-                                    //     borderRadius: BorderRadius.circular(18),
-                                    //     child: Image.network( AppUtils.mapToList(data!['details'])[i].value[0], fit: BoxFit.cover,),
-                                    //   )
-                                    // ),
                                                       
                                     SizedBox(width: 2.w,),
                                                           
@@ -126,15 +136,15 @@ class CardDocument extends StatelessWidget{
                                               SizedBox(height: 5,),
                                               i == 0 ?
                                               Row(
-                                                mainAxisAlignment: MainAxisAlignment.center,
+                                                mainAxisAlignment: MainAxisAlignment.start,
                                                 children: [
                                                   MyText(
                                                     // width: 70,
-                                                    fontSize: 18,
+                                                    fontSize: 17,
                                                     text: AppUtils.mapToList(data!['details'])[i].value.toString(),
                                                     color: textColor ?? AppColors.newText,
                                                     textAlign: TextAlign.left,
-                                                    fontWeight: FontWeight.bold
+                                                    fontWeight: FontWeight.w500
                                                     // overflow: TextOverflow.ellipsis,
                                                   ),
                                                 ],
@@ -142,13 +152,6 @@ class CardDocument extends StatelessWidget{
                                               :
                                               Row(
                                                 children: [
-                                                  // MyText(
-                                                  //   fontSize: 15,
-                                                  //   text: '${AppUtils.mapToList(data!['details'])[i].key.toString().toUpperCase()}:  ',
-                                                  //   fontWeight: FontWeight.bold,
-                                                  //   color: textColor ?? AppColors.newText,
-                                                  //   overflow: TextOverflow.ellipsis,
-                                                  // ),
                                                   MyText(
                                                     // width: 70,
                                                     fontSize: i == 0 ? 18 : 15,
@@ -169,204 +172,7 @@ class CardDocument extends StatelessWidget{
                                 ),
                               ),
                             )
-                        
-                          //   List<Widget>.generate(.length, (index){
-                          //     return Container(
-                          //       // width: 33.w,
-                          //       // height: 5,
-                          //       decoration: BoxDecoration(
-                          //         border: Border.all(
-                          //           color: Colors.white,
-                          //         ),
-                          //         borderRadius: BorderRadius.circular(18),
-                          //       ),
-                          //       child: ClipRRect(
-                          //         borderRadius: BorderRadius.circular(18),
-                          //         child: Text(AppUtils.mapToList(data!['details'])[index].value.toString())//Image.network( , fit: BoxFit.cover,),
-                          //       )
-                          //     );
-                          //   })
-                          // ]
-                          // List<Widget>.generate(Map<String, dynamic>.from(data!['details']).length, (index){
-                          //   return Container(
-                          //     // width: 33.w,
-                          //     // height: 5,
-                          //     decoration: BoxDecoration(
-                          //       border: Border.all(
-                          //         color: Colors.white,
-                          //       ),
-                          //       borderRadius: BorderRadius.circular(18),
-                          //     ),
-                          //     child: ClipRRect(
-                          //       borderRadius: BorderRadius.circular(18),
-                          //       child: Text(AppUtils.mapToList(data!['details'])[index].value.toString())//Image.network( , fit: BoxFit.cover,),
-                          //     )
-                          //   );
-                          // })
-                          
-                          // List<Widget>.generate(Map<String, dynamic>.from(data!['details']).entries.length, (index) {
-                          //   return Expanded(
-                          //     child: Row(
-                          //       crossAxisAlignment: CrossAxisAlignment.center,
-                          //       mainAxisAlignment: MainAxisAlignment.start,
-                          //       children: [
-                                    
-                            //       Container(
-                            //         width: 33.w,
-                            //         height: double.infinity,
-                            //         decoration: BoxDecoration(
-                            //           border: Border.all(
-                            //             color: Colors.white,
-                            //           ),
-                            //           borderRadius: BorderRadius.circular(18),
-                            //         ),
-                            //         child: ClipRRect(
-                            //           borderRadius: BorderRadius.circular(18),
-                            //           child: Image.network(data![], fit: BoxFit.cover,),
-                            //         )
-                            //       ),
-                                    
-                            //       SizedBox(width: 5.w,),
-                            //       Flexible(
-                            //         child: Column(
-                            //           crossAxisAlignment: CrossAxisAlignment.start,
-                            //           children: [
-                                      
-                            //             MyText(
-                            //               textAlign: TextAlign.start,
-                            //               text: data!['type'],
-                            //               fontSize: 16,
-                            //               fontWeight: FontWeight.bold,
-                            //               color: textColor ?? AppColors.newText,
-                            //             ),
-                                  
-                            //             SizedBox(height: 3.h,),
-                                  
-                            //             Row(
-                            //               children: [
-                            //                 MyText(
-                            //                   fontSize: 14,
-                            //                   text: 'CID: ',
-                            //                   fontWeight: FontWeight.bold, 
-                            //                   color: textColor ?? AppColors.newText,
-                            //                 ),
-                            //                 MyText(
-                            //                   fontSize: 14,
-                            //                   text: '${data!['id']}',
-                            //                   color: textColor ?? AppColors.newText,
-                            //                 ),
-                            //               ],
-                            //             ),
-                                      
-                            //             SizedBox(height: 5,),
-                            //             Row(
-                            //               children: [
-                            //                 MyText(
-                            //                   fontSize: 14,
-                            //                   text: 'Name: ',
-                            //                   fontWeight: FontWeight.bold,
-                            //                   color: textColor ?? AppColors.newText,
-                            //                 ),
-                            //                 MyText(
-                            //                   fontSize: 14,
-                            //                   text: '${data!['name']}',
-                            //                   color: textColor ?? AppColors.newText,
-                            //                 ),
-                            //               ],
-                            //             ),
-                                  
-                            //             SizedBox(height: 5,),
-                            //             Row(
-                            //               children: [
-                            //                 MyText(
-                            //                   fontSize: 14,
-                            //                   text: 'Full name: ',
-                            //                   fontWeight: FontWeight.bold,
-                            //                   color: textColor ?? AppColors.newText,
-                            //                 ),
-                            //                 MyText(
-                            //                   fontSize: 14,
-                            //                   text: '${data!['dob']}',
-                            //                   color: textColor ?? AppColors.newText,
-                            //                 ),
-                            //               ],
-                            //             ),
-                                  
-                            //             SizedBox(height: 5,),
-                            //             Row(
-                            //               crossAxisAlignment: CrossAxisAlignment.start,
-                            //               children: [
-                            //                 MyText(
-                            //                   fontSize: 14,
-                            //                   text: 'Gender: ',
-                            //                   fontWeight: FontWeight.bold,
-                            //                   color: textColor ?? AppColors.newText,
-                            //                 ),
-                            //                 MyText(
-                            //                   width: 20.w,
-                            //                   fontSize: 14,
-                            //                   textAlign: TextAlign.start,
-                            //                   // width: MediaQuery.of(context).size.width / 1.5,
-                            //                   text: '${data!['address']}',
-                            //                   color: textColor ?? AppColors.newText,
-                            //                   overflow: TextOverflow.ellipsis,
-                            //                 ),
-                            //               ],
-                            //             ),
-                                  
-                            //             // SizedBox(height: 5,),
-                            //             // Row(
-                            //             //   crossAxisAlignment: CrossAxisAlignment.start,
-                            //             //   children: [
-                            //             //     MyText(
-                            //             //       fontSize: 14,
-                            //             //       text: 'Expired date: ',
-                            //             //       fontWeight: FontWeight.bold,
-                            //             //       color: textColor ?? AppColors.newText,
-                            //             //     ),
-                            //             //     MyText(
-                            //             //       width: 20.w,
-                            //             //       fontSize: 14,
-                            //             //       textAlign: TextAlign.start,
-                            //             //       // width: MediaQuery.of(context).size.width / 1.5,
-                            //             //       text: '${data!['expired_date']}',
-                            //             //       color: textColor ?? AppColors.newText,
-                            //             //       overflow: TextOverflow.ellipsis,
-                            //             //     ),
-                            //             //   ],
-                            //             // ),
-                                  
-                            //             Expanded(child: Container()),
-                                  
-                            //             isDetail == true ? Container() : Align(
-                            //               alignment: Alignment.bottomRight,
-                            //               child: Container(
-                            //                 width: 20.w,
-                            //                 height: 3.h,
-                            //                 decoration: BoxDecoration(
-                            //                   border: Border.all(color: hexaCodeToColor(AppColors.primary), width: 2),
-                            //                   borderRadius: BorderRadius.circular(20)
-                            //                 ),
-                            //                 alignment: Alignment.center,
-                            //                 child: MyText(
-                            //                   text: "Detail",
-                            //                   color: AppColors.primary,
-                            //                 ),
-                            //               ),
-                            //             )
-                            //           ],
-                            //         ),
-                            //       ),
-                          //       ],
-                          //     ),
-                          //   );
-                          // })
-                          // [
-                        
-                        
-                            
-                          
-                            
+
                           ],
                         ),
                       ),

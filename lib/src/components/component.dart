@@ -827,14 +827,24 @@ class MyBanner extends StatelessWidget{
           child: Transform.rotate(
             angle: 69.8,
             child: Container(
-              color: hexaCodeToColor(color!).withOpacity(0.2),
               height: 25,
               width: 100,
+              decoration: BoxDecoration(
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.5),
+                    spreadRadius: 0,
+                    blurRadius: 7,
+                    offset: Offset(0, 2), // changes position of shadow
+                  ),
+                ],
+                color: hexaCodeToColor(color!).withOpacity(0.7),
+              ),
               alignment: Alignment.center,
               child: MyText(
                 fontSize: 13.5,
                 text: isApprove == false ? "Pending" : "Approved",
-                color2: hexaCodeToColor(color!)
+                color2: hexaCodeToColor("#FFFFFF")
               ),
             ),
           ),

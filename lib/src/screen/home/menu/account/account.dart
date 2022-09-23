@@ -230,7 +230,6 @@ class _AccountState extends State<Account> {
         await _apiProvider!.apiKeyring.getDecryptedSeed(_apiProvider!.getKeyring, value).then((seeds) async {
           print("seed ${seeds!.seed}");
           final pk = await _apiProvider!.getPrivateKey(seeds.seed!);
-          print("pk $pk");
           await _apiProvider!.getSdk.webView!.evalJavascript("accBinding.bindAccount('${seeds.seed!}', '$pk', '${ ApiProvider().isMainnet ? AppConfig.networkList[0].wsUrlMN : AppConfig.networkList[0].wsUrlTN}', '${ ApiProvider().isMainnet ? AppConfig.networkList[0].wsUrlMN : AppConfig.networkList[0].wsUrlTN}' )").then((result) async {
             print("result['status'] == false ${result['status'] == false}");
             
@@ -243,6 +242,8 @@ class _AccountState extends State<Account> {
               }
             } else {
               await StorageServices.storeData(result, DbKey.bindAcc);
+
+              await checkBindAcc();
             }
           });
         });

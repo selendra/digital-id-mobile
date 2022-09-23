@@ -101,30 +101,32 @@ class _HomeState extends State<HomePage> with TickerProviderStateMixin {
 
     print("finish initJson");
 
-    await StorageServices.fetchData(DbKey.lsDocs).then((data) async {
+    try {
+      await StorageServices.fetchData(DbKey.lsDocs).then((data) async {
 
-      print("data $data");
-      if (data != null){
-        print("data['credentials'] ${data['credentials']}");
-        for (var element in data['credentials']){
-          print("element $element");
-          _docsProvider!.assetsMinted!.add(element);
-        }
-
-        await StorageServices.fetchData(DBkey.datas).then((value) {
-          if (value != null){
-
-            _docsProvider!.object = value;
-
-            _docsProvider!.orgFilter();
-
-            _docsProvider!.userDocsDataFilter();
+        print("data $data");
+        if (data != null){
+          print("data['credentials'] ${data.length}");
+          for (var element in data){
+            print("element $element");
+            _docsProvider!.assetsMinted!.add(element);
           }
-        });
-      } 
-    });
 
-    setState(() {});
+          await StorageServices.fetchData(DBkey.datas).then((value) {
+            if (value != null){
+
+              _docsProvider!.object = value;
+
+              _docsProvider!.orgFilter();
+
+              _docsProvider!.userDocsDataFilter();
+            }
+          });
+        } 
+      });
+    } catch (e) {
+      print("Error fetchOrganization lsDocs $e");
+    }
 
     await _docsProvider!.queryAllOrgs();
 
@@ -135,21 +137,6 @@ class _HomeState extends State<HomePage> with TickerProviderStateMixin {
     print("finish orgFilter");
 
     await _docsProvider!.queryAssetOf();
-
-    print("finish queryAssetOf");
-    // _docsProvider!.schemaFilter();
-    // _docsProvider!.schemaFilter();
-    // _docsProvider!.credentialsFilter();
-
-    // print("_docsProvider ${_docsProvider!.lsOrgDocs}");
-    // print("_docsProvider ${_docsProvider!.lsCredentailDocs}");
-  }
-
-  void fetchSelendraID() async {
-    await StorageServices.fetchData(DbKey.selendraID).then((value) {
-      if (value != null) _model.isSelendraID = value;
-      else Provider.of<DocumentProvider>(context, listen: false).initSelendraDocs();
-    });
   }
 
   void onPageChanged(int index){
@@ -157,11 +144,7 @@ class _HomeState extends State<HomePage> with TickerProviderStateMixin {
       _model.activeIndex = index;
     });
     _model.pageController!.jumpToPage(index);
-    //  else {
 
-    //   underContstuctionAnimationDailog(context: context);
-    // }
-    // _model.pageController.animateToPage(index, duration: Duration(milliseconds: 300), curve: Curves.ease);
   }
 
   final bool? pushReplacement = true;

@@ -105,7 +105,8 @@ class ImportAccState extends State<ImportAcc> {
   }
 
   Future<void> onSubmitIm() async {
-    if (_importAccModel.formKey.currentState!.validate()) {
+    if (_importAccModel.formKey.currentState!.validate()
+    ) {
       reImport();
     }
   }

@@ -101,13 +101,6 @@ class _CreateDocumentState extends State<CreateDocument> with TickerProviderStat
       await DialogComponents().dialogCustom(context: context, contents: "Something went wrong", titles: "Oops");
     }
   }
-  
-  void queryPropByOwer() async {
-    await _docProvider!.queryDocByOwerAddr(ownerAddr: widget.ownerId);
-  }
-
-  void resetField() {
-  }
 
   bool? isImage(){
     for (var element in Provider.of<DocumentProvider>(context, listen: false).lsIssuerProp!){
@@ -176,10 +169,8 @@ class _CreateDocumentState extends State<CreateDocument> with TickerProviderStat
   initState(){
     
     _docProvider = Provider.of<DocumentProvider>(context, listen: false);
-
     /// Initalize Drop Down Value With Title Of First Schema
     initValue = _docProvider!.lsSchmDocs![0].did;
-    print("initValue $initValue");
     searchAndFilter(_docProvider!.lsSchmDocs![0].did!);
     // queryPropByOwer();
     super.initState();
@@ -189,7 +180,6 @@ class _CreateDocumentState extends State<CreateDocument> with TickerProviderStat
   Widget build(BuildContext context) {
     return CreateIDBody(
       initValue: initValue,
-      resetField: resetField,
       pickImage: pickImage,
       onChanged: onChanged,
       mintCredential: mintCredential

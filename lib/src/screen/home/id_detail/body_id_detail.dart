@@ -8,9 +8,11 @@ class IdDetailBody extends StatelessWidget {
 
   final Map<String, dynamic>? data;
 
+  final String? url;
+
   final GlobalKey? keyQrShare;
 
-  IdDetailBody({this.data, this.keyQrShare});
+  IdDetailBody({this.data, this.keyQrShare, this.url});
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +21,7 @@ class IdDetailBody extends StatelessWidget {
         iconTheme: IconThemeData(color: hexaCodeToColor(AppColors.textColor)),
         titleSpacing: 0,
         elevation: 0,
-        title: MyText(text: data!['type'], color: AppColors.textColor, fontSize: 17, fontWeight: FontWeight.bold,),
+        title: MyText(text: "data!['type']", color: AppColors.textColor, fontSize: 17, fontWeight: FontWeight.bold,),
         actions: [
           IconButton(
             icon: Icon(
@@ -42,7 +44,7 @@ class IdDetailBody extends StatelessWidget {
               padding: EdgeInsets.symmetric(horizontal: paddingSize),
               child: FlipCard(
                 direction: FlipDirection.HORIZONTAL,
-                front: CardDocument(data: data!, isDetail: true, margin: EdgeInsets.zero, bottomPadding: 0,),
+                front: CardDocument( url: url, data: data!, isDetail: true, margin: EdgeInsets.zero, bottomPadding: 0,),
                 back: ClipRRect(
                   borderRadius: BorderRadius.circular(18.0),
                   child: Container(
@@ -55,7 +57,7 @@ class IdDetailBody extends StatelessWidget {
       
             SizedBox(height: paddingSize*2),
       
-            _cardInformation(context),
+            // _cardInformation(context),
           ],
         ),
       ),

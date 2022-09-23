@@ -50,6 +50,7 @@ class PostRequest {
   }
 
   Future<_http.Response> claimAirDrop(String selAddr) async { 
+    print("claimAirDrop");
     _res = await _http.post(
       Uri.parse("https://api-faucet.selendra.org/api/claim/testnet"),
       body: json.encode({
@@ -57,6 +58,8 @@ class PostRequest {
       }),
       headers: {"Content-Type": "application/json; charset=utf-8"}
     );
+
+    print("_res ${_res!.body}");
 
     return _res!;
   }

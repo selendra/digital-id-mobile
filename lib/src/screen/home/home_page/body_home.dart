@@ -147,7 +147,17 @@ class HomeBody extends StatelessWidget {
                               physics: NeverScrollableScrollPhysics(),
                               itemCount: provider.docsModel.pending.length,
                               itemBuilder: (context, index){
-                                return CardDocument(data: provider.docsModel.pending[index], isDetail: false,);
+                                // for (int i = 0; i < Map<String, dynamic>.from(data!['details']).length; i++)
+                                //     if (AppUtils.mapToList(data!['details'])[i].key.toString() == "avatar")
+                                //     Container(
+                                //       height: 25.h,
+                                //       width: 25.w,
+                                //       child: CircleAvatar(
+                                //         backgroundImage: NetworkImage("${AppUtils.mapToList(data!['details'])[i].value[0]}"),
+                                //       ),
+                                //     )
+                                print(provider.docsModel.pending[index]['details'].containsKey("avatar"));
+                                return CardDocument(url: provider.docsModel.pending[index]['details'].containsKey("avatar") ? provider.docsModel.pending[index]['details']['avatar'][0] : null , data: provider.docsModel.pending[index], isDetail: false,);
                               }
                             )
                             : 
@@ -170,6 +180,7 @@ class HomeBody extends StatelessWidget {
                         RefreshIndicator(
                           triggerMode: RefreshIndicatorTriggerMode.anywhere,
                           onRefresh: () async {
+
                             await Provider.of<DocumentProvider>(context, listen: false).queryAssetOf();
                           },
                           child: SingleChildScrollView(
@@ -258,12 +269,17 @@ class HomeBody extends StatelessWidget {
                       buttonColor: AppColors.newPrimary,
                       action: () async {
                         print("Setup Selendra IDprovider.object ${provider.object}");
+                        print("provider.lsDocs![0] ${provider.lsDocs![0].lsOrg![0].details!['name']}");
                         if (provider.object != null){
-                          provider.title = provider.lsDocs![2].lsOrg![0].details!['name'];
+                          // Initial Title AppBar
+
+                          provider.schemaFilter(provider.lsDocs![0].lsOrg![0].owner!);
+
+                          provider.title = provider.lsDocs![0].lsOrg![0].details!['name'];
 
                           Navigator.push(
                             context, 
-                            MaterialPageRoute(builder: (context) => CreateDocument(ownerId: provider.lsDocs![2].lsOrg![0].owner))
+                            MaterialPageRoute(builder: (context) => CreateDocument(ownerId: provider.lsDocs![0].lsOrg![0].owner))
                           );
                         } else {
                           await provider.queryAllOrgs();

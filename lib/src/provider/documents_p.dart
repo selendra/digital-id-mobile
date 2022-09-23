@@ -41,61 +41,6 @@ class DocumentProvider extends ChangeNotifier{
 
   ApiProvider? apiProvider;
 
-  DocumentProvider(){
-
-    // Initialize All Field
-    // docsModel.data = [
-      // {
-      //   "type": "National ID",
-      //   "id": "1233452423",
-      //   "name": "Sam Allen",
-      //   "dob": "09.02.2000",
-      //   "gender": "Female",
-      //   "address": "Tik L'lork, Toul Kork, Phnom Penh",
-      //   "status": "verifying",
-      //   "isVeried": false,
-      //   "color": "#D5ECC2",
-      //   "height": "165",
-      //   "identity": "Scar on the left side 1cm",
-      //   "expired_date": "2022.01.21 - 2025.01.21",
-      //   "isApprove": false
-      // },
-      // {
-      //   "type": "Driver licence",
-      //   "id": "1233452423",
-      //   "name": "Sam Allen",
-      //   "dob": "09.02.2000",
-      //   "gender": "Male",
-      //   "address": "Tik L'lork, Toul Kork, Phnom Penh",
-      //   "status": "verifying",
-      //   "isVeried": false,
-      //   "color": "#98DDCA",
-      //   "height": "175",
-      //   "identity": "Scar on the left side 1cm",
-      //   "expired_date": "2022.01.21 - 2025.01.21",
-      //   "isApprove": true
-      // },
-      // {
-      //   "type": "Covid Vaccination",
-      //   "id": "1233452423",
-      //   "name": "Sam Allen",
-      //   "dob": "09.02.2000",
-      //   "gender": "Male",
-      //   "address": "Tik L'lork, Toul Kork, Phnom Penh",
-      //   "status": "verified",
-      //   "isVeried": true,
-      //   "color": "#FFAAA7",
-      //   "height": "188",
-      //   "identity": "Scar on the left side 1cm",
-      //   "expired_date": "2022.01.21 - 2025.01.21",
-      //   "isApprove": false
-      // }
-    // ];
-
-    // userDocsDataFilter();
-
-  }
-
   void initField(){
 
     lsOrgDocs = [];
@@ -191,25 +136,6 @@ class DocumentProvider extends ChangeNotifier{
     notifyListeners();
   }
 
-  Future<void> initSelendraDocs() async {
-    
-    final myJson = await rootBundle.loadString(AppConfig.selendra_id);
-    selendra = json.decode(myJson);
-    Map<String, dynamic>.from(selendra!['properties']).forEach((key, value) {
-      selendraID!.add({
-        'key': key,
-        'value': value,
-        'formController': TextEditingController(),
-        'focusNode': FocusNode(),
-        'type': value['type'],
-        'editable': value['editable'],
-        'description': value['description']
-      });
-    });
-
-    notifyListeners();
-  }
-
   /// Data Of User's Document Filter By Status
   void userDocsDataFilter(){
 
@@ -249,19 +175,6 @@ class DocumentProvider extends ChangeNotifier{
     } catch (e){
       print("Error queryListOfOrgs $e");
     }
-    
-  }
-
-  Future<void> queryDocByOwerAddr({required String? ownerAddr}) async {
-    // print("queryDocByOwerAddr $ownerAddr");
-    // try {
-    //   // _res = await _http.get(Uri.parse(Api.assetOf+"$ownerAddr"));
-    //   // schemaFilter(json.decode(_res!.body));
-
-    //   schemaFilter(object!);
-    // } catch (e){
-    //   print("Error queryListOfOrgs $e");
-    // }
     
   }
   
@@ -369,13 +282,27 @@ class DocumentProvider extends ChangeNotifier{
     assetsMinted = [];
     await GetRequest().querySubmittedDocs(Provider.of<ContractProvider>(context!, listen: false).ethAdd).then((value) async {
       final data = await json.decode(value.body);
+      print("Map<String, dynamic>.from(data).isNotEmpty ${Map<String, dynamic>.from(data).isNotEmpty}");
       if (Map<String, dynamic>.from(data).isNotEmpty){
-        
-        StorageServices.storeData(await json.decode(value.body), DbKey.lsDocs);
 
         for (var element in data['credentials']){
           assetsMinted!.add(element);
         }
+
+        for (int i = 0; i < assetsMinted!.length; i++){
+          for (int j = 0; j < object!['schemas'].length; j++){
+            if (object!['schemas'][j]['did'] == assetsMinted![i]['parent']){
+              print(object!['schemas'][j]['did'] == data['credentials'][i]['parent']);
+              assetsMinted![i].addAll({
+                'parent_data': object!['schemas'][j]
+              });
+              break;
+            }
+          }
+        }
+
+        StorageServices.storeData(assetsMinted, DbKey.lsDocs);
+
       }
       
     });

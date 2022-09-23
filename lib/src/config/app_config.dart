@@ -64,15 +64,16 @@ class AppConfig {
     NetworkParams(
       httpUrlTN: 'https://rpc.testnet.selendra.org/',
       httpUrlMN: 'https://app.selendra.org/',
-      wsUrlTN: 'wss://rpc-testnet.selendra.org',
-      // wsUrlTN: 'wss://rpc-sabay-testnet.selendra.org/',
+      // wsUrlTN: 'wss://rpc-testnet.selendra.org',
+      wsUrlTN: 'wss://rpc-sabay-testnet.selendra.org/',
       wsUrlMN: 'wss://rpc-mainnet.selendra.org',
       ss58: 204,
       ss58MN: 204
     ),
 
     NetworkParams(
-      wsUrlMN: 'wss://rpc.polkadot.io',
+      // wsUrlMN: 'wss://rpc.polkadot.io',
+      wsUrlMN: 'wss://polkadot-rpc.dwellir.com',
       wsUrlTN: 'wss://westend-rpc.polkadot.io',
       ss58: 0,
     ),
