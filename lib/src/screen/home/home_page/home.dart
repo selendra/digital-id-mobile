@@ -358,12 +358,12 @@ class _HomeState extends State<HomePage> with TickerProviderStateMixin {
       }
     ];
 
-    final schema = await JsonSchema.createSchemaAsync({
-      'type': 'array',
-      'items': {r'$ref': 'https://json-schema.org/draft/2020-12/schema'}
-    });
+    // final schema = await JsonSchema.createSchemaAsync({
+    //   'type': 'array',
+    //   'items': {r'$ref': 'https://json-schema.org/draft/2020-12/schema'}
+    // });
 
-    print(schema.validate(workivaLocations));
+    // print(schema.validate(workivaLocations));
   }
 
   @override
